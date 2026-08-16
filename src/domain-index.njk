@@ -1,0 +1,18 @@
+---
+pagination:
+  data: domains
+  size: 1
+  alias: d
+permalink: "/{{ d.slug }}/"
+layout: layouts/base.njk
+eleventyComputed:
+  title: "{{ d.nama }}"
+---
+{% set item = { domainSlug: d.slug, domainNama: d.nama, domainDeskripsi: d.deskripsiSingkat, fase: d.fase[0] } %}
+{% set matched = null %}
+{% for c in faseContentData %}
+  {% if c.data.domain == item.domainSlug and c.data.fase == item.fase %}
+    {% set matched = c %}
+  {% endif %}
+{% endfor %}
+{% include "partials/fase-body.njk" %}

@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+title: "Belajar Matematika, Dengan Ebook Interaktif"
+description: "Belajar matematika sesuai Kurikulum Merdeka menggunakan ebook interaktif, fase A sampai F."
+---
+<div class="content-inner">
+  <p class="eyebrow">KURIKULUM MERDEKA &middot; FASE A&ndash;F</p>
+  <h1 class="page-title">Belajar Matematika, Dengan Ebook Interaktif</h1>
+  <p class="page-lede">Di situs ini, kita bisa belajar matematika menggunakan ebook yang interaktif</p>
+
+  <div class="hero-card">
+    <p><strong>Matematika</strong> merupakan ilmu atau pengetahuan tentang belajar atau berpikir logis
+    yang mendasari perkembangan teknologi modern dan sangat dibutuhkan dalam kehidupan manusia.
+    Matematika berkontribusi terhadap pengembangan dan pemahaman dalam berbagai disiplin ilmu dan
+    menjadi landasan bagi banyak inovasi saat ini maupun memberikan solusi masa depan. Matematika
+    dipelajari bukan hanya untuk dipahami, tetapi juga berperan sebagai alat untuk membangun
+    pemahaman, melatih cara berpikir, dan menyelesaikan masalah dalam kehidupan. Belajar matematika
+    dapat meningkatkan kemampuan murid dalam berpikir logis, analitis, sistematis, kritis, dan
+    kreatif. Kompetensi tersebut diperlukan agar murid memiliki kemampuan memperoleh, mengelola,
+    dan memanfaatkan informasi untuk bertahan hidup pada keadaan yang selalu berubah, penuh dengan
+    ketidakpastian, dan bersifat kompetitif.</p>
+
+    <p>Mata pelajaran Matematika membekali murid dengan pengetahuan dan keterampilan yang
+    diperlukan serta kapasitas untuk berpikir logis, kritis, dan analitis sehingga mereka belajar
+    bernalar secara bertahap untuk memahami konsep, prinsip, dan solusi dalam matematika. Proses
+    ini juga membentuk sikap positif terhadap matematika dan menumbuhkan nilai-nilai seperti
+    kemandirian, ketekunan, ketelitian, rasionalitas, serta kreativitas.</p>
+  </div>
+
+  <h2 class="section-heading">Jelajahi Materi per Domain</h2>
+  <div class="domain-grid">
+    {% for d in domains %}
+    <a href="/{{ d.slug }}/" class="domain-card">
+      <h3>{{ d.nama }}</h3>
+      <p>{{ d.deskripsiSingkat }}</p>
+      <span class="domain-card-arrow">Fase A&ndash;F &rarr;</span>
+    </a>
+    {% endfor %}
+  </div>
+</div>

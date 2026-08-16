@@ -1,0 +1,13 @@
+<nav class="sidebar" id="sidebar">
+  <div class="brand">
+    <a href="/">Belajar<br>Matematika</a>
+    <span class="brand-sub">KURIKULUM MERDEKA</span>
+  </div>
+  <ul class="menu">
+    <li><a href="/" class="{{ 'is-active' if page.url == '/' }}"><span class="dot"></span>Home</a></li>
+    {% for d in domains %}
+    <li><a href="/{{ d.slug }}/" class="{{ 'is-active' if page.url.startsWith('/' + d.slug + '/') }}"><span class="dot"></span>{{ d.nama }}</a></li>
+    {% endfor %}
+    <li><a href="/about/" class="{{ 'is-active' if page.url == '/about/' }}"><span class="dot"></span>About</a></li>
+  </ul>
+</nav>

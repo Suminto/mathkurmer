@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title or "Belajar Matematika" }} — Kurikulum Merdeka</title>
+  <meta name="description" content="{{ description or 'Belajar matematika dengan ebook interaktif, sesuai Kurikulum Merdeka.' }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+  <div class="app-shell">
+    {% include "partials/sidebar.njk" %}
+    <main class="content-col">
+      {{ content | safe }}
+    </main>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <script>
+    let mathJaxReady = false;
+    let pendingTypeset = [];
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' },
+      startup: {
+        typeset: false,
+        ready: function () {
+          MathJax.startup.defaultReady();
+          mathJaxReady = true;
+          pendingTypeset.forEach(function (fn) { fn(); });
+          pendingTypeset = [];
+        }
+      }
+    };
+    function typesetMath() {
+      if (mathJaxReady && window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise().catch(function (err) { console.error('MathJax error:', err); });
+      } else {
+        pendingTypeset.push(typesetMath);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', typesetMath);
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <!-- Netlify Identity: menangani link undangan/reset password yang mengarah ke halaman ini -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

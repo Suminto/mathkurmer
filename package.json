@@ -1,0 +1,19 @@
+{
+  "name": "belajar-matematika",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^15.0.0"
+  }
+}

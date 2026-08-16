@@ -1,0 +1,17 @@
+---
+pagination:
+  data: faseList
+  size: 1
+  alias: item
+permalink: "/{{ item.domainSlug }}/fase-{{ item.fase | lower }}/"
+layout: layouts/base.njk
+eleventyComputed:
+  title: "{{ item.domainNama }} — Fase {{ item.fase }}"
+---
+{% set matched = null %}
+{% for c in faseContentData %}
+  {% if c.data.domain == item.domainSlug and c.data.fase == item.fase %}
+    {% set matched = c %}
+  {% endif %}
+{% endfor %}
+{% include "partials/fase-body.njk" %}

@@ -1,0 +1,43 @@
+<div class="content-inner">
+  <p class="eyebrow">KURIKULUM MERDEKA &middot; DOMAIN {{ item.domainNama | upper }}</p>
+  <h1 class="page-title">{{ item.domainNama }}</h1>
+  <p class="page-lede">{{ item.domainDeskripsi }}</p>
+
+  <div class="fase-tabs">
+    {% for f in ["A", "B", "C", "D", "E", "F"] %}
+    <a href="/{{ item.domainSlug }}/fase-{{ f | lower }}/"
+       class="fase-tab {{ 'is-active' if f == item.fase }}">Fase {{ f }}</a>
+    {% endfor %}
+  </div>
+
+  {% if matched %}
+    {% if matched.data.deskripsi %}
+    <div class="fase-desc">{{ matched.data.deskripsi | markdown | safe }}</div>
+    {% endif %}
+
+    {% if matched.data.bab and matched.data.bab.length %}
+    <div class="bab-list">
+      {% for b in matched.data.bab %}
+      <article class="bab-card">
+        <h2 class="bab-title">{{ b.judul }}</h2>
+        <div class="bab-ringkasan">{{ b.ringkasan | markdown | safe }}</div>
+        {% if b.ebookUrl %}
+        <a href="{{ b.ebookUrl }}" target="_blank" rel="noopener" class="btn-ebook">
+          {{ b.ebookLabel or "Buka Ebook Interaktif" }} &rarr;
+        </a>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p>Deskripsi fase sudah ada, tapi belum ada Bab yang ditambahkan.</p>
+    </div>
+    {% endif %}
+  {% else %}
+  <div class="empty-state">
+    <p>Materi untuk <strong>{{ item.domainNama }} &middot; Fase {{ item.fase }}</strong> belum tersedia.</p>
+    <p class="empty-hint">Konten akan ditambahkan melalui halaman admin (<code>/admin</code>).</p>
+  </div>
+  {% endif %}
+</div>
