@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: suminto65/mathkurmer
   branch: main
+  base_url: https://mathkurmer-oauth-proxy.pasuminto.workers.dev
+  auth_endpoint: auth
 
 media_folder: "src/images"
 public_folder: "/images"
