@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: suminto65/mathkurmer
+  repo: suminto/mathkurmer
   branch: main
   base_url: https://mathkurmer-oauth-proxy.pasuminto.workers.dev
   auth_endpoint: auth
