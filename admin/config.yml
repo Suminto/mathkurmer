@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: suminto65/mathkurmer
+  repo: Suminto/mathkurmer
   branch: main
   base_url: https://mathkurmer-oauth-proxy.pasuminto.workers.dev
   auth_endpoint: auth
@@ -9,6 +9,36 @@ media_folder: "src/images"
 public_folder: "/images"
 
 collections:
+  - name: "domain_desc"
+    label: "Deskripsi Domain (Home)"
+    label_singular: "Deskripsi Domain"
+    files:
+      - name: "bilangan"
+        label: "Bilangan"
+        file: "content/domain-desc/bilangan.md"
+        fields:
+          - { label: "Deskripsi Singkat", name: "deskripsiSingkat", widget: "string" }
+      - name: "aljabar"
+        label: "Aljabar"
+        file: "content/domain-desc/aljabar.md"
+        fields:
+          - { label: "Deskripsi Singkat", name: "deskripsiSingkat", widget: "string" }
+      - name: "pengukuran"
+        label: "Pengukuran"
+        file: "content/domain-desc/pengukuran.md"
+        fields:
+          - { label: "Deskripsi Singkat", name: "deskripsiSingkat", widget: "string" }
+      - name: "geometri"
+        label: "Geometri"
+        file: "content/domain-desc/geometri.md"
+        fields:
+          - { label: "Deskripsi Singkat", name: "deskripsiSingkat", widget: "string" }
+      - name: "analisis-data-peluang"
+        label: "Analisis Data dan Peluang"
+        file: "content/domain-desc/analisis-data-peluang.md"
+        fields:
+          - { label: "Deskripsi Singkat", name: "deskripsiSingkat", widget: "string" }
+
   - name: "pages"
     label: "Halaman (Home & About)"
     label_singular: "Halaman"

@@ -18,7 +18,7 @@ eleventyComputed:
     {% for d in domains %}
     <a href="/{{ d.slug }}/" class="domain-card">
       <h3>{{ d.nama }}</h3>
-      <p>{{ d.deskripsiSingkat }}</p>
+      <p>{{ domainDesc[d.slug].deskripsiSingkat }}</p>
       <span class="domain-card-arrow">Fase A&ndash;F &rarr;</span>
     </a>
     {% endfor %}

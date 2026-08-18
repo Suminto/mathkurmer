@@ -8,7 +8,7 @@ layout: layouts/base.njk
 eleventyComputed:
   title: "{{ d.nama }}"
 ---
-{% set item = { domainSlug: d.slug, domainNama: d.nama, domainDeskripsi: d.deskripsiSingkat, fase: d.fase[0] } %}
+{% set item = { domainSlug: d.slug, domainNama: d.nama, domainDeskripsi: domainDesc[d.slug].deskripsiSingkat, fase: d.fase[0] } %}
 {% set matched = null %}
 {% for c in faseContentData %}
   {% if c.data.domain == item.domainSlug and c.data.fase == item.fase %}

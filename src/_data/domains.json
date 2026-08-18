@@ -1,32 +1,7 @@
 [
-  {
-    "slug": "bilangan",
-    "nama": "Bilangan",
-    "deskripsiSingkat": "Konsep dan operasi bilangan, dari bilangan cacah hingga bilangan berpangkat dan bentuk akar.",
-    "fase": ["A", "B", "C", "D", "E", "F"]
-  },
-  {
-    "slug": "aljabar",
-    "nama": "Aljabar",
-    "deskripsiSingkat": "Pola, persamaan, pertidaksamaan, fungsi, dan relasi.",
-    "fase": ["A", "B", "C", "D", "E", "F"]
-  },
-  {
-    "slug": "pengukuran",
-    "nama": "Pengukuran",
-    "deskripsiSingkat": "Satuan, luas, volume, dan besaran turunan dalam kehidupan sehari-hari.",
-    "fase": ["A", "B", "C", "D", "E", "F"]
-  },
-  {
-    "slug": "geometri",
-    "nama": "Geometri",
-    "deskripsiSingkat": "Bangun datar, bangun ruang, transformasi, dan kesebangunan.",
-    "fase": ["A", "B", "C", "D", "E", "F"]
-  },
-  {
-    "slug": "analisis-data-peluang",
-    "nama": "Analisis Data dan Peluang",
-    "deskripsiSingkat": "Statistika, penyajian data, dan peluang kejadian.",
-    "fase": ["A", "B", "C", "D", "E", "F"]
-  }
+  { "slug": "bilangan", "nama": "Bilangan", "fase": ["A", "B", "C", "D", "E", "F"] },
+  { "slug": "aljabar", "nama": "Aljabar", "fase": ["A", "B", "C", "D", "E", "F"] },
+  { "slug": "pengukuran", "nama": "Pengukuran", "fase": ["A", "B", "C", "D", "E", "F"] },
+  { "slug": "geometri", "nama": "Geometri", "fase": ["A", "B", "C", "D", "E", "F"] },
+  { "slug": "analisis-data-peluang", "nama": "Analisis Data dan Peluang", "fase": ["A", "B", "C", "D", "E", "F"] }
 ]
