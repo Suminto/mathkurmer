@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: suminto/mathkurmer
+  repo: suminto65/mathkurmer
   branch: main
   base_url: https://mathkurmer-oauth-proxy.pasuminto.workers.dev
   auth_endpoint: auth
@@ -9,6 +9,33 @@ media_folder: "src/images"
 public_folder: "/images"
 
 collections:
+  - name: "pages"
+    label: "Halaman (Home & About)"
+    label_singular: "Halaman"
+    files:
+      - name: "home"
+        label: "Home"
+        file: "content/pages/home.md"
+        fields:
+          - { label: "Label Kecil di Atas Judul", name: "eyebrow", widget: "string" }
+          - { label: "Judul Utama", name: "judul", widget: "string" }
+          - { label: "Sub-judul (Lede)", name: "lede", widget: "string" }
+          - label: "Isi Paragraf"
+            name: "isi"
+            widget: "markdown"
+            hint: "Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
+      - name: "about"
+        label: "About"
+        file: "content/pages/about.md"
+        fields:
+          - { label: "Label Kecil di Atas Judul", name: "eyebrow", widget: "string" }
+          - { label: "Judul Utama", name: "judul", widget: "string" }
+          - label: "Isi Paragraf"
+            name: "isi"
+            widget: "markdown"
+            hint: "Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
+          - { label: "Baris Kredit di Bawah", name: "creditLine", widget: "string" }
+
   - name: "materi"
     label: "Materi (Domain x Fase)"
     label_singular: "Halaman Fase"
