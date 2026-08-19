@@ -1,10 +1,15 @@
 ---
 domain: bilangan
 fase: D
-deskripsi: |
-  Fase D (setara Kelas 7–9 SMP) membahas bilangan bulat, bilangan rasional,
-  bilangan berpangkat, dan bentuk akar. Murid diajak memahami operasi hitung
-  secara konseptual, bukan sekadar menghafal prosedur.
+deskripsi: >-
+  Fase D (Umumnya untuk Kelas VII, VIII dan IX SMP/MTs/Program Paket B). Pada
+  akhir Fase D, murid memiliki kemampuan Membaca, menulis, dan membandingkan
+  bilangan bulat, bilangan rasional, bilangan desimal, bilangan berpangkat bulat
+  dan akar, bilangan dalam notasi ilmiah; menerapkan operasi aritmatika pada
+  bilangan real, dan memberikan estimasi/perkiraan dalam menyelesaikan masalah
+  (termasuk berkaitan dengan literasi finansial).  \
+
+  Murid dapat menggunakan rasio (skala, proporsi, dan laju perubahan) dalam penyelesaian masalah.
 bab:
   - judul: "Bab 1: Bilangan Bulat"
     ringkasan: |
