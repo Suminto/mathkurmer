@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persamaan Garis Lurus — Kelas 8 | Ebook Interaktif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Serif 4', serif; background:var(--paper); color:var(--text-dark); display:flex; min-height:100vh;}
+h1,h2,h3,h4{font-family:'Playfair Display', serif;}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:290px; min-width:290px; background:linear-gradient(175deg, var(--ink), var(--ink2));
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto;
+  border-right:1px solid var(--ink-border); z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink3); border-radius:4px;}
+.side-head{padding:26px 22px 18px; border-bottom:1px solid var(--ink-border);}
+.side-eyebrow{font-family:'JetBrains Mono', monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:8px;}
+.side-title{font-size:1.32rem; font-weight:700; line-height:1.25; color:var(--cream);}
+.progress-wrap{padding:14px 22px; border-bottom:1px solid var(--ink-border);}
+.progress-label{font-family:'JetBrains Mono', monospace; font-size:.68rem; color:var(--cream-dim); display:flex; justify-content:space-between; margin-bottom:6px;}
+.progress-track{height:6px; background:var(--ink3); border-radius:6px; overflow:hidden;}
+.progress-fill{height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .25s ease;}
+.nav-group-title{font-family:'JetBrains Mono', monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cream-dim); padding:18px 22px 8px;}
+.nav-link{display:block; padding:9px 22px; color:var(--cream); text-decoration:none; font-size:.92rem; border-left:3px solid transparent; transition:.18s ease;}
+.nav-link:hover{background:var(--ink3);}
+.nav-link.active{border-left-color:var(--gold); background:var(--ink3); color:var(--gold-soft); font-weight:600;}
+.nav-sub{padding-left:14px;}
+.nav-sub-link{display:block; padding:6px 22px 6px 20px; color:var(--cream-dim); text-decoration:none; font-size:.82rem; border-left:3px solid transparent; transition:.18s ease;}
+.nav-sub-link:hover{color:var(--gold-soft);}
+.nav-sub-link.active{color:var(--gold); border-left-color:var(--gold); font-weight:600;}
+#sidebar-footer{padding:16px 22px 24px; font-size:.72rem; color:var(--cream-dim); font-family:'JetBrains Mono', monospace;}
+
+.menu-toggle{display:none; position:fixed; top:14px; left:14px; z-index:100; background:var(--ink); color:var(--gold-soft); border:1px solid var(--ink-border); width:42px; height:42px; border-radius:10px; font-size:1.2rem; cursor:pointer;}
+.sidebar-overlay{display:none; position:fixed; inset:0; background:rgba(10,12,24,.55); z-index:40;}
+
+/* ===== CONTENT ===== */
+#content{flex:1; min-width:0; max-width:900px; padding:0 0 80px;}
+.hero{background:linear-gradient(160deg, var(--ink2), var(--ink)); color:var(--cream); padding:64px 56px 48px; position:relative; overflow:hidden;}
+.hero::after{content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(224,169,77,.18), transparent 70%);}
+.hero-eyebrow{font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:14px;}
+.hero h1{font-size:2.5rem; line-height:1.15; margin-bottom:16px; max-width:640px;}
+.hero p{color:var(--cream-dim); max-width:560px; line-height:1.65; margin-bottom:22px;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+.chip{font-family:'JetBrains Mono', monospace; font-size:.72rem; background:rgba(224,169,77,.14); border:1px solid rgba(224,169,77,.35); color:var(--gold-soft); padding:6px 12px; border-radius:20px;}
+
+section.materi{padding:52px 56px 12px; border-bottom:1px dashed var(--paper-line);}
+.sec-label{font-family:'JetBrains Mono', monospace; font-size:.75rem; letter-spacing:.1em; color:var(--note-b); text-transform:uppercase; margin-bottom:10px;}
+.sec-title{font-size:1.75rem; color:var(--text-dark); margin-bottom:18px;}
+.sec-title span{color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:1.1rem; margin-right:10px;}
+section.materi p{line-height:1.85; margin-bottom:16px; font-size:1.02rem; color:var(--text-mid);}
+section.materi h4{font-size:1.1rem; margin:22px 0 10px; color:var(--text-dark);}
+
+.callout{border-radius:12px; padding:18px 20px; margin:20px 0; border-left:4px solid; line-height:1.7; font-size:.96rem;}
+.callout-title{font-weight:700; font-family:'JetBrains Mono', monospace; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; display:block;}
+.callout.def{background:var(--def); border-color:var(--def-b); color:#2e4527;}
+.callout.note{background:var(--note); border-color:var(--note-b); color:#5c4419;}
+.callout.warn{background:var(--warn); border-color:var(--warn-b); color:#5c2620;}
+
+.example-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px; padding:20px 22px; margin:20px 0;}
+.example-box .ex-label{font-family:'JetBrains Mono', monospace; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:10px; display:block;}
+.example-box .ex-step{margin:8px 0; padding-left:14px; border-left:2px solid var(--paper-line); line-height:1.7;}
+
+.plot-box{background:#fffdf7; border:1px solid var(--paper-line); border-radius:14px; padding:22px 24px; margin:26px 0; box-shadow:0 2px 12px rgba(43,36,22,.05);}
+.plot-box .plot-title{font-family:'Playfair Display', serif; font-weight:700; font-size:1.06rem; color:var(--text-dark); margin-bottom:16px;}
+.plot-row{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px;}
+.plot-field{flex:1; min-width:110px;}
+.plot-field label{display:block; font-size:.74rem; color:var(--text-mid); margin-bottom:5px; font-family:'JetBrains Mono', monospace;}
+.plot-field input{width:100%; padding:10px 12px; border:1px solid var(--paper-line); border-radius:8px; font-family:'JetBrains Mono', monospace; font-size:.92rem; background:#fff; color:var(--text-dark);}
+.plot-btn{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 22px; border-radius:8px; font-weight:700; font-family:'JetBrains Mono', monospace; font-size:.84rem; cursor:pointer; transition:.18s ease;}
+.plot-btn:hover{background:var(--ink2); transform:translateY(-1px);}
+.plot-canvas-wrap{margin-top:18px; border:1px solid var(--paper-line); border-radius:12px; overflow:hidden; background:#fff; min-height:2px;}
+.plot-result{margin-top:14px; text-align:center; font-family:'JetBrains Mono', monospace; font-size:.9rem; color:var(--text-mid);}
+
+.calc-box{background:linear-gradient(160deg, var(--ink2), var(--ink)); color:var(--cream); border-radius:14px; padding:24px 26px; margin:26px 0; box-shadow:0 8px 22px rgba(20,26,46,.25);}
+.calc-box .calc-title{font-family:'JetBrains Mono', monospace; font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;}
+.calc-field{flex:1; min-width:100px;}
+.calc-field label{display:block; font-size:.72rem; color:var(--cream-dim); margin-bottom:4px; font-family:'JetBrains Mono', monospace;}
+.calc-field input{width:100%; padding:9px 10px; border-radius:8px; border:1px solid var(--ink-border); background:var(--ink3); color:var(--cream); font-family:'JetBrains Mono', monospace; font-size:.9rem;}
+.calc-btn{background:var(--gold); color:var(--ink); border:none; padding:10px 20px; border-radius:8px; font-weight:700; font-family:'JetBrains Mono', monospace; font-size:.85rem; cursor:pointer; transition:.18s ease;}
+.calc-btn:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:14px; padding:14px 16px; background:rgba(224,169,77,.12); border:1px solid rgba(224,169,77,.3); border-radius:10px; font-family:'JetBrains Mono', monospace; font-size:.92rem; min-height:20px; line-height:1.7;}
+
+/* ===== LATIHAN ===== */
+section#latihan{padding:52px 56px 20px;}
+.type-tabs{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 26px;}
+.type-tab{padding:9px 16px; border-radius:22px; border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-mid); font-family:'JetBrains Mono', monospace; font-size:.8rem; cursor:pointer; transition:.18s ease;}
+.type-tab.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+.score-strip{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;}
+.score-pill{font-family:'JetBrains Mono', monospace; font-size:.74rem; background:var(--paper2); border:1px solid var(--paper-line); padding:6px 12px; border-radius:16px; color:var(--text-mid);}
+.score-pill b{color:var(--text-dark);}
+
+.q-card{background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 24px; margin-bottom:18px; animation:fadeUp .35s ease; box-shadow:0 2px 10px rgba(43,36,22,.04);}
+@keyframes fadeUp{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
+.q-card.correct{border-color:var(--correct-b); background:var(--correct);}
+.q-card.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+.q-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+.q-num{font-family:'JetBrains Mono', monospace; font-weight:700; color:var(--gold); background:var(--ink); color:var(--gold-soft); width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.85rem;}
+.level-badge{font-family:'JetBrains Mono', monospace; font-size:.68rem; text-transform:uppercase; padding:3px 10px; border-radius:10px;}
+.level-badge.mudah{background:#e3f0e0; color:#356b2c;}
+.level-badge.sedang{background:#fbeecb; color:#8a5f13;}
+.level-badge.sukar{background:#f6dcd8; color:#8c3229;}
+.q-text{font-size:1.02rem; line-height:1.7; margin-bottom:16px; color:var(--text-dark);}
+
+.opt-btn{display:block; width:100%; text-align:left; padding:11px 16px; margin-bottom:8px; border:1px solid var(--paper-line); border-radius:10px; background:var(--paper2); cursor:pointer; font-family:'Source Serif 4', serif; font-size:.95rem; color:var(--text-dark); transition:.16s ease;}
+.opt-btn:hover{transform:translateX(3px); border-color:var(--gold);}
+.opt-btn.selected-correct{background:var(--correct); border-color:var(--correct-b); font-weight:600;}
+.opt-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn.reveal-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.pk-marked{border-color:var(--gold); background:#fdf0df;}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{flex:1; min-width:180px; padding:11px 14px; border:1px solid var(--paper-line); border-radius:10px; font-family:'JetBrains Mono', monospace; font-size:.95rem;}
+.is-row button{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 20px; border-radius:10px; font-weight:600; cursor:pointer; font-family:'JetBrains Mono', monospace; font-size:.85rem;}
+
+.bs-row{display:flex; gap:10px;}
+.bs-btn{flex:1; padding:12px; border-radius:10px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer; font-weight:600; font-family:'JetBrains Mono', monospace;}
+.bs-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.bs-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{flex:1; min-width:200px; font-weight:600;}
+.jd-row select{flex:1; min-width:180px; padding:10px 12px; border-radius:10px; border:1px solid var(--paper-line); font-family:'Source Serif 4', serif; font-size:.95rem;}
+
+.explanation{margin-top:14px; padding:13px 15px; background:var(--paper2); border-left:3px solid var(--gold); border-radius:8px; font-size:.92rem; line-height:1.65; color:var(--text-mid); display:none;}
+.explanation.show{display:block;}
+
+.analysis-btn-wrap{text-align:center; margin:30px 0;}
+#analysisBtn{background:var(--ink); color:var(--gold-soft); border:none; padding:14px 30px; border-radius:30px; font-family:'JetBrains Mono', monospace; font-weight:700; cursor:pointer; font-size:.9rem;}
+#analysisPanel{display:none; background:linear-gradient(160deg, var(--ink2), var(--ink)); color:var(--cream); border-radius:16px; padding:32px; margin-top:20px;}
+#analysisPanel.show{display:block;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:20px 0;}
+.stat-box{background:var(--ink3); border-radius:12px; padding:16px; text-align:center;}
+.stat-box .num{font-size:1.7rem; font-weight:800; color:var(--gold-soft); font-family:'JetBrains Mono', monospace;}
+.stat-box .lbl{font-size:.7rem; color:var(--cream-dim); text-transform:uppercase; letter-spacing:.06em; margin-top:4px;}
+.bar-row{display:flex; align-items:center; gap:10px; margin:10px 0;}
+.bar-row .bar-lbl{width:110px; font-size:.78rem; font-family:'JetBrains Mono', monospace; color:var(--cream-dim);}
+.bar-track{flex:1; height:10px; background:var(--ink3); border-radius:6px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); width:0%; transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{text-align:center; margin:24px 0; padding:20px; border-radius:14px; background:rgba(224,169,77,.14); border:1px solid rgba(224,169,77,.35);}
+.grade-box .grade-letter{font-size:2.6rem; font-weight:800; color:var(--gold-soft); font-family:'Playfair Display', serif;}
+#resetBtn{display:block; margin:20px auto 0; background:transparent; border:1px solid var(--gold-soft); color:var(--gold-soft); padding:10px 24px; border-radius:24px; cursor:pointer; font-family:'JetBrains Mono', monospace;}
+
+footer{padding:34px 56px; text-align:center; color:var(--text-mid); font-size:.82rem; border-top:1px solid var(--paper-line); font-family:'JetBrains Mono', monospace;}
+
+@media (max-width:900px){
+  .menu-toggle{display:block;}
+  #sidebar{position:fixed; left:0; top:0; transform:translateX(-100%); transition:transform .25s ease; width:270px;}
+  #sidebar.open{transform:translateX(0);}
+  .sidebar-overlay.show{display:block;}
+  #content{max-width:100%;}
+  .hero{padding:80px 22px 40px;}
+  .hero h1{font-size:1.9rem;}
+  section.materi{padding:38px 22px 8px;}
+  section#latihan{padding:38px 22px 20px;}
+  footer{padding:26px 22px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .calc-row{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<nav id="sidebar">
+  <div class="side-head">
+    <div class="side-eyebrow">Matematika · Kelas 8</div>
+    <div class="side-title">Persamaan Garis Lurus</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progres Baca</span><span id="progressPct">0%</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="nav-group-title">Materi</div>
+  <a href="#materi-a" class="nav-link" data-target="materi-a">A. Menentukan Formula Fungsi</a>
+  <a href="#materi-b" class="nav-link" data-target="materi-b">B. Persamaan Garis Lurus</a>
+  <a href="#materi-c" class="nav-link" data-target="materi-c">C. Gradien Garis</a>
+  <a href="#materi-d" class="nav-link" data-target="materi-d">D. Garis Sejajar &amp; Tegak Lurus</a>
+  <a href="#materi-e" class="nav-link" data-target="materi-e">E. Masalah PGL</a>
+  <a href="#materi-f" class="nav-link" data-target="materi-f">F. PGL pada Geometri</a>
+  <div class="nav-group-title">Latihan</div>
+  <a href="#latihan" class="nav-link" data-target="latihan">📝 Latihan Soal</a>
+  <div class="nav-sub">
+    <a href="#latihan" onclick="showType('pg')" class="nav-sub-link" data-type="pg">1. Pilihan Ganda Biasa</a>
+    <a href="#latihan" onclick="showType('is')" class="nav-sub-link" data-type="is">2. Isian Singkat</a>
+    <a href="#latihan" onclick="showType('pk')" class="nav-sub-link" data-type="pk">3. PG Kompleks</a>
+    <a href="#latihan" onclick="showType('bs')" class="nav-sub-link" data-type="bs">4. Benar/Salah</a>
+    <a href="#latihan" onclick="showType('jd')" class="nav-sub-link" data-type="jd">5. Menjodohkan</a>
+  </div>
+  <div id="sidebar-footer">Suminto with Claude</div>
+</nav>
+
+<main id="content">
+
+  <div class="hero">
+    <div class="hero-eyebrow">Ebook Interaktif · Matematika Kelas 8 · Kurikulum Merdeka</div>
+    <h1>Persamaan Garis Lurus</h1>
+    <p>Pelajari cara menentukan formula fungsi linear, menyusun persamaan garis lurus, menghitung gradien, memahami hubungan garis sejajar dan tegak lurus, hingga menerapkannya pada soal cerita dan geometri.</p>
+    <div class="chip-row">
+      <span class="chip">A. Formula Fungsi</span>
+      <span class="chip">B. Persamaan Garis</span>
+      <span class="chip">C. Gradien</span>
+      <span class="chip">D. Sejajar &amp; Tegak Lurus</span>
+      <span class="chip">E. Soal Cerita</span>
+      <span class="chip">F. Geometri</span>
+      <span class="chip">25 Soal Latihan</span>
+    </div>
+  </div>
+
+  <!-- ===== A. MENENTUKAN FORMULA FUNGSI ===== -->
+  <section class="materi" id="materi-a">
+    <div class="sec-label">Bagian A</div>
+    <h2 class="sec-title"><span>A</span>Menentukan Formula Fungsi</h2>
+    <p>Fungsi linear adalah fungsi yang grafiknya berbentuk garis lurus, dituliskan dalam bentuk umum \(f(x) = ax + b\), dengan \(a\) sebagai gradien (kemiringan) dan \(b\) sebagai nilai fungsi ketika \(x = 0\).</p>
+
+    <div class="callout def">
+      <span class="callout-title">Definisi</span>
+      Suatu fungsi \(f(x) = ax + b\) disebut fungsi linear jika \(a \neq 0\). Nilai \(a\) menentukan seberapa curam garis, sedangkan \(b\) menentukan titik potong dengan sumbu-Y.
+    </div>
+
+    <h4>Menentukan Formula dari Dua Pasangan Nilai</h4>
+    <p>Jika diketahui dua pasang nilai \((x_1, f(x_1))\) dan \((x_2, f(x_2))\), kita bisa mencari \(a\) dan \(b\) dengan langkah berikut.</p>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="ex-step">Diketahui \(f(1) = 5\) dan \(f(3) = 9\). Tentukan formula fungsi \(f(x)\)!</div>
+      <div class="ex-step">Langkah 1 — cari gradien: \(a = \dfrac{f(3)-f(1)}{3-1} = \dfrac{9-5}{2} = 2\)</div>
+      <div class="ex-step">Langkah 2 — substitusi ke \(f(1)=5\): \(2(1)+b=5 \Rightarrow b=3\)</div>
+      <div class="ex-step">Jadi, formula fungsinya adalah \(f(x) = 2x + 3\)</div>
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">🧮 Kalkulator Formula Fungsi dari Dua Titik</div>
+      <div class="calc-row">
+        <div class="calc-field"><label>x₁</label><input type="number" id="fA_x1" placeholder="1"></div>
+        <div class="calc-field"><label>y₁ = f(x₁)</label><input type="number" id="fA_y1" placeholder="5"></div>
+        <div class="calc-field"><label>x₂</label><input type="number" id="fA_x2" placeholder="3"></div>
+        <div class="calc-field"><label>y₂ = f(x₂)</label><input type="number" id="fA_y2" placeholder="9"></div>
+      </div>
+      <button class="calc-btn" onclick="hitungFormulaFungsi()">Hitung Formula</button>
+      <div class="calc-result" id="fA_result">Hasil akan tampil di sini…</div>
+    </div>
+  </section>
+
+  <!-- ===== B. PERSAMAAN GARIS LURUS ===== -->
+  <section class="materi" id="materi-b">
+    <div class="sec-label">Bagian B</div>
+    <h2 class="sec-title"><span>B</span>Persamaan Garis Lurus</h2>
+    <p>Persamaan garis lurus dapat dituliskan dalam dua bentuk umum yang sering dipakai bergantian.</p>
+
+    <div class="callout def">
+      <span class="callout-title">Dua Bentuk Umum</span>
+      Bentuk eksplisit: \(y = mx + c\) (m = gradien, c = titik potong sumbu-Y).<br>
+      Bentuk implisit: \(ax + by + c = 0\).
+    </div>
+
+    <div class="plot-box">
+      <div class="plot-title">📍 Plot Garis \(y = mx + c\) pada Bidang Cartesius</div>
+      <div class="plot-row">
+        <div class="plot-field"><label>Gradien (m)</label><input type="number" id="plotB1_m" placeholder="2"></div>
+        <div class="plot-field"><label>Konstanta (c)</label><input type="number" id="plotB1_c" placeholder="3"></div>
+      </div>
+      <button class="plot-btn" onclick="plotGarisMC()">Plot Garis</button>
+      <div class="plot-canvas-wrap" id="plotB1_canvas"></div>
+      <div class="plot-result" id="plotB1_result">Masukkan nilai m dan c, lalu klik "Plot Garis".</div>
+    </div>
+
+    <h4>Persamaan Garis dari Satu Titik dan Gradien</h4>
+    <p>Jika diketahui gradien \(m\) dan sebuah titik \((x_1, y_1)\) yang dilalui garis, persamaan garisnya adalah \(y - y_1 = m(x - x_1)\).</p>
+
+    <div class="plot-box">
+      <div class="plot-title">📍 Plot Garis dari Gradien dan Satu Titik</div>
+      <div class="plot-row">
+        <div class="plot-field"><label>Gradien (m)</label><input type="number" id="plotB2_m" placeholder="3"></div>
+        <div class="plot-field"><label>x₁</label><input type="number" id="plotB2_x1" placeholder="2"></div>
+        <div class="plot-field"><label>y₁</label><input type="number" id="plotB2_y1" placeholder="4"></div>
+      </div>
+      <button class="plot-btn" onclick="plotGarisTitikGradien()">Plot Garis</button>
+      <div class="plot-canvas-wrap" id="plotB2_canvas"></div>
+      <div class="plot-result" id="plotB2_result">Masukkan nilai m, x₁, dan y₁, lalu klik "Plot Garis".</div>
+    </div>
+
+    <h4>Persamaan Garis Melalui Dua Titik</h4>
+    <p>Jika garis melalui \((x_1,y_1)\) dan \((x_2,y_2)\), gunakan rumus perbandingan: \(\dfrac{y-y_1}{y_2-y_1} = \dfrac{x-x_1}{x_2-x_1}\).</p>
+
+    <div class="plot-box">
+      <div class="plot-title">📍 Plot Garis Melalui Dua Titik</div>
+      <div class="plot-row">
+        <div class="plot-field"><label>x₁</label><input type="number" id="plotB3_x1" placeholder="2"></div>
+        <div class="plot-field"><label>y₁</label><input type="number" id="plotB3_y1" placeholder="4"></div>
+        <div class="plot-field"><label>x₂</label><input type="number" id="plotB3_x2" placeholder="5"></div>
+        <div class="plot-field"><label>y₂</label><input type="number" id="plotB3_y2" placeholder="10"></div>
+      </div>
+      <button class="plot-btn" onclick="plotGarisDuaTitik()">Plot Garis</button>
+      <div class="plot-canvas-wrap" id="plotB3_canvas"></div>
+      <div class="plot-result" id="plotB3_result">Masukkan koordinat kedua titik, lalu klik "Plot Garis".</div>
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="ex-step">Tentukan persamaan garis yang bergradien 3 dan melalui titik (2, 4)!</div>
+      <div class="ex-step">\(y - 4 = 3(x - 2)\)</div>
+      <div class="ex-step">\(y - 4 = 3x - 6\)</div>
+      <div class="ex-step">Jadi, persamaannya adalah \(y = 3x - 2\)</div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-title">Tips</span>
+      Untuk mengubah bentuk \(y=mx+c\) ke bentuk \(ax+by+c=0\), pindahkan semua suku ke satu ruas, misalnya \(y=3x-2\) menjadi \(3x-y-2=0\).
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">🧮 Kalkulator Persamaan Garis dari Dua Titik</div>
+      <div class="calc-row">
+        <div class="calc-field"><label>x₁</label><input type="number" id="fB_x1" placeholder="2"></div>
+        <div class="calc-field"><label>y₁</label><input type="number" id="fB_y1" placeholder="4"></div>
+        <div class="calc-field"><label>x₂</label><input type="number" id="fB_x2" placeholder="5"></div>
+        <div class="calc-field"><label>y₂</label><input type="number" id="fB_y2" placeholder="10"></div>
+      </div>
+      <button class="calc-btn" onclick="hitungPersamaanGaris()">Hitung Persamaan</button>
+      <div class="calc-result" id="fB_result">Hasil akan tampil di sini…</div>
+    </div>
+  </section>
+
+  <!-- ===== C. GRADIEN GARIS ===== -->
+  <section class="materi" id="materi-c">
+    <div class="sec-label">Bagian C</div>
+    <h2 class="sec-title"><span>C</span>Gradien Garis</h2>
+    <p>Gradien (kemiringan) menyatakan seberapa curam sebuah garis dan ke arah mana garis itu naik atau turun.</p>
+
+    <div class="callout def">
+      <span class="callout-title">Rumus Gradien</span>
+      Melalui dua titik: \(m = \dfrac{y_2-y_1}{x_2-x_1}\).<br>
+      Dari bentuk \(y=mx+c\): gradiennya adalah \(m\) itu sendiri.<br>
+      Dari bentuk \(ax+by+c=0\): gradiennya adalah \(m = -\dfrac{a}{b}\).<br>
+      Melalui titik asal (0,0) dan titik \((x,y)\): \(m = \dfrac{y}{x}\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="ex-step">Tentukan gradien garis \(4x - 2y + 6 = 0\)!</div>
+      <div class="ex-step">Di sini \(a=4\), \(b=-2\), sehingga \(m = -\dfrac{a}{b} = -\dfrac{4}{-2} = 2\)</div>
+      <div class="ex-step">Jadi, gradien garis tersebut adalah 2</div>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-title">Perhatikan</span>
+      Garis vertikal (bentuk \(x = k\)) tidak memiliki gradien (gradien tidak terdefinisi), karena perubahan \(x\) selalu nol.
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">🧮 Kalkulator Gradien dari Dua Titik</div>
+      <div class="calc-row">
+        <div class="calc-field"><label>x₁</label><input type="number" id="fC_x1" placeholder="1"></div>
+        <div class="calc-field"><label>y₁</label><input type="number" id="fC_y1" placeholder="2"></div>
+        <div class="calc-field"><label>x₂</label><input type="number" id="fC_x2" placeholder="4"></div>
+        <div class="calc-field"><label>y₂</label><input type="number" id="fC_y2" placeholder="11"></div>
+      </div>
+      <button class="calc-btn" onclick="hitungGradien()">Hitung Gradien</button>
+      <div class="calc-result" id="fC_result">Hasil akan tampil di sini…</div>
+    </div>
+  </section>
+
+  <!-- ===== D. SEJAJAR & TEGAK LURUS ===== -->
+  <section class="materi" id="materi-d">
+    <div class="sec-label">Bagian D</div>
+    <h2 class="sec-title"><span>D</span>Garis Sejajar dan Garis Tegak Lurus</h2>
+    <p>Hubungan antara dua garis dapat ditentukan hanya dengan membandingkan gradiennya.</p>
+
+    <div class="callout def">
+      <span class="callout-title">Syarat Sejajar dan Tegak Lurus</span>
+      Dua garis sejajar jika gradiennya sama: \(m_1 = m_2\).<br>
+      Dua garis saling tegak lurus jika hasil kali gradiennya \(-1\): \(m_1 \times m_2 = -1\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="ex-step">Tentukan persamaan garis yang sejajar dengan \(y = 2x + 5\) dan melalui titik (1, 4)!</div>
+      <div class="ex-step">Karena sejajar, gradiennya sama, yaitu \(m = 2\)</div>
+      <div class="ex-step">\(y - 4 = 2(x-1) \Rightarrow y = 2x + 2\)</div>
+      <div class="ex-step">Jadi, persamaannya adalah \(y = 2x + 2\)</div>
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal Tegak Lurus</span>
+      <div class="ex-step">Tentukan gradien garis yang tegak lurus dengan garis bergradien \(\dfrac{2}{5}\)!</div>
+      <div class="ex-step">Gunakan \(m_1 \times m_2 = -1 \Rightarrow \dfrac{2}{5} \times m_2 = -1\)</div>
+      <div class="ex-step">Jadi, \(m_2 = -\dfrac{5}{2}\)</div>
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">🧮 Kalkulator Hubungan Dua Garis</div>
+      <div class="calc-row">
+        <div class="calc-field"><label>Gradien garis 1 (m₁)</label><input type="number" id="fD_m1" placeholder="2"></div>
+        <div class="calc-field"><label>Gradien garis 2 (m₂)</label><input type="number" id="fD_m2" placeholder="-0.5"></div>
+      </div>
+      <button class="calc-btn" onclick="cekHubunganGaris()">Cek Hubungan</button>
+      <div class="calc-result" id="fD_result">Hasil akan tampil di sini…</div>
+    </div>
+  </section>
+
+  <!-- ===== E. MASALAH PGL ===== -->
+  <section class="materi" id="materi-e">
+    <div class="sec-label">Bagian E</div>
+    <h2 class="sec-title"><span>E</span>Menyelesaikan Masalah yang Melibatkan Persamaan Garis Lurus</h2>
+    <p>Banyak situasi sehari-hari berubah secara linear terhadap waktu atau jumlah — misalnya biaya yang bertambah tetap setiap unit, atau tabungan yang bertambah tetap setiap bulan. Situasi seperti ini dapat dimodelkan dengan persamaan garis lurus.</p>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="ex-step">Tarif taksi terdiri atas biaya buka pintu Rp7.000 ditambah Rp3.500 setiap kilometer. Jika \(y\) menyatakan total biaya dan \(x\) menyatakan jarak (km), tentukan persamaannya, lalu hitung biaya untuk jarak 8 km!</div>
+      <div class="ex-step">Model: \(y = 3500x + 7000\)</div>
+      <div class="ex-step">Untuk \(x = 8\): \(y = 3500(8) + 7000 = 28000+7000 = 35000\)</div>
+      <div class="ex-step">Jadi, biaya untuk jarak 8 km adalah Rp35.000</div>
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal Tabungan</span>
+      <div class="ex-step">Ali menabung dengan saldo awal Rp50.000, lalu menambah Rp20.000 setiap minggu. Setelah berapa minggu saldonya mencapai Rp250.000?</div>
+      <div class="ex-step">Model: \(y = 20000x + 50000\), dicari \(x\) saat \(y = 250000\)</div>
+      <div class="ex-step">\(250000 = 20000x + 50000 \Rightarrow 200000 = 20000x \Rightarrow x = 10\)</div>
+      <div class="ex-step">Jadi, saldo Rp250.000 tercapai setelah 10 minggu</div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-title">Strategi</span>
+      Langkah umum: (1) identifikasi apa yang berubah tetap sebagai gradien \(m\), (2) identifikasi nilai awal sebagai \(c\), (3) susun model \(y=mx+c\), (4) substitusikan nilai yang diketahui untuk mencari yang ditanya.
+    </div>
+  </section>
+
+  <!-- ===== F. PGL PADA GEOMETRI ===== -->
+  <section class="materi" id="materi-f">
+    <div class="sec-label">Bagian F</div>
+    <h2 class="sec-title"><span>F</span>Menyelesaikan Masalah Persamaan Garis Lurus pada Geometri</h2>
+    <p>Persamaan garis lurus juga digunakan untuk menyelesaikan masalah geometris, misalnya menentukan titik potong dua garis atau luas daerah yang dibentuk oleh sebuah garis dengan sumbu koordinat.</p>
+
+    <div class="callout def">
+      <span class="callout-title">Titik Potong Dua Garis</span>
+      Titik potong dua garis dicari dengan menyelesaikan sistem persamaan linear dua variabel dari kedua persamaan garis tersebut secara serentak (substitusi atau eliminasi).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal — Titik Potong</span>
+      <div class="ex-step">Tentukan titik potong garis \(y = 2x - 1\) dan \(y = -x + 5\)!</div>
+      <div class="ex-step">Karena ruas kiri sama-sama \(y\): \(2x - 1 = -x + 5\)</div>
+      <div class="ex-step">\(3x = 6 \Rightarrow x = 2\), lalu \(y = 2(2)-1 = 3\)</div>
+      <div class="ex-step">Jadi, titik potongnya adalah (2, 3)</div>
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal — Luas Segitiga</span>
+      <div class="ex-step">Garis \(2x + y = 8\) memotong sumbu-X dan sumbu-Y. Tentukan luas segitiga yang dibentuk garis tersebut dengan kedua sumbu koordinat!</div>
+      <div class="ex-step">Potong sumbu-X (y=0): \(2x=8 \Rightarrow x=4\), titik (4,0)</div>
+      <div class="ex-step">Potong sumbu-Y (x=0): \(y=8\), titik (0,8)</div>
+      <div class="ex-step">Luas segitiga siku-siku: \(L = \dfrac{1}{2} \times 4 \times 8 = 16\) satuan luas</div>
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">🧮 Kalkulator Titik Potong Dua Garis</div>
+      <p style="font-size:.78rem;color:var(--cream-dim);margin-bottom:10px;">Bentuk: a₁x + b₁y = c₁ dan a₂x + b₂y = c₂</p>
+      <div class="calc-row">
+        <div class="calc-field"><label>a₁</label><input type="number" id="fF_a1" placeholder="2"></div>
+        <div class="calc-field"><label>b₁</label><input type="number" id="fF_b1" placeholder="1"></div>
+        <div class="calc-field"><label>c₁</label><input type="number" id="fF_c1" placeholder="8"></div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-field"><label>a₂</label><input type="number" id="fF_a2" placeholder="1"></div>
+        <div class="calc-field"><label>b₂</label><input type="number" id="fF_b2" placeholder="1"></div>
+        <div class="calc-field"><label>c₂</label><input type="number" id="fF_c2" placeholder="5"></div>
+      </div>
+      <button class="calc-btn" onclick="hitungTitikPotong()">Hitung Titik Potong</button>
+      <div class="calc-result" id="fF_result">Hasil akan tampil di sini…</div>
+    </div>
+  </section>
+
+  <!-- ===== LATIHAN SOAL ===== -->
+  <section id="latihan">
+    <div class="sec-label">Latihan</div>
+    <h2 class="sec-title"><span>📝</span>Latihan Soal</h2>
+    <p style="color:var(--text-mid); margin-bottom:8px;">25 soal — 5 tipe soal, masing-masing 5 butir. Kerjakan setiap tipe, lalu lihat analisis hasil belajarmu di akhir.</p>
+
+    <div class="type-tabs">
+      <button class="type-tab active" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda</button>
+      <button class="type-tab" data-type="is" onclick="showType('is')">2. Isian Singkat</button>
+      <button class="type-tab" data-type="pk" onclick="showType('pk')">3. PG Kompleks</button>
+      <button class="type-tab" data-type="bs" onclick="showType('bs')">4. Benar/Salah</button>
+      <button class="type-tab" data-type="jd" onclick="showType('jd')">5. Menjodohkan</button>
+    </div>
+
+    <div class="score-strip" id="scoreStrip"></div>
+
+    <div id="quiz-area"></div>
+
+    <div class="analysis-btn-wrap">
+      <button id="analysisBtn" onclick="showAnalysis()">📊 Lihat Analisis Hasil Belajar</button>
+    </div>
+
+    <div id="analysisPanel">
+      <h3 style="color:var(--gold-soft);">Analisis Hasil Belajar</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lbl">Total Soal</div></div>
+        <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lbl">Benar</div></div>
+        <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lbl">Salah</div></div>
+        <div class="stat-box"><div class="num" id="statPersen">0%</div><div class="lbl">Nilai</div></div>
+      </div>
+      <div id="barChart"></div>
+      <div class="grade-box">
+        <div class="grade-letter" id="gradeLetter">-</div>
+        <div id="gradeMsg" style="margin-top:6px; color:var(--cream-dim);"></div>
+      </div>
+      <button id="resetBtn" onclick="resetAll()">🔄 Ulangi Latihan</button>
+    </div>
+  </section>
+
+  <footer>
+    Persamaan Garis Lurus — Ebook Interaktif Matematika Kelas 8 · Kurikulum Merdeka<br>
+    Dibuat oleh Suminto with Claude
+  </footer>
+</main>
+
+<script>
+/* ============ SIDEBAR TOGGLE (mobile) ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+document.querySelectorAll('#sidebar .nav-link, #sidebar .nav-sub-link').forEach(function(el){
+  el.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ SCROLLSPY + PROGRESS BAR ============ */
+const sectionIds = ['materi-a','materi-b','materi-c','materi-d','materi-e','materi-f','latihan'];
+function updateScrollspy(){
+  let activeId = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top <= 140){ activeId = id; }
+  });
+  document.querySelectorAll('#sidebar .nav-link').forEach(function(link){
+    link.classList.toggle('active', link.dataset.target === activeId);
+  });
+  const scrollableH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = scrollableH > 0 ? Math.min(100, Math.max(0, (window.scrollY/scrollableH)*100)) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = Math.round(pct) + '%';
+}
+window.addEventListener('scroll', updateScrollspy);
+window.addEventListener('resize', updateScrollspy);
+
+/* ============ KALKULATOR MATERI ============ */
+function fmtNum(n){
+  if(Object.is(n,-0)) n = 0;
+  return (Math.round(n*1000)/1000).toString();
+}
+function hitungFormulaFungsi(){
+  const x1=parseFloat(document.getElementById('fA_x1').value)||0;
+  const y1=parseFloat(document.getElementById('fA_y1').value)||0;
+  const x2=parseFloat(document.getElementById('fA_x2').value)||0;
+  const y2=parseFloat(document.getElementById('fA_y2').value)||0;
+  const el=document.getElementById('fA_result');
+  if(x2-x1===0){ el.innerHTML='⚠️ x₁ dan x₂ tidak boleh sama (garis vertikal, tidak memiliki formula fungsi).'; return; }
+  const a=(y2-y1)/(x2-x1);
+  const b=y1-a*x1;
+  el.innerHTML='Gradien a = '+fmtNum(a)+'<br>Konstanta b = '+fmtNum(b)+'<br><b>f(x) = '+fmtNum(a)+'x '+(b>=0?'+ '+fmtNum(b):'- '+fmtNum(Math.abs(b)))+'</b>';
+}
+function hitungPersamaanGaris(){
+  const x1=parseFloat(document.getElementById('fB_x1').value)||0;
+  const y1=parseFloat(document.getElementById('fB_y1').value)||0;
+  const x2=parseFloat(document.getElementById('fB_x2').value)||0;
+  const y2=parseFloat(document.getElementById('fB_y2').value)||0;
+  const el=document.getElementById('fB_result');
+  if(x2-x1===0){ el.innerHTML='⚠️ Garis vertikal: persamaannya x = '+fmtNum(x1); return; }
+  const m=(y2-y1)/(x2-x1);
+  const c=y1-m*x1;
+  el.innerHTML='Gradien m = '+fmtNum(m)+'<br><b>y = '+fmtNum(m)+'x '+(c>=0?'+ '+fmtNum(c):'- '+fmtNum(Math.abs(c)))+'</b>';
+}
+function hitungGradien(){
+  const x1=parseFloat(document.getElementById('fC_x1').value)||0;
+  const y1=parseFloat(document.getElementById('fC_y1').value)||0;
+  const x2=parseFloat(document.getElementById('fC_x2').value)||0;
+  const y2=parseFloat(document.getElementById('fC_y2').value)||0;
+  const el=document.getElementById('fC_result');
+  if(x2-x1===0){ el.innerHTML='⚠️ Garis vertikal — gradien tidak terdefinisi.'; return; }
+  const m=(y2-y1)/(x2-x1);
+  el.innerHTML='<b>Gradien m = '+fmtNum(m)+'</b>';
+}
+function cekHubunganGaris(){
+  const m1=parseFloat(document.getElementById('fD_m1').value);
+  const m2=parseFloat(document.getElementById('fD_m2').value);
+  const el=document.getElementById('fD_result');
+  if(isNaN(m1)||isNaN(m2)){ el.innerHTML='⚠️ Isi kedua gradien terlebih dahulu.'; return; }
+  const hasilKali=m1*m2;
+  if(Math.abs(m1-m2)<1e-9){ el.innerHTML='<b>Kedua garis SEJAJAR</b> (m₁ = m₂ = '+fmtNum(m1)+')'; }
+  else if(Math.abs(hasilKali+1)<1e-9){ el.innerHTML='<b>Kedua garis SALING TEGAK LURUS</b> (m₁ × m₂ = '+fmtNum(hasilKali)+')'; }
+  else { el.innerHTML='Kedua garis <b>berpotongan biasa</b> (tidak sejajar maupun tegak lurus). Hasil kali gradien = '+fmtNum(hasilKali); }
+}
+function hitungTitikPotong(){
+  const a1=parseFloat(document.getElementById('fF_a1').value)||0;
+  const b1=parseFloat(document.getElementById('fF_b1').value)||0;
+  const c1=parseFloat(document.getElementById('fF_c1').value)||0;
+  const a2=parseFloat(document.getElementById('fF_a2').value)||0;
+  const b2=parseFloat(document.getElementById('fF_b2').value)||0;
+  const c2=parseFloat(document.getElementById('fF_c2').value)||0;
+  const el=document.getElementById('fF_result');
+  const det=a1*b2-a2*b1;
+  if(Math.abs(det)<1e-9){ el.innerHTML='⚠️ Kedua garis sejajar atau berimpit — tidak ada satu titik potong tunggal.'; return; }
+  const x=(c1*b2-c2*b1)/det;
+  const y=(a1*c2-a2*c1)/det;
+  el.innerHTML='<b>Titik potong: ('+fmtNum(x)+', '+fmtNum(y)+')</b>';
+}
+
+/* ============ PLOT GARIS PADA BIDANG CARTESIUS ============ */
+function computeRangeForLine(vals){
+  let maxV = 10;
+  vals.forEach(function(v){ if(isFinite(v)){ maxV = Math.max(maxV, Math.abs(v)); } });
+  return Math.ceil((maxV*1.35)/5)*5;
+}
+function clipLineToBox(m, c, R){
+  const eps = 1e-6;
+  function within(v){ return v >= -R-eps && v <= R+eps; }
+  let cands = [];
+  const yAtXn = m*(-R)+c;
+  if(within(yAtXn)) cands.push({x:-R, y:yAtXn});
+  const yAtXp = m*R+c;
+  if(within(yAtXp)) cands.push({x:R, y:yAtXp});
+  if(Math.abs(m) > eps){
+    const xAtYn = (-R-c)/m;
+    if(within(xAtYn)) cands.push({x:xAtYn, y:-R});
+    const xAtYp = (R-c)/m;
+    if(within(xAtYp)) cands.push({x:xAtYp, y:R});
+  }
+  const uniq = [];
+  cands.forEach(function(p){
+    if(!uniq.some(function(u){ return Math.abs(u.x-p.x)<1e-4 && Math.abs(u.y-p.y)<1e-4; })) uniq.push(p);
+  });
+  if(uniq.length < 2) return null;
+  let best=null, bestDist=-1;
+  for(let i=0;i<uniq.length;i++){
+    for(let j=i+1;j<uniq.length;j++){
+      const d = Math.hypot(uniq[i].x-uniq[j].x, uniq[i].y-uniq[j].y);
+      if(d>bestDist){ bestDist=d; best=[uniq[i],uniq[j]]; }
+    }
+  }
+  return best;
+}
+function svgCartesianPlot(R, segPoints, markPoints){
+  const W=560, H=560, pad=48;
+  const size = W - 2*pad;
+  const scale = size/(2*R);
+  const originX = W/2, originY = H/2;
+  function px(x){ return originX + x*scale; }
+  function py(y){ return originY - y*scale; }
+
+  let svg = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">';
+  svg += '<text x="'+(originX+size*0.28)+'" y="'+(originY-size*0.26)+'" font-family="JetBrains Mono, monospace" font-size="15" fill="#c9b98a" text-anchor="middle">I</text>';
+  svg += '<text x="'+(originX-size*0.28)+'" y="'+(originY-size*0.26)+'" font-family="JetBrains Mono, monospace" font-size="15" fill="#c9b98a" text-anchor="middle">II</text>';
+  svg += '<text x="'+(originX-size*0.28)+'" y="'+(originY+size*0.30)+'" font-family="JetBrains Mono, monospace" font-size="15" fill="#c9b98a" text-anchor="middle">III</text>';
+  svg += '<text x="'+(originX+size*0.28)+'" y="'+(originY+size*0.30)+'" font-family="JetBrains Mono, monospace" font-size="15" fill="#c9b98a" text-anchor="middle">IV</text>';
+  svg += '<line x1="'+pad+'" y1="'+originY+'" x2="'+(W-pad)+'" y2="'+originY+'" stroke="#9c9270" stroke-width="1.4"/>';
+  svg += '<line x1="'+originX+'" y1="'+pad+'" x2="'+originX+'" y2="'+(H-pad)+'" stroke="#9c9270" stroke-width="1.4"/>';
+  svg += '<text x="'+(W-pad+10)+'" y="'+(originY+4)+'" font-family="JetBrains Mono, monospace" font-size="13" fill="#7d7454">x</text>';
+  svg += '<text x="'+(originX-16)+'" y="'+(pad-8)+'" font-family="JetBrains Mono, monospace" font-size="13" fill="#7d7454">y</text>';
+
+  if(segPoints){
+    svg += '<line x1="'+px(segPoints[0].x)+'" y1="'+py(segPoints[0].y)+'" x2="'+px(segPoints[1].x)+'" y2="'+py(segPoints[1].y)+'" stroke="#2a3358" stroke-width="2.6" stroke-linecap="round"/>';
+  }
+  (markPoints||[]).forEach(function(p){
+    svg += '<circle cx="'+px(p.x)+'" cy="'+py(p.y)+'" r="5.5" fill="#c1584f"/>';
+    svg += '<text x="'+(px(p.x)+10)+'" y="'+(py(p.y)-9)+'" font-family="JetBrains Mono, monospace" font-size="12.5" fill="#c1584f">('+fmtNum(p.x)+', '+fmtNum(p.y)+')</text>';
+  });
+  svg += '</svg>';
+  return svg;
+}
+function plotGarisMC(){
+  const m = parseFloat(document.getElementById('plotB1_m').value);
+  const c = parseFloat(document.getElementById('plotB1_c').value);
+  const canvasEl = document.getElementById('plotB1_canvas');
+  const resultEl = document.getElementById('plotB1_result');
+  if(isNaN(m) || isNaN(c)){ resultEl.textContent='⚠️ Isi nilai m dan c terlebih dahulu.'; canvasEl.innerHTML=''; return; }
+  const R = computeRangeForLine([c]);
+  const seg = clipLineToBox(m, c, R);
+  canvasEl.innerHTML = svgCartesianPlot(R, seg, []);
+  resultEl.textContent = 'Persamaan garis: y = '+fmtNum(m)+'x '+(c>=0?'+ '+fmtNum(c):'- '+fmtNum(Math.abs(c)));
+}
+function plotGarisTitikGradien(){
+  const m = parseFloat(document.getElementById('plotB2_m').value);
+  const x1 = parseFloat(document.getElementById('plotB2_x1').value);
+  const y1 = parseFloat(document.getElementById('plotB2_y1').value);
+  const canvasEl = document.getElementById('plotB2_canvas');
+  const resultEl = document.getElementById('plotB2_result');
+  if(isNaN(m) || isNaN(x1) || isNaN(y1)){ resultEl.textContent='⚠️ Isi nilai m, x₁, dan y₁ terlebih dahulu.'; canvasEl.innerHTML=''; return; }
+  const c = y1 - m*x1;
+  const R = computeRangeForLine([c, x1, y1]);
+  const seg = clipLineToBox(m, c, R);
+  canvasEl.innerHTML = svgCartesianPlot(R, seg, [{x:x1, y:y1}]);
+  resultEl.textContent = 'Persamaan garis: y = '+fmtNum(m)+'x '+(c>=0?'+ '+fmtNum(c):'- '+fmtNum(Math.abs(c)))+' — melalui titik ('+fmtNum(x1)+', '+fmtNum(y1)+')';
+}
+function plotGarisDuaTitik(){
+  const x1 = parseFloat(document.getElementById('plotB3_x1').value);
+  const y1 = parseFloat(document.getElementById('plotB3_y1').value);
+  const x2 = parseFloat(document.getElementById('plotB3_x2').value);
+  const y2 = parseFloat(document.getElementById('plotB3_y2').value);
+  const canvasEl = document.getElementById('plotB3_canvas');
+  const resultEl = document.getElementById('plotB3_result');
+  if(isNaN(x1) || isNaN(y1) || isNaN(x2) || isNaN(y2)){ resultEl.textContent='⚠️ Isi koordinat kedua titik terlebih dahulu.'; canvasEl.innerHTML=''; return; }
+  if(Math.abs(x2-x1) < 1e-9){
+    if(Math.abs(y2-y1) < 1e-9){ resultEl.textContent='⚠️ Kedua titik sama — tidak dapat membentuk garis.'; canvasEl.innerHTML=''; return; }
+    const R = computeRangeForLine([x1, y1, y2]);
+    canvasEl.innerHTML = svgCartesianPlot(R, [{x:x1,y:-R},{x:x1,y:R}], [{x:x1,y:y1},{x:x2,y:y2}]);
+    resultEl.textContent = 'Persamaan garis: x = '+fmtNum(x1)+' (garis vertikal)';
+    return;
+  }
+  const m = (y2-y1)/(x2-x1);
+  const c = y1 - m*x1;
+  const R = computeRangeForLine([x1, y1, x2, y2, c]);
+  const seg = clipLineToBox(m, c, R);
+  canvasEl.innerHTML = svgCartesianPlot(R, seg, [{x:x1,y:y1},{x:x2,y:y2}]);
+  resultEl.textContent = 'Persamaan garis: y = '+fmtNum(m)+'x '+(c>=0?'+ '+fmtNum(c):'- '+fmtNum(Math.abs(c)));
+}
+
+/* ============ BANK SOAL LATIHAN ============ */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Gradien garis \\(y = 3x - 5\\) adalah…',
+      options:['3','-5','-3','5'], answer:0,
+      explanation:'✅ Pada bentuk \\(y = mx + c\\), gradiennya adalah nilai \\(m\\), yaitu koefisien dari \\(x\\). Jadi gradiennya adalah 3.' },
+    { id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Garis \\(2x + y = 6\\) memotong sumbu-Y di titik…',
+      options:['(0, 6)','(3, 0)','(0, 3)','(6, 0)'], answer:0,
+      explanation:'✅ Titik potong sumbu-Y terjadi saat \\(x=0\\): \\(2(0)+y=6 \\Rightarrow y=6\\). Jadi titiknya (0, 6).' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Gradien garis yang melalui titik (2, 3) dan (5, 9) adalah…',
+      options:['2','3','1/2','6'], answer:0,
+      explanation:'✅ \\(m = \\dfrac{9-3}{5-2} = \\dfrac{6}{3} = 2\\).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Persamaan garis yang bergradien 2 dan melalui titik (0, -3) adalah…',
+      options:['y = 2x - 3','y = 2x + 3','y = -2x - 3','y = 3x - 2'], answer:0,
+      explanation:'✅ Karena melalui (0,-3), maka \\(c=-3\\). Dengan \\(m=2\\), persamaannya \\(y = 2x - 3\\).' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Garis yang sejajar dengan garis \\(y = 4x + 1\\) adalah…',
+      options:['y = 4x - 7','y = -4x + 1','y = \\(\\frac{1}{4}\\)x + 1','y = x + 4'], answer:0,
+      explanation:'✅ Dua garis sejajar memiliki gradien sama. Garis \\(y=4x-7\\) juga bergradien 4, sama seperti garis awal.' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'sedang', num:1,
+      text:'Tentukan gradien garis \\(3x - 2y = 8\\)! (tulis dalam bentuk pecahan, contoh: 3/2)',
+      answer:'3/2', altAnswers:['1.5','1,5','3/2'],
+      explanation:'✅ Dari bentuk \\(ax+by+c=0\\) dengan \\(a=3, b=-2\\): \\(m = -\\dfrac{a}{b} = -\\dfrac{3}{-2} = \\dfrac{3}{2}\\).' },
+    { id:'is2', type:'is', level:'sedang', num:2,
+      text:'Jika \\(f(0) = 4\\) dan \\(f(2) = 10\\), tentukan formula fungsi \\(f(x)\\)! (format: ax+b, contoh: 3x+4)',
+      answer:'3x+4', altAnswers:['3x + 4','f(x)=3x+4'],
+      explanation:'✅ \\(a = \\dfrac{10-4}{2-0}=3\\); dari \\(f(0)=4\\) diperoleh \\(b=4\\). Jadi \\(f(x)=3x+4\\).' },
+    { id:'is3', type:'is', level:'mudah', num:3,
+      text:'Dua garis dikatakan sejajar jika kedua gradiennya …',
+      answer:'sama', altAnswers:['sama besar','sama nilainya','identik'],
+      explanation:'✅ Syarat dua garis sejajar adalah \\(m_1 = m_2\\), yaitu gradiennya sama.' },
+    { id:'is4', type:'is', level:'sukar', num:4,
+      text:'Gradien garis yang tegak lurus dengan garis bergradien 2/3 adalah… (format pecahan, contoh: -3/2)',
+      answer:'-3/2', altAnswers:['-1.5','-1,5'],
+      explanation:'✅ Syarat tegak lurus: \\(m_1 \\times m_2 = -1\\). Maka \\(m_2 = -1 \\div \\dfrac{2}{3} = -\\dfrac{3}{2}\\).' },
+    { id:'is5', type:'is', level:'sedang', num:5,
+      text:'Titik potong garis \\(y = 2x + 1\\) dengan sumbu-X memiliki absis (nilai x) sebesar…',
+      answer:'-1/2', altAnswers:['-0.5','-0,5'],
+      explanation:'✅ Saat \\(y=0\\): \\(0=2x+1 \\Rightarrow x = -\\dfrac{1}{2}\\).' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1,
+      text:'Manakah pernyataan berikut yang BENAR tentang garis \\(y = -2x + 5\\)? (pilih semua yang benar)',
+      options:['Gradiennya -2','Memotong sumbu-Y di titik (0, 5)','Garis tersebut naik dari kiri ke kanan','Sejajar dengan garis y = -2x - 3'],
+      answers:[0,1,3],
+      explanation:'✅ Gradien -2 (benar), memotong sumbu-Y di (0,5) (benar), sejajar dengan y=-2x-3 karena gradien sama (benar). Karena gradien negatif, garis justru TURUN dari kiri ke kanan, bukan naik.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Garis manakah yang SEJAJAR dengan garis \\(2x - y = 4\\)? (pilih semua yang benar)',
+      options:['y = 2x + 7','y = -2x + 1','4x - 2y = 10','y = x + 2'],
+      answers:[0,2],
+      explanation:'✅ Garis \\(2x-y=4\\) memiliki gradien 2. Opsi A (\\(m=2\\)) dan opsi C (disederhanakan menjadi \\(y=2x-5\\), \\(m=2\\)) sejajar. Opsi B bergradien -2 dan opsi D bergradien 1, keduanya tidak sejajar.' },
+    { id:'pk3', type:'pk', level:'sukar', num:3,
+      text:'Pilih pasangan gradien yang menunjukkan DUA GARIS SALING TEGAK LURUS!',
+      options:['m₁ = 2, m₂ = -1/2','m₁ = 3, m₂ = 3','m₁ = -4, m₂ = 1/4','m₁ = 1, m₂ = 1'],
+      answers:[0,2],
+      explanation:'✅ Syarat tegak lurus \\(m_1 \\times m_2 = -1\\). Pasangan A: \\(2 \\times (-\\frac{1}{2}) = -1\\) ✓. Pasangan C: \\(-4 \\times \\frac{1}{4} = -1\\) ✓. Pasangan B dan D justru menunjukkan garis sejajar.' },
+    { id:'pk4', type:'pk', level:'mudah', num:4,
+      text:'Manakah cara berikut yang BENAR untuk menentukan gradien garis dari dua titik \\((x_1,y_1)\\) dan \\((x_2,y_2)\\)?',
+      options:['m = (y₂-y₁)/(x₂-x₁)','m = (x₂-x₁)/(y₂-y₁)','m = (y₂+y₁)/(x₂+x₁)','m = Δy/Δx'],
+      answers:[0,3],
+      explanation:'✅ Rumus gradien yang benar adalah selisih y dibagi selisih x, yaitu \\(m=\\dfrac{y_2-y_1}{x_2-x_1}\\), yang juga bisa ditulis sebagai \\(\\dfrac{\\Delta y}{\\Delta x}\\).' },
+    { id:'pk5', type:'pk', level:'sukar', num:5,
+      text:'Diketahui garis \\(ax + by + c = 0\\) dengan \\(b \\neq 0\\). Manakah pernyataan yang TEPAT?',
+      options:['Gradiennya m = -a/b','Jika a = 0 maka garis horizontal','Jika b = 0 maka garis horizontal','Titik potong sumbu-Y adalah (0, -c/b)'],
+      answers:[0,1,3],
+      explanation:'✅ Gradien \\(m=-a/b\\) (benar). Jika \\(a=0\\), persamaan menjadi \\(by+c=0\\) yaitu garis horizontal (benar). Titik potong sumbu-Y adalah \\((0,-c/b)\\) (benar). Namun jika \\(b=0\\), garis menjadi VERTIKAL, bukan horizontal — pernyataan C salah.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'sedang', num:1,
+      text:'Gradien garis vertikal (misalnya \\(x = 5\\)) adalah 0.',
+      answer:false,
+      explanation:'❌ SALAH. Garis vertikal memiliki gradien yang TIDAK TERDEFINISI (bukan 0), karena perubahan nilai \\(x\\) selalu nol sehingga pembagi pada rumus gradien menjadi nol.' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Garis \\(y = 5x - 2\\) dan \\(y = 5x + 7\\) merupakan dua garis yang sejajar.',
+      answer:true,
+      explanation:'✅ BENAR. Kedua garis memiliki gradien yang sama, yaitu 5, sehingga keduanya sejajar meskipun konstantanya berbeda.' },
+    { id:'bs3', type:'bs', level:'mudah', num:3,
+      text:'Pada bentuk \\(y = mx + c\\), nilai \\(c\\) menyatakan gradien garis.',
+      answer:false,
+      explanation:'❌ SALAH. Nilai \\(c\\) menyatakan titik potong garis dengan sumbu-Y, bukan gradien. Gradien garis ditunjukkan oleh nilai \\(m\\).' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Dua garis dikatakan saling tegak lurus jika hasil kali gradiennya sama dengan -1.',
+      answer:true,
+      explanation:'✅ BENAR. Syarat dua garis tegak lurus adalah \\(m_1 \\times m_2 = -1\\).' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Garis yang melalui titik asal (0, 0) dengan gradien \\(m\\) memiliki persamaan \\(y = mx\\).',
+      answer:true,
+      explanation:'✅ BENAR. Dengan \\((x_1,y_1)=(0,0)\\), persamaan \\(y-y_1=m(x-x_1)\\) menjadi \\(y-0=m(x-0)\\), yaitu \\(y=mx\\) (tanpa konstanta \\(c\\)).' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'sedang', num:1,
+      left:'Gradien garis 2x + 3y = 6',
+      answer:'-2/3', options:['-2/3','2/3','3/2','-3/2'],
+      explanation:'✅ \\(m = -\\dfrac{a}{b} = -\\dfrac{2}{3}\\).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2,
+      left:'Persamaan garis gradien 4 melalui (0, 2)',
+      answer:'y=4x+2', options:['y=4x+2','y=4x-2','y=2x+4','y=-4x+2'],
+      explanation:'✅ Dengan \\(m=4\\) dan melalui (0,2) maka \\(c=2\\), sehingga persamaannya \\(y=4x+2\\).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Gradien garis melalui (1, 2) dan (4, 11)',
+      answer:'3', options:['3','9','1/3','-3'],
+      explanation:'✅ \\(m=\\dfrac{11-2}{4-1}=\\dfrac{9}{3}=3\\).' },
+    { id:'jd4', type:'jd', level:'mudah', num:4,
+      left:'Syarat dua garis sejajar',
+      answer:'m1 = m2', options:['m1 = m2','m1 × m2 = -1','m1 + m2 = 0','m1 = -m2'],
+      explanation:'✅ Dua garis sejajar jika gradiennya sama besar, \\(m_1=m_2\\).' },
+    { id:'jd5', type:'jd', level:'sedang', num:5,
+      left:'Titik potong garis y = x + 3 dengan sumbu-X',
+      answer:'(-3, 0)', options:['(-3, 0)','(0, 3)','(3, 0)','(0, -3)'],
+      explanation:'✅ Saat \\(y=0\\): \\(0=x+3 \\Rightarrow x=-3\\). Titiknya (-3, 0).' }
+  ]
+};
+
+const typeLabels = {pg:'Pilihan Ganda', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan'};
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.type-tab').forEach(function(btn){
+    btn.classList.toggle('active', btn.dataset.type===type);
+  });
+  document.querySelectorAll('.nav-sub-link').forEach(function(a){
+    a.classList.toggle('active', a.dataset.type===type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  const area = document.getElementById('quiz-area');
+  let html = '';
+  allQuestions[type].forEach(function(q){
+    html += renderCard(q);
+  });
+  area.innerHTML = html;
+  typesetMath();
+}
+
+function renderCard(q){
+  const savedState = state.answers[q.id];
+  const isAnswered = !!savedState;
+  const cardClass = isAnswered ? (savedState.correct ? 'correct' : 'wrong') : '';
+  let body = '';
+  if(q.type==='pg') body = renderPG(q, savedState);
+  else if(q.type==='is') body = renderIS(q, savedState);
+  else if(q.type==='pk') body = renderPK(q, savedState);
+  else if(q.type==='bs') body = renderBS(q, savedState);
+  else if(q.type==='jd') body = renderJD(q, savedState);
+
+  return '<div class="q-card '+cardClass+'" id="card-'+q.id+'">' +
+    '<div class="q-top"><span class="q-num">'+q.num+'</span><span class="level-badge '+q.level+'">'+q.level+'</span></div>' +
+    '<div class="q-text">'+q.text+'</div>' +
+    body +
+    '<div class="explanation '+(isAnswered?'show':'')+'" id="exp-'+q.id+'">'+(isAnswered?q.explanation:'')+'</div>' +
+  '</div>';
+}
+
+function renderPG(q, saved){
+  let html = '';
+  q.options.forEach(function(opt, idx){
+    let cls = 'opt-btn';
+    let disabled = '';
+    if(saved){
+      disabled = 'disabled';
+      if(idx===saved.chosen && saved.correct) cls += ' selected-correct';
+      else if(idx===saved.chosen && !saved.correct) cls += ' selected-wrong';
+      else if(idx===q.answer) cls += ' reveal-correct';
+    }
+    html += '<button class="'+cls+'" '+disabled+' onclick="answerPG(\''+q.id+'\','+idx+')">'+String.fromCharCode(65+idx)+'. '+opt+'</button>';
+  });
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){return x.id===qid;});
+  const correct = idx===q.answer;
+  state.answers[qid] = {chosen:idx, correct:correct};
+  refreshCard(q, correct);
+}
+
+function renderIS(q, saved){
+  const val = saved ? saved.chosen : '';
+  const disabled = saved ? 'disabled' : '';
+  return '<div class="is-row">' +
+    '<input type="text" id="input-'+q.id+'" value="'+(val||'')+'" '+disabled+' placeholder="Ketik jawabanmu…" onkeydown="if(event.key===\'Enter\')submitIS(\''+q.id+'\')">' +
+    '<button '+disabled+' onclick="submitIS(\''+q.id+'\')">Kirim Jawaban</button>' +
+  '</div>';
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){return x.id===qid;});
+  const input = document.getElementById('input-'+qid);
+  if(!input || input.disabled) return;
+  const raw = input.value.trim().toLowerCase();
+  if(raw===''){ return; }
+  const validAnswers = [q.answer].concat(q.altAnswers||[]).map(function(a){return a.toString().trim().toLowerCase();});
+  const correct = validAnswers.some(function(a){ return a===raw || raw.includes(a) || a.includes(raw); });
+  state.answers[qid] = {chosen:input.value.trim(), correct:correct};
+  refreshCard(q, correct);
+}
+
+function renderPK(q, saved){
+  let html = '';
+  q.options.forEach(function(opt, idx){
+    let cls = 'opt-btn';
+    let disabled = '';
+    if(saved){
+      disabled = 'disabled';
+      const isChosen = saved.chosen.indexOf(idx) !== -1;
+      const isCorrectOpt = q.answers.indexOf(idx) !== -1;
+      if(isChosen && isCorrectOpt) cls += ' selected-correct';
+      else if(isChosen && !isCorrectOpt) cls += ' selected-wrong';
+      else if(!isChosen && isCorrectOpt) cls += ' reveal-correct';
+    } else if(pkTemp[q.id] && pkTemp[q.id].indexOf(idx)!==-1){
+      cls += ' pk-marked';
+    }
+    html += '<button class="'+cls+'" '+disabled+' onclick="togglePK(\''+q.id+'\','+idx+')">'+String.fromCharCode(65+idx)+'. '+opt+'</button>';
+  });
+  if(!saved){
+    html += '<button class="calc-btn" style="margin-top:6px;" onclick="submitPK(\''+q.id+'\')">Konfirmasi Jawaban</button>';
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const pos = pkTemp[qid].indexOf(idx);
+  if(pos===-1) pkTemp[qid].push(idx); else pkTemp[qid].splice(pos,1);
+  const q = allQuestions.pk.find(function(x){return x.id===qid;});
+  document.getElementById('card-'+qid).outerHTML = renderCard(q);
+  typesetMath();
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){return x.id===qid;});
+  const chosen = (pkTemp[qid]||[]).slice().sort();
+  const correctSet = q.answers.slice().sort();
+  const correct = chosen.length===correctSet.length && chosen.every(function(v,i){return v===correctSet[i];});
+  state.answers[qid] = {chosen:chosen, correct:correct};
+  refreshCard(q, correct);
+}
+
+function renderBS(q, saved){
+  let clsT='bs-btn', clsF='bs-btn', disabled='';
+  if(saved){
+    disabled='disabled';
+    if(saved.chosen===true) clsT += saved.correct ? ' selected-correct' : ' selected-wrong';
+    if(saved.chosen===false) clsF += saved.correct ? ' selected-correct' : ' selected-wrong';
+    if(!saved.correct){ if(q.answer===true) clsT+=' selected-correct'; else clsF+=' selected-correct'; }
+  }
+  return '<div class="bs-row">' +
+    '<button class="'+clsT+'" '+disabled+' onclick="answerBS(\''+q.id+'\',true)">✅ BENAR</button>' +
+    '<button class="'+clsF+'" '+disabled+' onclick="answerBS(\''+q.id+'\',false)">❌ SALAH</button>' +
+  '</div>';
+}
+function answerBS(qid, val){
+  const q = allQuestions.bs.find(function(x){return x.id===qid;});
+  const correct = val===q.answer;
+  state.answers[qid] = {chosen:val, correct:correct};
+  refreshCard(q, correct);
+}
+
+function renderJD(q, saved){
+  const disabled = saved ? 'disabled' : '';
+  let optHtml = '<option value="">— pilih pasangan —</option>';
+  q.options.forEach(function(opt){
+    const sel = saved && saved.chosen===opt ? 'selected' : '';
+    optHtml += '<option value="'+opt+'" '+sel+'>'+opt+'</option>';
+  });
+  return '<div class="jd-row"><div class="jd-left">'+q.left+'</div>' +
+    '<select '+disabled+' onchange="answerJD(\''+q.id+'\', this.value)">'+optHtml+'</select></div>';
+}
+function answerJD(qid, val){
+  if(val==='') return;
+  const q = allQuestions.jd.find(function(x){return x.id===qid;});
+  const correct = val===q.answer;
+  state.answers[qid] = {chosen:val, correct:correct};
+  refreshCard(q, correct);
+}
+
+function refreshCard(q, correct){
+  const cardEl = document.getElementById('card-'+q.id);
+  if(cardEl) cardEl.outerHTML = renderCard(q);
+  const expEl = document.getElementById('exp-'+q.id);
+  if(expEl){ expEl.classList.add('show'); expEl.innerHTML = q.explanation; }
+  typesetMath();
+  updateScoreStrip();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let correctCount = 0, answeredCount = 0;
+    qs.forEach(function(q){
+      const a = state.answers[q.id];
+      if(a){ answeredCount++; if(a.correct) correctCount++; }
+    });
+    html += '<div class="score-pill">'+typeLabels[t]+': <b>'+correctCount+'/'+qs.length+'</b></div>';
+  });
+  strip.innerHTML = html;
+}
+
+function showAnalysis(){
+  let total=0, benar=0;
+  const perType = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let c=0;
+    qs.forEach(function(q){
+      total++;
+      const a = state.answers[q.id];
+      if(a && a.correct){ benar++; c++; }
+    });
+    perType[t] = {correct:c, total:qs.length};
+  });
+  const salah = total - benar;
+  const persen = total>0 ? Math.round((benar/total)*100) : 0;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  document.getElementById('statPersen').textContent = persen+'%';
+
+  let barHtml = '';
+  typeOrder.forEach(function(t){
+    const p = perType[t];
+    const pct = p.total>0 ? Math.round((p.correct/p.total)*100) : 0;
+    barHtml += '<div class="bar-row"><div class="bar-lbl">'+typeLabels[t]+'</div><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div><div style="font-family:\'JetBrains Mono\',monospace;font-size:.78rem;color:var(--cream-dim);width:50px;text-align:right;">'+p.correct+'/'+p.total+'</div></div>';
+  });
+  document.getElementById('barChart').innerHTML = barHtml;
+
+  let grade='E', msg='Semangat Belajar 📚';
+  if(persen>=90){ grade='A'; msg='Luar Biasa! 🏆'; }
+  else if(persen>=75){ grade='B'; msg='Bagus! ⭐'; }
+  else if(persen>=60){ grade='C'; msg='Cukup Baik 👍'; }
+  else if(persen>=40){ grade='D'; msg='Jangan Menyerah 💪'; }
+  document.getElementById('gradeLetter').textContent = grade;
+  document.getElementById('gradeMsg').textContent = msg;
+
+  document.getElementById('analysisPanel').classList.add('show');
+  document.getElementById('analysisPanel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollspy();
+  typesetMath();
+});
+</script>
+
+</body>
+</html>

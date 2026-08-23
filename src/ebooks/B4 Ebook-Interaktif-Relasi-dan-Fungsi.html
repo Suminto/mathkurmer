@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relasi dan Fungsi — Ebook Interaktif Matematika Kelas 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Serif 4', serif; color:var(--text-dark); background:var(--paper);}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--ink);}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+.layout{display:flex; min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  width:290px; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream); padding:26px 20px; z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink-border); border-radius:4px;}
+.brand{margin-bottom:22px;}
+.brand .label{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft); text-transform:uppercase;}
+.brand h1{font-size:22px; margin-top:6px; line-height:1.25; color:var(--cream);}
+.progress-wrap{background:var(--ink3); border-radius:20px; height:8px; margin:18px 0 22px; overflow:hidden; border:1px solid var(--ink-border);}
+#progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .4s;}
+.nav-group{margin-bottom:20px;}
+.nav-title{font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:2px; color:var(--cream-dim); text-transform:uppercase; margin-bottom:8px; padding-left:6px;}
+.nav-link{
+  display:flex; align-items:center; gap:8px; padding:9px 10px; border-radius:8px; color:var(--cream-dim);
+  text-decoration:none; font-size:14px; margin-bottom:2px; transition:.18s ease; border-left:3px solid transparent;
+}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left:3px solid var(--gold);}
+.nav-sub{padding-left:26px; font-size:13px;}
+.nav-badge{font-family:'JetBrains Mono', monospace; font-size:10px; background:var(--ink3); color:var(--gold-soft); border-radius:5px; padding:1px 6px; margin-right:4px;}
+#menuToggle{display:none;}
+
+/* CONTENT */
+#content{flex:1; min-width:0; background:var(--paper);}
+.section{padding:56px 64px; max-width:880px; margin:0 auto; border-bottom:1px dashed var(--paper-line);}
+.hero{padding:70px 64px 50px; max-width:880px; margin:0 auto;}
+.hero .label{font-family:'JetBrains Mono', monospace; letter-spacing:3px; color:var(--gold); font-size:12px; text-transform:uppercase;}
+.hero h1{font-size:46px; margin:14px 0 18px; line-height:1.15;}
+.hero p{font-size:17px; color:var(--text-mid); max-width:640px; line-height:1.7;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:26px;}
+.chip{background:var(--paper2); border:1px solid var(--paper-line); border-radius:20px; padding:7px 16px; font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--text-mid);}
+
+.section-label{font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:2px; color:var(--gold); text-transform:uppercase;}
+.section h2{font-size:32px; margin:8px 0 20px;}
+.section p{font-size:16.5px; line-height:1.8; margin-bottom:16px; color:var(--text-dark);}
+.section h3{font-size:20px; margin:26px 0 12px;}
+
+.callout{border-radius:10px; padding:18px 20px; margin:20px 0; border:1px solid; font-size:15.5px; line-height:1.7;}
+.callout .callout-title{font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; display:block; margin-bottom:6px; font-weight:700;}
+.callout.def{background:var(--def); border-color:var(--def-b);}
+.callout.def .callout-title{color:#4a7a3a;}
+.callout.note{background:var(--note); border-color:var(--note-b);}
+.callout.note .callout-title{color:#a66c1f;}
+.callout.warn{background:var(--warn); border-color:var(--warn-b);}
+.callout.warn .callout-title{color:#9c3a32;}
+
+.example-box{background:var(--paper2); border:1px solid var(--paper-line); border-left:4px solid var(--gold); border-radius:8px; padding:18px 22px; margin:20px 0;}
+.example-box .ex-title{font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; font-weight:700; margin-bottom:8px; display:block;}
+.example-box ol,.example-box ul{padding-left:22px; margin-top:6px;}
+.example-box li{margin-bottom:6px; line-height:1.6;}
+
+.calc-box{background:var(--ink2); color:var(--cream); border-radius:12px; padding:22px 24px; margin:22px 0; box-shadow:0 6px 20px rgba(20,26,46,.18);}
+.calc-box .calc-title{font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:1.5px; color:var(--gold-soft); text-transform:uppercase; margin-bottom:12px; display:block;}
+.calc-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px;}
+.calc-row label{font-size:13.5px; color:var(--cream-dim); display:flex; flex-direction:column; gap:4px;}
+.calc-row input,.calc-row select{
+  background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); padding:9px 10px; border-radius:7px;
+  font-family:'JetBrains Mono', monospace; font-size:14px; width:130px;
+}
+.calc-btn{
+  background:var(--gold); color:var(--ink); border:none; padding:10px 20px; border-radius:7px; font-weight:700;
+  font-family:'JetBrains Mono', monospace; cursor:pointer; font-size:13.5px; letter-spacing:.5px; transition:.18s;
+}
+.calc-btn:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:14px; background:var(--ink3); border-radius:8px; padding:14px 16px; font-size:15px; min-height:20px; border:1px solid var(--ink-border);}
+
+table.rf-table{border-collapse:collapse; width:100%; margin:18px 0; font-size:15px;}
+table.rf-table th,table.rf-table td{border:1px solid var(--paper-line); padding:10px 14px; text-align:left;}
+table.rf-table th{background:var(--paper2); font-family:'JetBrains Mono', monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:1px;}
+
+.cartesius-svg{background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:12px; margin:18px 0;}
+
+.plot-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px; padding:22px 24px; margin:22px 0;}
+.plot-title{font-family:'JetBrains Mono', monospace; font-size:14px; letter-spacing:.5px; color:var(--ink); font-weight:700; display:block; margin-bottom:14px;}
+.plot-input-row{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px;}
+.plot-input-row label{display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-mid); font-family:'JetBrains Mono', monospace;}
+.plot-input-row input{padding:10px 12px; border:1px solid var(--paper-line); border-radius:8px; font-family:'JetBrains Mono', monospace; font-size:14px; width:150px; background:#fff; color:var(--text-dark);}
+.plot-btn{background:var(--ink); color:var(--gold-soft);}
+.plot-btn:hover{background:var(--ink3); color:var(--gold-soft);}
+.plot-result-text{text-align:center; font-family:'JetBrains Mono', monospace; font-size:14.5px; margin-top:12px; color:var(--text-mid);}
+
+/* LATIHAN */
+.latihan-nav{display:flex; gap:10px; flex-wrap:wrap; margin:22px 0 30px;}
+.lt-btn{
+  background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid); padding:10px 18px; border-radius:22px;
+  font-family:'JetBrains Mono', monospace; font-size:13px; cursor:pointer; transition:.18s;
+}
+.lt-btn:hover{background:var(--gold-soft); color:var(--ink);}
+.lt-btn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px;}
+.score-item{background:var(--paper2); border:1px solid var(--paper-line); border-radius:8px; padding:8px 14px; font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--text-mid);}
+.score-item b{color:var(--ink);}
+
+.question-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:12px; padding:22px 24px; margin-bottom:18px;
+  animation: fadeUp .35s ease; box-shadow:0 3px 10px rgba(43,36,22,.05);
+}
+@keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+.q-num{width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:13px; flex-shrink:0;}
+.q-level{font-family:'JetBrains Mono', monospace; font-size:10.5px; padding:3px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:1px;}
+.lv-mudah{background:#dff0da; color:#3d7a30;}
+.lv-sedang{background:#fdf0df; color:#a66c1f;}
+.lv-sukar{background:#fbe1df; color:#a13a30;}
+.q-text{font-size:16px; line-height:1.7; margin-bottom:14px;}
+
+.opt-btn{
+  display:block; width:100%; text-align:left; background:var(--paper2); border:1px solid var(--paper-line);
+  padding:11px 16px; border-radius:8px; margin-bottom:8px; cursor:pointer; font-size:15px; font-family:'Source Serif 4', serif;
+  transition:.15s; color:var(--text-dark);
+}
+.opt-btn:hover{background:var(--gold-soft);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b); font-weight:600;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn.disabled{pointer-events:none; opacity:.75;}
+.opt-btn.pk-selected{border-color:var(--gold); background:var(--gold-soft);}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{flex:1; min-width:180px; padding:11px 14px; border:1px solid var(--paper-line); border-radius:8px; font-size:15px; font-family:'Source Serif 4', serif;}
+.pk-confirm{margin-top:10px;}
+
+.jd-row{display:flex; align-items:center; gap:14px; margin-bottom:12px; flex-wrap:wrap;}
+.jd-left{background:var(--paper2); border:1px solid var(--paper-line); padding:9px 14px; border-radius:8px; min-width:200px; font-size:15px;}
+.jd-row select{padding:9px 12px; border-radius:8px; border:1px solid var(--paper-line); font-size:14.5px; font-family:'Source Serif 4', serif; min-width:220px;}
+
+.explanation-box{margin-top:12px; padding:14px 16px; border-radius:8px; font-size:14.5px; line-height:1.65; display:none;}
+.explanation-box.show{display:block;}
+.explanation-box.ok{background:var(--correct); border:1px solid var(--correct-b);}
+.explanation-box.no{background:var(--wrong); border:1px solid var(--wrong-b);}
+
+.bs-btn-row{display:flex; gap:10px;}
+.bs-btn{flex:1; padding:11px; border-radius:8px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer; font-size:15px; font-weight:600; font-family:'Source Serif 4', serif;}
+.bs-btn:hover{background:var(--gold-soft);}
+
+#analysisPanel{display:none; margin-top:26px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:var(--ink2); color:var(--cream); border-radius:10px; padding:18px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono', monospace; font-size:28px; color:var(--gold-soft); font-weight:700;}
+.stat-box .lbl{font-size:12px; color:var(--cream-dim); margin-top:4px;}
+.bar-row{display:flex; align-items:center; gap:12px; margin-bottom:10px;}
+.bar-label{width:130px; font-size:13.5px; font-family:'JetBrains Mono', monospace;}
+.bar-track{flex:1; background:var(--paper2); border-radius:10px; height:16px; overflow:hidden; border:1px solid var(--paper-line);}
+.bar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{text-align:center; padding:26px; border-radius:12px; margin:20px 0; background:linear-gradient(135deg, var(--ink), var(--ink3)); color:var(--cream);}
+.grade-box .grade-letter{font-family:'Playfair Display'; font-size:50px; color:var(--gold-soft);}
+.reset-btn{background:var(--ink); color:var(--gold-soft); border:none; padding:12px 24px; border-radius:8px; font-family:'JetBrains Mono', monospace; cursor:pointer; font-size:13.5px;}
+
+footer{padding:40px 64px; text-align:center; color:var(--text-mid); font-size:13.5px; font-family:'JetBrains Mono', monospace; border-top:1px solid var(--paper-line);}
+
+@media(max-width:900px){
+  #sidebar{position:fixed; top:0; left:0; transform:translateX(-100%); transition:transform .25s ease; width:80%; max-width:300px;}
+  #sidebar.open{transform:translateX(0);}
+  #menuToggle{display:flex; position:fixed; top:14px; left:14px; z-index:60; background:var(--ink); color:var(--gold-soft); border:none; width:42px; height:42px; border-radius:8px; align-items:center; justify-content:center; font-size:20px; cursor:pointer;}
+  #overlay{display:none; position:fixed; inset:0; background:rgba(20,26,46,.5); z-index:40;}
+  #overlay.show{display:block;}
+  .section, .hero{padding:56px 22px 40px;}
+  .hero h1{font-size:32px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+  <nav id="sidebar">
+    <div class="brand">
+      <div class="label">Matematika · Kelas 8</div>
+      <h1>Relasi dan Fungsi</h1>
+    </div>
+    <div class="progress-wrap"><div id="progress-bar"></div></div>
+
+    <div class="nav-group">
+      <div class="nav-title">Materi</div>
+      <a class="nav-link" href="#cartesius"><span class="nav-badge">A</span> Koordinat Cartesius</a>
+      <a class="nav-link" href="#relasi"><span class="nav-badge">B</span> Relasi</a>
+      <a class="nav-link" href="#fungsi-definisi"><span class="nav-badge">C</span> Definisi Fungsi</a>
+      <a class="nav-link" href="#fungsi-mesin"><span class="nav-badge">D</span> Fungsi sebagai Mesin</a>
+      <a class="nav-link" href="#banyak-fungsi"><span class="nav-badge">E</span> Banyak Fungsi/Pemetaan</a>
+      <a class="nav-link" href="#korespondensi"><span class="nav-badge">F</span> Korespondensi Satu-Satu</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-title">Latihan Soal</div>
+      <a class="nav-link" href="#latihan">📝 Mulai Latihan</a>
+      <a class="nav-link nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda Biasa</a>
+      <a class="nav-link nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+      <a class="nav-link nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+      <a class="nav-link nav-sub" href="#latihan" onclick="showType('bs')">4. Benar/Salah</a>
+      <a class="nav-link nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+    </div>
+  </nav>
+
+  <main id="content">
+    <div class="hero">
+      <div class="label">Ebook Interaktif · Matematika</div>
+      <h1>Relasi dan Fungsi</h1>
+      <p>Kelas 8 SMP — Kurikulum Merdeka. Mulai dari titik-titik di bidang koordinat, memahami apa itu relasi, hingga menemukan makna fungsi sebagai "mesin" matematika yang mengubah setiap masukan menjadi satu keluaran yang pasti.</p>
+      <div class="chip-row">
+        <span class="chip">A · Koordinat Cartesius</span>
+        <span class="chip">B · Relasi</span>
+        <span class="chip">C · Definisi Fungsi</span>
+        <span class="chip">D · Fungsi sebagai Mesin</span>
+        <span class="chip">E · Banyak Fungsi/Pemetaan</span>
+        <span class="chip">F · Korespondensi Satu-Satu</span>
+        <span class="chip">25 Soal Latihan · 5 Tipe</span>
+      </div>
+    </div>
+
+    <!-- A. KOORDINAT CARTESIUS -->
+    <section class="section" id="cartesius">
+      <div class="section-label">Bagian A</div>
+      <h2>Koordinat Cartesius</h2>
+      <p>Bidang koordinat Cartesius adalah bidang datar yang dibentuk oleh dua garis bilangan yang saling tegak lurus: <b>sumbu-x</b> (mendatar) dan <b>sumbu-y</b> (tegak). Kedua sumbu berpotongan di satu titik yang disebut <b>titik pusat (origin)</b>, yaitu titik \(O(0, 0)\).</p>
+
+      <div class="callout def">
+        <span class="callout-title">Definisi</span>
+        Setiap titik pada bidang Cartesius dinyatakan sebagai pasangan berurutan \((x, y)\), dengan \(x\) disebut <b>absis</b> (jarak mendatar dari sumbu-y) dan \(y\) disebut <b>ordinat</b> (jarak tegak dari sumbu-x).
+      </div>
+
+      <p>Bidang Cartesius terbagi menjadi empat daerah yang disebut <b>kuadran</b>:</p>
+      <table class="rf-table">
+        <tr><th>Kuadran</th><th>Tanda \(x\)</th><th>Tanda \(y\)</th><th>Contoh Titik</th></tr>
+        <tr><td>I</td><td>positif (+)</td><td>positif (+)</td><td>\((3, 2)\)</td></tr>
+        <tr><td>II</td><td>negatif (−)</td><td>positif (+)</td><td>\((-4, 5)\)</td></tr>
+        <tr><td>III</td><td>negatif (−)</td><td>negatif (−)</td><td>\((-2, -3)\)</td></tr>
+        <tr><td>IV</td><td>positif (+)</td><td>negatif (−)</td><td>\((5, -1)\)</td></tr>
+      </table>
+
+      <div class="cartesius-svg">
+        <svg viewBox="0 0 300 300" width="100%" height="260" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="150" x2="290" y2="150" stroke="#5b5137" stroke-width="1.5"/>
+          <line x1="150" y1="10" x2="150" y2="290" stroke="#5b5137" stroke-width="1.5"/>
+          <text x="278" y="145" font-size="12" fill="#5b5137" font-family="JetBrains Mono">x</text>
+          <text x="156" y="22" font-size="12" fill="#5b5137" font-family="JetBrains Mono">y</text>
+          <text x="200" y="70" font-size="13" fill="#a66c1f" font-family="JetBrains Mono">Kuadran I</text>
+          <text x="45" y="70" font-size="13" fill="#a66c1f" font-family="JetBrains Mono">Kuadran II</text>
+          <text x="30" y="230" font-size="13" fill="#a66c1f" font-family="JetBrains Mono">Kuadran III</text>
+          <text x="195" y="230" font-size="13" fill="#a66c1f" font-family="JetBrains Mono">Kuadran IV</text>
+          <circle cx="210" cy="110" r="4" fill="#c1584f"/>
+          <text x="216" y="108" font-size="11" fill="#c1584f" font-family="JetBrains Mono">(3,2)</text>
+          <circle cx="150" cy="150" r="3" fill="#141a2e"/>
+          <text x="155" y="168" font-size="11" fill="#141a2e" font-family="JetBrains Mono">O(0,0)</text>
+        </svg>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-title">Contoh Soal</span>
+        <p>Tentukan kuadran dari titik \(P(-6, 4)\).</p>
+        <ol>
+          <li>Perhatikan tanda absis: \(x = -6\) (negatif)</li>
+          <li>Perhatikan tanda ordinat: \(y = 4\) (positif)</li>
+          <li>Kombinasi (negatif, positif) berada di <b>Kuadran II</b></li>
+        </ol>
+      </div>
+
+      <div class="calc-box">
+        <span class="calc-title">🧮 Kalkulator Penentu Kuadran</span>
+        <div class="calc-row">
+          <label>Absis (x) <input type="number" id="kx" placeholder="mis. -3"></label>
+          <label>Ordinat (y) <input type="number" id="ky" placeholder="mis. 4"></label>
+          <button class="calc-btn" onclick="hitungKuadran()">Cek Kuadran</button>
+        </div>
+        <div class="calc-result" id="kuadranResult">Masukkan nilai x dan y, lalu klik "Cek Kuadran".</div>
+      </div>
+
+      <div class="plot-box">
+        <span class="plot-title">📍 Plot Titik pada Bidang Cartesius</span>
+        <div class="plot-input-row">
+          <label>Koordinat x <input type="number" id="plotX" value="3"></label>
+          <label>Koordinat y <input type="number" id="plotY" value="4"></label>
+        </div>
+        <button class="calc-btn plot-btn" onclick="plotTitik()">Plot Titik</button>
+
+        <div class="cartesius-svg" style="margin-top:18px;">
+          <svg viewBox="0 0 500 400" width="100%" height="320" xmlns="http://www.w3.org/2000/svg">
+            <line x1="20" y1="200" x2="480" y2="200" stroke="#5b5137" stroke-width="1.5"/>
+            <line x1="250" y1="20" x2="250" y2="380" stroke="#5b5137" stroke-width="1.5"/>
+            <text x="465" y="195" font-size="13" fill="#5b5137" font-family="JetBrains Mono">x</text>
+            <text x="256" y="30" font-size="13" fill="#5b5137" font-family="JetBrains Mono">y</text>
+            <text x="330" y="80" font-size="14" fill="#a66c1f" font-family="JetBrains Mono">I</text>
+            <text x="170" y="80" font-size="14" fill="#a66c1f" font-family="JetBrains Mono">II</text>
+            <text x="170" y="330" font-size="14" fill="#a66c1f" font-family="JetBrains Mono">III</text>
+            <text x="330" y="330" font-size="14" fill="#a66c1f" font-family="JetBrains Mono">IV</text>
+            <g id="titikMarker"></g>
+          </svg>
+        </div>
+        <p id="plotResultText" class="plot-result-text">Masukkan koordinat lalu klik "Plot Titik".</p>
+      </div>
+    </section>
+
+    <!-- B. RELASI -->
+    <section class="section" id="relasi">
+      <div class="section-label">Bagian B</div>
+      <h2>Relasi</h2>
+      <p><b>Relasi</b> dari himpunan \(A\) ke himpunan \(B\) adalah aturan yang memasangkan anggota-anggota himpunan \(A\) dengan anggota-anggota himpunan \(B\). Relasi menghubungkan dua himpunan berdasarkan suatu hubungan tertentu, misalnya "faktor dari", "lebih dari", atau "kuadrat dari".</p>
+
+      <div class="callout def">
+        <span class="callout-title">Definisi</span>
+        Relasi \(R\) dari \(A\) ke \(B\) adalah himpunan pasangan berurutan \((a, b)\) dengan \(a \in A\) dan \(b \in B\), yang memenuhi suatu aturan hubungan tertentu.
+      </div>
+
+      <p>Sebuah relasi dapat dinyatakan dengan tiga cara berikut:</p>
+      <div class="example-box">
+        <span class="ex-title">Tiga Cara Menyatakan Relasi</span>
+        <ol>
+          <li><b>Diagram panah</b> — anak panah dari anggota A menuju pasangannya di B</li>
+          <li><b>Himpunan pasangan berurutan</b> — misalnya \(\{(1,2), (2,4), (3,6)\}\)</li>
+          <li><b>Diagram Cartesius</b> — pasangan dituliskan sebagai titik-titik pada bidang koordinat</li>
+        </ol>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-title">Contoh Soal</span>
+        <p>Diketahui \(A = \{2, 3, 4\}\) dan \(B = \{4, 6, 8, 9\}\) dengan relasi "faktor dari". Nyatakan relasi tersebut sebagai himpunan pasangan berurutan.</p>
+        <ol>
+          <li>2 adalah faktor dari 4, 6, 8 → pasangan: (2,4), (2,6), (2,8)</li>
+          <li>3 adalah faktor dari 6, 9 → pasangan: (3,6), (3,9)</li>
+          <li>4 adalah faktor dari 4, 8 → pasangan: (4,4), (4,8)</li>
+          <li>Jadi \(R = \{(2,4),(2,6),(2,8),(3,6),(3,9),(4,4),(4,8)\}\)</li>
+        </ol>
+      </div>
+
+      <div class="callout note">
+        <span class="callout-title">Catatan Penting</span>
+        Satu anggota di \(A\) pada relasi <b>boleh</b> berpasangan dengan lebih dari satu anggota di \(B\), dan boleh juga tidak memiliki pasangan sama sekali. Sifat inilah yang membedakan relasi dengan fungsi.
+      </div>
+    </section>
+
+    <!-- C. DEFINISI FUNGSI -->
+    <section class="section" id="fungsi-definisi">
+      <div class="section-label">Bagian C</div>
+      <h2>Definisi Fungsi</h2>
+      <p><b>Fungsi</b> (atau <b>pemetaan</b>) adalah relasi khusus dari himpunan \(A\) ke himpunan \(B\) yang memasangkan <b>setiap</b> anggota \(A\) dengan <b>tepat satu</b> anggota \(B\).</p>
+
+      <div class="callout def">
+        <span class="callout-title">Definisi</span>
+        Relasi \(f\) dari \(A\) ke \(B\) disebut fungsi jika dan hanya jika setiap anggota \(A\) (domain) dipasangkan dengan <b>tepat satu</b> anggota \(B\) (kodomain) — tidak boleh ada anggota \(A\) yang tidak berpasangan, dan tidak boleh ada anggota \(A\) yang berpasangan dengan lebih dari satu anggota \(B\).
+      </div>
+
+      <p>Beberapa istilah penting dalam fungsi \(f: A \to B\):</p>
+      <table class="rf-table">
+        <tr><th>Istilah</th><th>Arti</th></tr>
+        <tr><td><b>Domain</b></td><td>Himpunan \(A\), yaitu daerah asal</td></tr>
+        <tr><td><b>Kodomain</b></td><td>Himpunan \(B\), yaitu daerah kawan</td></tr>
+        <tr><td><b>Range</b></td><td>Himpunan hasil/bayangan, yaitu anggota \(B\) yang benar-benar memiliki pasangan di \(A\)</td></tr>
+      </table>
+
+      <div class="callout warn">
+        <span class="callout-title">Peringatan</span>
+        Tidak semua relasi adalah fungsi, tetapi <b>semua fungsi pasti relasi</b>. Untuk mengecek diagram panah: fungsi jika setiap titik di A punya <i>tepat satu</i> anak panah keluar.
+      </div>
+
+      <div class="example-box">
+        <span class="ex-title">Contoh Soal</span>
+        <p>Manakah dari pasangan berikut yang merupakan fungsi dari \(A = \{1,2,3\}\) ke \(B = \{a,b,c,d\}\)?</p>
+        <ol>
+          <li>\(\{(1,a),(2,b),(3,c)\}\) → <b>Fungsi</b>, karena setiap anggota A punya tepat satu pasangan</li>
+          <li>\(\{(1,a),(1,b),(2,c),(3,d)\}\) → <b>Bukan fungsi</b>, karena 1 punya dua pasangan (a dan b)</li>
+          <li>\(\{(1,a),(2,b)\}\) → <b>Bukan fungsi</b>, karena anggota 3 tidak memiliki pasangan</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- D. FUNGSI SEBAGAI MESIN -->
+    <section class="section" id="fungsi-mesin">
+      <div class="section-label">Bagian D</div>
+      <h2>Fungsi sebagai Mesin</h2>
+      <p>Cara yang mudah untuk membayangkan fungsi adalah sebagai sebuah <b>mesin</b>: kita memasukkan sebuah nilai (input), mesin memprosesnya dengan suatu aturan, lalu mengeluarkan tepat satu nilai (output).</p>
+
+      <div class="callout def">
+        <span class="callout-title">Notasi Fungsi</span>
+        Fungsi \(f\) yang memetakan \(x\) ke \(f(x)\) ditulis \(f: x \to f(x)\) atau \(y = f(x)\). Nilai \(x\) disebut variabel bebas (input/masukan), dan \(f(x)\) disebut nilai fungsi (output/keluaran).
+      </div>
+
+      <p>Misalnya untuk aturan "mesin" \(f(x) = 2x + 3\): setiap kali sebuah bilangan \(x\) dimasukkan, mesin mengalikannya dengan 2 lalu menambah 3, dan hasilnya keluar sebagai \(f(x)\).</p>
+
+      <div class="example-box">
+        <span class="ex-title">Contoh Soal</span>
+        <p>Diketahui fungsi \(f(x) = 3x - 2\). Tentukan nilai \(f(4)\).</p>
+        <ol>
+          <li>Substitusikan \(x = 4\) ke dalam aturan fungsi: \(f(4) = 3(4) - 2\)</li>
+          <li>Hitung: \(f(4) = 12 - 2\)</li>
+          <li>Jadi \(f(4) = 10\)</li>
+        </ol>
+      </div>
+
+      <div class="calc-box">
+        <span class="calc-title">🧮 Kalkulator Mesin Fungsi \(f(x) = ax + b\)</span>
+        <div class="calc-row">
+          <label>a <input type="number" id="fa" value="2"></label>
+          <label>b <input type="number" id="fb" value="3"></label>
+          <label>x (input) <input type="number" id="fx" placeholder="mis. 5"></label>
+          <button class="calc-btn" onclick="hitungFungsi()">Proses Mesin</button>
+        </div>
+        <div class="calc-result" id="fungsiResult">Isi nilai a, b, dan x lalu klik "Proses Mesin".</div>
+      </div>
+    </section>
+
+    <!-- E. BANYAK FUNGSI -->
+    <section class="section" id="banyak-fungsi">
+      <div class="section-label">Bagian E</div>
+      <h2>Banyak Semua Kemungkinan Fungsi atau Pemetaan</h2>
+      <p>Jika himpunan \(A\) memiliki \(n(A)\) anggota dan himpunan \(B\) memiliki \(n(B)\) anggota, kita bisa menghitung <b>berapa banyak fungsi berbeda</b> yang mungkin dibentuk dari \(A\) ke \(B\).</p>
+
+      <div class="callout def">
+        <span class="callout-title">Rumus</span>
+        Banyaknya fungsi/pemetaan yang mungkin dari \(A\) ke \(B\) adalah:
+        \[ n(B)^{n(A)} \]
+        Karena setiap anggota \(A\) memiliki \(n(B)\) pilihan pasangan, dan pilihan itu berlaku untuk semua \(n(A)\) anggota secara bebas.
+      </div>
+
+      <div class="example-box">
+        <span class="ex-title">Contoh Soal</span>
+        <p>Diketahui \(A = \{1, 2\}\) dan \(B = \{a, b, c\}\). Berapa banyak fungsi yang mungkin dari \(A\) ke \(B\)?</p>
+        <ol>
+          <li>\(n(A) = 2\) dan \(n(B) = 3\)</li>
+          <li>Anggota 1 punya 3 pilihan pasangan (a, b, atau c)</li>
+          <li>Anggota 2 juga punya 3 pilihan pasangan, bebas dari pilihan anggota 1</li>
+          <li>Banyak fungsi \(= n(B)^{n(A)} = 3^2 = 9\) fungsi</li>
+        </ol>
+      </div>
+
+      <div class="calc-box">
+        <span class="calc-title">🧮 Kalkulator Banyak Fungsi \(n(B)^{n(A)}\)</span>
+        <div class="calc-row">
+          <label>n(A) <input type="number" id="nA" placeholder="mis. 2" min="0"></label>
+          <label>n(B) <input type="number" id="nB" placeholder="mis. 3" min="0"></label>
+          <button class="calc-btn" onclick="hitungBanyakFungsi()">Hitung</button>
+        </div>
+        <div class="calc-result" id="banyakFungsiResult">Masukkan banyak anggota A dan B.</div>
+      </div>
+    </section>
+
+    <!-- F. KORESPONDENSI SATU-SATU -->
+    <section class="section" id="korespondensi">
+      <div class="section-label">Bagian F</div>
+      <h2>Korespondensi Satu-Satu</h2>
+      <p><b>Korespondensi satu-satu</b> (perkawanan satu-satu) adalah fungsi khusus dari \(A\) ke \(B\) di mana setiap anggota \(A\) dipasangkan dengan <b>tepat satu</b> anggota \(B\), dan setiap anggota \(B\) juga menjadi pasangan dari <b>tepat satu</b> anggota \(A\).</p>
+
+      <div class="callout def">
+        <span class="callout-title">Syarat Korespondensi Satu-Satu</span>
+        Korespondensi satu-satu antara \(A\) dan \(B\) hanya mungkin terjadi jika banyak anggota kedua himpunan sama, yaitu \(n(A) = n(B)\).
+      </div>
+
+      <div class="callout def">
+        <span class="callout-title">Rumus Banyak Korespondensi</span>
+        Jika \(n(A) = n(B) = n\), maka banyaknya korespondensi satu-satu yang mungkin dibentuk antara \(A\) dan \(B\) adalah:
+        \[ n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1 \]
+      </div>
+
+      <div class="example-box">
+        <span class="ex-title">Contoh Soal</span>
+        <p>Diketahui \(A = \{p, q, r\}\) dan \(B = \{1, 2, 3\}\). Berapa banyak korespondensi satu-satu yang mungkin?</p>
+        <ol>
+          <li>\(n(A) = 3\) dan \(n(B) = 3\), syarat \(n(A) = n(B)\) terpenuhi</li>
+          <li>Banyak korespondensi \(= 3! = 3 \times 2 \times 1\)</li>
+          <li>Jadi terdapat \(6\) korespondensi satu-satu yang mungkin</li>
+        </ol>
+      </div>
+
+      <div class="calc-box">
+        <span class="calc-title">🧮 Kalkulator Banyak Korespondensi Satu-Satu \(n!\)</span>
+        <div class="calc-row">
+          <label>n (anggota A = anggota B) <input type="number" id="nF" placeholder="mis. 4" min="0"></label>
+          <button class="calc-btn" onclick="hitungFaktorial()">Hitung n!</button>
+        </div>
+        <div class="calc-result" id="faktorialResult">Masukkan banyak anggota himpunan (n).</div>
+      </div>
+    </section>
+
+    <!-- LATIHAN -->
+    <section class="section" id="latihan">
+      <div class="section-label">Latihan Soal</div>
+      <h2>Uji Pemahamanmu</h2>
+      <p>25 soal interaktif mencakup seluruh materi Relasi dan Fungsi, dengan koreksi otomatis dan penjelasan di setiap soal.</p>
+
+      <div class="latihan-nav">
+        <button class="lt-btn active" id="btn-pg" onclick="showType('pg')">1. Pilihan Ganda Biasa</button>
+        <button class="lt-btn" id="btn-is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="lt-btn" id="btn-pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="lt-btn" id="btn-bs" onclick="showType('bs')">4. Benar/Salah</button>
+        <button class="lt-btn" id="btn-jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="scoreStrip"></div>
+
+      <div id="quiz-area"></div>
+
+      <div style="text-align:center; margin-top:20px;">
+        <button class="calc-btn" onclick="showAnalysis()">📊 Lihat Analisis Akhir</button>
+      </div>
+
+      <div id="analysisPanel">
+        <h3>Hasil Analisis</h3>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lbl">Total Soal</div></div>
+          <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lbl">Jawaban Benar</div></div>
+          <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lbl">Jawaban Salah</div></div>
+          <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lbl">Nilai Akhir</div></div>
+        </div>
+        <div id="barChart"></div>
+        <div class="grade-box">
+          <div class="grade-letter" id="gradeLetter">-</div>
+          <div id="gradeMsg">Selesaikan semua soal untuk melihat nilaimu</div>
+        </div>
+        <div style="text-align:center;"><button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua Soal</button></div>
+      </div>
+    </section>
+
+    <footer>
+      Ebook Interaktif Matematika Kelas 8 — Relasi dan Fungsi<br>
+      Dibuat oleh Suminto with Claude
+    </footer>
+  </main>
+</div>
+
+<script>
+/* ===== SIDEBAR & SCROLLSPY ===== */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+const sections = document.querySelectorAll('.section, .hero');
+const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+function updateScrollspy(){
+  let currentId = '';
+  sections.forEach(sec=>{
+    const rect = sec.getBoundingClientRect();
+    if(rect.top <= 140) currentId = sec.id;
+  });
+  navLinks.forEach(link=>{
+    link.classList.remove('active');
+    if(link.getAttribute('href') === '#' + currentId) link.classList.add('active');
+  });
+  const scrollY = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+window.addEventListener('scroll', updateScrollspy);
+document.querySelectorAll('.nav-link').forEach(l=>{
+  l.addEventListener('click', ()=>{ if(window.innerWidth <= 900) toggleSidebar(); });
+});
+
+/* ===== KALKULATOR MATERI ===== */
+function hitungKuadran(){
+  const x = parseFloat(document.getElementById('kx').value) || 0;
+  const y = parseFloat(document.getElementById('ky').value) || 0;
+  const el = document.getElementById('kuadranResult');
+  if(x === 0 && y === 0){ el.innerHTML = 'Titik (' + x + ', ' + y + ') adalah <b>titik pusat (origin)</b>.'; return; }
+  if(x === 0){ el.innerHTML = 'Titik (' + x + ', ' + y + ') terletak <b>tepat pada sumbu-y</b>.'; return; }
+  if(y === 0){ el.innerHTML = 'Titik (' + x + ', ' + y + ') terletak <b>tepat pada sumbu-x</b>.'; return; }
+  let kuadran = '';
+  if(x > 0 && y > 0) kuadran = 'I';
+  else if(x < 0 && y > 0) kuadran = 'II';
+  else if(x < 0 && y < 0) kuadran = 'III';
+  else kuadran = 'IV';
+  el.innerHTML = 'Titik (' + x + ', ' + y + ') berada di <b>Kuadran ' + kuadran + '</b>.';
+}
+
+function plotTitik(){
+  const xInput = document.getElementById('plotX').value;
+  const yInput = document.getElementById('plotY').value;
+  const x = parseFloat(xInput);
+  const y = parseFloat(yInput);
+  const marker = document.getElementById('titikMarker');
+  const resultEl = document.getElementById('plotResultText');
+  marker.innerHTML = '';
+
+  if(isNaN(x) || isNaN(y)){
+    resultEl.textContent = 'Masukkan nilai x dan y yang valid.';
+    return;
+  }
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const maxRange = 9;
+  const xClamped = Math.max(-maxRange, Math.min(maxRange, x));
+  const yClamped = Math.max(-maxRange, Math.min(maxRange, y));
+  const scale = 24;
+  const originX = 250;
+  const originY = 200;
+  const px = originX + xClamped * scale;
+  const py = originY - yClamped * scale;
+
+  const circle = document.createElementNS(svgNS, 'circle');
+  circle.setAttribute('cx', px);
+  circle.setAttribute('cy', py);
+  circle.setAttribute('r', 6);
+  circle.setAttribute('fill', '#c1584f');
+  marker.appendChild(circle);
+
+  const label = document.createElementNS(svgNS, 'text');
+  const labelX = px + 12 > 470 ? px - 55 : px + 10;
+  const labelY = py - 10 < 20 ? py + 22 : py - 10;
+  label.setAttribute('x', labelX);
+  label.setAttribute('y', labelY);
+  label.setAttribute('font-size', '13');
+  label.setAttribute('font-family', 'JetBrains Mono, monospace');
+  label.setAttribute('fill', '#c1584f');
+  label.setAttribute('font-weight', '700');
+  label.textContent = '(' + x + ', ' + y + ')';
+  marker.appendChild(label);
+
+  let keterangan = '';
+  if(x === 0 && y === 0) keterangan = 'titik pusat (origin)';
+  else if(x === 0) keterangan = 'tepat pada sumbu-y';
+  else if(y === 0) keterangan = 'tepat pada sumbu-x';
+  else if(x > 0 && y > 0) keterangan = 'Kuadran I';
+  else if(x < 0 && y > 0) keterangan = 'Kuadran II';
+  else if(x < 0 && y < 0) keterangan = 'Kuadran III';
+  else keterangan = 'Kuadran IV';
+
+  let catatanClamp = (Math.abs(x) > maxRange || Math.abs(y) > maxRange) ? ' <i>(posisi disesuaikan agar terlihat di area grafik)</i>' : '';
+  resultEl.innerHTML = 'Titik (' + x + ', ' + y + ') berada di <b>' + keterangan + '</b>.' + catatanClamp;
+}
+
+function hitungFungsi(){
+  const a = parseFloat(document.getElementById('fa').value) || 0;
+  const b = parseFloat(document.getElementById('fb').value) || 0;
+  const x = parseFloat(document.getElementById('fx').value) || 0;
+  const hasil = a * x + b;
+  const el = document.getElementById('fungsiResult');
+  el.innerHTML = 'Mesin menerima input x = ' + x + '<br>Proses: f(' + x + ') = ' + a + '(' + x + ') + ' + b + '<br>Output: <b>f(' + x + ') = ' + hasil + '</b>';
+}
+
+function hitungBanyakFungsi(){
+  const nA = parseInt(document.getElementById('nA').value) || 0;
+  const nB = parseInt(document.getElementById('nB').value) || 0;
+  const el = document.getElementById('banyakFungsiResult');
+  if(nA <= 0 || nB <= 0){ el.innerHTML = 'Masukkan nilai n(A) dan n(B) yang lebih besar dari 0.'; return; }
+  const hasil = Math.pow(nB, nA);
+  el.innerHTML = 'n(A) = ' + nA + ', n(B) = ' + nB + '<br>Banyak fungsi = ' + nB + '<sup>' + nA + '</sup> = <b>' + hasil + ' fungsi</b>';
+}
+
+function hitungFaktorial(){
+  const n = parseInt(document.getElementById('nF').value);
+  const el = document.getElementById('faktorialResult');
+  if(!n || n < 0){ el.innerHTML = 'Masukkan bilangan bulat positif untuk n.'; return; }
+  let hasil = 1;
+  let uraian = [];
+  for(let i = n; i >= 1; i--){ hasil *= i; uraian.push(i); }
+  el.innerHTML = 'Karena n(A) = n(B) = ' + n + ':<br>' + n + '! = ' + uraian.join(' × ') + (uraian.length===0?'1':'') + '<br>Banyak korespondensi satu-satu = <b>' + hasil + '</b>';
+}
+
+/* ===== BANK SOAL ===== */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Titik \\(P(-3, 4)\\) terletak pada kuadran ke berapa?',
+      options:['A. Kuadran I','B. Kuadran II','C. Kuadran III','D. Kuadran IV'],
+      answer:1,
+      explanation:'✅ Absis \\(x = -3\\) bertanda negatif dan ordinat \\(y = 4\\) bertanda positif, sehingga kombinasi (negatif, positif) berada di Kuadran II.' },
+    { id:'pg2', type:'pg', level:'sedang', num:2,
+      text:'Diketahui \\(A = \\{2,3\\}\\) dan \\(B = \\{4,5,6\\}\\) dengan relasi "faktor dari". Pasangan berurutan yang tepat menyatakan relasi tersebut adalah...',
+      options:['A. \\(\\{(2,4),(2,6),(3,6)\\}\\)','B. \\(\\{(4,2),(6,2),(6,3)\\}\\)','C. \\(\\{(2,5),(3,4)\\}\\)','D. \\(\\{(2,3),(4,5)\\}\\)'],
+      answer:0,
+      explanation:'✅ 2 adalah faktor dari 4 dan 6; 3 adalah faktor dari 6. Maka relasinya \\(\\{(2,4),(2,6),(3,6)\\}\\), dengan arah pasangan dari A ke B.' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Diketahui fungsi \\(f(x) = 2x + 1\\). Nilai \\(f(3)\\) adalah...',
+      options:['A. 5','B. 6','C. 7','D. 8'],
+      answer:2,
+      explanation:'✅ \\(f(3) = 2(3) + 1 = 6 + 1 = 7\\).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Banyaknya fungsi yang mungkin dari himpunan \\(A\\) dengan 3 anggota ke himpunan \\(B\\) dengan 2 anggota adalah...',
+      options:['A. 5','B. 6','C. 8','D. 9'],
+      answer:2,
+      explanation:'✅ Banyak fungsi \\(= n(B)^{n(A)} = 2^3 = 8\\).' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Jika \\(A\\) dan \\(B\\) masing-masing memiliki 4 anggota, banyaknya korespondensi satu-satu yang mungkin dibentuk dari \\(A\\) ke \\(B\\) adalah...',
+      options:['A. 8','B. 16','C. 24','D. 256'],
+      answer:2,
+      explanation:'✅ Karena \\(n(A) = n(B) = 4\\), banyak korespondensi satu-satu \\(= 4! = 4 \\times 3 \\times 2 \\times 1 = 24\\).' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Titik perpotongan sumbu-x dan sumbu-y pada bidang Cartesius disebut titik...',
+      answer:'pusat', altAnswers:['origin','titik pusat','titik asal','titik 0,0'],
+      explanation:'✅ Titik perpotongan sumbu-x dan sumbu-y disebut titik pusat atau origin, yaitu \\(O(0,0)\\).' },
+    { id:'is2', type:'is', level:'mudah', num:2,
+      text:'Diketahui \\(f(x) = 3x - 2\\). Nilai \\(f(5)\\) adalah...',
+      answer:'13', altAnswers:['13.0'],
+      explanation:'✅ \\(f(5) = 3(5) - 2 = 15 - 2 = 13\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3,
+      text:'Diketahui \\(A = \\{1,2\\}\\) dan \\(B = \\{a,b,c\\}\\). Banyaknya fungsi yang mungkin dari \\(A\\) ke \\(B\\) adalah...',
+      answer:'9', altAnswers:['9 fungsi'],
+      explanation:'✅ Banyak fungsi \\(= n(B)^{n(A)} = 3^2 = 9\\).' },
+    { id:'is4', type:'is', level:'sedang', num:4,
+      text:'Jika himpunan \\(A\\) dan \\(B\\) masing-masing memiliki 3 anggota, banyaknya korespondensi satu-satu yang mungkin adalah...',
+      answer:'6', altAnswers:['6 korespondensi'],
+      explanation:'✅ Banyak korespondensi \\(= 3! = 3 \\times 2 \\times 1 = 6\\).' },
+    { id:'is5', type:'is', level:'sukar', num:5,
+      text:'Syarat agar dua himpunan \\(A\\) dan \\(B\\) dapat dibentuk korespondensi satu-satu adalah \\(n(A)\\) harus ... dengan \\(n(B)\\).',
+      answer:'sama', altAnswers:['sama dengan','sama besar','n(a)=n(b)','n(a) = n(b)'],
+      explanation:'✅ Korespondensi satu-satu hanya mungkin jika banyak anggota kedua himpunan sama, yaitu \\(n(A) = n(B)\\).' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1,
+      text:'Manakah pernyataan berikut yang termasuk cara menyatakan relasi? (pilih semua yang benar)',
+      options:['A. Diagram panah','B. Himpunan pasangan berurutan','C. Diagram batang','D. Diagram Cartesius'],
+      answers:[0,1,3],
+      explanation:'✅ Relasi dapat dinyatakan dengan diagram panah, himpunan pasangan berurutan, dan diagram Cartesius. Diagram batang bukan cara menyatakan relasi (itu untuk data statistik).' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Manakah ciri-ciri yang benar tentang sebuah fungsi \\(f: A \\to B\\)? (pilih semua yang benar)',
+      options:['A. Setiap anggota A punya tepat satu pasangan di B','B. Boleh ada anggota A tanpa pasangan','C. Fungsi adalah relasi khusus','D. Satu anggota A tidak boleh punya dua pasangan berbeda'],
+      answers:[0,2,3],
+      explanation:'✅ Fungsi mengharuskan setiap anggota A dipasangkan tepat satu ke B (tidak boleh tanpa pasangan, tidak boleh dobel), dan merupakan relasi khusus.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Diberikan beberapa himpunan pasangan berurutan dari \\(A=\\{1,2,3\\}\\) ke \\(B=\\{x,y\\}\\). Manakah yang MERUPAKAN fungsi? (pilih semua yang benar)',
+      options:['A. \\(\\{(1,x),(2,y),(3,x)\\}\\)','B. \\(\\{(1,x),(1,y),(2,x),(3,y)\\}\\)','C. \\(\\{(1,x),(2,x),(3,x)\\}\\)','D. \\(\\{(1,x),(2,y)\\}\\)'],
+      answers:[0,2],
+      explanation:'✅ Opsi A dan C valid karena setiap anggota A (1,2,3) memiliki tepat satu pasangan. Opsi B tidak valid karena 1 punya dua pasangan. Opsi D tidak valid karena 3 tidak memiliki pasangan.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4,
+      text:'Diketahui \\(A = \\{1,2\\}\\), \\(B=\\{p,q\\}\\). Manakah pasangan berurutan berikut yang merupakan korespondensi satu-satu dari A ke B? (pilih semua yang benar)',
+      options:['A. \\(\\{(1,p),(2,q)\\}\\)','B. \\(\\{(1,q),(2,p)\\}\\)','C. \\(\\{(1,p),(2,p)\\}\\)','D. \\(\\{(1,p),(1,q)\\}\\)'],
+      answers:[0,1],
+      explanation:'✅ Opsi A dan B valid karena setiap anggota A dan B saling berpasangan tepat satu (perkawanan satu-satu). Opsi C tidak valid karena q tidak berpasangan. Opsi D tidak valid karena 1 punya dua pasangan.' },
+    { id:'pk5', type:'pk', level:'sedang', num:5,
+      text:'Manakah pernyataan berikut yang benar tentang istilah dalam fungsi \\(f: A \\to B\\)? (pilih semua yang benar)',
+      options:['A. Domain adalah himpunan A (daerah asal)','B. Kodomain adalah himpunan B (daerah kawan)','C. Range selalu sama dengan kodomain','D. Range adalah himpunan hasil/bayangan'],
+      answers:[0,1,3],
+      explanation:'✅ Domain = daerah asal (A), kodomain = daerah kawan (B), range = himpunan hasil/bayangan. Range tidak selalu sama dengan kodomain, karena bisa jadi ada anggota B yang tidak menjadi bayangan.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Titik \\(Q(2, -3)\\) berada di Kuadran IV.',
+      answer:true,
+      explanation:'✅ Benar. Absis positif (2) dan ordinat negatif (-3) menandakan Kuadran IV.' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Setiap relasi pasti merupakan fungsi.',
+      answer:false,
+      explanation:'❌ Salah. Setiap fungsi pasti relasi, tetapi tidak semua relasi adalah fungsi. Relasi menjadi fungsi hanya jika setiap anggota domain punya tepat satu pasangan.' },
+    { id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Jika \\(f(x) = x^2\\), maka \\(f(2) = 4\\).',
+      answer:true,
+      explanation:'✅ Benar. \\(f(2) = 2^2 = 4\\).' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Jika \\(n(A) = 2\\) dan \\(n(B) = 4\\), maka banyaknya fungsi dari A ke B adalah 16.',
+      answer:true,
+      explanation:'✅ Benar. Banyak fungsi \\(= n(B)^{n(A)} = 4^2 = 16\\).' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Korespondensi satu-satu dapat terjadi meskipun \\(n(A) \\neq n(B)\\).',
+      answer:false,
+      explanation:'❌ Salah. Korespondensi satu-satu hanya mungkin terjadi jika \\(n(A) = n(B)\\), karena setiap anggota kedua himpunan harus saling berpasangan tepat satu.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'Sumbu-x',
+      answer:'Garis mendatar pada bidang Cartesius',
+      options:['Garis mendatar pada bidang Cartesius','Garis tegak pada bidang Cartesius','Titik perpotongan dua sumbu','Daerah hasil fungsi'],
+      explanation:'✅ Sumbu-x adalah garis mendatar (horizontal) pada bidang Cartesius.' },
+    { id:'jd2', type:'jd', level:'mudah', num:2,
+      left:'Domain',
+      answer:'Daerah asal (himpunan A)',
+      options:['Daerah asal (himpunan A)','Daerah kawan (himpunan B)','Himpunan hasil/bayangan','Titik pusat koordinat'],
+      explanation:'✅ Domain adalah daerah asal, yaitu himpunan A pada fungsi \\(f: A \\to B\\).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Kodomain',
+      answer:'Daerah kawan (himpunan B)',
+      options:['Daerah kawan (himpunan B)','Daerah asal (himpunan A)','Himpunan hasil/bayangan','Rumus fungsi'],
+      explanation:'✅ Kodomain adalah daerah kawan, yaitu himpunan B pada fungsi \\(f: A \\to B\\).' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'Range',
+      answer:'Himpunan hasil/bayangan anggota domain',
+      options:['Himpunan hasil/bayangan anggota domain','Daerah asal fungsi','Daerah kawan fungsi','Nama lain dari relasi'],
+      explanation:'✅ Range adalah himpunan hasil atau bayangan, yaitu anggota kodomain yang benar-benar dipasangkan dari domain.' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'Korespondensi satu-satu',
+      answer:'Fungsi khusus dengan n(A) = n(B) dan setiap anggota saling berpasangan tepat satu',
+      options:['Fungsi khusus dengan n(A) = n(B) dan setiap anggota saling berpasangan tepat satu','Relasi yang tidak memiliki aturan pasti','Fungsi yang hanya berlaku untuk bilangan bulat','Himpunan pasangan berurutan tanpa aturan'],
+      explanation:'✅ Korespondensi satu-satu adalah fungsi khusus di mana n(A) = n(B) dan setiap anggota A maupun B saling berpasangan tepat satu.' }
+  ]
+};
+
+/* ===== STATE ===== */
+const state = { answers:{}, currentType:'pg', matchSelections:{} };
+let pkTemp = {};
+
+function shuffleOptionsForJD(q){
+  if(!q._shuffled){
+    q._shuffled = [...q.options].sort(()=>Math.random()-0.5);
+  }
+  return q._shuffled;
+}
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.lt-btn').forEach(b=>b.classList.remove('active'));
+  const btn = document.getElementById('btn-' + type);
+  if(btn) btn.classList.add('active');
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 10, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quiz-area');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(q=>{
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function levelClass(level){
+  if(level==='mudah') return 'lv-mudah';
+  if(level==='sedang') return 'lv-sedang';
+  return 'lv-sukar';
+}
+
+function renderCard(q){
+  const answered = state.answers[q.id];
+  let inner = '';
+  if(q.type === 'pg') inner = renderPG(q, answered);
+  else if(q.type === 'is') inner = renderIS(q, answered);
+  else if(q.type === 'pk') inner = renderPK(q, answered);
+  else if(q.type === 'bs') inner = renderBS(q, answered);
+  else if(q.type === 'jd') inner = renderJD(q, answered);
+
+  let expBox = '';
+  if(answered){
+    expBox = '<div class="explanation-box show ' + (answered.correct ? 'ok' : 'no') + '">' + q.explanation + '</div>';
+  }
+
+  return '<div class="question-card" id="card-' + q.id + '">' +
+    '<div class="q-head"><span class="q-num">' + q.num + '</span><span class="q-level ' + levelClass(q.level) + '">' + q.level + '</span></div>' +
+    '<div class="q-text">' + q.text + '</div>' +
+    inner + expBox +
+    '</div>';
+}
+
+function renderPG(q, answered){
+  let html = '';
+  q.options.forEach((opt, idx)=>{
+    let cls = 'opt-btn';
+    if(answered){
+      cls += ' disabled';
+      if(idx === q.answer) cls += ' correct';
+      else if(idx === answered.chosen) cls += ' wrong';
+    }
+    html += '<button class="' + cls + '" onclick="answerPG(\'' + q.id + '\', ' + idx + ')" ' + (answered?'disabled':'') + '>' + opt + '</button>';
+  });
+  return html;
+}
+
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(x=>x.id===qid);
+  if(state.answers[qid]) return;
+  const correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderIS(q, answered){
+  if(answered){
+    return '<div class="is-row"><input type="text" value="' + answered.chosen + '" disabled></div>';
+  }
+  return '<div class="is-row">' +
+    '<input type="text" id="isInput-' + q.id + '" placeholder="Ketik jawabanmu..." onkeydown="if(event.key===\'Enter\') submitIS(\'' + q.id + '\')">' +
+    '<button class="calc-btn" onclick="submitIS(\'' + q.id + '\')">Kirim Jawaban</button>' +
+    '</div>';
+}
+
+function submitIS(qid){
+  const q = allQuestions.is.find(x=>x.id===qid);
+  if(state.answers[qid]) return;
+  const input = document.getElementById('isInput-' + qid);
+  const val = (input.value || '').trim().toLowerCase();
+  if(val === '') return;
+  let correct = false;
+  const mainAns = (q.answer || '').toLowerCase();
+  if(val === mainAns || val.includes(mainAns) || mainAns.includes(val)) correct = true;
+  if(!correct && q.altAnswers){
+    for(const alt of q.altAnswers){
+      const a = alt.toLowerCase();
+      if(val === a || val.includes(a) || a.includes(val)){ correct = true; break; }
+    }
+  }
+  state.answers[qid] = { chosen: input.value, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderPK(q, answered){
+  let html = '';
+  q.options.forEach((opt, idx)=>{
+    let cls = 'opt-btn';
+    const selected = pkTemp[q.id] && pkTemp[q.id].includes(idx);
+    if(answered){
+      cls += ' disabled';
+      if(q.answers.includes(idx)) cls += ' correct';
+      else if(answered.chosen.includes(idx)) cls += ' wrong';
+    } else if(selected){
+      cls += ' pk-selected';
+    }
+    html += '<button class="' + cls + '" onclick="togglePK(\'' + q.id + '\', ' + idx + ')" ' + (answered?'disabled':'') + '>' + opt + '</button>';
+  });
+  if(!answered){
+    html += '<div class="pk-confirm"><button class="calc-btn" onclick="submitPK(\'' + q.id + '\')">Konfirmasi Jawaban</button></div>';
+  }
+  return html;
+}
+
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const pos = pkTemp[qid].indexOf(idx);
+  if(pos >= 0) pkTemp[qid].splice(pos, 1);
+  else pkTemp[qid].push(idx);
+  const q = allQuestions.pk.find(x=>x.id===qid);
+  refreshCard(q);
+}
+
+function submitPK(qid){
+  const q = allQuestions.pk.find(x=>x.id===qid);
+  const chosen = pkTemp[qid] || [];
+  if(chosen.length === 0) return;
+  const setChosen = new Set(chosen);
+  const setAns = new Set(q.answers);
+  const correct = setChosen.size === setAns.size && [...setChosen].every(v=>setAns.has(v));
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderBS(q, answered){
+  if(answered){
+    const chosenLabel = answered.chosen ? 'BENAR' : 'SALAH';
+    const correctLabel = q.answer ? 'BENAR' : 'SALAH';
+    return '<div class="bs-btn-row">' +
+      '<button class="bs-btn" disabled style="background:' + (q.answer===true ? 'var(--correct)' : (answered.chosen===true?'var(--wrong)':'var(--paper2)')) + '">✅ BENAR</button>' +
+      '<button class="bs-btn" disabled style="background:' + (q.answer===false ? 'var(--correct)' : (answered.chosen===false?'var(--wrong)':'var(--paper2)')) + '">❌ SALAH</button>' +
+      '</div>';
+  }
+  return '<div class="bs-btn-row">' +
+    '<button class="bs-btn" onclick="answerBS(\'' + q.id + '\', true)">✅ BENAR</button>' +
+    '<button class="bs-btn" onclick="answerBS(\'' + q.id + '\', false)">❌ SALAH</button>' +
+    '</div>';
+}
+
+function answerBS(qid, val){
+  const q = allQuestions.bs.find(x=>x.id===qid);
+  if(state.answers[qid]) return;
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderJD(q, answered){
+  const opts = shuffleOptionsForJD(q);
+  let optionsHtml = '<option value="">-- pilih pasangan --</option>';
+  opts.forEach(opt=>{
+    let selectedAttr = '';
+    if(answered && answered.chosen === opt) selectedAttr = 'selected';
+    optionsHtml += '<option value="' + opt.replace(/"/g,'&quot;') + '" ' + selectedAttr + '>' + opt + '</option>';
+  });
+  return '<div class="jd-row"><div class="jd-left">' + q.left + '</div>' +
+    '<select ' + (answered?'disabled':'') + ' onchange="answerJD(\'' + q.id + '\', this.value)">' + optionsHtml + '</select></div>';
+}
+
+function answerJD(qid, val){
+  if(!val) return;
+  const q = allQuestions.jd.find(x=>x.id===qid);
+  if(state.answers[qid]) return;
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function refreshCard(q){
+  const card = document.getElementById('card-' + q.id);
+  if(!card) return;
+  card.outerHTML = renderCard(q);
+  typesetMath();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  const labels = { pg:'PG Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+  let html = '';
+  Object.keys(allQuestions).forEach(type=>{
+    const qs = allQuestions[type];
+    let benar = 0, dijawab = 0;
+    qs.forEach(q=>{
+      if(state.answers[q.id]){
+        dijawab++;
+        if(state.answers[q.id].correct) benar++;
+      }
+    });
+    html += '<div class="score-item">' + labels[type] + ': <b>' + benar + '/' + qs.length + '</b> (dijawab ' + dijawab + ')</div>';
+  });
+  strip.innerHTML = html;
+}
+
+function showAnalysis(){
+  const panel = document.getElementById('analysisPanel');
+  panel.style.display = 'block';
+  let total = 0, benar = 0, salah = 0;
+  let barHtml = '';
+  const labels = { pg:'PG Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+  Object.keys(allQuestions).forEach(type=>{
+    const qs = allQuestions[type];
+    let typeBenar = 0;
+    qs.forEach(q=>{
+      total++;
+      if(state.answers[q.id]){
+        if(state.answers[q.id].correct){ benar++; typeBenar++; }
+        else salah++;
+      }
+    });
+    const pct = qs.length > 0 ? (typeBenar / qs.length) * 100 : 0;
+    barHtml += '<div class="bar-row"><div class="bar-label">' + labels[type] + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
+      '<div style="width:50px; font-family:JetBrains Mono; font-size:12.5px;">' + typeBenar + '/' + qs.length + '</div></div>';
+  });
+  document.getElementById('barChart').innerHTML = barHtml;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  const nilai = total > 0 ? Math.round((benar/total)*100) : 0;
+  document.getElementById('statNilai').textContent = nilai + '%';
+
+  let grade = 'E', msg = '📚 Semangat Belajar, ayo coba lagi!';
+  if(nilai >= 90){ grade='A'; msg='🏆 Luar Biasa! Pemahamanmu sangat baik.'; }
+  else if(nilai >= 75){ grade='B'; msg='⭐ Bagus! Kamu sudah memahami sebagian besar materi.'; }
+  else if(nilai >= 60){ grade='C'; msg='👍 Cukup Baik, terus berlatih ya.'; }
+  else if(nilai >= 40){ grade='D'; msg='💪 Jangan Menyerah, pelajari kembali materinya.'; }
+  document.getElementById('gradeLetter').textContent = grade;
+  document.getElementById('gradeMsg').textContent = msg;
+
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  Object.values(allQuestions).forEach(arr=>arr.forEach(q=>{ delete q._shuffled; }));
+  document.getElementById('analysisPanel').style.display = 'none';
+  showType(state.currentType);
+}
+
+/* ===== INIT ===== */
+document.addEventListener('DOMContentLoaded', function(){
+  showType('pg');
+  updateScrollspy();
+  typesetMath();
+  plotTitik();
+});
+</script>
+</body>
+</html>

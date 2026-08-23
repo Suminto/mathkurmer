@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistem Persamaan Linear Dua Variabel — Ebook Interaktif Kelas 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4',serif; color:var(--text-dark); background:var(--paper);
+  display:flex; min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:280px; flex-shrink:0; background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 100%);
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto;
+  padding:26px 20px 30px; border-right:1px solid var(--ink-border);
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink3); border-radius:4px;}
+.sb-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft); opacity:.85;}
+.sb-title{font-size:21px; font-weight:800; line-height:1.3; margin:8px 0 18px; color:var(--cream);}
+.progress-wrap{background:var(--ink3); border-radius:20px; height:8px; overflow:hidden; margin-bottom:22px; border:1px solid var(--ink-border);}
+.progress-bar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); transition:width .3s ease;}
+.nav-group-title{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--cream-dim); margin:18px 0 8px; padding-left:6px;}
+.nav-link{
+  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:9px; color:var(--cream-dim);
+  text-decoration:none; font-size:14.5px; margin-bottom:2px; transition:.18s ease; border-left:3px solid transparent;
+}
+.nav-link .dot{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); width:18px; flex-shrink:0;}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left-color:var(--gold); font-weight:600;}
+.nav-sub{margin-left:22px; margin-top:2px; margin-bottom:6px; border-left:1px dashed var(--ink-border); padding-left:10px;}
+.nav-sub .nav-link{font-size:13px; padding:6px 8px;}
+#sb-close{display:none;}
+
+/* ===== CONTENT ===== */
+#content{flex:1; min-width:0; max-width:900px; margin:0 auto; padding:0 0 80px;}
+.hero{
+  padding:64px 56px 46px; background:linear-gradient(160deg,var(--paper2),var(--paper));
+  border-bottom:2px solid var(--paper-line);
+}
+.hero-label{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--note-b); font-weight:600;}
+.hero h1{font-size:40px; line-height:1.18; margin:12px 0 16px; color:var(--ink);}
+.hero p{font-size:17px; color:var(--text-mid); max-width:640px; line-height:1.6;}
+.chip-row{display:flex; flex-wrap:wrap; gap:9px; margin-top:24px;}
+.chip{
+  font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--ink2); color:var(--gold-soft);
+  padding:7px 13px; border-radius:20px; border:1px solid var(--ink-border);
+}
+
+section.chapter{padding:52px 56px; border-bottom:1px solid var(--paper-line);}
+section.chapter h2{font-size:29px; color:var(--ink); margin-bottom:6px;}
+.chapter-sub{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--note-b); letter-spacing:.08em; text-transform:uppercase; margin-bottom:18px; display:block;}
+section.chapter h3{font-size:21px; color:var(--ink2); margin:28px 0 12px;}
+section.chapter p{font-size:16.5px; line-height:1.8; margin-bottom:14px; color:var(--text-dark);}
+section.chapter ul, section.chapter ol{margin:0 0 16px 22px; line-height:1.85; font-size:16.5px;}
+
+.callout{border-radius:10px; padding:18px 20px; margin:20px 0; border-left:5px solid; font-size:15.5px; line-height:1.75;}
+.callout-title{font-weight:700; font-family:'Playfair Display',serif; font-size:15.5px; margin-bottom:6px; display:block;}
+.callout.def{background:var(--def); border-color:var(--def-b);}
+.callout.note{background:var(--note); border-color:var(--note-b);}
+.callout.warn{background:var(--warn); border-color:var(--warn-b);}
+
+.example-box{
+  background:var(--ink); color:var(--cream); border-radius:12px; padding:22px 24px; margin:22px 0;
+  border:1px solid var(--ink-border);
+}
+.example-box .ex-label{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold-soft); letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px; display:block;}
+.example-box .step{padding:6px 0; border-bottom:1px dashed var(--ink3); font-size:15px;}
+.example-box .step:last-child{border-bottom:none;}
+.example-box .step b{color:var(--gold-soft);}
+
+.calc-box{
+  background:var(--ink2); color:var(--cream); border-radius:14px; padding:24px 26px; margin:24px 0;
+  border:1px solid var(--ink-border);
+}
+.calc-box h4{color:var(--gold-soft); font-size:17px; margin-bottom:14px;}
+.calc-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:14px;}
+.calc-eq-label{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--cream-dim); margin-bottom:4px; grid-column:1/-1;}
+.calc-box input{
+  background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); border-radius:7px;
+  padding:9px 10px; font-family:'JetBrains Mono',monospace; font-size:14px; width:100%;
+}
+.calc-box button{
+  background:var(--gold); color:var(--ink); border:none; padding:11px 22px; border-radius:8px;
+  font-weight:700; cursor:pointer; font-size:14.5px; margin-top:6px; transition:.15s ease;
+}
+.calc-box button:hover{background:var(--gold-soft);}
+.calc-result{
+  margin-top:16px; background:var(--ink); border-radius:9px; padding:14px 16px; font-size:14.5px;
+  line-height:1.7; min-height:20px; border:1px solid var(--ink-border);
+}
+.calc-result .res-line{padding:3px 0;}
+.calc-result b{color:var(--gold-soft);}
+
+/* ===== LATIHAN ===== */
+#latihan{padding:52px 56px;}
+#latihan h2{font-size:29px; color:var(--ink); margin-bottom:8px;}
+#latihan > p{color:var(--text-mid); margin-bottom:22px; font-size:16px;}
+.type-nav{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px;}
+.type-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13px; padding:10px 16px; border-radius:9px;
+  border:1.5px solid var(--paper-line); background:var(--paper2); color:var(--text-mid); cursor:pointer;
+  transition:.16s ease; font-weight:600;
+}
+.type-btn:hover{border-color:var(--note-b);}
+.type-btn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{
+  display:flex; flex-wrap:wrap; gap:10px; background:var(--paper2); border:1px solid var(--paper-line);
+  border-radius:10px; padding:14px 18px; margin-bottom:24px; font-family:'JetBrains Mono',monospace; font-size:13px;
+}
+.score-item{color:var(--text-mid);}
+.score-item b{color:var(--ink);}
+
+.question-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:12px; padding:22px 24px; margin-bottom:18px;
+  animation:fadeUp .35s ease; box-shadow:0 2px 10px rgba(43,36,22,.05);
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+.q-num{
+  width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft);
+  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; flex-shrink:0;
+}
+.q-level{font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em;}
+.q-level.mudah{background:var(--def); color:#3f6b32;}
+.q-level.sedang{background:var(--note); color:#8a5a15;}
+.q-level.sukar{background:var(--warn); color:#8a2e26;}
+.q-text{font-size:16.5px; line-height:1.7; margin-bottom:16px;}
+
+.opt-btn{
+  display:block; width:100%; text-align:left; background:var(--paper2); border:1.5px solid var(--paper-line);
+  border-radius:9px; padding:12px 15px; margin-bottom:9px; font-size:15px; font-family:'Source Serif 4',serif;
+  color:var(--text-dark); cursor:pointer; transition:.15s ease;
+}
+.opt-btn:hover{border-color:var(--note-b); transform:translateX(3px);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b); font-weight:600;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn.disabled{pointer-events:none; opacity:.85;}
+.opt-btn.pk-selected{border-color:var(--note-b); background:#fdf5e8;}
+.opt-btn .mark{font-family:'JetBrains Mono',monospace; margin-right:8px; font-weight:700;}
+
+.bs-row{display:flex; gap:12px;}
+.bs-btn{
+  flex:1; padding:13px; border-radius:9px; border:1.5px solid var(--paper-line); background:var(--paper2);
+  font-size:15px; font-weight:700; cursor:pointer; transition:.15s ease; font-family:'JetBrains Mono',monospace;
+}
+.bs-btn:hover{border-color:var(--note-b);}
+.bs-btn.correct{background:var(--correct); border-color:var(--correct-b);}
+.bs-btn.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+
+.is-row{display:flex; gap:10px;}
+.is-row input{
+  flex:1; padding:12px 14px; border-radius:9px; border:1.5px solid var(--paper-line); font-size:15px;
+  font-family:'Source Serif 4',serif;
+}
+.is-row button, .pk-confirm{
+  background:var(--ink); color:var(--gold-soft); border:none; padding:12px 20px; border-radius:9px;
+  font-weight:700; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:13px;
+}
+.pk-confirm{margin-top:8px;}
+
+.jd-row{display:flex; align-items:center; gap:14px; margin-bottom:12px;}
+.jd-left{flex:1; font-size:15px; background:var(--paper2); padding:10px 14px; border-radius:8px; border:1px solid var(--paper-line);}
+.jd-arrow{color:var(--note-b); font-weight:700;}
+.jd-row select{
+  flex:1; padding:10px 12px; border-radius:8px; border:1.5px solid var(--paper-line); font-size:14.5px;
+  font-family:'Source Serif 4',serif; background:#fff;
+}
+.jd-row.answered.correct select{border-color:var(--correct-b); background:var(--correct);}
+.jd-row.answered.wrong select{border-color:var(--wrong-b); background:var(--wrong);}
+
+.explain-box{
+  margin-top:14px; padding:14px 16px; border-radius:9px; font-size:14.5px; line-height:1.7; display:none;
+}
+.explain-box.show{display:block;}
+.explain-box.ok{background:var(--correct); border-left:4px solid var(--correct-b);}
+.explain-box.no{background:var(--wrong); border-left:4px solid var(--wrong-b);}
+
+.analysis-panel{background:var(--ink); color:var(--cream); border-radius:14px; padding:32px; margin-top:12px; display:none;}
+.analysis-panel.show{display:block;}
+.analysis-panel h3{color:var(--gold-soft); margin-bottom:20px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px;}
+.stat-box{background:var(--ink2); border-radius:10px; padding:16px; text-align:center; border:1px solid var(--ink-border);}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:700; color:var(--gold-soft);}
+.stat-box .lab{font-size:12px; color:var(--cream-dim); margin-top:4px;}
+.type-bar-row{display:flex; align-items:center; gap:12px; margin-bottom:10px;}
+.type-bar-row .tb-label{width:130px; font-size:13px; font-family:'JetBrains Mono',monospace; color:var(--cream-dim);}
+.type-bar-track{flex:1; background:var(--ink3); border-radius:20px; height:14px; overflow:hidden;}
+.type-bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); width:0%; transition:width .8s cubic-bezier(.4,0,.2,1);}
+.type-bar-row .tb-val{width:50px; font-size:12px; font-family:'JetBrains Mono',monospace; text-align:right;}
+.grade-box{text-align:center; padding:22px; border-radius:12px; margin:20px 0; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:var(--ink);}
+.grade-box .g-letter{font-size:44px; font-weight:800; font-family:'Playfair Display',serif;}
+.grade-box .g-msg{font-size:15px; font-weight:600; margin-top:4px;}
+#resetBtn{
+  display:block; margin:0 auto; background:var(--gold); color:var(--ink); border:none; padding:13px 28px;
+  border-radius:9px; font-weight:700; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:14px;
+}
+.analysis-trigger{
+  display:block; margin:26px auto 0; background:var(--ink); color:var(--gold-soft); border:none;
+  padding:13px 30px; border-radius:9px; font-weight:700; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:14px;
+}
+
+footer{padding:34px 56px; text-align:center; color:var(--text-mid); font-size:13.5px; border-top:1px solid var(--paper-line);}
+footer .credit{font-family:'JetBrains Mono',monospace; color:var(--note-b); font-weight:600; margin-top:4px;}
+
+#menuToggle{display:none;}
+
+@media (max-width:900px){
+  #menuToggle{
+    display:flex; position:fixed; top:14px; left:14px; z-index:60; width:42px; height:42px; border-radius:10px;
+    background:var(--ink); color:var(--gold-soft); align-items:center; justify-content:center; border:none; font-size:19px; cursor:pointer;
+  }
+  #sidebar{
+    position:fixed; left:0; top:0; height:100vh; z-index:55; transform:translateX(-100%); transition:transform .25s ease;
+    width:260px; box-shadow:0 0 40px rgba(0,0,0,.4);
+  }
+  #sidebar.open{transform:translateX(0);}
+  #overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:50;}
+  #overlay.show{display:block;}
+  #content{max-width:100%;}
+  .hero{padding:74px 22px 34px;}
+  .hero h1{font-size:29px;}
+  section.chapter{padding:34px 22px;}
+  #latihan{padding:34px 22px;}
+  .calc-grid{grid-template-columns:1fr;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<nav id="sidebar">
+  <span class="sb-label">Matematika · Kelas 8</span>
+  <h1 class="sb-title">Sistem Persamaan<br>Linear Dua Variabel</h1>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+  <div class="nav-group-title">Materi</div>
+  <a href="#hero" class="nav-link" data-target="hero"><span class="dot">•</span> Pendahuluan</a>
+  <a href="#bab-a" class="nav-link" data-target="bab-a"><span class="dot">A</span> Model Masalah Dua Variabel</a>
+  <a href="#bab-b" class="nav-link" data-target="bab-b"><span class="dot">B</span> Persamaan Linear Dua Variabel</a>
+  <a href="#bab-c" class="nav-link" data-target="bab-c"><span class="dot">C</span> Sistem Persamaan Linear Dua Variabel</a>
+  <a href="#bab-d" class="nav-link" data-target="bab-d"><span class="dot">D</span> Metode Penyelesaian SPLDV</a>
+  <div class="nav-sub">
+    <a href="#bab-d1" class="nav-link" data-target="bab-d1"><span class="dot">D1</span> Metode Grafik</a>
+    <a href="#bab-d2" class="nav-link" data-target="bab-d2"><span class="dot">D2</span> Metode Substitusi</a>
+    <a href="#bab-d3" class="nav-link" data-target="bab-d3"><span class="dot">D3</span> Metode Eliminasi</a>
+    <a href="#bab-d4" class="nav-link" data-target="bab-d4"><span class="dot">D4</span> Metode Gabungan</a>
+  </div>
+  <a href="#bab-e" class="nav-link" data-target="bab-e"><span class="dot">E</span> Menyelesaikan Masalah SPLDV</a>
+
+  <div class="nav-group-title">Latihan</div>
+  <a href="#latihan" class="nav-link" data-target="latihan"><span class="dot">✎</span> Latihan Soal</a>
+  <div class="nav-sub">
+    <a href="#latihan" onclick="showType('pg')" class="nav-link"><span class="dot">1</span> Pilihan Ganda Biasa</a>
+    <a href="#latihan" onclick="showType('is')" class="nav-link"><span class="dot">2</span> Isian Singkat</a>
+    <a href="#latihan" onclick="showType('pk')" class="nav-link"><span class="dot">3</span> PG Kompleks</a>
+    <a href="#latihan" onclick="showType('bs')" class="nav-link"><span class="dot">4</span> Benar/Salah</a>
+    <a href="#latihan" onclick="showType('jd')" class="nav-link"><span class="dot">5</span> Menjodohkan</a>
+  </div>
+</nav>
+
+<main id="content">
+
+  <section class="hero" id="hero">
+    <span class="hero-label">Ebook Interaktif · Matematika Kelas 8</span>
+    <h1>Sistem Persamaan Linear Dua Variabel</h1>
+    <p>Pelajari bagaimana dua besaran yang tidak diketahui dapat dimodelkan, dihubungkan dalam satu sistem persamaan, dan diselesaikan dengan berbagai metode — mulai dari grafik, substitusi, eliminasi, hingga penerapannya dalam masalah sehari-hari.</p>
+    <div class="chip-row">
+      <span class="chip">A. Model Dua Variabel</span>
+      <span class="chip">B. Persamaan Linear Dua Variabel</span>
+      <span class="chip">C. Sistem Persamaan Linear</span>
+      <span class="chip">D. Metode Penyelesaian</span>
+      <span class="chip">E. Masalah Kontekstual</span>
+      <span class="chip">25 Soal Latihan</span>
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-a">
+    <span class="chapter-sub">Bagian A</span>
+    <h2>Model untuk Masalah Dua Variabel</h2>
+    <p>Dalam kehidupan sehari-hari, kita sering menjumpai situasi yang melibatkan dua besaran yang belum diketahui nilainya sekaligus. Misalnya, harga sebuah buku dan harga sebuah pensil sama-sama belum diketahui, tetapi kita tahu total harga dari kombinasi keduanya.</p>
+    <p>Untuk memodelkan situasi seperti ini, kita menggunakan <b>dua variabel</b> — biasanya dilambangkan dengan huruf seperti \(x\) dan \(y\) — untuk mewakili dua besaran yang tidak diketahui tersebut.</p>
+
+    <div class="callout def">
+      <span class="callout-title">📌 Definisi</span>
+      Variabel adalah lambang (biasanya huruf) yang mewakili suatu bilangan yang belum diketahui nilainya. Ketika suatu masalah melibatkan dua besaran yang tidak diketahui, kita membutuhkan <b>dua variabel</b> untuk memodelkannya.
+    </div>
+
+    <h3>Mengubah Situasi Nyata menjadi Model Matematika</h3>
+    <p>Langkah-langkah memodelkan masalah dua variabel:</p>
+    <ol>
+      <li>Tentukan dua besaran yang belum diketahui, lalu beri nama variabel (misalnya \(x\) dan \(y\)).</li>
+      <li>Tuliskan hubungan antar besaran tersebut dalam bentuk kalimat matematika.</li>
+      <li>Pastikan setiap suku hanya memuat variabel berpangkat satu (linear).</li>
+    </ol>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Andi membeli 2 permen dan 1 coklat seharga Rp7.000. Buatlah model matematikanya.</div>
+      <div class="step"><b>Langkah 1:</b> Misalkan harga permen = \(x\) dan harga coklat = \(y\).</div>
+      <div class="step"><b>Langkah 2:</b> "2 permen dan 1 coklat seharga Rp7.000" diterjemahkan menjadi persamaan.</div>
+      <div class="step"><b>Model:</b> \[2x + y = 7000\]</div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-title">💡 Tips</span>
+      Kata kunci seperti "dan", "total", "jumlah", atau "sekaligus" biasanya menandakan bahwa dua besaran digabungkan dalam satu persamaan.
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-b">
+    <span class="chapter-sub">Bagian B</span>
+    <h2>Persamaan Linear dengan Dua Variabel</h2>
+    <p>Setelah memahami cara memodelkan masalah dengan dua variabel, sekarang kita akan mempelajari bentuk umum dari persamaan tersebut secara lebih formal.</p>
+
+    <div class="callout def">
+      <span class="callout-title">📌 Definisi</span>
+      Persamaan Linear Dua Variabel (PLDV) adalah persamaan yang memuat dua variabel berbeda, dengan pangkat tertinggi tiap variabel adalah satu. Bentuk umumnya:
+      \[ax + by = c\]
+      dengan \(a, b, c\) adalah bilangan real, \(a \neq 0\), dan \(b \neq 0\).
+    </div>
+
+    <h3>Penyelesaian PLDV</h3>
+    <p>Penyelesaian sebuah PLDV bukanlah satu nilai, melainkan <b>pasangan terurut</b> \((x, y)\) yang memenuhi persamaan tersebut. Karena hanya ada satu persamaan dengan dua variabel, sebuah PLDV memiliki <b>tak hingga banyak penyelesaian</b> yang jika digambarkan akan membentuk sebuah <b>garis lurus</b> pada bidang koordinat.</p>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Tunjukkan bahwa \((2, 3)\) merupakan penyelesaian dari persamaan \(x + y = 5\).</div>
+      <div class="step"><b>Langkah:</b> Substitusikan \(x = 2\) dan \(y = 3\) ke persamaan.</div>
+      <div class="step">\(2 + 3 = 5\) → Benar (pernyataan bernilai benar)</div>
+      <div class="step"><b>Kesimpulan:</b> \((2, 3)\) adalah salah satu penyelesaian dari \(x + y = 5\).</div>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-title">⚠️ Perhatikan</span>
+      Persamaan seperti \(x^2 + y = 4\) atau \(xy = 6\) <b>bukan</b> PLDV karena memuat variabel berpangkat lebih dari satu atau perkalian antar variabel.
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-c">
+    <span class="chapter-sub">Bagian C</span>
+    <h2>Sistem Persamaan Linear Dua Variabel</h2>
+    <p>Satu PLDV saja memiliki tak hingga banyak penyelesaian, sehingga belum cukup untuk menentukan nilai pasti dari kedua variabel. Untuk itu, kita membutuhkan <b>dua persamaan sekaligus</b> yang harus dipenuhi secara bersamaan.</p>
+
+    <div class="callout def">
+      <span class="callout-title">📌 Definisi</span>
+      Sistem Persamaan Linear Dua Variabel (SPLDV) adalah gabungan dua PLDV dengan variabel yang sama, yang harus dipenuhi secara bersamaan. Bentuk umumnya:
+      \[a_1x + b_1y = c_1\]
+      \[a_2x + b_2y = c_2\]
+    </div>
+
+    <h3>Makna Geometris SPLDV</h3>
+    <p>Karena setiap PLDV membentuk sebuah garis lurus, maka SPLDV secara geometris berarti mencari <b>titik potong</b> antara dua garis tersebut. Ada tiga kemungkinan hubungan dua garis:</p>
+    <ul>
+      <li><b>Berpotongan di satu titik</b> → SPLDV memiliki <b>tepat satu penyelesaian</b>.</li>
+      <li><b>Sejajar (tidak pernah berpotongan)</b> → SPLDV <b>tidak memiliki penyelesaian</b>.</li>
+      <li><b>Berimpit (garis yang sama)</b> → SPLDV memiliki <b>tak hingga banyak penyelesaian</b>.</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Periksa apakah \((3, 2)\) merupakan penyelesaian dari sistem berikut:</div>
+      <div class="step">\[x + y = 5 \quad \text{dan} \quad 2x - y = 4\]</div>
+      <div class="step">Cek persamaan 1: \(3 + 2 = 5\) → Benar</div>
+      <div class="step">Cek persamaan 2: \(2(3) - 2 = 4\) → Benar</div>
+      <div class="step"><b>Kesimpulan:</b> \((3, 2)\) memenuhi kedua persamaan, sehingga merupakan penyelesaian SPLDV tersebut.</div>
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-d">
+    <span class="chapter-sub">Bagian D</span>
+    <h2>Metode Penyelesaian Sistem Persamaan Linear Dua Variabel</h2>
+    <p>Terdapat beberapa metode untuk menentukan penyelesaian SPLDV. Setiap metode memiliki kelebihan tersendiri tergantung bentuk persamaan yang diberikan.</p>
+  </section>
+
+  <section class="chapter" id="bab-d1">
+    <span class="chapter-sub">Bagian D · Sub 1</span>
+    <h2>Metode Grafik</h2>
+    <p>Metode grafik menyelesaikan SPLDV dengan cara menggambar kedua persamaan sebagai garis lurus pada bidang koordinat, kemudian menentukan titik potongnya.</p>
+    <ol>
+      <li>Tentukan minimal dua titik pada masing-masing persamaan (biasanya titik potong sumbu \(x\) dan sumbu \(y\)).</li>
+      <li>Gambar kedua garis pada satu bidang koordinat yang sama.</li>
+      <li>Titik potong kedua garis adalah penyelesaian SPLDV.</li>
+    </ol>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Tentukan titik-titik bantu untuk persamaan \(x + y = 4\):</div>
+      <div class="step">Jika \(x = 0\) maka \(y = 4\) → titik \((0, 4)\)</div>
+      <div class="step">Jika \(y = 0\) maka \(x = 4\) → titik \((4, 0)\)</div>
+      <div class="step">Kedua titik ini dihubungkan menjadi garis, lalu dibandingkan dengan garis dari persamaan kedua untuk menemukan titik potongnya.</div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-title">💡 Tips</span>
+      Metode grafik cocok untuk memahami konsep secara visual, tetapi kurang akurat jika titik potongnya berupa bilangan pecahan. Untuk hasil yang lebih tepat, gunakan metode substitusi atau eliminasi.
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-d2">
+    <span class="chapter-sub">Bagian D · Sub 2</span>
+    <h2>Metode Substitusi</h2>
+    <p>Metode substitusi menyelesaikan SPLDV dengan cara mengubah salah satu persamaan menjadi bentuk "\(y = ...\)" atau "\(x = ...\)", lalu menggantikan (mensubstitusi) bentuk tersebut ke persamaan yang lain.</p>
+    <ol>
+      <li>Pilih salah satu persamaan, nyatakan satu variabel dalam variabel lainnya.</li>
+      <li>Substitusikan hasil tersebut ke persamaan kedua sehingga hanya tersisa satu variabel.</li>
+      <li>Selesaikan persamaan satu variabel tersebut.</li>
+      <li>Substitusikan kembali nilai yang didapat untuk mencari variabel yang lain.</li>
+    </ol>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Selesaikan sistem: \[x + y = 7 \quad \text{dan} \quad x - y = 1\]</div>
+      <div class="step"><b>Langkah 1:</b> Dari persamaan pertama, \(x = 7 - y\).</div>
+      <div class="step"><b>Langkah 2:</b> Substitusi ke persamaan kedua: \((7-y) - y = 1\)</div>
+      <div class="step"><b>Langkah 3:</b> \(7 - 2y = 1 \Rightarrow -2y = -6 \Rightarrow y = 3\)</div>
+      <div class="step"><b>Langkah 4:</b> Substitusi \(y=3\) ke \(x = 7 - y\): \(x = 4\)</div>
+      <div class="step"><b>Hasil:</b> Penyelesaiannya adalah \((4, 3)\).</div>
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-d3">
+    <span class="chapter-sub">Bagian D · Sub 3</span>
+    <h2>Metode Eliminasi</h2>
+    <p>Metode eliminasi menyelesaikan SPLDV dengan cara menghilangkan salah satu variabel terlebih dahulu, dengan menyamakan koefisien pada kedua persamaan lalu menjumlahkan atau mengurangkan kedua persamaan tersebut.</p>
+    <ol>
+      <li>Samakan koefisien salah satu variabel pada kedua persamaan (kalikan salah satu atau kedua persamaan bila perlu).</li>
+      <li>Jumlahkan atau kurangkan kedua persamaan untuk menghilangkan variabel tersebut.</li>
+      <li>Selesaikan persamaan satu variabel yang tersisa.</li>
+      <li>Ulangi proses untuk mencari variabel yang satunya.</li>
+    </ol>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Selesaikan sistem: \[2x + y = 8 \quad \text{dan} \quad x - y = 1\]</div>
+      <div class="step"><b>Langkah 1:</b> Koefisien \(y\) sudah berlawanan tanda, langsung jumlahkan kedua persamaan.</div>
+      <div class="step">\((2x + y) + (x - y) = 8 + 1 \Rightarrow 3x = 9 \Rightarrow x = 3\)</div>
+      <div class="step"><b>Langkah 2:</b> Substitusi \(x=3\) ke \(x - y = 1\): \(3 - y = 1 \Rightarrow y = 2\)</div>
+      <div class="step"><b>Hasil:</b> Penyelesaiannya adalah \((3, 2)\).</div>
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-d4">
+    <span class="chapter-sub">Bagian D · Sub 4</span>
+    <h2>Metode Gabungan (Eliminasi-Substitusi)</h2>
+    <p>Metode gabungan menggunakan eliminasi untuk mencari nilai salah satu variabel terlebih dahulu, kemudian menggunakan substitusi untuk mencari nilai variabel yang kedua. Metode ini paling sering digunakan karena lebih cepat dan efisien.</p>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Selesaikan sistem: \[3x + 2y = 16 \quad \text{dan} \quad x + y = 7\]</div>
+      <div class="step"><b>Eliminasi \(y\):</b> kalikan persamaan kedua dengan 2: \(2x + 2y = 14\)</div>
+      <div class="step">Kurangkan: \((3x+2y) - (2x+2y) = 16 - 14 \Rightarrow x = 2\)</div>
+      <div class="step"><b>Substitusi</b> \(x=2\) ke \(x+y=7\): \(2 + y = 7 \Rightarrow y = 5\)</div>
+      <div class="step"><b>Hasil:</b> Penyelesaiannya adalah \((2, 5)\).</div>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Penyelesaian SPLDV (Metode Eliminasi)</h4>
+      <div class="calc-eq-label">Persamaan 1: a₁x + b₁y = c₁</div>
+      <div class="calc-grid">
+        <input type="number" id="a1" placeholder="a₁" value="3">
+        <input type="number" id="b1" placeholder="b₁" value="2">
+        <input type="number" id="c1" placeholder="c₁" value="16">
+      </div>
+      <div class="calc-eq-label">Persamaan 2: a₂x + b₂y = c₂</div>
+      <div class="calc-grid">
+        <input type="number" id="a2" placeholder="a₂" value="1">
+        <input type="number" id="b2" placeholder="b₂" value="1">
+        <input type="number" id="c2" placeholder="c₂" value="7">
+      </div>
+      <button onclick="hitungSPLDV()">Hitung Penyelesaian</button>
+      <div class="calc-result" id="spldvResult">Masukkan koefisien lalu klik "Hitung Penyelesaian".</div>
+    </div>
+  </section>
+
+  <section class="chapter" id="bab-e">
+    <span class="chapter-sub">Bagian E</span>
+    <h2>Menyelesaikan Masalah yang Berkaitan dengan SPLDV</h2>
+    <p>Kemampuan memodelkan dan menyelesaikan SPLDV sangat berguna untuk memecahkan masalah sehari-hari, seperti soal harga barang, jumlah tiket, umur, atau kecepatan.</p>
+
+    <h3>Langkah Menyelesaikan Soal Cerita SPLDV</h3>
+    <ol>
+      <li><b>Memahami masalah:</b> tentukan apa yang ditanyakan dan besaran yang belum diketahui.</li>
+      <li><b>Membuat model matematika:</b> nyatakan besaran tersebut sebagai \(x\) dan \(y\), lalu tuliskan dua persamaan berdasarkan informasi yang diberikan.</li>
+      <li><b>Menyelesaikan sistem:</b> gunakan metode substitusi, eliminasi, atau gabungan.</li>
+      <li><b>Menafsirkan hasil:</b> kembalikan nilai \(x\) dan \(y\) ke konteks soal semula, lalu periksa kewajaran jawabannya.</li>
+    </ol>
+
+    <div class="example-box">
+      <span class="ex-label">Contoh Soal</span>
+      <div class="step">Harga 2 buku dan 3 pensil adalah Rp16.000. Harga 1 buku dan 2 pensil adalah Rp9.000. Tentukan harga satu buku dan satu pensil.</div>
+      <div class="step"><b>Model:</b> misal harga buku \(=x\), harga pensil \(=y\).</div>
+      <div class="step">\[2x + 3y = 16000 \quad \text{dan} \quad x + 2y = 9000\]</div>
+      <div class="step"><b>Eliminasi \(x\):</b> kalikan persamaan kedua dengan 2: \(2x + 4y = 18000\)</div>
+      <div class="step">Kurangkan: \((2x+4y)-(2x+3y) = 18000-16000 \Rightarrow y = 2000\)</div>
+      <div class="step"><b>Substitusi</b> ke \(x+2y=9000\): \(x + 4000 = 9000 \Rightarrow x = 5000\)</div>
+      <div class="step"><b>Kesimpulan:</b> Harga satu buku Rp5.000 dan satu pensil Rp2.000.</div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-title">💡 Tips</span>
+      Selalu tuliskan permisalan variabel dengan jelas di awal, dan periksa kembali jawaban dengan mensubstitusikannya ke kedua persamaan asal.
+    </div>
+  </section>
+
+  <section id="latihan">
+    <h2>✎ Latihan Soal</h2>
+    <p>25 soal interaktif dengan 5 tipe berbeda. Jawablah setiap soal untuk melihat penjelasannya secara langsung.</p>
+
+    <div class="type-nav">
+      <button class="type-btn active" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda Biasa</button>
+      <button class="type-btn" data-type="is" onclick="showType('is')">2. Isian Singkat</button>
+      <button class="type-btn" data-type="pk" onclick="showType('pk')">3. PG Kompleks</button>
+      <button class="type-btn" data-type="bs" onclick="showType('bs')">4. Benar/Salah</button>
+      <button class="type-btn" data-type="jd" onclick="showType('jd')">5. Menjodohkan</button>
+    </div>
+
+    <div class="score-strip" id="scoreStrip"></div>
+
+    <div id="quiz-area"></div>
+
+    <button class="analysis-trigger" onclick="showAnalysis()">📊 Lihat Analisis Hasil Belajar</button>
+
+    <div class="analysis-panel" id="analysisPanel">
+      <h3>Analisis Hasil Belajar</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">Total Dikerjakan</div></div>
+        <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lab">Benar</div></div>
+        <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lab">Salah</div></div>
+        <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lab">Nilai</div></div>
+      </div>
+      <div id="typeBars"></div>
+      <div class="grade-box" id="gradeBox">
+        <div class="g-letter" id="gLetter">-</div>
+        <div class="g-msg" id="gMsg">Kerjakan soal untuk melihat nilaimu</div>
+      </div>
+      <button id="resetBtn" onclick="resetAll()">🔄 Ulangi Latihan</button>
+    </div>
+  </section>
+
+  <footer>
+    <div>Sistem Persamaan Linear Dua Variabel — Ebook Interaktif Matematika Kelas 8 · Kurikulum Merdeka</div>
+    <div class="credit">Suminto with Claude</div>
+  </footer>
+
+</main>
+
+<script>
+/* ================= KALKULATOR SPLDV ================= */
+function hitungSPLDV(){
+  const a1 = parseFloat(document.getElementById('a1').value) || 0;
+  const b1 = parseFloat(document.getElementById('b1').value) || 0;
+  const c1 = parseFloat(document.getElementById('c1').value) || 0;
+  const a2 = parseFloat(document.getElementById('a2').value) || 0;
+  const b2 = parseFloat(document.getElementById('b2').value) || 0;
+  const c2 = parseFloat(document.getElementById('c2').value) || 0;
+  const box = document.getElementById('spldvResult');
+
+  const det = a1*b2 - a2*b1;
+  if(det === 0){
+    box.innerHTML = '<div class="res-line">Determinan sistem = 0. Sistem ini <b>tidak memiliki penyelesaian tunggal</b> (garis sejajar atau berimpit).</div>';
+    return;
+  }
+  const x = (c1*b2 - c2*b1) / det;
+  const y = (a1*c2 - a2*c1) / det;
+  box.innerHTML =
+    '<div class="res-line"><b>Langkah eliminasi:</b> determinan = a₁b₂ - a₂b₁ = ' + a1 + '×' + b2 + ' - ' + a2 + '×' + b1 + ' = ' + det + '</div>' +
+    '<div class="res-line"><b>x</b> = (c₁b₂ - c₂b₁) / determinan = ' + x.toFixed(2) + '</div>' +
+    '<div class="res-line"><b>y</b> = (a₁c₂ - a₂c₁) / determinan = ' + y.toFixed(2) + '</div>' +
+    '<div class="res-line">✅ Penyelesaian: <b>(' + x.toFixed(2) + ', ' + y.toFixed(2) + ')</b></div>';
+}
+
+/* ================= SIDEBAR SCROLLSPY + PROGRESS ================= */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+const sections = ['hero','bab-a','bab-b','bab-c','bab-d','bab-d1','bab-d2','bab-d3','bab-d4','bab-e','latihan'];
+function onScroll(){
+  const scrollY = window.scrollY;
+  const doc = document.documentElement;
+  const pct = (scrollY / (doc.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('progressBar').style.width = Math.min(100, Math.max(0,pct)) + '%';
+
+  let current = sections[0];
+  sections.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top < 140){ current = id; }
+  });
+  document.querySelectorAll('.nav-link[data-target]').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+  if(window.innerWidth <= 900){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+}
+window.addEventListener('scroll', onScroll);
+
+/* ================= BANK SOAL ================= */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Manakah dari persamaan berikut yang merupakan Persamaan Linear Dua Variabel (PLDV)?',
+      options:['A. \\(x^2 + y = 5\\)','B. \\(2x + 3y = 6\\)','C. \\(xy = 4\\)','D. \\(2x + 3 = 7\\)'],
+      answer:1,
+      explanation:'✅ PLDV harus memiliki dua variabel berbeda dengan pangkat tertinggi 1. Persamaan \\(2x+3y=6\\) memenuhi syarat tersebut, sedangkan pilihan lain memiliki pangkat lebih dari 1, perkalian antar variabel, atau hanya satu variabel.' },
+    { id:'pg2', type:'pg', level:'sedang', num:2,
+      text:'Penyelesaian dari sistem persamaan \\(2x + y = 8\\) dan \\(x - y = 1\\) adalah...',
+      options:['A. (2, 3)','B. (3, 2)','C. (4, 1)','D. (1, 4)'],
+      answer:1,
+      explanation:'✅ Dengan metode eliminasi: jumlahkan kedua persamaan → \\(3x = 9 \\Rightarrow x = 3\\). Substitusi ke \\(x-y=1\\): \\(3-y=1 \\Rightarrow y=2\\). Jadi penyelesaiannya (3, 2).' },
+    { id:'pg3', type:'pg', level:'mudah', num:3,
+      text:'Metode penyelesaian SPLDV yang dilakukan dengan menyamakan koefisien salah satu variabel lalu menjumlahkan/mengurangkan kedua persamaan disebut metode...',
+      options:['A. Substitusi','B. Grafik','C. Eliminasi','D. Gabungan'],
+      answer:2,
+      explanation:'✅ Metode eliminasi bekerja dengan menghilangkan salah satu variabel melalui penyamaan koefisien, kemudian menjumlahkan atau mengurangkan kedua persamaan.' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Harga 2 buku dan 3 pensil adalah Rp16.000, sedangkan harga 1 buku dan 2 pensil adalah Rp9.000. Jika harga buku = b dan harga pensil = p, model matematika yang tepat adalah...',
+      options:['A. \\(2b+3p=16000\\) dan \\(b+2p=9000\\)','B. \\(2b+3p=9000\\) dan \\(b+2p=16000\\)','C. \\(3b+2p=16000\\) dan \\(2b+p=9000\\)','D. \\(b+p=16000\\) dan \\(2b+3p=9000\\)'],
+      answer:0,
+      explanation:'✅ "2 buku dan 3 pensil = Rp16.000" menjadi \\(2b+3p=16000\\), dan "1 buku dan 2 pensil = Rp9.000" menjadi \\(b+2p=9000\\).' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Jika grafik dua persamaan linear dari sebuah SPLDV berupa dua garis yang sejajar (tidak pernah berpotongan), maka sistem tersebut...',
+      options:['A. Memiliki satu penyelesaian','B. Memiliki tak hingga penyelesaian','C. Tidak memiliki penyelesaian','D. Memiliki dua penyelesaian'],
+      answer:2,
+      explanation:'✅ Dua garis yang sejajar tidak pernah berpotongan di titik manapun, sehingga tidak ada pasangan (x,y) yang memenuhi kedua persamaan sekaligus — sistem tidak memiliki penyelesaian.' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Jika \\(x=2\\) memenuhi persamaan \\(3x+y=10\\), tentukan nilai y.',
+      answer:'4', altAnswers:['y=4','y = 4'],
+      explanation:'✅ Substitusi \\(x=2\\): \\(3(2)+y=10 \\Rightarrow 6+y=10 \\Rightarrow y=4\\).' },
+    { id:'is2', type:'is', level:'sedang', num:2,
+      text:'Diketahui SPLDV \\(x+y=7\\) dan \\(x-y=1\\). Tentukan nilai x.',
+      answer:'4', altAnswers:['x=4','x = 4'],
+      explanation:'✅ Jumlahkan kedua persamaan: \\(2x=8 \\Rightarrow x=4\\).' },
+    { id:'is3', type:'is', level:'mudah', num:3,
+      text:'Berapa banyak variabel yang terdapat dalam sebuah Persamaan Linear Dua Variabel?',
+      answer:'2', altAnswers:['dua'],
+      explanation:'✅ Sesuai namanya, Persamaan Linear "Dua Variabel" memuat dua variabel berbeda.' },
+    { id:'is4', type:'is', level:'sukar', num:4,
+      text:'Sistem \\(4x+2y=12\\) dan \\(2x+y=6\\) memiliki jenis penyelesaian berupa...',
+      answer:'tak hingga', altAnswers:['tak hingga penyelesaian','banyak penyelesaian','tak terhingga','tak terhingga penyelesaian'],
+      explanation:'✅ Persamaan kedua jika dikalikan 2 menjadi \\(4x+2y=12\\), sama persis dengan persamaan pertama — artinya kedua garis berimpit, sehingga penyelesaiannya tak hingga banyaknya.' },
+    { id:'is5', type:'is', level:'mudah', num:5,
+      text:'Lengkapi bentuk umum Persamaan Linear Dua Variabel: \\(ax+by=\\) ...',
+      answer:'c', altAnswers:['=c'],
+      explanation:'✅ Bentuk umum PLDV adalah \\(ax+by=c\\), dengan a, b, c bilangan real, serta \\(a \\neq 0\\) dan \\(b \\neq 0\\).' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1,
+      text:'Manakah pasangan (x, y) berikut yang merupakan penyelesaian dari persamaan \\(x+y=5\\)? (Pilih semua yang benar)',
+      options:['A. (1, 4)','B. (2, 3)','C. (5, 0)','D. (3, 3)'],
+      answers:[0,1,2],
+      explanation:'✅ (1,4): 1+4=5 benar. (2,3): 2+3=5 benar. (5,0): 5+0=5 benar. (3,3): 3+3=6 salah, bukan penyelesaian.' },
+    { id:'pk2', type:'pk', level:'sukar', num:2,
+      text:'Diketahui sistem \\(2x+3y=12\\) dan \\(4x+6y=24\\). Pernyataan mana yang benar? (Pilih semua yang benar)',
+      options:['A. Persamaan kedua adalah kelipatan persamaan pertama','B. Sistem memiliki tak hingga penyelesaian','C. Grafik kedua persamaan berimpit','D. Sistem tidak memiliki penyelesaian'],
+      answers:[0,1,2],
+      explanation:'✅ Persamaan kedua = 2 × persamaan pertama, sehingga kedua garis berimpit dan sistem memiliki tak hingga banyak penyelesaian. Pernyataan D salah karena sistem justru memiliki penyelesaian (bukan tidak ada).' },
+    { id:'pk3', type:'pk', level:'mudah', num:3,
+      text:'Berikut ini yang termasuk metode penyelesaian SPLDV adalah... (Pilih semua yang benar)',
+      options:['A. Substitusi','B. Eliminasi','C. Faktorisasi','D. Grafik'],
+      answers:[0,1,3],
+      explanation:'✅ Substitusi, eliminasi, dan grafik adalah metode penyelesaian SPLDV. Faktorisasi bukan metode untuk SPLDV, melainkan digunakan pada persamaan kuadrat.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4,
+      text:'Diketahui SPLDV \\(3x+2y=16\\) dan \\(x+y=7\\). Manakah pernyataan yang benar? (Pilih semua yang benar)',
+      options:['A. Nilai x = 2','B. Nilai y = 5','C. x + y = 7 terpenuhi','D. \\(3x+2y=20\\)'],
+      answers:[0,1,2],
+      explanation:'✅ Penyelesaiannya adalah (2, 5): dari x+y=7 → y=7-x, substitusi ke 3x+2y=16 menghasilkan x=2 dan y=5. Pilihan D salah karena \\(3(2)+2(5)=16\\), bukan 20.' },
+    { id:'pk5', type:'pk', level:'sedang', num:5,
+      text:'Ciri-ciri Persamaan Linear Dua Variabel adalah... (Pilih semua yang benar)',
+      options:['A. Pangkat tertinggi variabel adalah 1','B. Memiliki dua variabel berbeda','C. Grafiknya berupa garis lurus','D. Grafiknya berupa parabola'],
+      answers:[0,1,2],
+      explanation:'✅ PLDV memiliki variabel berpangkat satu, dua variabel berbeda, dan grafiknya garis lurus. Grafik berupa parabola adalah ciri persamaan kuadrat, bukan PLDV.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Persamaan \\(2x+3y=6\\) termasuk Persamaan Linear Dua Variabel.',
+      answer:true,
+      explanation:'✅ Benar. Persamaan tersebut memuat dua variabel (x dan y) yang masing-masing berpangkat satu.' },
+    { id:'bs2', type:'bs', level:'sedang', num:2,
+      text:'Sistem Persamaan Linear Dua Variabel selalu memiliki tepat satu penyelesaian.',
+      answer:false,
+      explanation:'❌ Salah. SPLDV bisa memiliki tepat satu penyelesaian (garis berpotongan), tak hingga penyelesaian (garis berimpit), atau tidak memiliki penyelesaian sama sekali (garis sejajar).' },
+    { id:'bs3', type:'bs', level:'mudah', num:3,
+      text:'Metode substitusi dilakukan dengan mengganti salah satu variabel menggunakan bentuk dari persamaan lain.',
+      answer:true,
+      explanation:'✅ Benar. Pada metode substitusi, salah satu variabel dinyatakan dalam variabel lain dari satu persamaan, lalu digantikan ke persamaan yang lain.' },
+    { id:'bs4', type:'bs', level:'sukar', num:4,
+      text:'Grafik dua garis yang berpotongan pada satu titik menunjukkan bahwa SPLDV tersebut memiliki tak hingga banyak penyelesaian.',
+      answer:false,
+      explanation:'❌ Salah. Dua garis yang berpotongan di satu titik menunjukkan SPLDV memiliki tepat SATU penyelesaian, bukan tak hingga. Tak hingga penyelesaian terjadi jika kedua garis berimpit.' },
+    { id:'bs5', type:'bs', level:'sedang', num:5,
+      text:'Soal cerita tentang harga barang, seperti harga buku dan pensil, dapat dimodelkan sebagai Sistem Persamaan Linear Dua Variabel.',
+      answer:true,
+      explanation:'✅ Benar. Selama melibatkan dua besaran yang belum diketahui dan dua informasi/hubungan berbeda, soal tersebut dapat dimodelkan sebagai SPLDV.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'Metode yang mengganti satu variabel dengan bentuk dari persamaan lain',
+      answer:'Substitusi',
+      options:['Substitusi','Eliminasi','Grafik','Gabungan'],
+      explanation:'✅ Metode substitusi bekerja dengan mengganti (mensubstitusi) satu variabel menggunakan bentuk yang diperoleh dari persamaan lain.' },
+    { id:'jd2', type:'jd', level:'mudah', num:2,
+      left:'Metode yang menyamakan koefisien untuk menghilangkan salah satu variabel',
+      answer:'Eliminasi',
+      options:['Substitusi','Eliminasi','Grafik','Gabungan'],
+      explanation:'✅ Metode eliminasi menyamakan koefisien salah satu variabel, lalu menjumlahkan atau mengurangkan kedua persamaan untuk menghilangkannya.' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Bentuk umum Persamaan Linear Dua Variabel',
+      answer:'ax + by = c',
+      options:['ax + by = c','ax² + by = c','ax + by² = c','ax · by = c'],
+      explanation:'✅ Bentuk umum PLDV adalah ax + by = c, dengan a, b, c bilangan real serta a ≠ 0 dan b ≠ 0.' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'Titik potong dua garis pada grafik SPLDV',
+      answer:'Penyelesaian sistem',
+      options:['Penyelesaian sistem','Koefisien persamaan','Konstanta persamaan','Variabel bebas'],
+      explanation:'✅ Titik potong dua garis pada grafik menunjukkan pasangan (x,y) yang memenuhi kedua persamaan sekaligus, yaitu penyelesaian sistem.' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'Sistem dengan dua garis yang sejajar',
+      answer:'Tidak memiliki penyelesaian',
+      options:['Tidak memiliki penyelesaian','Memiliki satu penyelesaian','Memiliki tak hingga penyelesaian','Memiliki dua penyelesaian'],
+      explanation:'✅ Dua garis sejajar tidak pernah berpotongan, sehingga sistem tersebut tidak memiliki penyelesaian.' }
+  ]
+};
+
+const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.type-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-type') === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  typesetMath();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 10, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  const area = document.getElementById('quiz-area');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){ html += renderCard(q); });
+  area.innerHTML = html;
+  qs.forEach(function(q){
+    const saved = state.answers[q.id];
+    if(saved){ refreshCardVisual(q, saved); }
+  });
+}
+
+function renderCard(q){
+  let inner = '';
+  if(q.type === 'pg'){ inner = renderPG(q); }
+  else if(q.type === 'is'){ inner = renderIS(q); }
+  else if(q.type === 'pk'){ inner = renderPK(q); }
+  else if(q.type === 'bs'){ inner = renderBS(q); }
+  else if(q.type === 'jd'){ inner = renderJD(q); }
+  return '<div class="question-card" id="card-'+q.id+'">' +
+    '<div class="q-head"><span class="q-num">'+q.num+'</span><span class="q-level '+q.level+'">'+q.level+'</span></div>' +
+    '<div class="q-text">'+q.text+'</div>' +
+    inner +
+    '<div class="explain-box" id="explain-'+q.id+'"></div>' +
+  '</div>';
+}
+
+function renderPG(q){
+  let html = '<div>';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-'+q.id+'-'+idx+'" onclick="answerPG(\''+q.id+'\','+idx+')">'+opt+'</button>';
+  });
+  html += '</div>';
+  return html;
+}
+function answerPG(qid, idx){
+  if(state.answers[qid]) return;
+  const q = findQ(qid);
+  const correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCardVisual(q, state.answers[qid]);
+  updateScoreStrip();
+}
+
+function renderIS(q){
+  return '<div class="is-row">' +
+    '<input type="text" id="input-'+q.id+'" placeholder="Ketik jawabanmu di sini..." onkeydown="if(event.key===\'Enter\'){submitIS(\''+q.id+'\')}">' +
+    '<button onclick="submitIS(\''+q.id+'\')">Kirim</button>' +
+  '</div>';
+}
+function submitIS(qid){
+  if(state.answers[qid]) return;
+  const q = findQ(qid);
+  const input = document.getElementById('input-'+qid);
+  const val = (input.value || '').trim().toLowerCase();
+  if(val === ''){ return; }
+  const main = q.answer.toLowerCase();
+  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase(); });
+  const correct = val === main || alts.indexOf(val) !== -1 || val.includes(main) || main.includes(val);
+  state.answers[qid] = { chosen: input.value, correct: correct };
+  input.disabled = true;
+  refreshCardVisual(q, state.answers[qid]);
+  updateScoreStrip();
+}
+
+function renderPK(q){
+  let html = '<div>';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-'+q.id+'-'+idx+'" onclick="togglePK(\''+q.id+'\','+idx+')">'+opt+'</button>';
+  });
+  html += '</div><button class="pk-confirm" id="confirm-'+q.id+'" onclick="submitPK(\''+q.id+'\')">Konfirmasi Jawaban</button>';
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const arr = pkTemp[qid];
+  const pos = arr.indexOf(idx);
+  const btn = document.getElementById('opt-'+qid+'-'+idx);
+  if(pos === -1){ arr.push(idx); btn.classList.add('pk-selected'); }
+  else{ arr.splice(pos,1); btn.classList.remove('pk-selected'); }
+}
+function submitPK(qid){
+  if(state.answers[qid]) return;
+  const q = findQ(qid);
+  const chosen = (pkTemp[qid] || []).slice().sort();
+  const correctArr = q.answers.slice().sort();
+  const correct = JSON.stringify(chosen) === JSON.stringify(correctArr);
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCardVisual(q, state.answers[qid]);
+  updateScoreStrip();
+}
+
+function renderBS(q){
+  return '<div class="bs-row">' +
+    '<button class="bs-btn" id="bstrue-'+q.id+'" onclick="answerBS(\''+q.id+'\',true)">✅ BENAR</button>' +
+    '<button class="bs-btn" id="bsfalse-'+q.id+'" onclick="answerBS(\''+q.id+'\',false)">❌ SALAH</button>' +
+  '</div>';
+}
+function answerBS(qid, val){
+  if(state.answers[qid]) return;
+  const q = findQ(qid);
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCardVisual(q, state.answers[qid]);
+  updateScoreStrip();
+}
+
+function renderJD(q){
+  const shuffled = q.options.slice().sort(function(){ return Math.random()-0.5; });
+  let html = '<div class="jd-row" id="jdrow-'+q.id+'">' +
+    '<div class="jd-left">'+q.left+'</div><div class="jd-arrow">→</div>' +
+    '<select id="sel-'+q.id+'" onchange="answerJD(\''+q.id+'\')">' +
+    '<option value="">-- Pilih pasangan --</option>';
+  shuffled.forEach(function(opt){ html += '<option value="'+opt+'">'+opt+'</option>'; });
+  html += '</select></div>';
+  return html;
+}
+function answerJD(qid){
+  if(state.answers[qid]) return;
+  const q = findQ(qid);
+  const sel = document.getElementById('sel-'+qid);
+  const val = sel.value;
+  if(val === '') return;
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  sel.disabled = true;
+  document.getElementById('jdrow-'+qid).classList.add('answered', correct ? 'correct' : 'wrong');
+  showExplanation(q, correct);
+  updateScoreStrip();
+}
+
+function findQ(qid){
+  for(const t of typeOrder){
+    const found = allQuestions[t].find(function(q){ return q.id === qid; });
+    if(found) return found;
+  }
+  return null;
+}
+
+function refreshCardVisual(q, saved){
+  if(q.type === 'pg' || q.type === 'pk'){
+    const answers = q.type === 'pg' ? [q.answer] : q.answers;
+    q.options.forEach(function(opt, idx){
+      const btn = document.getElementById('opt-'+q.id+'-'+idx);
+      if(!btn) return;
+      btn.classList.add('disabled');
+      btn.classList.remove('pk-selected');
+      const isChosen = q.type === 'pg' ? idx === saved.chosen : saved.chosen.indexOf(idx) !== -1;
+      if(answers.indexOf(idx) !== -1){ btn.classList.add('correct'); }
+      else if(isChosen){ btn.classList.add('wrong'); }
+    });
+    const confirmBtn = document.getElementById('confirm-'+q.id);
+    if(confirmBtn){ confirmBtn.style.display = 'none'; }
+  } else if(q.type === 'bs'){
+    const trueBtn = document.getElementById('bstrue-'+q.id);
+    const falseBtn = document.getElementById('bsfalse-'+q.id);
+    [trueBtn, falseBtn].forEach(function(b){ if(b) b.disabled = true; });
+    if(q.answer === true){ if(trueBtn) trueBtn.classList.add('correct'); if(!saved.correct && falseBtn) falseBtn.classList.add('wrong'); }
+    else{ if(falseBtn) falseBtn.classList.add('correct'); if(!saved.correct && trueBtn) trueBtn.classList.add('wrong'); }
+  } else if(q.type === 'jd'){
+    const row = document.getElementById('jdrow-'+q.id);
+    if(row){ row.classList.add('answered', saved.correct ? 'correct' : 'wrong'); }
+    const sel = document.getElementById('sel-'+q.id);
+    if(sel){ sel.disabled = true; }
+  }
+  showExplanation(q, saved.correct);
+}
+
+function showExplanation(q, correct){
+  const box = document.getElementById('explain-'+q.id);
+  if(!box) return;
+  box.innerHTML = q.explanation;
+  box.classList.add('show', correct ? 'ok' : 'no');
+  typesetMath();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let correctCount = 0, answeredCount = 0;
+    qs.forEach(function(q){
+      const a = state.answers[q.id];
+      if(a){ answeredCount++; if(a.correct) correctCount++; }
+    });
+    const active = t === state.currentType ? ' style="color:var(--ink);"' : '';
+    html += '<span class="score-item"'+active+'>'+typeLabels[t]+': <b>'+correctCount+'/'+qs.length+'</b></span>';
+  });
+  strip.innerHTML = html;
+}
+
+function showAnalysis(){
+  let total=0, benar=0;
+  const perType = {};
+  typeOrder.forEach(function(t){
+    let c=0, a=0;
+    allQuestions[t].forEach(function(q){
+      const ans = state.answers[q.id];
+      if(ans){ a++; total++; if(ans.correct){ c++; benar++; } }
+    });
+    perType[t] = { correct:c, total:allQuestions[t].length };
+  });
+  const salah = total - benar;
+  const nilai = total > 0 ? Math.round((benar/total)*100) : 0;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  document.getElementById('statNilai').textContent = nilai + '%';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const p = perType[t];
+    const pct = p.total > 0 ? Math.round((p.correct/p.total)*100) : 0;
+    barsHtml += '<div class="type-bar-row"><span class="tb-label">'+typeLabels[t]+'</span>' +
+      '<div class="type-bar-track"><div class="type-bar-fill" style="width:'+pct+'%"></div></div>' +
+      '<span class="tb-val">'+p.correct+'/'+p.total+'</span></div>';
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let letter='E', msg='📚 Semangat Belajar', total25=25;
+  const pctOf25 = Math.round((benar/total25)*100);
+  if(pctOf25>=90){ letter='A'; msg='🏆 Luar Biasa!'; }
+  else if(pctOf25>=75){ letter='B'; msg='⭐ Bagus!'; }
+  else if(pctOf25>=60){ letter='C'; msg='👍 Cukup Baik'; }
+  else if(pctOf25>=40){ letter='D'; msg='💪 Jangan Menyerah'; }
+  document.getElementById('gLetter').textContent = letter;
+  document.getElementById('gMsg').textContent = msg;
+
+  document.getElementById('analysisPanel').classList.add('show');
+  document.getElementById('analysisPanel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  typesetMath();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 10, behavior:'smooth'});
+}
+
+/* ================= INIT ================= */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  onScroll();
+  typesetMath();
+});
+</script>
+</body>
+</html>
