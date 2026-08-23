@@ -8,9 +8,10 @@ deskripsi: >-
 
   Menentukan keliling, luas, panjang busur, sudut dan luas juring lingkaran, serta menyelesaikan masalah yang terkait; menjelaskan cara untuk menentukan luas permukaan dan volume bangun ruang (prisma, tabung, bola, limas dan kerucut) dan menyelesaikan masalah yang terkait; dan menjelaskan pengaruh perubahan secara proporsional dari bangun datar dan bangun ruang terhadap ukuran panjang, besar sudut, luas, dan/atau volume.
 bab:
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Lingkaran
     judul: Lingkaran
     ringkasan: Lingkaran
+    ebookUrl: /ebooks/C1 Ebook-Interaktif-Lingkaran.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Bangun Ruang
     ringkasan: Bangun Ruang
