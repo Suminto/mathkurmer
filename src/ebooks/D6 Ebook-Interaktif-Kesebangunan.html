@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kesebangunan — Kelas 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:'Source Serif 4', serif; background:var(--paper); color:var(--text-dark); line-height:1.7;}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono', monospace;}
+a{color:inherit; text-decoration:none;}
+
+.layout{display:flex; min-height:100vh;}
+
+#sidebar{
+  width:300px; flex-shrink:0; background:linear-gradient(180deg,var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto; padding:24px 18px;
+  border-right:2px solid var(--gold);
+}
+.side-label{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft); text-transform:uppercase;}
+.side-title{font-family:'Playfair Display', serif; font-size:20px; font-weight:700; margin:6px 0 18px; line-height:1.3;}
+.progress-wrap{background:var(--ink3); border-radius:8px; height:8px; overflow:hidden; margin-bottom:20px; border:1px solid var(--ink-border);}
+#progressBar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold), var(--gold-soft)); transition:width .4s;}
+.nav-group-title{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:1.5px; color:var(--cream-dim); text-transform:uppercase; margin:18px 0 8px;}
+.nav-link{display:block; padding:9px 12px; border-radius:8px; font-size:14px; color:var(--cream-dim); margin-bottom:3px; border-left:3px solid transparent; transition:.18s ease;}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left-color:var(--gold); font-weight:600;}
+.nav-sub{padding-left:26px; font-size:13px;}
+#mobileToggle{display:none;}
+#overlay{display:none;}
+
+#content{flex:1; min-width:0; padding:0;}
+.hero{padding:64px 60px 48px; background:linear-gradient(160deg, var(--paper2), var(--paper)); border-bottom:2px solid var(--paper-line);}
+.hero-label{font-family:'JetBrains Mono', monospace; color:var(--note-b); font-size:12px; letter-spacing:2px; text-transform:uppercase;}
+.hero h1{font-size:40px; margin:10px 0 16px; max-width:720px;}
+.hero p{font-size:17px; color:var(--text-mid); max-width:640px; margin-bottom:22px;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+.chip{background:var(--ink); color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:12px; padding:6px 12px; border-radius:999px; border:1px solid var(--gold);}
+
+section.mat-section{padding:48px 60px; border-bottom:1px solid var(--paper-line);}
+section.mat-section h2{font-size:28px; margin-bottom:6px;}
+.sec-eyebrow{font-family:'JetBrains Mono',monospace; color:var(--text-mid); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px;}
+section.mat-section p{margin-bottom:14px; font-size:16px;}
+section.mat-section h3{font-size:20px; margin:24px 0 10px;}
+
+.callout{border-radius:10px; padding:16px 20px; margin:18px 0; border-left:5px solid; font-size:15.5px;}
+.callout-def{background:var(--def); border-color:var(--def-b);}
+.callout-note{background:var(--note); border-color:var(--note-b);}
+.callout-warn{background:var(--warn); border-color:var(--warn-b);}
+.callout-title{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; display:block;}
+
+.example-box{background:#fff; border:1.5px solid var(--paper-line); border-radius:12px; padding:20px 22px; margin:18px 0; box-shadow:0 2px 10px rgba(0,0,0,.04);}
+.example-box .ex-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1.5px; color:var(--gold-soft); background:var(--ink); display:inline-block; padding:4px 10px; border-radius:6px; margin-bottom:10px;}
+.example-box .step{padding:4px 0 4px 14px; border-left:2px solid var(--paper-line); margin-left:4px;}
+
+.diagram-wrap{background:var(--paper2); border:1.5px solid var(--paper-line); border-radius:12px; padding:18px; margin:18px 0; text-align:center;}
+.diagram-wrap svg{max-width:100%; height:auto;}
+.diagram-caption{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-mid); margin-top:8px;}
+
+.calc-box{background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 24px; margin:20px 0; box-shadow:0 6px 20px rgba(20,26,46,.25);}
+.calc-box h4{color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
+.calc-row label{font-size:13px; color:var(--cream-dim); margin-right:4px;}
+.calc-box input{background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); padding:8px 10px; border-radius:7px; width:90px; font-family:'JetBrains Mono',monospace; font-size:14px;}
+.calc-box button{background:var(--gold); color:var(--ink); border:none; padding:9px 18px; border-radius:7px; font-weight:700; cursor:pointer; font-family:'Source Serif 4',serif; transition:.15s;}
+.calc-box button:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:10px; background:var(--ink3); border-radius:8px; padding:12px 16px; font-size:15px; min-height:20px;}
+
+#latihan{padding:48px 60px 80px;}
+#latihan h2{font-size:30px; margin-bottom:6px;}
+.type-btns{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 24px;}
+.type-btn{background:#fff; border:1.5px solid var(--paper-line); padding:10px 16px; border-radius:9px; font-family:'JetBrains Mono',monospace; font-size:12.5px; cursor:pointer; color:var(--text-mid); transition:.15s;}
+.type-btn:hover{border-color:var(--gold);}
+.type-btn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px;}
+.score-chip{background:#fff; border:1px solid var(--paper-line); border-radius:8px; padding:8px 14px; font-family:'JetBrains Mono',monospace; font-size:12.5px;}
+
+.question-card{background:#fff; border:1.5px solid var(--paper-line); border-radius:14px; padding:22px 24px; margin-bottom:18px; animation:fadeUp .35s ease; box-shadow:0 2px 10px rgba(0,0,0,.03);}
+@keyframes fadeUp{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+.q-num{width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; flex-shrink:0;}
+.q-level{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; padding:3px 9px; border-radius:999px; letter-spacing:.5px;}
+.lvl-mudah{background:#dff0da; color:#2f6b2f;}
+.lvl-sedang{background:#fdf0df; color:#a06a1c;}
+.lvl-sukar{background:#fbe1df; color:#a13a30;}
+.q-text{font-size:16px; margin-bottom:14px;}
+
+.opt-btn{display:block; width:100%; text-align:left; background:var(--paper2); border:1.5px solid var(--paper-line); padding:11px 14px; border-radius:9px; margin-bottom:8px; cursor:pointer; font-family:'Source Serif 4',serif; font-size:15px; transition:.15s;}
+.opt-btn:hover{border-color:var(--gold);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.pk-selected{border-color:var(--gold); background:#fdf0df;}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input[type=text]{flex:1; min-width:180px; padding:11px 14px; border:1.5px solid var(--paper-line); border-radius:9px; font-family:'Source Serif 4',serif; font-size:15px;}
+.btn-primary{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 20px; border-radius:9px; font-weight:600; cursor:pointer; font-family:'Source Serif 4',serif;}
+.btn-primary:hover{background:var(--ink2);}
+.btn-primary:disabled{opacity:.5; cursor:default;}
+
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{background:var(--paper2); padding:10px 14px; border-radius:8px; min-width:220px; font-family:'Source Serif 4',serif; font-size:14.5px;}
+.jd-row select{padding:10px 12px; border-radius:8px; border:1.5px solid var(--paper-line); font-family:'Source Serif 4',serif; font-size:14.5px; flex:1; min-width:200px;}
+
+.explanation{margin-top:12px; padding:12px 16px; border-radius:9px; font-size:14.5px; display:none;}
+.explanation.show{display:block;}
+.explanation.exp-correct{background:var(--correct); border-left:4px solid var(--correct-b);}
+.explanation.exp-wrong{background:var(--wrong); border-left:4px solid var(--wrong-b);}
+
+#analysisPanel{display:none; background:var(--ink); color:var(--cream); border-radius:16px; padding:32px; margin-top:24px;}
+#analysisPanel.show{display:block;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:var(--ink3); border-radius:10px; padding:16px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:26px; color:var(--gold-soft); font-weight:700;}
+.stat-box .lbl{font-size:12px; color:var(--cream-dim); margin-top:4px;}
+.grade-box{text-align:center; padding:20px; margin:18px 0; border-radius:12px; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:var(--ink);}
+.grade-box .grade-letter{font-family:'Playfair Display',serif; font-size:48px; font-weight:800;}
+.type-bar-row{margin-bottom:10px;}
+.type-bar-row .lbl{font-size:13px; color:var(--cream-dim); margin-bottom:4px; display:flex; justify-content:space-between;}
+.type-bar-track{background:var(--ink3); border-radius:6px; height:10px; overflow:hidden;}
+.type-bar-fill{height:100%; background:var(--gold); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.reset-btn{margin-top:18px; background:var(--gold); color:var(--ink); border:none; padding:12px 22px; border-radius:9px; font-weight:700; cursor:pointer;}
+
+footer{padding:36px 60px; background:var(--ink); color:var(--cream-dim); font-size:13.5px; text-align:center;}
+footer strong{color:var(--gold-soft);}
+
+@media(max-width:900px){
+  #sidebar{position:fixed; top:0; left:0; z-index:50; transform:translateX(-100%); transition:transform .25s ease; width:270px;}
+  #sidebar.open{transform:translateX(0);}
+  #mobileToggle{display:block; position:fixed; top:14px; left:14px; z-index:60; background:var(--ink); color:var(--gold-soft); border:none; width:42px; height:42px; border-radius:10px; font-size:18px; cursor:pointer;}
+  #overlay.show{display:block; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:40;}
+  .hero, section.mat-section, #latihan{padding:60px 20px 40px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:28px 20px;}
+}
+</style>
+</head>
+<body>
+
+<button id="mobileToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+  <nav id="sidebar">
+    <div class="side-label">Matematika · Kelas 9</div>
+    <div class="side-title">Kesebangunan</div>
+    <div class="progress-wrap"><div id="progressBar"></div></div>
+
+    <div class="nav-group-title">Materi</div>
+    <a class="nav-link" data-target="sec-a" href="#sec-a">A. Bangun Serupa/Sebangun</a>
+    <a class="nav-link" data-target="sec-b" href="#sec-b">B. Segitiga &amp; Segiempat Sebangun</a>
+    <a class="nav-link" data-target="sec-c" href="#sec-c">C. Segitiga yang Sebangun</a>
+    <a class="nav-link" data-target="sec-d" href="#sec-d">D. Menghitung Sisi/Sudut</a>
+    <a class="nav-link" data-target="sec-e" href="#sec-e">E. Mencari Segitiga Sebangun</a>
+    <a class="nav-link" data-target="sec-f" href="#sec-f">F. Perbandingan Luas</a>
+    <a class="nav-link" data-target="sec-g" href="#sec-g">G. Kesebangunan Bangun Ruang</a>
+
+    <div class="nav-group-title">Latihan Soal</div>
+    <a class="nav-link" data-target="latihan" href="#latihan">Mulai Latihan</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda Biasa</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('bs')">4. Benar/Salah</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+
+  <div id="content">
+
+    <div class="hero">
+      <div class="hero-label">Ebook Interaktif · Kurikulum Merdeka</div>
+      <h1>Kesebangunan</h1>
+      <p>Materi lengkap Matematika Kelas 9 SMP: mengenal bangun sebangun, syarat kesebangunan segitiga dan segiempat, cara menghitung sisi/sudut yang belum diketahui, perbandingan luas, hingga kesebangunan pada bangun ruang — dilengkapi diagram, kalkulator interaktif, dan 25 latihan soal.</p>
+      <div class="chip-row">
+        <span class="chip">A. Bangun Sebangun</span>
+        <span class="chip">B. Segitiga &amp; Segiempat</span>
+        <span class="chip">C. Segitiga Sebangun</span>
+        <span class="chip">D. Sisi/Sudut</span>
+        <span class="chip">E. Mencari Segitiga</span>
+        <span class="chip">F. Perbandingan Luas</span>
+        <span class="chip">G. Bangun Ruang</span>
+      </div>
+    </div>
+
+    <!-- SECTION A -->
+    <section class="mat-section" id="sec-a">
+      <div class="sec-eyebrow">Bagian A</div>
+      <h2>Bangun yang Serupa atau Sebangun</h2>
+      <p>Dua bangun datar dikatakan <strong>sebangun (similar)</strong> jika bentuknya sama, meskipun ukurannya boleh berbeda.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Definisi</span>
+        Dua bangun dikatakan <strong>sebangun</strong> jika memenuhi dua syarat berikut:
+        <br>1. Sudut-sudut yang bersesuaian sama besar.
+        <br>2. Sisi-sisi yang bersesuaian memiliki perbandingan (rasio) yang sama.
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-title">Sebangun vs Kongruen</span>
+        <strong>Sebangun</strong>: bentuk sama, ukuran boleh berbeda (rasio sisi tetap konstan).<br>
+        <strong>Kongruen</strong>: bentuk dan ukuran sama persis (rasio sisi = 1).<br>
+        Jadi, semua bangun yang kongruen pasti sebangun, tetapi tidak semua bangun sebangun itu kongruen.
+      </div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,150 110,150 110,70 30,70" fill="none" stroke="#2b2416" stroke-width="2.5"/>
+          <text x="15" y="115" font-size="13" font-family="JetBrains Mono, monospace">6</text>
+          <text x="65" y="168" font-size="13" font-family="JetBrains Mono, monospace">4</text>
+          <text x="20" y="65" font-size="14" font-family="Playfair Display, serif">A</text>
+          <text x="112" y="65" font-size="14" font-family="Playfair Display, serif">B</text>
+          <text x="112" y="162" font-size="14" font-family="Playfair Display, serif">C</text>
+          <text x="20" y="162" font-size="14" font-family="Playfair Display, serif">D</text>
+
+          <polygon points="200,150 350,150 350,45 200,45" fill="none" stroke="#d99a45" stroke-width="2.5"/>
+          <text x="170" y="100" font-size="13" font-family="JetBrains Mono, monospace">9</text>
+          <text x="265" y="168" font-size="13" font-family="JetBrains Mono, monospace">6</text>
+          <text x="188" y="40" font-size="14" font-family="Playfair Display, serif">E</text>
+          <text x="353" y="40" font-size="14" font-family="Playfair Display, serif">F</text>
+          <text x="353" y="162" font-size="14" font-family="Playfair Display, serif">G</text>
+          <text x="188" y="162" font-size="14" font-family="Playfair Display, serif">H</text>
+        </svg>
+        <div class="diagram-caption">Persegi panjang ABCD dan EFGH sebangun karena semua sudutnya 90° dan perbandingan sisinya sama: 4/6 = 6/9 = 2/3</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Persegi panjang ABCD berukuran 4 cm x 6 cm sebangun dengan persegi panjang EFGH berukuran 6 cm x 9 cm. Periksa apakah kedua bangun tersebut benar-benar sebangun!</p>
+        <div class="step">Bandingkan sisi bersesuaian: \( \dfrac{AB}{EF} = \dfrac{4}{6} = \dfrac{2}{3} \) dan \( \dfrac{BC}{FG} = \dfrac{6}{9} = \dfrac{2}{3} \)</div>
+        <div class="step">Karena kedua perbandingan sisi bersesuaian sama (\( \frac{2}{3} \)) dan semua sudutnya 90°, maka ABCD sebangun dengan EFGH.</div>
+      </div>
+    </section>
+
+    <!-- SECTION B -->
+    <section class="mat-section" id="sec-b">
+      <div class="sec-eyebrow">Bagian B</div>
+      <h2>Segitiga dan Segiempat Sebangun</h2>
+      <p>Untuk segiempat (seperti persegi panjang, jajar genjang, trapesium), kedua syarat kesebangunan (sudut sama besar DAN sisi sebanding) harus dipenuhi bersamaan.</p>
+
+      <div class="callout callout-note">
+        <span class="callout-title">Perhatikan</span>
+        Berbeda dengan segitiga, pada segiempat kita <strong>tidak bisa</strong> hanya mengandalkan salah satu syarat saja. Contoh: setiap persegi memiliki sudut 90° semua, tetapi persegi 2x2 dan persegi panjang 2x4 tidak sebangun karena sisinya tidak sebanding.
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Apakah belah ketupat dengan sisi 5 cm pasti sebangun dengan belah ketupat sisi 8 cm?</p>
+        <div class="step">Semua sisi belah ketupat sama panjang, sehingga rasio sisi bersesuaian otomatis sama: \( \frac{5}{5}=\frac{8}{8} \), tetapi ini belum cukup.</div>
+        <div class="step">Sudut-sudut kedua belah ketupat belum tentu sama besar (belah ketupat bisa "gemuk" atau "kurus"). Jadi belum tentu sebangun — bergantung pada besar sudutnya.</div>
+      </div>
+
+      <h3>Kekhususan Segitiga</h3>
+      <p>Segitiga memiliki keistimewaan: jika <strong>dua sudut</strong> sebuah segitiga sama dengan dua sudut segitiga lain, maka sudut ketiga otomatis sama besar (jumlah sudut segitiga selalu 180°) — sehingga kedua segitiga otomatis sebangun. Inilah yang akan dipelajari pada Bagian C.</p>
+    </section>
+
+    <!-- SECTION C -->
+    <section class="mat-section" id="sec-c">
+      <div class="sec-eyebrow">Bagian C</div>
+      <h2>Segitiga yang Sebangun</h2>
+      <p>Ada tiga syarat (cukup salah satu saja) untuk membuktikan dua segitiga sebangun.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Syarat Kesebangunan Segitiga</span>
+        <strong>1. Sudut-Sudut (AA)</strong> — dua pasang sudut yang bersesuaian sama besar.<br>
+        <strong>2. Sisi-Sisi-Sisi (SSS)</strong> — tiga pasang sisi bersesuaian memiliki perbandingan yang sama.<br>
+        <strong>3. Sisi-Sudut-Sisi (SAS)</strong> — dua pasang sisi bersesuaian sebanding, dan sudut di antara kedua sisi tersebut sama besar.
+      </div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 460 210" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,180 140,180 60,60" fill="none" stroke="#2b2416" stroke-width="2.5"/>
+          <text x="30" y="198" font-size="14" font-family="Playfair Display, serif">A</text>
+          <text x="142" y="198" font-size="14" font-family="Playfair Display, serif">B</text>
+          <text x="52" y="55" font-size="14" font-family="Playfair Display, serif">C</text>
+          <path d="M 55 175 A 10 10 0 0 1 65 165" fill="none" stroke="#d99a45" stroke-width="2"/>
+
+          <polygon points="220,180 420,180 300,20" fill="none" stroke="#d99a45" stroke-width="2.5"/>
+          <text x="205" y="198" font-size="14" font-family="Playfair Display, serif">D</text>
+          <text x="422" y="198" font-size="14" font-family="Playfair Display, serif">E</text>
+          <text x="295" y="15" font-size="14" font-family="Playfair Display, serif">F</text>
+          <path d="M 232 175 A 15 15 0 0 1 248 158" fill="none" stroke="#2b2416" stroke-width="2"/>
+        </svg>
+        <div class="diagram-caption">△ABC dan △DEF sebangun jika sudut A = sudut D dan sudut B = sudut E (syarat AA)</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Segitiga ABC memiliki sudut A = 50° dan sudut B = 70°. Segitiga DEF memiliki sudut D = 50° dan sudut E = 70°. Apakah kedua segitiga sebangun?</p>
+        <div class="step">Karena dua pasang sudut bersesuaian sama besar (A=D=50° dan B=E=70°), maka berdasarkan syarat <strong>AA</strong>, △ABC sebangun dengan △DEF.</div>
+        <div class="step">Sudut ketiga otomatis sama: sudut C = sudut F = 180° − 50° − 70° = 60°.</div>
+      </div>
+    </section>
+
+    <!-- SECTION D -->
+    <section class="mat-section" id="sec-d">
+      <div class="sec-eyebrow">Bagian D</div>
+      <h2>Menghitung Sisi atau Sudut yang Tidak Diketahui</h2>
+      <p>Jika dua bangun diketahui sebangun, sisi atau sudut yang belum diketahui dapat dicari menggunakan perbandingan sisi-sisi bersesuaian.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Cara Kerja</span>
+        \[ \frac{\text{sisi bangun 1}}{\text{sisi bersesuaian bangun 2}} = \frac{\text{sisi lain bangun 1}}{\text{sisi bersesuaian lain bangun 2}} \]
+        Sudut yang bersesuaian pada bangun sebangun selalu sama besar, sehingga tinggal disalin langsung.
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>△ABC sebangun dengan △DEF. Diketahui AB = 6 cm, DE = 9 cm, dan BC = 8 cm. Tentukan panjang EF!</p>
+        <div class="step">Tentukan skala perbandingan: \( \dfrac{DE}{AB} = \dfrac{9}{6} = \dfrac{3}{2} \)</div>
+        <div class="step">\( EF = BC \times \dfrac{3}{2} = 8 \times \dfrac{3}{2} = 12 \) cm</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Pada △ABC dan △DEF yang sebangun, sudut A = 65° dan sudut B = 80°. Tentukan besar sudut D, E, dan F jika D bersesuaian dengan A, E bersesuaian dengan B!</p>
+        <div class="step">Karena sebangun, sudut bersesuaian sama besar: sudut D = sudut A = 65°, sudut E = sudut B = 80°.</div>
+        <div class="step">Sudut F = 180° − 65° − 80° = 35°.</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>Kalkulator Mencari Sisi yang Belum Diketahui</h4>
+        <div class="calc-row">
+          <label>Sisi 1 bangun A (a₁)</label><input type="number" id="calcD_a1" value="6">
+          <label>Sisi bersesuaian bangun B (b₁)</label><input type="number" id="calcD_b1" value="9">
+        </div>
+        <div class="calc-row">
+          <label>Sisi 2 bangun A (a₂)</label><input type="number" id="calcD_a2" value="8">
+          <button onclick="hitungSisi()">Hitung Sisi 2 Bangun B</button>
+        </div>
+        <div class="calc-result" id="calcD_result">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- SECTION E -->
+    <section class="mat-section" id="sec-e">
+      <div class="sec-eyebrow">Bagian E</div>
+      <h2>Mencari Segitiga Sebangun</h2>
+      <p>Pada gambar gabungan (dua segitiga yang saling berimpit atau bertumpuk), kita perlu mengenali pasangan segitiga yang sebangun dengan cermat sebelum menghitung.</p>
+
+      <div class="callout callout-note">
+        <span class="callout-title">Langkah Mengenali</span>
+        1. Cari sudut yang sama pada kedua segitiga (misalnya sudut yang berimpit / sudut sepihak akibat garis sejajar).<br>
+        2. Tentukan pasangan sisi yang bersesuaian dengan hati-hati (jangan tertukar).<br>
+        3. Gunakan syarat AA, SSS, atau SAS untuk memastikan kesebangunan.
+      </div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="60,190 340,190 200,30" fill="none" stroke="#2b2416" stroke-width="2.5"/>
+          <line x1="120" y1="120" x2="280" y2="120" stroke="#d99a45" stroke-width="2.5"/>
+          <text x="45" y="208" font-size="14" font-family="Playfair Display, serif">B</text>
+          <text x="345" y="208" font-size="14" font-family="Playfair Display, serif">C</text>
+          <text x="192" y="20" font-size="14" font-family="Playfair Display, serif">A</text>
+          <text x="100" y="118" font-size="14" font-family="Playfair Display, serif">D</text>
+          <text x="285" y="118" font-size="14" font-family="Playfair Display, serif">E</text>
+        </svg>
+        <div class="diagram-caption">DE sejajar BC pada △ABC → △ADE sebangun dengan △ABC (sudut A sama, sudut ADE = sudut ABC karena sehadap)</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Pada segitiga ABC, garis DE sejajar BC dengan D di AB dan E di AC. Buktikan △ADE sebangun dengan △ABC!</p>
+        <div class="step">Sudut A sama-sama dimiliki kedua segitiga (sudut berimpit).</div>
+        <div class="step">Karena DE // BC, maka sudut ADE = sudut ABC (sudut sehadap).</div>
+        <div class="step">Dua pasang sudut sama besar → berdasarkan syarat AA, △ADE sebangun dengan △ABC.</div>
+      </div>
+    </section>
+
+    <!-- SECTION F -->
+    <section class="mat-section" id="sec-f">
+      <div class="sec-eyebrow">Bagian F</div>
+      <h2>Perbandingan Luas untuk Bangun yang Sebangun</h2>
+      <p>Perbandingan luas dua bangun sebangun <strong>tidak sama</strong> dengan perbandingan sisinya, melainkan sama dengan <strong>kuadrat</strong> dari perbandingan sisinya.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Rumus</span>
+        Jika perbandingan sisi bersesuaian dua bangun sebangun adalah \( m : n \), maka
+        \[ \text{Luas}_1 : \text{Luas}_2 = m^2 : n^2 \]
+      </div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <rect x="30" y="90" width="60" height="60" fill="#eef4ea" stroke="#7fae6b" stroke-width="2.5"/>
+          <text x="50" y="125" font-size="13" font-family="JetBrains Mono, monospace">2</text>
+          <rect x="160" y="30" width="120" height="120" fill="#fdf0df" stroke="#d99a45" stroke-width="2.5"/>
+          <text x="215" y="95" font-size="13" font-family="JetBrains Mono, monospace">4</text>
+        </svg>
+        <div class="diagram-caption">Perbandingan sisi 2:4 = 1:2 → perbandingan luas = 1²:2² = 1:4</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Dua segitiga sebangun memiliki perbandingan sisi 3 : 5. Jika luas segitiga pertama adalah 27 cm², tentukan luas segitiga kedua!</p>
+        <div class="step">Perbandingan luas = \( 3^2 : 5^2 = 9 : 25 \)</div>
+        <div class="step">\( \text{Luas}_2 = \dfrac{25}{9} \times 27 = 75 \) cm²</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>Kalkulator Perbandingan Luas</h4>
+        <div class="calc-row">
+          <label>Sisi bangun 1</label><input type="number" id="calcF_s1" value="3">
+          <label>Sisi bangun 2</label><input type="number" id="calcF_s2" value="5">
+          <button onclick="hitungPerbandinganLuas()">Hitung Perbandingan Luas</button>
+        </div>
+        <div class="calc-result" id="calcF_result">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- SECTION G -->
+    <section class="mat-section" id="sec-g">
+      <div class="sec-eyebrow">Bagian G</div>
+      <h2>Kesebangunan pada Bangun Ruang</h2>
+      <p>Konsep kesebangunan juga berlaku pada bangun ruang seperti kubus, balok, tabung, dan kerucut.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Rumus</span>
+        Jika perbandingan rusuk/panjang bersesuaian dua bangun ruang sebangun adalah \( m : n \), maka
+        \[ \text{Luas permukaan}_1 : \text{Luas permukaan}_2 = m^2 : n^2 \]
+        \[ \text{Volume}_1 : \text{Volume}_2 = m^3 : n^3 \]
+      </div>
+
+      <div class="callout callout-note">
+        <span class="callout-title">Ingat</span>
+        Luas permukaan mengikuti perbandingan <strong>kuadrat</strong> (karena luas berdimensi dua), sedangkan volume mengikuti perbandingan <strong>pangkat tiga</strong> (karena volume berdimensi tiga).
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Dua kubus sebangun memiliki perbandingan panjang rusuk 2 : 3. Jika volume kubus pertama adalah 40 cm³, tentukan volume kubus kedua!</p>
+        <div class="step">Perbandingan volume = \( 2^3 : 3^3 = 8 : 27 \)</div>
+        <div class="step">\( \text{Volume}_2 = \dfrac{27}{8} \times 40 = 135 \) cm³</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>Kalkulator Perbandingan Luas Permukaan &amp; Volume</h4>
+        <div class="calc-row">
+          <label>Rusuk bangun 1</label><input type="number" id="calcG_r1" value="2">
+          <label>Rusuk bangun 2</label><input type="number" id="calcG_r2" value="3">
+          <button onclick="hitungBangunRuang()">Hitung Perbandingan</button>
+        </div>
+        <div class="calc-result" id="calcG_result">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- LATIHAN -->
+    <section id="latihan">
+      <div class="sec-eyebrow">Latihan Soal</div>
+      <h2>Uji Pemahamanmu</h2>
+      <p>25 soal dalam 5 tipe berbeda untuk menguji pemahamanmu tentang kesebangunan.</p>
+
+      <div class="type-btns">
+        <button class="type-btn active" id="btn-pg" onclick="showType('pg')">1. Pilihan Ganda Biasa</button>
+        <button class="type-btn" id="btn-is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="type-btn" id="btn-pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="type-btn" id="btn-bs" onclick="showType('bs')">4. Benar/Salah</button>
+        <button class="type-btn" id="btn-jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="scoreStrip"></div>
+
+      <div id="quiz-area"></div>
+
+      <button class="btn-primary" onclick="showAnalysis()">Lihat Analisis Akhir</button>
+
+      <div id="analysisPanel">
+        <h3 style="color:var(--gold-soft)">Analisis Hasil Belajar</h3>
+        <div class="stat-grid" id="statGrid"></div>
+        <div id="typeBars"></div>
+        <div class="grade-box" id="gradeBox"></div>
+        <button class="reset-btn" onclick="resetAll()">Ulangi Semua Latihan</button>
+      </div>
+    </section>
+
+    <footer>
+      Ebook Interaktif Matematika — Kesebangunan · Kelas 9 SMP · Kurikulum Merdeka<br>
+      Dibuat oleh <strong>Suminto with Claude</strong>
+    </footer>
+  </div>
+</div>
+
+<script>
+/* ============ SIDEBAR: SCROLLSPY + PROGRESS + MOBILE ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+const sectionIds = ['sec-a','sec-b','sec-c','sec-d','sec-e','sec-f','sec-g','latihan'];
+const navLinks = document.querySelectorAll('.nav-link[data-target]');
+
+function updateScrollspyAndProgress(){
+  const scrollY = window.scrollY;
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docH > 0 ? (scrollY / docH) * 100 : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  let current = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140){ current = id; }
+    }
+  });
+  navLinks.forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+}
+window.addEventListener('scroll', updateScrollspyAndProgress);
+window.addEventListener('resize', updateScrollspyAndProgress);
+
+navLinks.forEach(function(link){
+  link.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+document.querySelectorAll('.nav-sub').forEach(function(link){
+  link.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ KALKULATOR MATERI ============ */
+function hitungSisi(){
+  const a1 = parseFloat(document.getElementById('calcD_a1').value) || 0;
+  const b1 = parseFloat(document.getElementById('calcD_b1').value) || 0;
+  const a2 = parseFloat(document.getElementById('calcD_a2').value) || 0;
+  if(a1 === 0){
+    document.getElementById('calcD_result').innerHTML = 'Sisi 1 bangun A tidak boleh 0.';
+    return;
+  }
+  const skala = b1 / a1;
+  const b2 = a2 * skala;
+  document.getElementById('calcD_result').innerHTML =
+    '<span class="mono">Skala = '+b1+'/'+a1+' = '+(Math.round(skala*1000)/1000)+' &rarr; Sisi 2 bangun B = '+a2+' &times; '+(Math.round(skala*1000)/1000)+' = '+(Math.round(b2*1000)/1000)+'</span>';
+}
+
+function hitungPerbandinganLuas(){
+  const s1 = parseFloat(document.getElementById('calcF_s1').value) || 0;
+  const s2 = parseFloat(document.getElementById('calcF_s2').value) || 0;
+  const l1 = s1*s1, l2 = s2*s2;
+  document.getElementById('calcF_result').innerHTML =
+    '<span class="mono">Perbandingan sisi = '+s1+':'+s2+' &rarr; Perbandingan luas = '+s1+'&sup2;:'+s2+'&sup2; = '+l1+':'+l2+'</span>';
+}
+
+function hitungBangunRuang(){
+  const r1 = parseFloat(document.getElementById('calcG_r1').value) || 0;
+  const r2 = parseFloat(document.getElementById('calcG_r2').value) || 0;
+  const luas1 = r1*r1, luas2 = r2*r2;
+  const vol1 = r1*r1*r1, vol2 = r2*r2*r2;
+  document.getElementById('calcG_result').innerHTML =
+    '<span class="mono">Perbandingan rusuk = '+r1+':'+r2+'<br>Perbandingan luas permukaan = '+luas1+':'+luas2+'<br>Perbandingan volume = '+vol1+':'+vol2+'</span>';
+}
+
+/* ============ BANK SOAL LATIHAN ============ */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Dua bangun dikatakan sebangun jika ...',
+      options:['A. Sisi-sisinya sama panjang saja', 'B. Sudut-sudut bersesuaian sama besar dan sisi-sisi bersesuaian sebanding', 'C. Luasnya sama', 'D. Kelilingnya sama'], answer:1,
+      explanation:'Dua bangun sebangun harus memenuhi dua syarat sekaligus: sudut bersesuaian sama besar DAN sisi bersesuaian sebanding.' },
+    { id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Syarat kesebangunan dua segitiga berdasarkan dua pasang sudut yang sama besar disebut syarat ...',
+      options:['A. SSS', 'B. SAS', 'C. AA (Sudut-Sudut)', 'D. HL'], answer:2,
+      explanation:'Syarat AA (Sudut-Sudut) menyatakan bahwa jika dua pasang sudut bersesuaian sama besar, kedua segitiga pasti sebangun.' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'△ABC sebangun dengan △DEF dengan skala 3:5. Jika AB = 6 cm, maka panjang DE adalah ...',
+      options:['A. 8 cm', 'B. 9 cm', 'C. 10 cm', 'D. 12 cm'], answer:2,
+      explanation:'\\(DE = AB \\times \\dfrac{5}{3} = 6 \\times \\dfrac{5}{3} = 10\\) cm.' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Dua bangun sebangun memiliki perbandingan sisi 2:3. Perbandingan luas kedua bangun tersebut adalah ...',
+      options:['A. 2:3', 'B. 4:6', 'C. 4:9', 'D. 8:27'], answer:2,
+      explanation:'Perbandingan luas = kuadrat perbandingan sisi = \\(2^2:3^2 = 4:9\\).' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Sebuah tiang setinggi 4 m memiliki bayangan 5 m. Pada saat bersamaan, sebatang pohon memiliki bayangan 15 m. Tinggi pohon tersebut adalah ...',
+      options:['A. 10 m', 'B. 12 m', 'C. 15 m', 'D. 18 m'], answer:1,
+      explanation:'Perbandingan segitiga sebangun: \\(\\dfrac{4}{5} = \\dfrac{x}{15}\\), sehingga \\(x = \\dfrac{4 \\times 15}{5} = 12\\) m.' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Dua bangun yang memiliki bentuk sama namun ukuran boleh berbeda disebut dua bangun yang ...',
+      answer:'sebangun', altAnswers:['serupa'],
+      explanation:'Istilah untuk bangun yang bentuknya sama namun ukurannya boleh berbeda adalah "sebangun".' },
+    { id:'is2', type:'is', level:'mudah', num:2,
+      text:'Syarat kesebangunan segitiga berdasarkan tiga sisi yang sebanding disebut syarat ...',
+      answer:'SSS', altAnswers:['sisi sisi sisi','sisi-sisi-sisi'],
+      explanation:'Syarat ini disebut SSS (Sisi-Sisi-Sisi), yaitu ketiga pasang sisi bersesuaian sebanding.' },
+    { id:'is3', type:'is', level:'sedang', num:3,
+      text:'Jika perbandingan sisi dua bangun sebangun adalah 2:5, maka perbandingan luasnya adalah ...',
+      answer:'4:25', altAnswers:['4/25'],
+      explanation:'Perbandingan luas = kuadrat perbandingan sisi = \\(2^2:5^2 = 4:25\\).' },
+    { id:'is4', type:'is', level:'sedang', num:4,
+      text:'Dua kubus sebangun dengan perbandingan panjang rusuk 2:3. Perbandingan volume kedua kubus tersebut adalah ...',
+      answer:'8:27', altAnswers:['8/27'],
+      explanation:'Perbandingan volume = pangkat tiga perbandingan rusuk = \\(2^3:3^3 = 8:27\\).' },
+    { id:'is5', type:'is', level:'sukar', num:5,
+      text:'Panjang bayangan sebuah tongkat 1,5 m adalah 2 m. Pada saat bersamaan, bayangan sebuah pohon adalah 12 m. Tinggi pohon tersebut adalah ... m',
+      answer:'9', altAnswers:['9 m'],
+      explanation:'\\(\\dfrac{1{,}5}{2} = \\dfrac{x}{12}\\), sehingga \\(x = \\dfrac{1{,}5 \\times 12}{2} = 9\\) m.' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'mudah', num:1,
+      text:'Manakah pasangan bangun berikut yang PASTI sebangun? (pilih semua yang benar)',
+      options:['A. Dua persegi (ukuran berbeda)', 'B. Dua segitiga sama sisi (ukuran berbeda)', 'C. Dua persegi panjang sembarang', 'D. Dua lingkaran (ukuran berbeda)'],
+      answers:[0,1,3],
+      explanation:'Semua persegi, segitiga sama sisi, dan lingkaran pasti sebangun satu sama lain karena bentuknya selalu proporsional. Persegi panjang sembarang belum tentu sebangun karena rasio panjang:lebar bisa berbeda-beda.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Manakah syarat berikut yang dapat digunakan untuk membuktikan dua segitiga sebangun? (pilih semua yang benar)',
+      options:['A. Sudut-Sudut (AA)', 'B. Sisi-Sisi-Sisi sebanding (SSS)', 'C. Sisi-Sudut-Sisi sebanding (SAS)', 'D. Dua sisi sama panjang saja'],
+      answers:[0,1,2],
+      explanation:'AA, SSS, dan SAS adalah tiga syarat sah untuk membuktikan kesebangunan segitiga. Dua sisi sama panjang saja tidak cukup, karena sudut atau sisi lain belum tentu sebanding.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Dua segitiga sebangun dengan skala 1:4. Manakah pernyataan berikut yang BENAR? (pilih semua yang benar)',
+      options:['A. Perbandingan sisi bersesuaian 1:4', 'B. Perbandingan luas 1:16', 'C. Perbandingan luas 1:4', 'D. Sudut-sudut bersesuaian sama besar'],
+      answers:[0,1,3],
+      explanation:'Perbandingan sisi 1:4, perbandingan luas = kuadratnya = 1:16 (bukan 1:4), dan sudut-sudut bersesuaian tetap sama besar pada bangun sebangun.' },
+    { id:'pk4', type:'pk', level:'sedang', num:4,
+      text:'Dua balok sebangun dengan perbandingan panjang rusuk 3:5. Manakah pernyataan berikut yang BENAR? (pilih semua yang benar)',
+      options:['A. Perbandingan luas permukaan 9:25', 'B. Perbandingan volume 27:125', 'C. Perbandingan volume 9:25', 'D. Perbandingan luas permukaan 3:5'],
+      answers:[0,1],
+      explanation:'Perbandingan luas permukaan = kuadrat rasio rusuk = \\(3^2:5^2=9:25\\). Perbandingan volume = pangkat tiga rasio rusuk = \\(3^3:5^3=27:125\\). Pilihan C dan D salah karena tertukar pangkatnya.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5,
+      text:'Sebuah foto berukuran 4 cm x 6 cm diperbesar secara sebangun menjadi 10 cm x 15 cm. Manakah pernyataan berikut yang BENAR? (pilih semua yang benar)',
+      options:['A. Skala perbesaran adalah 2,5 kali', 'B. Bentuk foto tetap sama seperti aslinya', 'C. Luas foto menjadi 6,25 kali luas semula', 'D. Perbandingan panjang dan lebar foto berubah setelah diperbesar'],
+      answers:[0,1,2],
+      explanation:'Skala = 10/4 = 15/6 = 2,5 kali. Karena diperbesar sebangun, bentuknya tetap sama dan rasio panjang:lebar TIDAK berubah (D salah). Luas menjadi \\(2{,}5^2 = 6{,}25\\) kali semula.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Pernyataan: "Dua bangun yang sebangun pasti memiliki ukuran yang sama persis" adalah benar.',
+      answer:false,
+      explanation:'❌ Salah. Bangun sebangun hanya harus memiliki bentuk sama, ukurannya boleh berbeda (asalkan sisi sebanding). Ukuran sama persis disebut kongruen.' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Pernyataan: "Semua lingkaran pasti sebangun satu sama lain" adalah benar.',
+      answer:true,
+      explanation:'✅ Benar. Semua lingkaran memiliki bentuk yang sama (bulat sempurna), hanya berbeda ukuran jari-jari, sehingga selalu sebangun.' },
+    { id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Pernyataan: "Jika dua segitiga memiliki dua pasang sudut yang sama besar, maka kedua segitiga tersebut pasti sebangun" adalah benar.',
+      answer:true,
+      explanation:'✅ Benar. Ini adalah syarat AA (Sudut-Sudut) yang cukup untuk membuktikan kesebangunan segitiga.' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Pernyataan: "Perbandingan luas dua bangun sebangun sama persis dengan perbandingan sisinya" adalah benar.',
+      answer:false,
+      explanation:'❌ Salah. Perbandingan luas sama dengan KUADRAT dari perbandingan sisinya, bukan sama persis.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Pernyataan: "Dua kubus dengan perbandingan panjang rusuk 1:2 memiliki perbandingan volume 1:6" adalah benar.',
+      answer:false,
+      explanation:'❌ Salah. Perbandingan volume seharusnya \\(1^3:2^3 = 1:8\\), bukan 1:6.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'Syarat kesebangunan segitiga berdasarkan sudut', right:'AA (Sudut-Sudut)', answer:'AA (Sudut-Sudut)',
+      options:['AA (Sudut-Sudut)', 'SSS', 'SAS', 'HL'],
+      explanation:'Syarat berdasarkan dua pasang sudut bersesuaian yang sama besar disebut AA (Sudut-Sudut).' },
+    { id:'jd2', type:'jd', level:'mudah', num:2,
+      left:'Perbandingan sisi 2:3, maka perbandingan luas', right:'4:9', answer:'4:9',
+      options:['4:9', '2:3', '6:9', '8:27'],
+      explanation:'Perbandingan luas = kuadrat perbandingan sisi = \\(2^2:3^2=4:9\\).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Perbandingan rusuk kubus 1:3, maka perbandingan volume', right:'1:27', answer:'1:27',
+      options:['1:27', '1:9', '1:3', '3:1'],
+      explanation:'Perbandingan volume = pangkat tiga perbandingan rusuk = \\(1^3:3^3=1:27\\).' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'Dua bangun dengan bentuk sama, ukuran boleh berbeda', right:'Sebangun', answer:'Sebangun',
+      options:['Sebangun', 'Kongruen', 'Simetris', 'Identik'],
+      explanation:'Bangun dengan bentuk sama namun ukuran boleh berbeda disebut sebangun.' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'Dua bangun dengan bentuk dan ukuran sama persis', right:'Kongruen', answer:'Kongruen',
+      options:['Kongruen', 'Sebangun', 'Serupa', 'Proporsional'],
+      explanation:'Bangun dengan bentuk dan ukuran sama persis (rasio sisi 1:1) disebut kongruen.' }
+  ]
+};
+
+const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  typeOrder.forEach(function(t){
+    document.getElementById('btn-'+t).classList.toggle('active', t === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quiz-area');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function renderCard(q){
+  const levelClass = q.level === 'mudah' ? 'lvl-mudah' : (q.level === 'sedang' ? 'lvl-sedang' : 'lvl-sukar');
+  let body = '';
+  if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+
+  const answered = state.answers[q.id];
+  let expHtml = '';
+  if(answered){
+    const cls = answered.correct ? 'exp-correct' : 'exp-wrong';
+    expHtml = '<div class="explanation show ' + cls + '">' + (answered.correct ? '✅ ' : '') + q.explanation + '</div>';
+  }
+
+  return '<div class="question-card" id="card-'+q.id+'">' +
+    '<div class="q-head"><div class="q-num">'+q.num+'</div><span class="q-level '+levelClass+'">'+q.level+'</span></div>' +
+    '<div class="q-text">'+q.text+'</div>' +
+    body +
+    expHtml +
+    '</div>';
+}
+
+function renderPG(q){
+  const answered = state.answers[q.id];
+  let html = '';
+  q.options.forEach(function(opt, idx){
+    let cls = 'opt-btn';
+    let disabled = '';
+    if(answered){
+      disabled = 'disabled';
+      if(idx === q.answer){ cls += ' correct'; }
+      else if(idx === answered.chosen){ cls += ' wrong'; }
+    }
+    html += '<button class="'+cls+'" '+disabled+' onclick="answerPG(\''+q.id+'\','+idx+')">'+opt+'</button>';
+  });
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){ return x.id === qid; });
+  if(state.answers[qid]) return;
+  const correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q);
+}
+
+function renderIS(q){
+  const answered = state.answers[q.id];
+  if(answered){
+    return '<div class="is-row"><input type="text" value="'+(answered.chosen||'')+'" disabled></div>';
+  }
+  return '<div class="is-row">' +
+    '<input type="text" id="input-'+q.id+'" placeholder="Ketik jawabanmu..." onkeydown="if(event.key===\'Enter\'){submitIS(\''+q.id+'\')}">' +
+    '<button class="btn-primary" onclick="submitIS(\''+q.id+'\')">Kirim Jawaban</button>' +
+    '</div>';
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){ return x.id === qid; });
+  const inputEl = document.getElementById('input-'+qid);
+  if(!inputEl) return;
+  const raw = inputEl.value.trim();
+  if(raw === '') return;
+  const norm = raw.toLowerCase().replace(/\s+/g,'');
+  const validAnswers = [q.answer].concat(q.altAnswers || []).map(function(a){ return a.toLowerCase().replace(/\s+/g,''); });
+  const correct = validAnswers.indexOf(norm) !== -1;
+  state.answers[qid] = { chosen: raw, correct: correct };
+  refreshCard(q);
+}
+
+function renderPK(q){
+  const answered = state.answers[q.id];
+  const selected = pkTemp[q.id] || [];
+  let html = '';
+  q.options.forEach(function(opt, idx){
+    let cls = 'opt-btn';
+    let disabled = '';
+    if(answered){
+      disabled = 'disabled';
+      if(q.answers.indexOf(idx) !== -1){ cls += ' correct'; }
+      else if(answered.chosen.indexOf(idx) !== -1){ cls += ' wrong'; }
+    } else if(selected.indexOf(idx) !== -1){
+      cls += ' pk-selected';
+    }
+    html += '<button class="'+cls+'" '+disabled+' onclick="togglePK(\''+q.id+'\','+idx+')">'+opt+'</button>';
+  });
+  if(!answered){
+    html += '<button class="btn-primary" onclick="submitPK(\''+q.id+'\')">Konfirmasi Jawaban</button>';
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const i = pkTemp[qid].indexOf(idx);
+  if(i === -1){ pkTemp[qid].push(idx); } else { pkTemp[qid].splice(i,1); }
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  refreshCard(q);
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  const chosen = pkTemp[qid] || [];
+  const setChosen = new Set(chosen);
+  const setAnswer = new Set(q.answers);
+  const correct = setChosen.size === setAnswer.size && chosen.every(function(v){ return setAnswer.has(v); });
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q);
+}
+
+function renderBS(q){
+  const answered = state.answers[q.id];
+  let clsBenar = 'opt-btn', clsSalah = 'opt-btn', disabled = '';
+  if(answered){
+    disabled = 'disabled';
+    if(q.answer === true){ clsBenar += ' correct'; if(answered.chosen === false){ clsSalah += ' wrong'; } }
+    else { clsSalah += ' correct'; if(answered.chosen === true){ clsBenar += ' wrong'; } }
+  }
+  return '<button class="'+clsBenar+'" '+disabled+' onclick="answerBS(\''+q.id+'\',true)">✅ BENAR</button>' +
+    '<button class="'+clsSalah+'" '+disabled+' onclick="answerBS(\''+q.id+'\',false)">❌ SALAH</button>';
+}
+function answerBS(qid, val){
+  if(state.answers[qid]) return;
+  const q = allQuestions.bs.find(function(x){ return x.id === qid; });
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+}
+
+function renderJD(q){
+  const answered = state.answers[q.id];
+  let optHtml = '<option value="">-- pilih pasangan --</option>';
+  q.options.forEach(function(opt){
+    const sel = answered && answered.chosen === opt ? 'selected' : '';
+    optHtml += '<option value="'+opt+'" '+sel+'>'+opt+'</option>';
+  });
+  const disabled = answered ? 'disabled' : '';
+  return '<div class="jd-row"><div class="jd-left">'+q.left+'</div> &rarr; ' +
+    '<select '+disabled+' onchange="answerJD(\''+q.id+'\', this.value)">'+optHtml+'</select></div>';
+}
+function answerJD(qid, val){
+  if(val === '' || state.answers[qid]) return;
+  const q = allQuestions.jd.find(function(x){ return x.id === qid; });
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+}
+
+function refreshCard(q){
+  const el = document.getElementById('card-'+q.id);
+  if(el){
+    el.outerHTML = renderCard(q);
+    typesetMath();
+  }
+  updateScoreStrip();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let correct = 0, done = 0;
+    qs.forEach(function(q){
+      if(state.answers[q.id]){
+        done++;
+        if(state.answers[q.id].correct) correct++;
+      }
+    });
+    html += '<div class="score-chip">'+typeLabels[t]+': '+correct+'/'+qs.length+' ('+done+' dijawab)</div>';
+  });
+  strip.innerHTML = html;
+}
+
+function showAnalysis(){
+  let totalQ = 0, totalCorrect = 0, totalAnswered = 0;
+  let typeStats = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let correct = 0, answered = 0;
+    qs.forEach(function(q){
+      totalQ++;
+      if(state.answers[q.id]){
+        answered++; totalAnswered++;
+        if(state.answers[q.id].correct){ correct++; totalCorrect++; }
+      }
+    });
+    typeStats[t] = { correct: correct, total: qs.length };
+  });
+
+  const persen = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
+  document.getElementById('statGrid').innerHTML =
+    '<div class="stat-box"><div class="num">'+totalQ+'</div><div class="lbl">Total Soal</div></div>' +
+    '<div class="stat-box"><div class="num">'+totalCorrect+'</div><div class="lbl">Benar</div></div>' +
+    '<div class="stat-box"><div class="num">'+(totalAnswered-totalCorrect)+'</div><div class="lbl">Salah</div></div>' +
+    '<div class="stat-box"><div class="num">'+persen+'%</div><div class="lbl">Nilai</div></div>';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const st = typeStats[t];
+    const pct = st.total > 0 ? (st.correct / st.total) * 100 : 0;
+    barsHtml += '<div class="type-bar-row"><div class="lbl"><span>'+typeLabels[t]+'</span><span>'+st.correct+'/'+st.total+'</span></div>' +
+      '<div class="type-bar-track"><div class="type-bar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let grade, emoji, pesan;
+  if(persen >= 90){ grade='A'; emoji='🏆'; pesan='Luar Biasa!'; }
+  else if(persen >= 75){ grade='B'; emoji='⭐'; pesan='Bagus!'; }
+  else if(persen >= 60){ grade='C'; emoji='👍'; pesan='Cukup Baik'; }
+  else if(persen >= 40){ grade='D'; emoji='💪'; pesan='Jangan Menyerah'; }
+  else { grade='E'; emoji='📚'; pesan='Semangat Belajar'; }
+  document.getElementById('gradeBox').innerHTML =
+    '<div class="grade-letter">'+grade+'</div><div>'+emoji+' '+pesan+'</div>';
+
+  document.getElementById('analysisPanel').classList.add('show');
+  document.getElementById('analysisPanel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollspyAndProgress();
+  typesetMath();
+});
+</script>
+</body>
+</html>
