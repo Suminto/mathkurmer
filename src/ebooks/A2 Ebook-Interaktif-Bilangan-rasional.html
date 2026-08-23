@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilangan Rasional — Matematika Kelas 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4', serif;
+  background:var(--paper);
+  color:var(--text-dark);
+  display:flex;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:290px; flex-shrink:0;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column;
+  border-right:1px solid var(--ink-border);
+  z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink3); border-radius:3px;}
+.side-header{
+  padding:26px 22px 16px; border-bottom:1px solid var(--ink-border);
+}
+.side-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px;
+  color:var(--gold); text-transform:uppercase;
+}
+.side-title{
+  font-size:22px; font-weight:700; margin-top:8px; line-height:1.25; color:var(--cream);
+}
+.side-sub{
+  font-size:12.5px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;
+}
+.progress-wrap{
+  padding:16px 22px; border-bottom:1px solid var(--ink-border);
+}
+.progress-track{
+  height:6px; background:var(--ink3); border-radius:4px; overflow:hidden;
+}
+#progressBar{
+  height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+  transition:width .25s ease;
+}
+.progress-txt{font-size:11px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;}
+nav{padding:14px 12px 30px; flex:1;}
+.nav-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft);
+  padding:14px 10px 8px; text-transform:uppercase; opacity:.85;
+}
+.nav-link{
+  display:block; padding:10px 12px; margin:2px 0; border-radius:8px;
+  color:var(--cream-dim); text-decoration:none; font-size:14.5px;
+  transition:background .18s ease, color .18s ease;
+  border-left:3px solid transparent;
+}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left:3px solid var(--gold);}
+.nav-sub{padding-left:12px; border-left:1px solid var(--ink-border); margin:2px 0 10px 22px;}
+.nav-sub a{
+  display:block; padding:7px 10px; font-size:13px; color:var(--cream-dim); text-decoration:none;
+  border-radius:6px; transition:background .18s ease, color .18s ease; cursor:pointer;
+}
+.nav-sub a:hover, .nav-sub a.active{background:var(--ink3); color:var(--gold-soft);}
+
+#menuToggle{
+  display:none; position:fixed; top:14px; left:14px; z-index:200;
+  width:44px; height:44px; border-radius:10px; border:1px solid var(--ink-border);
+  background:var(--ink); color:var(--gold-soft); font-size:20px; cursor:pointer;
+}
+#overlay{display:none; position:fixed; inset:0; background:rgba(20,26,46,.6); z-index:60;}
+
+/* ===== CONTENT ===== */
+#content{flex:1; min-width:0; padding:0;}
+.hero{
+  background:linear-gradient(160deg, var(--ink) 0%, var(--ink2) 55%, var(--ink3) 100%);
+  color:var(--cream); padding:70px 60px 56px; position:relative; overflow:hidden;
+}
+.hero::after{
+  content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px;
+  border-radius:50%; background:radial-gradient(circle, rgba(224,169,77,.18), transparent 70%);
+}
+.hero-label{font-family:'JetBrains Mono',monospace; letter-spacing:3px; color:var(--gold); font-size:13px; text-transform:uppercase;}
+.hero h1{font-size:44px; margin-top:14px; line-height:1.15; max-width:640px;}
+.hero p{margin-top:16px; color:var(--cream-dim); max-width:600px; font-size:16.5px; line-height:1.7;}
+.chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.chip{
+  font-family:'JetBrains Mono',monospace; font-size:12px; padding:7px 14px; border-radius:20px;
+  background:var(--ink3); border:1px solid var(--ink-border); color:var(--gold-soft);
+}
+
+.mat-section{padding:56px 60px; border-bottom:1px solid var(--paper-line); max-width:900px;}
+.mat-section .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.mat-section h2{font-size:30px; margin-top:14px;}
+.mat-section h3{font-size:20px; margin-top:30px; margin-bottom:10px; color:var(--text-mid);}
+.mat-section p{line-height:1.85; margin-top:12px; font-size:16.5px; color:var(--text-dark);}
+.mat-section ul, .mat-section ol{margin:14px 0 14px 26px; line-height:1.9; font-size:16px;}
+
+.callout{
+  margin:20px 0; padding:18px 22px; border-radius:10px; border-left:5px solid;
+  font-size:15.5px; line-height:1.75;
+}
+.callout .co-title{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; display:block;}
+.def{background:var(--def); border-color:var(--def-b);}
+.def .co-title{color:#3f6b32;}
+.note{background:var(--note); border-color:var(--note-b);}
+.note .co-title{color:#a06a1e;}
+.warn{background:var(--warn); border-color:var(--warn-b);}
+.warn .co-title{color:#9a3c34;}
+
+.example-box{
+  margin:20px 0; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  padding:20px 24px;
+}
+.example-box .ex-title{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:1.5px; color:var(--gold);
+  background:var(--ink); display:inline-block; padding:4px 12px; border-radius:6px; margin-bottom:12px;
+}
+.example-box ol{margin-left:22px; line-height:2;}
+.example-box .step-label{font-weight:600; color:var(--text-mid); font-family:'JetBrains Mono',monospace; font-size:13px;}
+
+.calc-box{
+  margin:24px 0; background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 26px;
+  box-shadow:0 10px 30px rgba(20,26,46,.25);
+}
+.calc-box h4{color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
+.calc-row input, .calc-row select{
+  font-family:'JetBrains Mono',monospace; font-size:15px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--ink-border); background:var(--ink2); color:var(--cream); width:90px;
+}
+.calc-row select{width:auto;}
+.calc-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--gold); color:var(--ink); font-weight:700; cursor:pointer; transition:transform .15s ease, background .15s ease;
+}
+.calc-btn:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{
+  margin-top:12px; padding:12px 16px; background:var(--ink2); border-radius:8px; border:1px solid var(--ink-border);
+  font-family:'JetBrains Mono',monospace; font-size:15px; min-height:22px; color:var(--gold-soft);
+}
+
+/* ===== LATIHAN ===== */
+.latihan-section{padding:56px 60px 90px; background:var(--paper);}
+.latihan-header{max-width:900px;}
+.latihan-header .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.latihan-header h2{font-size:30px; margin-top:14px;}
+.latihan-header p{margin-top:10px; color:var(--text-mid); font-size:15.5px; max-width:640px; line-height:1.7;}
+
+.quiz-nav{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 20px;}
+.qbtn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:10px 18px; border-radius:24px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-mid); cursor:pointer;
+  transition:all .18s ease;
+}
+.qbtn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+.qbtn:hover{transform:translateY(-1px);}
+
+.score-strip{
+  display:flex; flex-wrap:wrap; gap:14px; margin-bottom:24px; max-width:900px;
+}
+.score-item{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:8px 14px; border-radius:8px;
+  background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid);
+}
+.score-item b{color:var(--text-dark);}
+
+#quizArea{max-width:820px;}
+.question-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px;
+  margin-bottom:20px; animation:fadeUp .35s ease;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.q-top{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+.q-num{
+  width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft);
+  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; flex-shrink:0;
+}
+.level-badge{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:.5px;
+}
+.level-mudah{background:#dff0da; color:#3f6b32;}
+.level-sedang{background:#fdf0df; color:#a06a1e;}
+.level-sukar{background:#fbe1df; color:#9a3c34;}
+.q-text{font-size:16.5px; line-height:1.7; margin-bottom:16px;}
+.q-options{display:flex; flex-direction:column; gap:9px;}
+.opt-btn{
+  text-align:left; padding:11px 16px; border-radius:9px; border:1px solid var(--paper-line);
+  background:var(--paper2); font-family:'Source Serif 4',serif; font-size:15.5px; cursor:pointer;
+  transition:all .18s ease; color:var(--text-dark);
+}
+.opt-btn:hover{background:#f0e6cc; transform:translateX(3px);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.opt-btn:disabled{cursor:default;}
+.bs-row{display:flex; gap:12px;}
+.bs-btn{
+  flex:1; padding:13px; border-radius:9px; border:1px solid var(--paper-line); background:var(--paper2);
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; font-weight:700; cursor:pointer; transition:all .18s ease;
+}
+.bs-btn:hover{transform:translateY(-2px);}
+.bs-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.bs-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{font-weight:600; min-width:160px;}
+.jd-row select{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-dark);
+}
+.jd-row select.correct{background:var(--correct); border-color:var(--correct-b);}
+.jd-row select.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.pk-confirm{margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none; background:var(--ink); color:var(--gold-soft); cursor:pointer;}
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{
+  flex:1; min-width:180px; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  font-family:'Source Serif 4',serif; font-size:15.5px; background:var(--paper2); color:var(--text-dark);
+}
+.is-row input.correct{background:var(--correct); border-color:var(--correct-b);}
+.is-row input.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.is-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer;
+}
+.explanation{
+  margin-top:14px; padding:14px 18px; border-radius:9px; background:var(--note); border-left:4px solid var(--note-b);
+  font-size:14.5px; line-height:1.7; display:none;
+}
+.explanation.show{display:block;}
+
+.analysis-btn-wrap{max-width:820px; text-align:center; margin:30px 0;}
+.analysis-btn{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:14px 32px; border-radius:26px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer; transition:all .2s ease;
+}
+.analysis-btn:hover{background:var(--ink2); transform:translateY(-2px);}
+
+#analysisPanel{max-width:820px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:#fff; border:1px solid var(--paper-line); border-radius:12px; padding:18px; text-align:center;}
+.stat-box .num{font-size:28px; font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--ink);}
+.stat-box .lab{font-size:12px; color:var(--text-mid); margin-top:4px; font-family:'JetBrains Mono',monospace;}
+.type-bars{margin:24px 0;}
+.type-bar-row{margin-bottom:14px;}
+.type-bar-row .tb-label{font-size:13.5px; font-family:'JetBrains Mono',monospace; margin-bottom:6px; color:var(--text-mid);}
+.type-bar-track{height:14px; background:var(--paper2); border-radius:7px; overflow:hidden; border:1px solid var(--paper-line);}
+.type-bar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{
+  text-align:center; padding:30px; border-radius:16px; margin:26px 0; color:#fff;
+  background:linear-gradient(135deg, var(--ink), var(--ink3));
+}
+.grade-box .grade-letter{font-size:52px; font-family:'Playfair Display',serif; font-weight:800;}
+.grade-box .grade-msg{font-size:16px; margin-top:6px; color:var(--gold-soft);}
+.reset-btn{
+  display:block; margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:12px 26px;
+  border-radius:24px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer;
+}
+
+footer{
+  padding:34px 60px; background:var(--ink); color:var(--cream-dim); font-size:13px; text-align:center;
+  font-family:'JetBrains Mono',monospace; line-height:1.9;
+}
+footer b{color:var(--gold-soft);}
+
+@media (max-width:900px){
+  #menuToggle{display:block;}
+  #sidebar{position:fixed; top:0; left:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.4);}
+  #sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}
+  .hero, .mat-section, .latihan-section{padding-left:26px; padding-right:26px;}
+  .hero{padding-top:90px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .jd-row{flex-direction:column; align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<aside id="sidebar">
+  <div class="side-header">
+    <div class="side-label">Matematika · Kelas 7</div>
+    <div class="side-title">Bilangan Rasional</div>
+    <div class="side-sub">Ebook Interaktif</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div id="progressBar"></div></div>
+    <div class="progress-txt" id="progressTxt">0% dibaca</div>
+  </div>
+  <nav>
+    <div class="nav-label">Materi</div>
+    <a href="#hero" class="nav-link" data-target="hero">Pendahuluan</a>
+    <a href="#matA" class="nav-link" data-target="matA">A. Pecahan dan Lambangnya</a>
+    <a href="#matB" class="nav-link" data-target="matB">B. Operasi Hitung pada Pecahan</a>
+    <a href="#matC" class="nav-link" data-target="matC">C. Bilangan Pecahan Negatif</a>
+    <a href="#matD" class="nav-link" data-target="matD">D. Sifat Operasi &amp; Urutan Operasi</a>
+    <a href="#matE" class="nav-link" data-target="matE">E. Persentase</a>
+    <a href="#matF" class="nav-link" data-target="matF">F. Bilangan Desimal</a>
+    <a href="#matG" class="nav-link" data-target="matG">G. Bentuk Baku</a>
+    <div class="nav-label">Latihan</div>
+    <a href="#latihan" class="nav-link" data-target="latihan">Latihan Soal</a>
+    <div class="nav-sub">
+      <a data-type="pg" onclick="showType('pg')">Pilihan Ganda Biasa</a>
+      <a data-type="is" onclick="showType('is')">Isian Singkat</a>
+      <a data-type="pk" onclick="showType('pk')">PG Kompleks</a>
+      <a data-type="bs" onclick="showType('bs')">Benar/Salah</a>
+      <a data-type="jd" onclick="showType('jd')">Menjodohkan</a>
+    </div>
+  </nav>
+</aside>
+
+<main id="content">
+
+  <section id="hero" class="hero">
+    <div class="hero-label">Ebook Interaktif · Matematika Kelas 7</div>
+    <h1>Bilangan Rasional</h1>
+    <p>Menjelajahi pecahan, bilangan negatif, persentase, desimal, hingga bentuk baku — lengkap dengan contoh langkah demi langkah, kalkulator interaktif, dan 25 soal latihan otomatis-terkoreksi.</p>
+    <div class="chip-row">
+      <div class="chip">A. Pecahan &amp; Lambangnya</div>
+      <div class="chip">B. Operasi Pecahan</div>
+      <div class="chip">C. Pecahan Negatif</div>
+      <div class="chip">D. Sifat &amp; Urutan Operasi</div>
+      <div class="chip">E. Persentase</div>
+      <div class="chip">F. Desimal</div>
+      <div class="chip">G. Bentuk Baku</div>
+    </div>
+  </section>
+
+  <section id="matA" class="mat-section">
+    <span class="sec-label">Bagian A</span>
+    <h2>Pecahan dan Lambangnya</h2>
+    <p>Pecahan adalah cara menuliskan bagian dari suatu keseluruhan. Secara umum, pecahan ditulis dalam bentuk \(\dfrac{a}{b}\), dengan \(a\) disebut <b>pembilang</b> (numerator) dan \(b\) disebut <b>penyebut</b> (denominator), serta \(b \neq 0\).</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Pecahan \(\dfrac{a}{b}\) menyatakan \(a\) bagian dari \(b\) bagian yang sama besar. Syarat: \(a, b\) bilangan bulat dan \(b \neq 0\).
+    </div>
+
+    <h3>Jenis-Jenis Pecahan</h3>
+    <ul>
+      <li><b>Pecahan biasa</b>: pembilang lebih kecil dari penyebut, contoh \(\dfrac{3}{4}\).</li>
+      <li><b>Pecahan campuran</b>: gabungan bilangan bulat dan pecahan biasa, contoh \(2\dfrac{1}{3}\).</li>
+      <li><b>Pecahan senilai</b>: pecahan berbeda bentuk namun bernilai sama, contoh \(\dfrac{1}{2} = \dfrac{2}{4} = \dfrac{3}{6}\).</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Ubahlah pecahan campuran \(3\dfrac{2}{5}\) menjadi pecahan biasa.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Kalikan bilangan bulat dengan penyebut: \(3 \times 5 = 15\).</li>
+        <li><span class="step-label">Langkah 2:</span> Tambahkan hasilnya dengan pembilang: \(15 + 2 = 17\).</li>
+        <li><span class="step-label">Langkah 3:</span> Tulis hasil sebagai pembilang baru dengan penyebut yang sama: \(3\dfrac{2}{5} = \dfrac{17}{5}\).</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Tips</span>
+      Untuk menyederhanakan pecahan, bagi pembilang dan penyebut dengan FPB (Faktor Persekutuan Terbesar) keduanya.
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Penyederhanaan Pecahan</h4>
+      <div class="calc-row">
+        <input type="number" id="sfNum" placeholder="Pembilang" value="12">
+        <span>/</span>
+        <input type="number" id="sfDen" placeholder="Penyebut" value="18">
+        <button class="calc-btn" onclick="hitungSederhana()">Sederhanakan</button>
+      </div>
+      <div class="calc-result" id="sfResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matB" class="mat-section">
+    <span class="sec-label">Bagian B</span>
+    <h2>Operasi Hitung pada Pecahan</h2>
+    <p>Empat operasi dasar (penjumlahan, pengurangan, perkalian, pembagian) berlaku pada pecahan dengan aturan yang sedikit berbeda dari bilangan bulat.</p>
+
+    <h3>Penjumlahan &amp; Pengurangan</h3>
+    <div class="callout def">
+      <span class="co-title">Aturan</span>
+      Samakan penyebut terlebih dahulu (gunakan KPK), lalu jumlahkan atau kurangkan pembilangnya: \(\dfrac{a}{c} + \dfrac{b}{c} = \dfrac{a+b}{c}\).
+    </div>
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Hitunglah \(\dfrac{1}{4} + \dfrac{2}{3}\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Cari KPK dari 4 dan 3, yaitu 12.</li>
+        <li><span class="step-label">Langkah 2:</span> Ubah kedua pecahan: \(\dfrac{1}{4} = \dfrac{3}{12}\) dan \(\dfrac{2}{3} = \dfrac{8}{12}\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jumlahkan: \(\dfrac{3}{12} + \dfrac{8}{12} = \dfrac{11}{12}\).</li>
+      </ol>
+    </div>
+
+    <h3>Perkalian Pecahan</h3>
+    <div class="callout def">
+      <span class="co-title">Aturan</span>
+      Kalikan pembilang dengan pembilang, penyebut dengan penyebut: \(\dfrac{a}{b} \times \dfrac{c}{d} = \dfrac{a \times c}{b \times d}\).
+    </div>
+
+    <h3>Pembagian Pecahan</h3>
+    <div class="callout def">
+      <span class="co-title">Aturan</span>
+      Membagi pecahan sama dengan mengalikan dengan kebalikan (invers) pecahan pembagi: \(\dfrac{a}{b} \div \dfrac{c}{d} = \dfrac{a}{b} \times \dfrac{d}{c}\).
+    </div>
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Hitunglah \(\dfrac{2}{5} \div \dfrac{4}{7}\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Balik pecahan kedua: \(\dfrac{4}{7}\) menjadi \(\dfrac{7}{4}\).</li>
+        <li><span class="step-label">Langkah 2:</span> Ubah operasi menjadi perkalian: \(\dfrac{2}{5} \times \dfrac{7}{4}\).</li>
+        <li><span class="step-label">Langkah 3:</span> Kalikan lalu sederhanakan: \(\dfrac{14}{20} = \dfrac{7}{10}\).</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Operasi Pecahan</h4>
+      <div class="calc-row">
+        <input type="number" id="opNum1" placeholder="a" value="1">
+        <span>/</span>
+        <input type="number" id="opDen1" placeholder="b" value="4">
+        <select id="opSelect">
+          <option value="+">+</option>
+          <option value="-">−</option>
+          <option value="x">×</option>
+          <option value="/">÷</option>
+        </select>
+        <input type="number" id="opNum2" placeholder="c" value="2">
+        <span>/</span>
+        <input type="number" id="opDen2" placeholder="d" value="3">
+        <button class="calc-btn" onclick="hitungOperasiPecahan()">Hitung</button>
+      </div>
+      <div class="calc-result" id="opResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matC" class="mat-section">
+    <span class="sec-label">Bagian C</span>
+    <h2>Bilangan Pecahan Negatif</h2>
+    <p>Pecahan negatif adalah pecahan yang bernilai kurang dari nol, misalnya \(-\dfrac{3}{4}\). Letaknya di sebelah kiri angka nol pada garis bilangan.</p>
+
+    <div class="callout warn">
+      <span class="co-title">Perhatikan</span>
+      Tanda negatif pada pecahan boleh diletakkan di pembilang, di depan pecahan, atau di penyebut — ketiganya bernilai sama: \(-\dfrac{3}{4} = \dfrac{-3}{4} = \dfrac{3}{-4}\).
+    </div>
+
+    <h3>Aturan Tanda pada Operasi</h3>
+    <ul>
+      <li>Negatif + Negatif → hasil negatif, nilai mutlak dijumlahkan.</li>
+      <li>Negatif − Positif → sama dengan menjumlahkan dengan negatifnya.</li>
+      <li>Negatif × Negatif → hasil positif.</li>
+      <li>Negatif × Positif (atau sebaliknya) → hasil negatif.</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Hitunglah \(-\dfrac{5}{6} - \left(-\dfrac{1}{3}\right)\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Kurang dengan bilangan negatif berarti tambah dengan lawannya: \(-\dfrac{5}{6} + \dfrac{1}{3}\).</li>
+        <li><span class="step-label">Langkah 2:</span> Samakan penyebut: \(\dfrac{1}{3} = \dfrac{2}{6}\).</li>
+        <li><span class="step-label">Langkah 3:</span> Hitung: \(-\dfrac{5}{6} + \dfrac{2}{6} = -\dfrac{3}{6} = -\dfrac{1}{2}\).</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Ingat</span>
+      Semakin besar nilai mutlak bilangan negatif, semakin kecil nilainya. Contoh: \(-\dfrac{3}{4} < -\dfrac{1}{4}\), karena \(-\dfrac{3}{4}\) lebih jauh ke kiri pada garis bilangan.
+    </div>
+  </section>
+
+  <section id="matD" class="mat-section">
+    <span class="sec-label">Bagian D</span>
+    <h2>Sifat Operasi dan Urutan Operasi</h2>
+    <p>Beberapa sifat operasi hitung berlaku pada bilangan rasional, dan urutan pengerjaan operasi campuran mengikuti aturan baku agar hasilnya konsisten.</p>
+
+    <h3>Sifat-Sifat Operasi</h3>
+    <div class="callout def">
+      <span class="co-title">Komutatif</span>
+      Urutan penjumlahan/perkalian boleh ditukar: \(a + b = b + a\) dan \(a \times b = b \times a\).
+    </div>
+    <div class="callout def">
+      <span class="co-title">Asosiatif</span>
+      Pengelompokan boleh diubah: \((a+b)+c = a+(b+c)\) dan \((a \times b) \times c = a \times (b \times c)\).
+    </div>
+    <div class="callout def">
+      <span class="co-title">Distributif</span>
+      Perkalian terhadap penjumlahan: \(a \times (b+c) = (a \times b) + (a \times c)\).
+    </div>
+
+    <h3>Urutan Operasi Hitung (Hierarki)</h3>
+    <div class="callout note">
+      <span class="co-title">Urutan Pengerjaan</span>
+      1) Tanda kurung <b>( )</b> → 2) Pangkat/akar → 3) Perkalian dan pembagian (dari kiri ke kanan) → 4) Penjumlahan dan pengurangan (dari kiri ke kanan).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Hitunglah \(\dfrac{1}{2} + \dfrac{1}{4} \times \left(\dfrac{2}{3} - \dfrac{1}{6}\right)\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Kerjakan dalam kurung dahulu: \(\dfrac{2}{3} - \dfrac{1}{6} = \dfrac{4}{6} - \dfrac{1}{6} = \dfrac{3}{6} = \dfrac{1}{2}\).</li>
+        <li><span class="step-label">Langkah 2:</span> Lakukan perkalian: \(\dfrac{1}{4} \times \dfrac{1}{2} = \dfrac{1}{8}\).</li>
+        <li><span class="step-label">Langkah 3:</span> Baru jumlahkan: \(\dfrac{1}{2} + \dfrac{1}{8} = \dfrac{4}{8} + \dfrac{1}{8} = \dfrac{5}{8}\).</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="matE" class="mat-section">
+    <span class="sec-label">Bagian E</span>
+    <h2>Persentase</h2>
+    <p>Persentase (perseratus) adalah cara lain menuliskan pecahan dengan penyebut 100, dilambangkan dengan simbol %. Persentase banyak digunakan dalam kehidupan sehari-hari seperti diskon, bunga, dan statistik.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      \(p\%\) berarti \(\dfrac{p}{100}\). Contoh: \(25\% = \dfrac{25}{100} = \dfrac{1}{4} = 0{,}25\).
+    </div>
+
+    <h3>Konversi Pecahan, Desimal, dan Persen</h3>
+    <ul>
+      <li>Pecahan → Persen: kalikan dengan 100%, contoh \(\dfrac{3}{4} \times 100\% = 75\%\).</li>
+      <li>Persen → Desimal: bagi dengan 100, contoh \(37{,}5\% = 0{,}375\).</li>
+      <li>Desimal → Persen: kalikan dengan 100%, contoh \(0{,}6 = 60\%\).</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Sebuah baju berharga Rp150.000 mendapat diskon 20%. Berapa harga setelah diskon?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Hitung besar diskon: \(20\% \times 150.000 = 0{,}2 \times 150.000 = 30.000\).</li>
+        <li><span class="step-label">Langkah 2:</span> Kurangi harga awal dengan diskon: \(150.000 - 30.000 = 120.000\).</li>
+        <li><span class="step-label">Langkah 3:</span> Harga setelah diskon adalah Rp120.000.</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Aplikasi</span>
+      Persentase juga dipakai untuk bunga tabungan, kenaikan/penurunan harga, hasil survei, dan nilai ujian.
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Persentase</h4>
+      <div class="calc-row">
+        <input type="number" id="pnPersen" placeholder="Persen" value="20">
+        <span>% dari</span>
+        <input type="number" id="pnAngka" placeholder="Angka" value="150000">
+        <button class="calc-btn" onclick="hitungPersen()">Hitung</button>
+      </div>
+      <div class="calc-result" id="pnResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matF" class="mat-section">
+    <span class="sec-label">Bagian F</span>
+    <h2>Bilangan Desimal</h2>
+    <p>Bilangan desimal adalah cara menuliskan pecahan menggunakan tanda koma, berdasarkan nilai tempat persepuluhan, perseratusan, dan seterusnya.</p>
+
+    <div class="callout def">
+      <span class="co-title">Nilai Tempat</span>
+      Pada \(3{,}142\): angka 1 bernilai persepuluhan \(\left(\dfrac{1}{10}\right)\), 4 bernilai perseratusan \(\left(\dfrac{4}{100}\right)\), dan 2 bernilai perseribuan \(\left(\dfrac{2}{1000}\right)\).
+    </div>
+
+    <h3>Operasi Bilangan Desimal</h3>
+    <ul>
+      <li><b>Penjumlahan/pengurangan</b>: sejajarkan tanda koma sebelum menghitung.</li>
+      <li><b>Perkalian</b>: kalikan seperti bilangan bulat, lalu tentukan letak koma dari total angka di belakang koma kedua bilangan.</li>
+      <li><b>Pembagian</b>: ubah pembagi menjadi bilangan bulat dengan menggeser koma, geser koma pada bilangan yang dibagi sejumlah yang sama.</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Ubahlah pecahan \(\dfrac{5}{8}\) menjadi bentuk desimal.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Bagi pembilang dengan penyebut: \(5 \div 8\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hasil pembagian bersusun: \(5{,}000 \div 8 = 0{,}625\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi \(\dfrac{5}{8} = 0{,}625\).</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Pembulatan</span>
+      Untuk membulatkan desimal, lihat angka setelah posisi yang diinginkan: jika ≥5 dibulatkan ke atas, jika &lt;5 dibulatkan ke bawah. Contoh: \(3{,}147\) dibulatkan ke dua desimal menjadi \(3{,}15\).
+    </div>
+  </section>
+
+  <section id="matG" class="mat-section">
+    <span class="sec-label">Bagian G</span>
+    <h2>Bentuk Baku</h2>
+    <p>Bentuk baku (notasi ilmiah) digunakan untuk menuliskan bilangan yang sangat besar atau sangat kecil secara ringkas, dalam bentuk \(a \times 10^{n}\).</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Bentuk baku ditulis sebagai \(a \times 10^{n}\), dengan syarat \(1 \le a < 10\) dan \(n\) bilangan bulat.
+    </div>
+
+    <h3>Bilangan Besar</h3>
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tuliskan 45.000.000 dalam bentuk baku.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Geser koma sampai hanya tersisa satu angka bukan nol di depan: \(4{,}5\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung berapa kali koma digeser: 7 kali ke kiri.</li>
+        <li><span class="step-label">Langkah 3:</span> Tulis hasilnya: \(45.000.000 = 4{,}5 \times 10^{7}\).</li>
+      </ol>
+    </div>
+
+    <h3>Bilangan Kecil</h3>
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tuliskan 0,000032 dalam bentuk baku.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Geser koma ke kanan sampai satu angka bukan nol di depan: \(3{,}2\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung berapa kali koma digeser: 5 kali ke kanan, sehingga pangkat bernilai negatif.</li>
+        <li><span class="step-label">Langkah 3:</span> Tulis hasilnya: \(0{,}000032 = 3{,}2 \times 10^{-5}\).</li>
+      </ol>
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Perhatikan</span>
+      Bilangan besar (≥ 10) memiliki pangkat positif, sedangkan bilangan kecil (antara 0 dan 1) memiliki pangkat negatif.
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Bentuk Baku</h4>
+      <div class="calc-row">
+        <input type="text" id="bbAngka" placeholder="Contoh: 0.000078" value="0.000078" style="width:180px;">
+        <button class="calc-btn" onclick="hitungBentukBaku()">Konversi</button>
+      </div>
+      <div class="calc-result" id="bbResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="latihan" class="latihan-section">
+    <div class="latihan-header">
+      <span class="sec-label">Latihan</span>
+      <h2>Latihan Soal Bilangan Rasional</h2>
+      <p>25 soal dengan 5 tipe berbeda. Pilih tipe soal di bawah, jawab, dan lihat penjelasannya secara langsung. Setelah selesai, klik "Lihat Analisis" untuk melihat hasil keseluruhan.</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="qbtn active" data-type="pg" onclick="showType('pg')">🔤 Pilihan Ganda Biasa</button>
+      <button class="qbtn" data-type="is" onclick="showType('is')">✏️ Isian Singkat</button>
+      <button class="qbtn" data-type="pk" onclick="showType('pk')">☑️ PG Kompleks</button>
+      <button class="qbtn" data-type="bs" onclick="showType('bs')">✅ Benar/Salah</button>
+      <button class="qbtn" data-type="jd" onclick="showType('jd')">🔗 Menjodohkan</button>
+    </div>
+
+    <div class="score-strip" id="scoreStrip"></div>
+
+    <div id="quizArea"></div>
+
+    <div class="analysis-btn-wrap">
+      <button class="analysis-btn" onclick="showAnalysis()">📊 Lihat Analisis Hasil</button>
+    </div>
+
+    <div id="analysisPanel" hidden>
+      <h3 style="margin-bottom:14px;">Analisis Hasil Belajar</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">TOTAL SOAL</div></div>
+        <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lab">BENAR</div></div>
+        <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lab">SALAH</div></div>
+        <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lab">NILAI</div></div>
+      </div>
+      <div class="type-bars" id="typeBars"></div>
+      <div class="grade-box">
+        <div class="grade-letter" id="gradeLetter">-</div>
+        <div class="grade-msg" id="gradeMsg">Belum ada data</div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua Soal</button>
+    </div>
+  </section>
+
+  <footer>
+    Ebook Interaktif Matematika Kelas 7 — Bilangan Rasional<br>
+    Dibuat oleh <b>Suminto</b> bersama <b>Claude</b><br>
+    Satu file HTML, dapat dibuka langsung di peramban tanpa koneksi internet (kecuali font &amp; rumus matematika).
+  </footer>
+</main>
+
+<script>
+/* ============ SIDEBAR TOGGLE (mobile) ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('.nav-link, .nav-sub a').forEach(function(a){
+  a.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ SCROLLSPY + PROGRESS BAR ============ */
+const sectionIds = ['hero','matA','matB','matC','matD','matE','matF','matG','latihan'];
+function updateScrollSpy(){
+  let current = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140){ current = id; }
+    }
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? Math.min(100, Math.round((scrollTop / docHeight) * 100)) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = pct + '% dibaca';
+}
+window.addEventListener('scroll', updateScrollSpy);
+window.addEventListener('resize', updateScrollSpy);
+
+/* ============ KALKULATOR: FPB & Penyederhanaan Pecahan ============ */
+function gcd(a, b){
+  a = Math.abs(a); b = Math.abs(b);
+  while(b){ const t = b; b = a % b; a = t; }
+  return a || 1;
+}
+function hitungSederhana(){
+  const num = parseFloat(document.getElementById('sfNum').value) || 0;
+  const den = parseFloat(document.getElementById('sfDen').value) || 0;
+  const out = document.getElementById('sfResult');
+  if(den === 0){ out.innerHTML = '⚠️ Penyebut tidak boleh nol.'; return; }
+  const g = gcd(num, den);
+  let sN = num / g, sD = den / g;
+  if(sD < 0){ sN = -sN; sD = -sD; }
+  out.innerHTML = `${num}/${den} disederhanakan menjadi <b>${sN}/${sD}</b> (FPB = ${g})`;
+}
+
+/* ============ KALKULATOR: Operasi Pecahan ============ */
+function hitungOperasiPecahan(){
+  const a = parseFloat(document.getElementById('opNum1').value) || 0;
+  const b = parseFloat(document.getElementById('opDen1').value) || 0;
+  const c = parseFloat(document.getElementById('opNum2').value) || 0;
+  const d = parseFloat(document.getElementById('opDen2').value) || 0;
+  const op = document.getElementById('opSelect').value;
+  const out = document.getElementById('opResult');
+  if(b === 0 || d === 0){ out.innerHTML = '⚠️ Penyebut tidak boleh nol.'; return; }
+  let rN, rD, opSym;
+  if(op === '+'){ rN = a*d + c*b; rD = b*d; opSym = '+'; }
+  else if(op === '-'){ rN = a*d - c*b; rD = b*d; opSym = '−'; }
+  else if(op === 'x'){ rN = a*c; rD = b*d; opSym = '×'; }
+  else { if(c === 0){ out.innerHTML = '⚠️ Tidak bisa membagi dengan pecahan bernilai nol.'; return; } rN = a*d; rD = b*c; opSym = '÷'; }
+  const g = gcd(rN, rD);
+  let sN = rN / g, sD = rD / g;
+  if(sD < 0){ sN = -sN; sD = -sD; }
+  out.innerHTML = `${a}/${b} ${opSym} ${c}/${d} = ${rN}/${rD} = <b>${sN}/${sD}</b>`;
+}
+
+/* ============ KALKULATOR: Persentase ============ */
+function hitungPersen(){
+  const p = parseFloat(document.getElementById('pnPersen').value) || 0;
+  const n = parseFloat(document.getElementById('pnAngka').value) || 0;
+  const out = document.getElementById('pnResult');
+  const hasil = (p / 100) * n;
+  out.innerHTML = `${p}% dari ${n.toLocaleString('id-ID')} = <b>${hasil.toLocaleString('id-ID')}</b>`;
+}
+
+/* ============ KALKULATOR: Bentuk Baku ============ */
+function hitungBentukBaku(){
+  const raw = document.getElementById('bbAngka').value.trim();
+  const out = document.getElementById('bbResult');
+  const num = parseFloat(raw);
+  if(isNaN(num) || num === 0){ out.innerHTML = '⚠️ Masukkan angka yang valid dan bukan nol.'; return; }
+  const sign = num < 0 ? -1 : 1;
+  const absNum = Math.abs(num);
+  const exp = Math.floor(Math.log10(absNum));
+  let mantissa = (absNum / Math.pow(10, exp)) * sign;
+  mantissa = Math.round(mantissa * 1000) / 1000;
+  const expDisplay = exp < 0 ? `<sup>${exp}</sup>` : `<sup>${exp}</sup>`;
+  out.innerHTML = `${num} = <b>${mantissa} × 10${expDisplay}</b>`;
+}
+
+/* ============ BANK SOAL ============ */
+const allQuestions = {
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1, text:'Pecahan \\(\\dfrac{2}{3}\\) senilai dengan \\(\\dfrac{4}{6}\\).', answer:true, explanation:'✅ Benar. Kalikan pembilang dan penyebut \\(\\dfrac{2}{3}\\) dengan 2, diperoleh \\(\\dfrac{4}{6}\\), sehingga keduanya pecahan senilai.' },
+    { id:'bs2', type:'bs', level:'sedang', num:2, text:'Hasil dari \\(-\\dfrac{3}{4} + \\left(-\\dfrac{1}{4}\\right)\\) adalah \\(-1\\).', answer:true, explanation:'✅ Benar. \\(-\\dfrac{3}{4} - \\dfrac{1}{4} = -\\dfrac{4}{4} = -1\\).' },
+    { id:'bs3', type:'bs', level:'sedang', num:3, text:'Dalam urutan operasi hitung, penjumlahan selalu dikerjakan sebelum perkalian.', answer:false, explanation:'❌ Salah. Sesuai hierarki operasi, perkalian dan pembagian dikerjakan lebih dahulu sebelum penjumlahan dan pengurangan (kecuali ada tanda kurung).' },
+    { id:'bs4', type:'bs', level:'mudah', num:4, text:'\\(37{,}5\\%\\) jika diubah ke pecahan paling sederhana adalah \\(\\dfrac{3}{8}\\).', answer:true, explanation:'✅ Benar. \\(37{,}5\\% = \\dfrac{375}{1000} = \\dfrac{3}{8}\\) setelah disederhanakan.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5, text:'Bentuk baku dari \\(0{,}00072\\) adalah \\(7{,}2 \\times 10^{-3}\\).', answer:false, explanation:'❌ Salah. \\(0{,}00072 = 7{,}2 \\times 10^{-4}\\), bukan \\(10^{-3}\\), karena koma digeser 4 kali ke kanan.' }
+  ],
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1, text:'Pecahan campuran dari \\(\\dfrac{17}{5}\\) adalah...', options:['3 2/5','2 3/5','3 1/5','4 2/5'], answer:0, explanation:'\\(17 \\div 5 = 3\\) sisa \\(2\\), sehingga \\(\\dfrac{17}{5} = 3\\dfrac{2}{5}\\).' },
+    { id:'pg2', type:'pg', level:'sedang', num:2, text:'Hasil dari \\(\\dfrac{2}{3} \\times \\dfrac{3}{4}\\) adalah...', options:['1/2','2/3','3/4','5/7'], answer:0, explanation:'\\(\\dfrac{2 \\times 3}{3 \\times 4} = \\dfrac{6}{12} = \\dfrac{1}{2}\\).' },
+    { id:'pg3', type:'pg', level:'sedang', num:3, text:'Hasil dari \\(-\\dfrac{5}{6} - \\left(-\\dfrac{1}{3}\\right)\\) adalah...', options:['-1/2','-1','1/2','-7/6'], answer:0, explanation:'\\(-\\dfrac{5}{6} + \\dfrac{2}{6} = -\\dfrac{3}{6} = -\\dfrac{1}{2}\\).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4, text:'Sebuah baju harga Rp150.000 didiskon 20%. Harga setelah diskon adalah...', options:['Rp120.000','Rp130.000','Rp100.000','Rp135.000'], answer:0, explanation:'Diskon = \\(20\\% \\times 150.000 = 30.000\\). Harga akhir = \\(150.000 - 30.000 = 120.000\\).' },
+    { id:'pg5', type:'pg', level:'sukar', num:5, text:'Bentuk baku dari \\(45.000.000\\) adalah...', options:['4,5×10^7','45×10^6','4,5×10^6','0,45×10^8'], answer:0, explanation:'Bentuk baku mensyaratkan \\(1 \\le a < 10\\), sehingga hanya \\(4{,}5 \\times 10^{7}\\) yang memenuhi syarat tersebut.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1, left:'1/2', answer:'0,5', options:['0,5','0,2','0,25','2'], explanation:'\\(\\dfrac{1}{2} = 1 \\div 2 = 0{,}5\\).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2, left:'3/4', answer:'75%', options:['75%','34%','43%','7,4%'], explanation:'\\(\\dfrac{3}{4} \\times 100\\% = 75\\%\\).' },
+    { id:'jd3', type:'jd', level:'mudah', num:3, left:'2 1/4', answer:'9/4', options:['9/4','5/4','8/4','10/4'], explanation:'\\(2\\dfrac{1}{4} = \\dfrac{(2\\times4)+1}{4} = \\dfrac{9}{4}\\).' },
+    { id:'jd4', type:'jd', level:'sukar', num:4, left:'6,3 × 10^5', answer:'630.000', options:['630.000','63.000','6.300.000','63'], explanation:'\\(6{,}3 \\times 10^{5} = 630.000\\), karena koma digeser 5 langkah ke kanan.' },
+    { id:'jd5', type:'jd', level:'sedang', num:5, left:'Sifat Distributif', answer:'a×(b+c) = a×b + a×c', options:['a×(b+c) = a×b + a×c','a+b=b+a','(a+b)+c=a+(b+c)','a×b=b×a'], explanation:'Sifat distributif menyebarkan perkalian ke setiap suku dalam penjumlahan.' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1, text:'Pilih pecahan yang senilai dengan \\(\\dfrac{1}{2}\\):', options:['2/4','3/6','2/5','5/8'], answers:[0,1], explanation:'\\(\\dfrac{2}{4} = \\dfrac{1}{2}\\) dan \\(\\dfrac{3}{6} = \\dfrac{1}{2}\\), sedangkan \\(\\dfrac{2}{5}\\) dan \\(\\dfrac{5}{8}\\) tidak senilai.' },
+    { id:'pk2', type:'pk', level:'sukar', num:2, text:'Pilih pernyataan yang benar mengenai bilangan negatif:', options:['Hasil kali dua bilangan negatif adalah positif','Hasil kali bilangan negatif dan positif adalah negatif','Penjumlahan dua bilangan negatif menghasilkan bilangan positif','-3/4 lebih kecil dari -1/4'], answers:[0,1,3], explanation:'Pernyataan 1, 2, dan 4 benar. Pernyataan 3 salah karena penjumlahan dua bilangan negatif menghasilkan bilangan yang lebih negatif, bukan positif.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3, text:'Manakah operasi berikut yang hasilnya sama dengan 40% dari 250?', options:['250×0,4','250×40/100','250÷2,5','250×4'], answers:[0,1,2], explanation:'\\(250 \\times 0{,}4 = 100\\), \\(250 \\times \\dfrac{40}{100} = 100\\), dan \\(250 \\div 2{,}5 = 100\\) — ketiganya benar. Sedangkan \\(250 \\times 4 = 1000\\) salah.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4, text:'Pilih bilangan yang termasuk bentuk baku yang benar (syarat \\(1 \\le a < 10\\)):', options:['3,2×10^4','0,32×10^5','32×10^3','7,8×10^-2'], answers:[0,3], explanation:'\\(3{,}2 \\times 10^{4}\\) dan \\(7{,}8 \\times 10^{-2}\\) memenuhi syarat \\(1 \\le a < 10\\). Dua pilihan lain memiliki mantissa di luar rentang tersebut.' },
+    { id:'pk5', type:'pk', level:'sedang', num:5, text:'Pilih pasangan pecahan berikut yang jika dijumlahkan menghasilkan 1:', options:['1/4 dan 3/4','2/5 dan 3/5','1/3 dan 1/3','5/8 dan 3/8'], answers:[0,1,3], explanation:'\\(\\dfrac{1}{4}+\\dfrac{3}{4}=1\\), \\(\\dfrac{2}{5}+\\dfrac{3}{5}=1\\), dan \\(\\dfrac{5}{8}+\\dfrac{3}{8}=1\\) — ketiganya benar. Sedangkan \\(\\dfrac{1}{3}+\\dfrac{1}{3}=\\dfrac{2}{3}\\), bukan 1.' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1, text:'Sederhanakan pecahan \\(\\dfrac{12}{18}\\) menjadi bentuk paling sederhana.', answer:'2/3', altAnswers:['2/3'], explanation:'FPB dari 12 dan 18 adalah 6, sehingga \\(\\dfrac{12}{18} = \\dfrac{2}{3}\\).' },
+    { id:'is2', type:'is', level:'sedang', num:2, text:'Hitunglah hasil dari \\(-\\dfrac{7}{8} + \\dfrac{3}{8}\\).', answer:'-1/2', altAnswers:['-4/8','-0,5','-0.5'], explanation:'\\(-\\dfrac{7}{8} + \\dfrac{3}{8} = -\\dfrac{4}{8} = -\\dfrac{1}{2}\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3, text:'Ubahlah \\(0{,}625\\) menjadi bentuk pecahan paling sederhana.', answer:'5/8', altAnswers:['5/8'], explanation:'\\(0{,}625 = \\dfrac{625}{1000}\\), disederhanakan menjadi \\(\\dfrac{5}{8}\\).' },
+    { id:'is4', type:'is', level:'sedang', num:4, text:'10 adalah berapa persen dari 40?', answer:'25%', altAnswers:['25','25 persen','25persen'], explanation:'\\(\\dfrac{10}{40} \\times 100\\% = 25\\%\\).' },
+    { id:'is5', type:'is', level:'sukar', num:5, text:'Tuliskan \\(0{,}0000078\\) dalam bentuk baku.', answer:'7,8×10^-6', altAnswers:['7,8 x 10^-6','7,8×10⁻⁶','7,8 × 10^-6','7.8x10^-6','7,8x10^-6'], explanation:'Koma digeser 6 langkah ke kanan hingga tersisa \\(7{,}8\\), sehingga \\(0{,}0000078 = 7{,}8 \\times 10^{-6}\\).' }
+  ]
+};
+const typeLabels = { bs:'Benar/Salah', pg:'Pilihan Ganda', jd:'Menjodohkan', pk:'PG Kompleks', is:'Isian Singkat' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.qbtn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-type') === type); });
+  document.querySelectorAll('.nav-sub a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-type') === type); });
+  renderQuestions(type);
+  window.scrollTo({ top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth' });
+  typesetMath();
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quizArea');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function levelBadge(level){
+  const cls = level === 'mudah' ? 'level-mudah' : (level === 'sedang' ? 'level-sedang' : 'level-sukar');
+  return `<span class="level-badge ${cls}">${level}</span>`;
+}
+
+function renderCard(q){
+  let body = '';
+  if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  const answered = state.answers[q.id];
+  const explClass = answered ? 'explanation show' : 'explanation';
+  return `<div class="question-card" id="card-${q.id}">
+    <div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text || (q.left ? 'Cocokkan: <b>' + q.left + '</b>' : '')}</div>
+    ${body}
+    <div class="${explClass}" id="expl-${q.id}">${q.explanation}</div>
+  </div>`;
+}
+
+function renderBS(q){
+  const answered = state.answers[q.id];
+  const trueClass = answered ? (q.answer === true ? 'correct' : (answered.chosen === true ? 'wrong' : '')) : '';
+  const falseClass = answered ? (q.answer === false ? 'correct' : (answered.chosen === false ? 'wrong' : '')) : '';
+  return `<div class="bs-row">
+    <button class="bs-btn ${trueClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', true)">✅ BENAR</button>
+    <button class="bs-btn ${falseClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', false)">❌ SALAH</button>
+  </div>`;
+}
+function answerBS(qid, val){
+  const q = allQuestions.bs.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPG(q){
+  const answered = state.answers[q.id];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    if(answered){
+      if(idx === q.answer) cls = 'correct';
+      else if(idx === answered.chosen) cls = 'wrong';
+    }
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="answerPG('${q.id}', ${idx})">${opt}</button>`;
+  });
+  html += '</div>';
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){ return x.id === qid; });
+  const correct = (idx === q.answer);
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderJD(q){
+  const answered = state.answers[q.id];
+  let cls = '';
+  if(answered){ cls = answered.correct ? 'correct' : 'wrong'; }
+  let opts = '<option value="">-- pilih --</option>';
+  q.options.forEach(function(opt){
+    const sel = answered && answered.chosen === opt ? 'selected' : '';
+    opts += `<option value="${opt}" ${sel}>${opt}</option>`;
+  });
+  return `<div class="jd-row">
+    <select class="${cls}" ${answered ? 'disabled' : ''} onchange="answerJD('${q.id}', this.value)">${opts}</select>
+  </div>`;
+}
+function answerJD(qid, val){
+  if(!val) return;
+  const q = allQuestions.jd.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPK(q){
+  const answered = state.answers[q.id];
+  if(!pkTemp[q.id]) pkTemp[q.id] = [];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    const chosenSet = answered ? answered.chosen : pkTemp[q.id];
+    const isChosen = chosenSet.includes(idx);
+    if(answered){
+      const isCorrectOpt = q.answers.includes(idx);
+      if(isCorrectOpt) cls = 'correct';
+      else if(isChosen) cls = 'wrong';
+    }
+    const marker = isChosen ? '☑' : '☐';
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="togglePK('${q.id}', ${idx})">${marker} ${opt}</button>`;
+  });
+  html += '</div>';
+  if(!answered){
+    html += `<button class="pk-confirm" onclick="submitPK('${q.id}')">Konfirmasi Jawaban</button>`;
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const pos = pkTemp[qid].indexOf(idx);
+  if(pos >= 0) pkTemp[qid].splice(pos, 1);
+  else pkTemp[qid].push(idx);
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  rerenderCardBody(q);
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  const chosen = (pkTemp[qid] || []).slice().sort();
+  const correctArr = q.answers.slice().sort();
+  const correct = JSON.stringify(chosen) === JSON.stringify(correctArr);
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderIS(q){
+  const answered = state.answers[q.id];
+  const cls = answered ? (answered.correct ? 'correct' : 'wrong') : '';
+  const val = answered ? answered.chosen : '';
+  return `<div class="is-row">
+    <input type="text" id="input-${q.id}" class="${cls}" value="${val}" placeholder="Ketik jawabanmu..." ${answered ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){submitIS('${q.id}')}">
+    ${answered ? '' : `<button class="is-btn" onclick="submitIS('${q.id}')">Kirim Jawaban</button>`}
+  </div>`;
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){ return x.id === qid; });
+  const inputEl = document.getElementById('input-' + qid);
+  const raw = inputEl.value.trim().toLowerCase();
+  const mainAns = (q.answer || '').toLowerCase();
+  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase(); });
+  const correct = raw === mainAns || alts.includes(raw) || alts.some(function(a){ return raw.includes(a) || a.includes(raw); }) || raw.includes(mainAns) || mainAns.includes(raw);
+  state.answers[qid] = { chosen: inputEl.value.trim(), correct: !!correct };
+  refreshCard(q, !!correct);
+}
+
+function rerenderCardBody(q){
+  const card = document.getElementById('card-' + q.id);
+  if(!card) return;
+  let body = '';
+  if(q.type === 'pk'){ body = renderPK(q); }
+  const explDiv = card.querySelector('.explanation');
+  const qTextDiv = card.querySelector('.q-text');
+  card.innerHTML = `<div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text}</div>
+    ${body}
+    <div class="${explDiv.className}" id="expl-${q.id}">${q.explanation}</div>`;
+  typesetMath();
+}
+
+function refreshCard(q, correct){
+  const card = document.getElementById('card-' + q.id);
+  if(card){
+    const temp = document.createElement('div');
+    temp.innerHTML = renderCard(q);
+    card.innerHTML = temp.firstElementChild.innerHTML;
+    const explDiv = document.getElementById('expl-' + q.id);
+    if(explDiv) explDiv.classList.add('show');
+  }
+  updateProgress();
+  updateScoreStrip();
+  typesetMath();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let benar = 0, total = qs.length, dijawab = 0;
+    qs.forEach(function(q){
+      if(state.answers[q.id]){ dijawab++; if(state.answers[q.id].correct) benar++; }
+    });
+    html += `<div class="score-item">${typeLabels[t]}: <b>${benar}/${total}</b></div>`;
+  });
+  strip.innerHTML = html;
+}
+function updateProgress(){
+  updateScoreStrip();
+}
+
+function showAnalysis(){
+  let total = 0, benar = 0, salah = 0;
+  const perType = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let tb = 0;
+    qs.forEach(function(q){
+      total++;
+      const a = state.answers[q.id];
+      if(a){
+        if(a.correct){ benar++; tb++; } else { salah++; }
+      } else {
+        salah++;
+      }
+    });
+    perType[t] = tb;
+  });
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  const nilai = total > 0 ? Math.round((benar / total) * 100) : 0;
+  document.getElementById('statNilai').textContent = nilai + '%';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    const b = perType[t];
+    const pct = qs.length > 0 ? Math.round((b / qs.length) * 100) : 0;
+    barsHtml += `<div class="type-bar-row">
+      <div class="tb-label">${typeLabels[t]}: ${b}/${qs.length}</div>
+      <div class="type-bar-track"><div class="type-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let grade, msg;
+  if(nilai >= 90){ grade = 'A'; msg = '🏆 Luar Biasa!'; }
+  else if(nilai >= 75){ grade = 'B'; msg = '⭐ Bagus!'; }
+  else if(nilai >= 60){ grade = 'C'; msg = '👍 Cukup Baik'; }
+  else if(nilai >= 40){ grade = 'D'; msg = '💪 Jangan Menyerah'; }
+  else { grade = 'E'; msg = '📚 Semangat Belajar'; }
+  document.getElementById('gradeLetter').textContent = grade;
+  document.getElementById('gradeMsg').textContent = msg;
+
+  document.getElementById('analysisPanel').hidden = false;
+  document.getElementById('analysisPanel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').hidden = true;
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollSpy();
+  typesetMath();
+});
+</script>
+</body>
+</html>
