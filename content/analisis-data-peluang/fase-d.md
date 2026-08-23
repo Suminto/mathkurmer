@@ -11,4 +11,14 @@ deskripsi: >-
   \
 
   Murid dapat menjelaskan dan menggunakan pengertian peluang dan frekuensi relatif untuk menentukan frekuensi harapan satu kejadian pada suatu percobaan sederhana (semua hasil percobaan dapat muncul secara merata).
+bab:
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Statistika 1
+    ringkasan: Statistika
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Peluang
+    ringkasan: Peluang
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Statistika 2
+    ringkasan: Statistika
 ---
