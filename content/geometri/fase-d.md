@@ -11,4 +11,26 @@ deskripsi: >-
   \
 
   Murid dapat melakukan transformasi tunggal (refleksi, translasi, rotasi, dan dilatasi) titik, garis, dan bangun datar pada bidang koordinat Kartesius dan menggunakannya untuk menyelesaikan masalah.
+bab:
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Sudut dan Garis Sejajar
+    ringkasan: Sudut dan Garis Sejajar
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Bangun Datar
+    ringkasan: Bangun Datar
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Segitiga
+    ringkasan: Segitiga
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Teorema Pythagoras
+    ringkasan: Teorema Pythagoras
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Kongruen
+    ringkasan: Kongruen
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Kesebangunan
+    ringkasan: Kesebangunan
+  - ebookLabel: Buka Ebook Interaktif
+    judul: Transformasi
+    ringkasan: Transformasi
 ---
