@@ -22,11 +22,12 @@ bab:
     ringkasan: |
       Memperluas konsep bilangan ke bentuk pecahan dan desimal, termasuk
       operasi hitung campuran seperti \( \tfrac{1}{2} + 0{,}75 \).
-    ebookUrl: ""
-    ebookLabel: ""
-  - ebookLabel: Buka Ebook Interaktif
+    ebookUrl: /ebooks/2 Ebook-Interaktif-Bilangan-rasional-kelas7.html
+    ebookLabel: "Buka Ebook Interaktif: Bilangan Rasional"
+  - ebookLabel: Buka Ebook Interaktif Rasio
     judul: Rasio
     ringkasan: Rasio
+    ebookUrl: /ebooks/3 Ebook-Interaktif-Rasio-kelas7.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Aritmetika Sosial
     ringkasan: Aritmetika Sosial
