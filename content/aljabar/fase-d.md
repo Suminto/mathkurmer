@@ -15,27 +15,33 @@ bab:
   - ebookLabel: Buka Ebook Interaktif
     judul: PLSV dan PtLSV
     ringkasan: Persamaan Linear Satu Variabel
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Pola Bilangan
     judul: Pola Bilangan
     ringkasan: Pola Bilangan
-  - ebookLabel: Buka Ebook Interaktif
+    ebookUrl: /ebooks/B3 Ebook-Interaktif-Pola-Bilangan.html
+  - ebookLabel: Buka Ebook Interaktif Relasi dan Fungsi
     judul: Relasi dan Fungsi
     ringkasan: Relasi dan Fungsi
+    ebookUrl: /ebooks/B4 Ebook-Interaktif-Relasi-dan-Fungsi.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Bidang Cartesius
     ringkasan: Bidang Cartesius
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Persamaan Garis Lurus
     judul: Persamaan Garis Lurus
     ringkasan: Persamaan Garis Lurus
-  - ebookLabel: Buka Ebook Interaktif
+    ebookUrl: /ebooks/B6 Ebook-Interaktif-Persamaan-Garis-Lurus.html
+  - ebookLabel: Buka Ebook Interaktif SPLDV
     judul: SPLDV
     ringkasan: Sistem Persamaan Linear Dua Variabel
-  - ebookLabel: Buka Ebook Interaktif
+    ebookUrl: /ebooks/B Ebook-Interaktif-SPLDV.html
+  - ebookLabel: Buka Ebook Interaktif Operasi Aljabar
     judul: Operasi Aljabar
     ringkasan: Operasi Aljabar
-  - ebookLabel: Buka Ebook Interaktif
+    ebookUrl: /ebooks/B8 Ebook-Interaktif-Operasi-Aljabar.html
+  - ebookLabel: Buka Ebook Interaktif Persamaan Kuadrat
     judul: Persamaan Kuadrat
     ringkasan: Persamaan Kuadrat
+    ebookUrl: /ebooks/B9 Ebook_Persamaan_Kuadrat.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Fungsi Kuadrat
     ringkasan: Fungsi Kuadrat
