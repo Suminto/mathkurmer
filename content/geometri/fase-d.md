@@ -27,9 +27,10 @@ bab:
   - ebookLabel: Buka Ebook Interaktif
     judul: Kongruen
     ringkasan: Kongruen
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Kesebangunan
     judul: Kesebangunan
     ringkasan: Kesebangunan
+    ebookUrl: /ebooks/D6 Ebook-Interaktif-Kesebangunan.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Transformasi
     ringkasan: Transformasi
