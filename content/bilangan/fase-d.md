@@ -32,7 +32,7 @@ bab:
       Pada suatuperbandingan dua besaran yang sejenis, kedua satuannya harus sama.
 
 
-      Perbandinganantara a dan b ditulis a : b atau (a/b), dimana a dan b adalah bilangan asli.
+      Perbandinganantara a dan b ditulis a : b atau (\tfrac {a} {b}), dimana a dan b adalah bilangan asli.
     ebookUrl: /ebooks/3 Ebook-Interaktif-Rasio-kelas7.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Aritmetika Sosial
