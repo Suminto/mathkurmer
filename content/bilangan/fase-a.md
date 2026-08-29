@@ -6,6 +6,9 @@ deskripsi: >-
 bab:
   - ebookLabel: Buka Aplikasi Interaktif Penjumlahan
     judul: Penjumlahan
-    ringkasan: Penjumlahan Bilangan
+    ringkasan: |-
+      Penjumlahan Bilangan
+
+      Di bawah ada link untuk aplikasi penjumlahan 
     ebookUrl: /ebooks/FASE A A1 Aplikasi belajar_penjumlahan.html
 ---
