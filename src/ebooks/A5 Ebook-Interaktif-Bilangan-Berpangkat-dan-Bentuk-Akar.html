@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilangan Berpangkat dan Bentuk Akar — Kelas 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:'Source Serif 4', serif; background:var(--paper); color:var(--text-dark); line-height:1.7;}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono', monospace;}
+a{color:inherit; text-decoration:none;}
+
+.layout{display:flex; min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  width:290px; flex-shrink:0; background:linear-gradient(180deg,var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto; padding:24px 18px;
+  border-right:2px solid var(--gold);
+}
+.side-label{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft); text-transform:uppercase;}
+.side-title{font-family:'Playfair Display', serif; font-size:20px; font-weight:700; margin:6px 0 18px; line-height:1.3;}
+.progress-wrap{background:var(--ink3); border-radius:8px; height:8px; overflow:hidden; margin-bottom:20px; border:1px solid var(--ink-border);}
+#progressBar{height:100%; width:0%; background:linear-gradient(90deg,var(--gold), var(--gold-soft)); transition:width .4s;}
+.nav-group-title{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:1.5px; color:var(--cream-dim); text-transform:uppercase; margin:18px 0 8px;}
+.nav-link{display:block; padding:9px 12px; border-radius:8px; font-size:14.5px; color:var(--cream-dim); margin-bottom:3px; border-left:3px solid transparent; transition:.18s ease;}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left-color:var(--gold); font-weight:600;}
+.nav-sub{padding-left:26px; font-size:13.5px;}
+#mobileToggle{display:none;}
+#overlay{display:none;}
+
+/* CONTENT */
+#content{flex:1; min-width:0; padding:0;}
+.hero{padding:64px 60px 48px; background:linear-gradient(160deg, var(--paper2), var(--paper)); border-bottom:2px solid var(--paper-line);}
+.hero-label{font-family:'JetBrains Mono', monospace; color:var(--note-b); font-size:12px; letter-spacing:2px; text-transform:uppercase;}
+.hero h1{font-size:40px; margin:10px 0 16px; max-width:720px;}
+.hero p{font-size:17px; color:var(--text-mid); max-width:620px; margin-bottom:22px;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+.chip{background:var(--ink); color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:12px; padding:6px 12px; border-radius:999px; border:1px solid var(--gold);}
+
+section.mat-section{padding:48px 60px; border-bottom:1px solid var(--paper-line);}
+section.mat-section h2{font-size:28px; margin-bottom:6px;}
+.sec-eyebrow{font-family:'JetBrains Mono',monospace; color:var(--text-mid); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px;}
+section.mat-section p{margin-bottom:14px; font-size:16px;}
+section.mat-section h3{font-size:20px; margin:24px 0 10px;}
+
+.callout{border-radius:10px; padding:16px 20px; margin:18px 0; border-left:5px solid; font-size:15.5px;}
+.callout-def{background:var(--def); border-color:var(--def-b);}
+.callout-note{background:var(--note); border-color:var(--note-b);}
+.callout-warn{background:var(--warn); border-color:var(--warn-b);}
+.callout-title{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; display:block;}
+
+.example-box{background:#fff; border:1.5px solid var(--paper-line); border-radius:12px; padding:20px 22px; margin:18px 0; box-shadow:0 2px 10px rgba(0,0,0,.04);}
+.example-box .ex-label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1.5px; color:var(--gold-soft); background:var(--ink); display:inline-block; padding:4px 10px; border-radius:6px; margin-bottom:10px;}
+.example-box .step{padding:4px 0 4px 14px; border-left:2px solid var(--paper-line); margin-left:4px;}
+
+.calc-box{background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 24px; margin:20px 0; box-shadow:0 6px 20px rgba(20,26,46,.25);}
+.calc-box h4{color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
+.calc-row label{font-size:13px; color:var(--cream-dim); margin-right:4px;}
+.calc-box input{background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); padding:8px 10px; border-radius:7px; width:90px; font-family:'JetBrains Mono',monospace; font-size:14px;}
+.calc-box button{background:var(--gold); color:var(--ink); border:none; padding:9px 18px; border-radius:7px; font-weight:700; cursor:pointer; font-family:'Source Serif 4',serif; transition:.15s;}
+.calc-box button:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:10px; background:var(--ink3); border-radius:8px; padding:12px 16px; font-size:15px; min-height:20px;}
+
+/* LATIHAN */
+#latihan{padding:48px 60px 80px;}
+#latihan h2{font-size:30px; margin-bottom:6px;}
+.type-btns{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 24px;}
+.type-btn{background:#fff; border:1.5px solid var(--paper-line); padding:10px 16px; border-radius:9px; font-family:'JetBrains Mono',monospace; font-size:12.5px; cursor:pointer; color:var(--text-mid); transition:.15s;}
+.type-btn:hover{border-color:var(--gold);}
+.type-btn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px;}
+.score-chip{background:#fff; border:1px solid var(--paper-line); border-radius:8px; padding:8px 14px; font-family:'JetBrains Mono',monospace; font-size:12.5px;}
+
+.question-card{background:#fff; border:1.5px solid var(--paper-line); border-radius:14px; padding:22px 24px; margin-bottom:18px; animation:fadeUp .35s ease; box-shadow:0 2px 10px rgba(0,0,0,.03);}
+@keyframes fadeUp{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+.q-num{width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; flex-shrink:0;}
+.q-level{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; padding:3px 9px; border-radius:999px; letter-spacing:.5px;}
+.lvl-mudah{background:#dff0da; color:#2f6b2f;}
+.lvl-sedang{background:#fdf0df; color:#a06a1c;}
+.lvl-sukar{background:#fbe1df; color:#a13a30;}
+.q-text{font-size:16px; margin-bottom:14px;}
+
+.opt-btn{display:block; width:100%; text-align:left; background:var(--paper2); border:1.5px solid var(--paper-line); padding:11px 14px; border-radius:9px; margin-bottom:8px; cursor:pointer; font-family:'Source Serif 4',serif; font-size:15px; transition:.15s;}
+.opt-btn:hover{border-color:var(--gold);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.pk-selected{border-color:var(--gold); background:#fdf0df;}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input[type=text]{flex:1; min-width:180px; padding:11px 14px; border:1.5px solid var(--paper-line); border-radius:9px; font-family:'Source Serif 4',serif; font-size:15px;}
+.btn-primary{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 20px; border-radius:9px; font-weight:600; cursor:pointer; font-family:'Source Serif 4',serif;}
+.btn-primary:hover{background:var(--ink2);}
+.btn-primary:disabled{opacity:.5; cursor:default;}
+
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{background:var(--paper2); padding:10px 14px; border-radius:8px; min-width:180px; font-family:'JetBrains Mono',monospace; font-size:14.5px;}
+.jd-row select{padding:10px 12px; border-radius:8px; border:1.5px solid var(--paper-line); font-family:'Source Serif 4',serif; font-size:14.5px; flex:1; min-width:200px;}
+
+.explanation{margin-top:12px; padding:12px 16px; border-radius:9px; font-size:14.5px; display:none;}
+.explanation.show{display:block;}
+.explanation.exp-correct{background:var(--correct); border-left:4px solid var(--correct-b);}
+.explanation.exp-wrong{background:var(--wrong); border-left:4px solid var(--wrong-b);}
+
+#analysisPanel{display:none; background:var(--ink); color:var(--cream); border-radius:16px; padding:32px; margin-top:24px;}
+#analysisPanel.show{display:block;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:var(--ink3); border-radius:10px; padding:16px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:26px; color:var(--gold-soft); font-weight:700;}
+.stat-box .lbl{font-size:12px; color:var(--cream-dim); margin-top:4px;}
+.grade-box{text-align:center; padding:20px; margin:18px 0; border-radius:12px; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:var(--ink);}
+.grade-box .grade-letter{font-family:'Playfair Display',serif; font-size:48px; font-weight:800;}
+.type-bar-row{margin-bottom:10px;}
+.type-bar-row .lbl{font-size:13px; color:var(--cream-dim); margin-bottom:4px; display:flex; justify-content:space-between;}
+.type-bar-track{background:var(--ink3); border-radius:6px; height:10px; overflow:hidden;}
+.type-bar-fill{height:100%; background:var(--gold); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.reset-btn{margin-top:18px; background:var(--gold); color:var(--ink); border:none; padding:12px 22px; border-radius:9px; font-weight:700; cursor:pointer;}
+
+footer{padding:36px 60px; background:var(--ink); color:var(--cream-dim); font-size:13.5px; text-align:center;}
+footer strong{color:var(--gold-soft);}
+
+@media(max-width:900px){
+  #sidebar{position:fixed; top:0; left:0; z-index:50; transform:translateX(-100%); transition:transform .25s ease; width:270px;}
+  #sidebar.open{transform:translateX(0);}
+  #mobileToggle{display:block; position:fixed; top:14px; left:14px; z-index:60; background:var(--ink); color:var(--gold-soft); border:none; width:42px; height:42px; border-radius:10px; font-size:18px; cursor:pointer;}
+  #overlay.show{display:block; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:40;}
+  .hero, section.mat-section, #latihan{padding:60px 20px 40px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:28px 20px;}
+}
+</style>
+</head>
+<body>
+
+<button id="mobileToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+  <nav id="sidebar">
+    <div class="side-label">Matematika · Kelas 9</div>
+    <div class="side-title">Bilangan Berpangkat &amp; Bentuk Akar</div>
+    <div class="progress-wrap"><div id="progressBar"></div></div>
+
+    <div class="nav-group-title">Materi</div>
+    <a class="nav-link" data-target="sec-a" href="#sec-a">A. Pengertian Bilangan Berpangkat</a>
+    <a class="nav-link" data-target="sec-b" href="#sec-b">B. Bilangan Berpangkat Negatif</a>
+    <a class="nav-link" data-target="sec-c" href="#sec-c">C. Bilangan Berpangkat Pecahan</a>
+    <a class="nav-link" data-target="sec-d" href="#sec-d">D. Operasi Aljabar Berpangkat Pecahan</a>
+    <a class="nav-link" data-target="sec-e" href="#sec-e">E. Operasi Aljabar Bentuk Akar</a>
+    <a class="nav-link" data-target="sec-f" href="#sec-f">F. Masalah Kontekstual</a>
+
+    <div class="nav-group-title">Latihan Soal</div>
+    <a class="nav-link" data-target="latihan" href="#latihan">Mulai Latihan</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda Biasa</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('bs')">4. Benar/Salah</a>
+    <a class="nav-link nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+
+  <div id="content">
+
+    <div class="hero">
+      <div class="hero-label">Ebook Interaktif · Kurikulum Merdeka</div>
+      <h1>Bilangan Berpangkat dan Bentuk Akar</h1>
+      <p>Materi lengkap Matematika Kelas 9 SMP: dari pengertian dasar bilangan berpangkat hingga operasi aljabar bentuk akar dan penerapannya dalam masalah kehidupan sehari-hari, dilengkapi kalkulator interaktif dan 25 latihan soal beragam tipe.</p>
+      <div class="chip-row">
+        <span class="chip">A. Pengertian Berpangkat</span>
+        <span class="chip">B. Berpangkat Negatif</span>
+        <span class="chip">C. Berpangkat Pecahan</span>
+        <span class="chip">D. Operasi Aljabar Pecahan</span>
+        <span class="chip">E. Operasi Bentuk Akar</span>
+        <span class="chip">F. Masalah Kontekstual</span>
+      </div>
+    </div>
+
+    <!-- SECTION A -->
+    <section class="mat-section" id="sec-a">
+      <div class="sec-eyebrow">Bagian A</div>
+      <h2>Pengertian Bilangan Berpangkat</h2>
+      <p>Bilangan berpangkat (eksponen) adalah cara singkat menuliskan perkalian berulang suatu bilangan dengan dirinya sendiri.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Definisi</span>
+        Untuk bilangan real \(a\) dan bilangan asli \(n\), berlaku
+        \[ a^n = \underbrace{a \times a \times \dots \times a}_{n \text{ faktor}} \]
+        \(a\) disebut <strong>basis (bilangan pokok)</strong>, dan \(n\) disebut <strong>pangkat (eksponen)</strong>.
+      </div>
+
+      <h3>Sifat-Sifat Bilangan Berpangkat</h3>
+      <p>Berikut sifat-sifat dasar yang berlaku untuk \(a, b \neq 0\) dan bilangan bulat \(m, n\):</p>
+      <div class="callout callout-note">
+        <span class="callout-title">Sifat Operasi</span>
+        1. Perkalian sama basis: \( a^m \times a^n = a^{m+n} \) <br>
+        2. Pembagian sama basis: \( a^m \div a^n = a^{m-n} \) <br>
+        3. Pangkat dari pangkat: \( (a^m)^n = a^{mn} \) <br>
+        4. Pangkat dari perkalian: \( (a \times b)^n = a^n \times b^n \) <br>
+        5. Pangkat dari pembagian: \( \left(\dfrac{a}{b}\right)^n = \dfrac{a^n}{b^n} \) <br>
+        6. Pangkat nol: \( a^0 = 1 \), untuk \( a \neq 0 \)
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Sederhanakan \( 2^3 \times 2^4 \) !</p>
+        <div class="step">Gunakan sifat perkalian sama basis: \( a^m \times a^n = a^{m+n} \)</div>
+        <div class="step">\( 2^3 \times 2^4 = 2^{3+4} = 2^7 \)</div>
+        <div class="step">\( 2^7 = 128 \)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>Kalkulator Bilangan Berpangkat</h4>
+        <div class="calc-row">
+          <label>Basis (a)</label><input type="number" id="calcA_base" value="2">
+          <label>Pangkat (n)</label><input type="number" id="calcA_pow" value="5">
+          <button onclick="hitungPangkat()">Hitung</button>
+        </div>
+        <div class="calc-result" id="calcA_result">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- SECTION B -->
+    <section class="mat-section" id="sec-b">
+      <div class="sec-eyebrow">Bagian B</div>
+      <h2>Bilangan Berpangkat Negatif</h2>
+      <p>Pangkat tidak selalu berupa bilangan bulat positif. Ketika pangkat bernilai negatif, bilangan tersebut diubah menjadi bentuk pecahan.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Definisi</span>
+        Untuk \( a \neq 0 \) dan \( n \) bilangan bulat positif, berlaku
+        \[ a^{-n} = \frac{1}{a^n} \quad \text{dan} \quad \frac{1}{a^{-n}} = a^n \]
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-title">Hati-Hati</span>
+        Pangkat negatif <strong>bukan</strong> berarti hasilnya negatif! \( 2^{-3} \) bukan \(-8\), melainkan \( \dfrac{1}{8} \).
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Sederhanakan \( 5^{-2} \) !</p>
+        <div class="step">Gunakan definisi pangkat negatif: \( a^{-n} = \dfrac{1}{a^n} \)</div>
+        <div class="step">\( 5^{-2} = \dfrac{1}{5^2} = \dfrac{1}{25} \)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>Kalkulator Pangkat Negatif</h4>
+        <div class="calc-row">
+          <label>Basis (a)</label><input type="number" id="calcB_base" value="3">
+          <label>Pangkat positif (n)</label><input type="number" id="calcB_pow" value="2">
+          <button onclick="hitungPangkatNegatif()">Hitung \(a^{-n}\)</button>
+        </div>
+        <div class="calc-result" id="calcB_result">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- SECTION C -->
+    <section class="mat-section" id="sec-c">
+      <div class="sec-eyebrow">Bagian C</div>
+      <h2>Bilangan Berpangkat Pecahan</h2>
+      <p>Bilangan berpangkat pecahan menghubungkan konsep eksponen dengan bentuk akar.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Definisi</span>
+        Untuk \( a > 0 \), bilangan bulat \( m \), dan bilangan asli \( n \geq 2 \), berlaku
+        \[ a^{\frac{m}{n}} = \sqrt[n]{a^m} = \left(\sqrt[n]{a}\right)^m \]
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Tentukan nilai dari \( 8^{\frac{2}{3}} \) !</p>
+        <div class="step">Gunakan bentuk \( a^{\frac{m}{n}} = \left(\sqrt[n]{a}\right)^m \)</div>
+        <div class="step">\( 8^{\frac{2}{3}} = \left(\sqrt[3]{8}\right)^2 = 2^2 = 4 \)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>Kalkulator Pangkat Pecahan</h4>
+        <div class="calc-row">
+          <label>Basis (a)</label><input type="number" id="calcC_base" value="27">
+          <label>Pembilang (m)</label><input type="number" id="calcC_m" value="2">
+          <label>Penyebut (n)</label><input type="number" id="calcC_n" value="3">
+          <button onclick="hitungPangkatPecahan()">Hitung \(a^{m/n}\)</button>
+        </div>
+        <div class="calc-result" id="calcC_result">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- SECTION D -->
+    <section class="mat-section" id="sec-d">
+      <div class="sec-eyebrow">Bagian D</div>
+      <h2>Operasi Aljabar Bilangan Berpangkat Pecahan</h2>
+      <p>Sifat-sifat operasi bilangan berpangkat pada Bagian A tetap berlaku meskipun pangkatnya berupa pecahan.</p>
+
+      <div class="callout callout-note">
+        <span class="callout-title">Ingat</span>
+        \( a^{\frac{p}{q}} \times a^{\frac{r}{s}} = a^{\frac{p}{q} + \frac{r}{s}} \) &nbsp;&nbsp;
+        \( a^{\frac{p}{q}} \div a^{\frac{r}{s}} = a^{\frac{p}{q} - \frac{r}{s}} \) &nbsp;&nbsp;
+        \( \left(a^{\frac{p}{q}}\right)^{\frac{r}{s}} = a^{\frac{p}{q}\times\frac{r}{s}} \)
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Sederhanakan \( a^{\frac{1}{2}} \times a^{\frac{1}{3}} \) !</p>
+        <div class="step">Jumlahkan pangkatnya (samakan penyebut): \( \dfrac{1}{2} + \dfrac{1}{3} = \dfrac{3}{6} + \dfrac{2}{6} = \dfrac{5}{6} \)</div>
+        <div class="step">Jadi \( a^{\frac{1}{2}} \times a^{\frac{1}{3}} = a^{\frac{5}{6}} \)</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Tentukan hasil dari \( \dfrac{a^{\frac{5}{4}}}{a^{\frac{1}{4}}} \) !</p>
+        <div class="step">Kurangkan pangkatnya: \( \dfrac{5}{4} - \dfrac{1}{4} = \dfrac{4}{4} = 1 \)</div>
+        <div class="step">Jadi hasilnya \( a^1 = a \)</div>
+      </div>
+    </section>
+
+    <!-- SECTION E -->
+    <section class="mat-section" id="sec-e">
+      <div class="sec-eyebrow">Bagian E</div>
+      <h2>Operasi Aljabar Bentuk Akar</h2>
+      <p>Bentuk akar (radikal) dapat disederhanakan, dijumlahkan, dikurangkan, dikalikan, dan penyebutnya dapat dirasionalkan.</p>
+
+      <h3>1. Menyederhanakan Bentuk Akar</h3>
+      <div class="callout callout-def">
+        <span class="callout-title">Aturan</span>
+        \[ \sqrt{a^2 \times b} = a\sqrt{b} \]
+        Carilah faktor kuadrat sempurna terbesar dari bilangan di dalam akar.
+      </div>
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Sederhanakan \( \sqrt{50} \) !</p>
+        <div class="step">Faktorkan 50 menjadi faktor kuadrat sempurna: \( 50 = 25 \times 2 \)</div>
+        <div class="step">\( \sqrt{50} = \sqrt{25 \times 2} = \sqrt{25} \times \sqrt{2} = 5\sqrt{2} \)</div>
+      </div>
+
+      <h3>2. Penjumlahan dan Pengurangan Bentuk Akar</h3>
+      <div class="callout callout-note">
+        <span class="callout-title">Ingat</span>
+        Hanya akar <strong>sejenis</strong> (bilangan di dalam akar sama) yang dapat dijumlahkan/dikurangkan.
+        \[ a\sqrt{c} \pm b\sqrt{c} = (a \pm b)\sqrt{c} \]
+      </div>
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Sederhanakan \( \sqrt{12} + \sqrt{27} \) !</p>
+        <div class="step">\( \sqrt{12} = \sqrt{4 \times 3} = 2\sqrt{3} \)</div>
+        <div class="step">\( \sqrt{27} = \sqrt{9 \times 3} = 3\sqrt{3} \)</div>
+        <div class="step">\( 2\sqrt{3} + 3\sqrt{3} = 5\sqrt{3} \)</div>
+      </div>
+
+      <h3>3. Perkalian Bentuk Akar</h3>
+      <div class="callout callout-def">
+        <span class="callout-title">Aturan</span>
+        \[ \sqrt{a} \times \sqrt{b} = \sqrt{a \times b} \]
+      </div>
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Hitunglah \( \sqrt{3} \times \sqrt{12} \) !</p>
+        <div class="step">\( \sqrt{3} \times \sqrt{12} = \sqrt{3 \times 12} = \sqrt{36} = 6 \)</div>
+      </div>
+
+      <h3>4. Merasionalkan Penyebut</h3>
+      <div class="callout callout-note">
+        <span class="callout-title">Ingat</span>
+        Penyebut berbentuk akar dirasionalkan dengan mengalikan pembilang dan penyebut dengan sekawannya.
+        \[ \frac{1}{\sqrt{a}} = \frac{1}{\sqrt{a}} \times \frac{\sqrt{a}}{\sqrt{a}} = \frac{\sqrt{a}}{a} \]
+      </div>
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal</span>
+        <p>Rasionalkan penyebut dari \( \dfrac{6}{\sqrt{3}} \) !</p>
+        <div class="step">Kalikan pembilang dan penyebut dengan \( \sqrt{3} \)</div>
+        <div class="step">\( \dfrac{6}{\sqrt{3}} \times \dfrac{\sqrt{3}}{\sqrt{3}} = \dfrac{6\sqrt{3}}{3} = 2\sqrt{3} \)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>Kalkulator Penyederhana Bentuk Akar</h4>
+        <div class="calc-row">
+          <label>Bilangan dalam akar</label><input type="number" id="calcE_num" value="72">
+          <button onclick="sederhanakanAkar()">Sederhanakan \(\sqrt{n}\)</button>
+        </div>
+        <div class="calc-result" id="calcE_result">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- SECTION F -->
+    <section class="mat-section" id="sec-f">
+      <div class="sec-eyebrow">Bagian F</div>
+      <h2>Masalah Kontekstual Terkait Bilangan Berpangkat dan Bentuk Akar</h2>
+      <p>Konsep bilangan berpangkat banyak dipakai untuk memodelkan pertumbuhan (populasi, bunga majemuk) dan peluruhan (zat radioaktif, nilai barang).</p>
+
+      <div class="callout callout-def">
+        <span class="callout-title">Model Pertumbuhan/Peluruhan</span>
+        \[ P(t) = P_0 \times r^{t} \]
+        \( P_0 \) = nilai awal, \( r \) = rasio pertumbuhan (\(r>1\)) atau peluruhan (\(0<r<1\)), \( t \) = waktu.
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal — Pertumbuhan</span>
+        <p>Sekelompok bakteri berjumlah 200, membelah diri menjadi 2 kali lipat setiap jam. Berapa jumlah bakteri setelah 4 jam?</p>
+        <div class="step">Rumus: \( P(t) = P_0 \times 2^t \)</div>
+        <div class="step">\( P(4) = 200 \times 2^4 = 200 \times 16 = 3200 \)</div>
+        <div class="step">Jadi setelah 4 jam terdapat 3.200 bakteri.</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal — Peluruhan</span>
+        <p>Suatu zat radioaktif bermassa 160 gram meluruh menjadi setengahnya setiap 2 tahun. Berapa massa zat tersebut setelah 6 tahun?</p>
+        <div class="step">Banyak periode peluruhan: \( 6 \div 2 = 3 \) periode</div>
+        <div class="step">\( P(3) = 160 \times \left(\dfrac{1}{2}\right)^3 = 160 \times \dfrac{1}{8} = 20 \)</div>
+        <div class="step">Jadi setelah 6 tahun massa zat tersisa 20 gram.</div>
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh Soal — Bentuk Akar dalam Geometri</span>
+        <p>Panjang diagonal sebuah persegi dengan sisi 6 cm adalah ...</p>
+        <div class="step">Rumus diagonal persegi: \( d = s\sqrt{2} \)</div>
+        <div class="step">\( d = 6\sqrt{2} \) cm (bentuk paling sederhana, tidak perlu diubah ke desimal)</div>
+      </div>
+    </section>
+
+    <!-- LATIHAN -->
+    <section id="latihan">
+      <div class="sec-eyebrow">Latihan Soal</div>
+      <h2>Uji Pemahamanmu</h2>
+      <p>25 soal dalam 5 tipe berbeda untuk menguji pemahamanmu tentang bilangan berpangkat dan bentuk akar.</p>
+
+      <div class="type-btns">
+        <button class="type-btn active" id="btn-pg" onclick="showType('pg')">1. Pilihan Ganda Biasa</button>
+        <button class="type-btn" id="btn-is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="type-btn" id="btn-pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="type-btn" id="btn-bs" onclick="showType('bs')">4. Benar/Salah</button>
+        <button class="type-btn" id="btn-jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="scoreStrip"></div>
+
+      <div id="quiz-area"></div>
+
+      <button class="btn-primary" onclick="showAnalysis()">Lihat Analisis Akhir</button>
+
+      <div id="analysisPanel">
+        <h3 style="color:var(--gold-soft)">Analisis Hasil Belajar</h3>
+        <div class="stat-grid" id="statGrid"></div>
+        <div id="typeBars"></div>
+        <div class="grade-box" id="gradeBox"></div>
+        <button class="reset-btn" onclick="resetAll()">Ulangi Semua Latihan</button>
+      </div>
+    </section>
+
+    <footer>
+      Ebook Interaktif Matematika — Bilangan Berpangkat dan Bentuk Akar · Kelas 9 SMP · Kurikulum Merdeka<br>
+      Dibuat oleh <strong>Suminto with Claude</strong>
+    </footer>
+  </div>
+</div>
+
+<script>
+/* ============ SIDEBAR: SCROLLSPY + PROGRESS + MOBILE ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+const sectionIds = ['sec-a','sec-b','sec-c','sec-d','sec-e','sec-f','latihan'];
+const navLinks = document.querySelectorAll('.nav-link[data-target]');
+
+function updateScrollspyAndProgress(){
+  const scrollY = window.scrollY;
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docH > 0 ? (scrollY / docH) * 100 : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  let current = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140){ current = id; }
+    }
+  });
+  navLinks.forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+}
+window.addEventListener('scroll', updateScrollspyAndProgress);
+window.addEventListener('resize', updateScrollspyAndProgress);
+
+navLinks.forEach(function(link){
+  link.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+document.querySelectorAll('.nav-sub').forEach(function(link){
+  link.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ KALKULATOR MATERI ============ */
+function hitungPangkat(){
+  const a = parseFloat(document.getElementById('calcA_base').value) || 0;
+  const n = parseFloat(document.getElementById('calcA_pow').value) || 0;
+  const hasil = Math.pow(a, n);
+  document.getElementById('calcA_result').innerHTML = '<span class="mono">' + a + '<sup>' + n + '</sup> = ' + hasil + '</span>';
+}
+
+function hitungPangkatNegatif(){
+  const a = parseFloat(document.getElementById('calcB_base').value) || 0;
+  const n = parseFloat(document.getElementById('calcB_pow').value) || 0;
+  if(a === 0){
+    document.getElementById('calcB_result').innerHTML = 'Basis tidak boleh 0.';
+    return;
+  }
+  const positif = Math.pow(a, n);
+  const desimal = 1 / positif;
+  document.getElementById('calcB_result').innerHTML =
+    '<span class="mono">' + a + '<sup>-' + n + '</sup> = 1/' + positif + ' = ' + (Math.round(desimal*10000)/10000) + '</span>';
+}
+
+function hitungPangkatPecahan(){
+  const a = parseFloat(document.getElementById('calcC_base').value) || 0;
+  const m = parseFloat(document.getElementById('calcC_m').value) || 0;
+  const n = parseFloat(document.getElementById('calcC_n').value) || 1;
+  if(n === 0){
+    document.getElementById('calcC_result').innerHTML = 'Penyebut pangkat tidak boleh 0.';
+    return;
+  }
+  const hasil = Math.pow(a, m/n);
+  document.getElementById('calcC_result').innerHTML =
+    '<span class="mono">' + a + '<sup>' + m + '/' + n + '</sup> \u2248 ' + (Math.round(hasil*10000)/10000) + '</span>';
+}
+
+function sederhanakanAkar(){
+  const n = Math.round(parseFloat(document.getElementById('calcE_num').value)) || 0;
+  if(n < 0){
+    document.getElementById('calcE_result').innerHTML = 'Bilangan di dalam akar tidak boleh negatif.';
+    return;
+  }
+  let luar = 1, dalam = n;
+  for(let i = 2; i * i <= dalam; i++){
+    while(dalam % (i*i) === 0){
+      dalam = dalam / (i*i);
+      luar = luar * i;
+    }
+  }
+  let hasilTeks;
+  if(dalam === 1){
+    hasilTeks = '\u221a' + n + ' = ' + luar + ' (bentuk akar hilang, sudah bilangan bulat)';
+  } else if(luar === 1){
+    hasilTeks = '\u221a' + n + ' sudah dalam bentuk paling sederhana';
+  } else {
+    hasilTeks = '\u221a' + n + ' = ' + luar + '\u221a' + dalam;
+  }
+  document.getElementById('calcE_result').innerHTML = '<span class="mono">' + hasilTeks + '</span>';
+}
+
+/* ============ BANK SOAL LATIHAN ============ */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Hasil dari \\(3^4\\) adalah ...',
+      options:['A. 12', 'B. 64', 'C. 81', 'D. 243'], answer:2,
+      explanation:'\\(3^4 = 3 \\times 3 \\times 3 \\times 3 = 81\\).' },
+    { id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Bentuk sederhana dari \\(2^{-3}\\) adalah ...',
+      options:['A. -8', 'B. -6', 'C. 1/8', 'D. 8'], answer:2,
+      explanation:'\\(2^{-3} = \\dfrac{1}{2^3} = \\dfrac{1}{8}\\). Pangkat negatif tidak membuat hasil menjadi negatif.' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Nilai dari \\(16^{\\frac{1}{2}} \\times 27^{\\frac{1}{3}}\\) adalah ...',
+      options:['A. 7', 'B. 10', 'C. 12', 'D. 19'], answer:2,
+      explanation:'\\(16^{1/2} = \\sqrt{16} = 4\\) dan \\(27^{1/3} = \\sqrt[3]{27} = 3\\). Jadi \\(4 \\times 3 = 12\\).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Bentuk sederhana dari \\(\\sqrt{50} - \\sqrt{18}\\) adalah ...',
+      options:['A. \\(\\sqrt{2}\\)', 'B. \\(2\\sqrt{2}\\)', 'C. \\(8\\sqrt{2}\\)', 'D. 32'], answer:1,
+      explanation:'\\(\\sqrt{50} = 5\\sqrt{2}\\) dan \\(\\sqrt{18} = 3\\sqrt{2}\\), sehingga \\(5\\sqrt{2} - 3\\sqrt{2} = 2\\sqrt{2}\\).' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Populasi bakteri mula-mula 500, berlipat 2 kali setiap jam. Jumlah bakteri setelah 5 jam adalah ...',
+      options:['A. 2.500', 'B. 8.000', 'C. 16.000', 'D. 32.000'], answer:2,
+      explanation:'\\(P(5) = 500 \\times 2^5 = 500 \\times 32 = 16.000\\).' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Hasil dari \\(5^3\\) adalah ... (tulis angka saja)',
+      answer:'125', altAnswers:[],
+      explanation:'\\(5^3 = 5 \\times 5 \\times 5 = 125\\).' },
+    { id:'is2', type:'is', level:'mudah', num:2,
+      text:'Bentuk sederhana (pecahan) dari \\(4^{-1}\\) adalah ... (contoh format: 1/4)',
+      answer:'1/4', altAnswers:['0.25','seperempat','1/4.0'],
+      explanation:'\\(4^{-1} = \\dfrac{1}{4^1} = \\dfrac{1}{4}\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3,
+      text:'Nilai dari \\(9^{\\frac{3}{2}}\\) adalah ...',
+      answer:'27', altAnswers:[],
+      explanation:'\\(9^{3/2} = (\\sqrt{9})^3 = 3^3 = 27\\).' },
+    { id:'is4', type:'is', level:'sedang', num:4,
+      text:'Bentuk paling sederhana dari \\(\\sqrt{32}\\) adalah ... (format: a\u221ab, contoh 4\u221a2)',
+      answer:'4\u221a2', altAnswers:['4 akar 2','4*\u221a2','4 \u221a2'],
+      explanation:'\\(32 = 16 \\times 2\\), sehingga \\(\\sqrt{32} = \\sqrt{16 \\times 2} = 4\\sqrt{2}\\).' },
+    { id:'is5', type:'is', level:'sukar', num:5,
+      text:'Zat radioaktif meluruh menjadi setengahnya setiap 1 tahun. Massa awal 80 gram. Massa setelah 3 tahun adalah ... gram.',
+      answer:'10', altAnswers:[],
+      explanation:'\\(P(3) = 80 \\times \\left(\\dfrac{1}{2}\\right)^3 = 80 \\times \\dfrac{1}{8} = 10\\) gram.' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'mudah', num:1,
+      text:'Manakah pernyataan berikut yang BENAR tentang sifat bilangan berpangkat? (pilih semua yang benar)',
+      options:['A. \\(a^0 = 1\\) untuk \\(a \\neq 0\\)', 'B. \\(a^1 = a\\)', 'C. \\(a^m \\times a^n = a^{m \\times n}\\)', 'D. \\((a^m)^n = a^{mn}\\)'],
+      answers:[0,1,3],
+      explanation:'A dan B benar sesuai definisi dasar. D benar (pangkat dari pangkat dikalikan). C salah, seharusnya \\(a^m \\times a^n = a^{m+n}\\) (dijumlahkan, bukan dikalikan).' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Manakah nilai berikut yang sama dengan \\(2^{-2}\\)? (pilih semua yang benar)',
+      options:['A. 1/4', 'B. -4', 'C. 0,25', 'D. -1/4'],
+      answers:[0,2],
+      explanation:'\\(2^{-2} = \\dfrac{1}{2^2} = \\dfrac{1}{4} = 0{,}25\\). Pilihan B dan D salah karena pangkat negatif tidak menghasilkan nilai negatif.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Manakah bentuk yang senilai dengan \\(27^{\\frac{2}{3}}\\)? (pilih semua yang benar)',
+      options:['A. \\((\\sqrt[3]{27})^2\\)', 'B. \\(\\sqrt[3]{27^2}\\)', 'C. 9', 'D. 18'],
+      answers:[0,1,2],
+      explanation:'\\(27^{2/3} = (\\sqrt[3]{27})^2 = \\sqrt[3]{27^2}\\), keduanya bentuk yang setara dan sama-sama menghasilkan \\(3^2 = 9\\).' },
+    { id:'pk4', type:'pk', level:'sedang', num:4,
+      text:'Manakah operasi bentuk akar berikut yang BENAR? (pilih semua yang benar)',
+      options:['A. \\(\\sqrt{8} + \\sqrt{2} = 3\\sqrt{2}\\)', 'B. \\(\\sqrt{3} \\times \\sqrt{12} = 6\\)', 'C. \\(\\sqrt{20} - \\sqrt{5} = \\sqrt{15}\\)', 'D. \\((\\sqrt{5})^2 = 5\\)'],
+      answers:[0,1,3],
+      explanation:'A benar (\\(2\\sqrt2+\\sqrt2=3\\sqrt2\\)). B benar (\\(\\sqrt{36}=6\\)). D benar sesuai definisi akar kuadrat. C salah, seharusnya \\(2\\sqrt5-\\sqrt5=\\sqrt5\\), bukan \\(\\sqrt{15}\\) — akar tidak bisa dikurangkan seperti bilangan di dalamnya.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5,
+      text:'Sebuah investasi tumbuh menurut rumus \\(M = P(1+r)^t\\), dengan \\(P = 1.000.000\\) dan \\(r = 0{,}1\\) untuk \\(t = 2\\) tahun. Manakah pernyataan yang BENAR? (pilih semua yang benar)',
+      options:['A. \\(M = 1.210.000\\)', 'B. M lebih besar dari P', 'C. \\(M = 1.200.000\\)', 'D. Rumus ini menggunakan konsep bilangan berpangkat'],
+      answers:[0,1,3],
+      explanation:'\\(M = 1.000.000 \\times (1{,}1)^2 = 1.000.000 \\times 1{,}21 = 1.210.000\\). Nilai ini lebih besar dari P, dan rumus memakai pangkat \\(t\\) sehingga termasuk konsep bilangan berpangkat.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Pernyataan: "\\(a^0 = 1\\) untuk setiap \\(a \\neq 0\\)" adalah benar.',
+      answer:true,
+      explanation:'✅ Benar. Setiap bilangan (kecuali 0) dipangkatkan nol hasilnya selalu 1.' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Pernyataan: "\\(2^{-3} = -8\\)" adalah benar.',
+      answer:false,
+      explanation:'❌ Salah. \\(2^{-3} = \\dfrac{1}{2^3} = \\dfrac{1}{8}\\), bukan \\(-8\\).' },
+    { id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Pernyataan: "\\(\\sqrt{12}\\) dapat disederhanakan menjadi \\(2\\sqrt{3}\\)" adalah benar.',
+      answer:true,
+      explanation:'✅ Benar. \\(12 = 4 \\times 3\\), sehingga \\(\\sqrt{12} = \\sqrt{4} \\times \\sqrt{3} = 2\\sqrt{3}\\).' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Pernyataan: "\\(8^{\\frac{1}{3}} = 2\\)" adalah benar.',
+      answer:true,
+      explanation:'✅ Benar. \\(8^{1/3} = \\sqrt[3]{8} = 2\\), karena \\(2^3 = 8\\).' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Pernyataan: "Jika populasi tumbuh menurut \\(P(t) = P_0 \\times 2^t\\), maka setelah 4 periode populasi menjadi 8 kali lipat" adalah benar.',
+      answer:false,
+      explanation:'❌ Salah. Setelah 4 periode, populasi menjadi \\(2^4 = 16\\) kali lipat, bukan 8 kali lipat (8 kali lipat terjadi setelah 3 periode, \\(2^3=8\\)).' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'\\(2^5\\)', right:'32', answer:'32',
+      options:['32', '10', '25', '16'],
+      explanation:'\\(2^5 = 2\\times2\\times2\\times2\\times2 = 32\\).' },
+    { id:'jd2', type:'jd', level:'mudah', num:2,
+      left:'\\(3^{-2}\\)', right:'1/9', answer:'1/9',
+      options:['1/9', '-6', '1/6', '9'],
+      explanation:'\\(3^{-2} = \\dfrac{1}{3^2} = \\dfrac{1}{9}\\).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'\\(16^{\\frac{1}{4}}\\)', right:'2', answer:'2',
+      options:['2', '4', '8', '1/2'],
+      explanation:'\\(16^{1/4} = \\sqrt[4]{16} = 2\\), karena \\(2^4 = 16\\).' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'\\(\\sqrt{45}\\) disederhanakan', right:'3\u221a5', answer:'3\u221a5',
+      options:['3\u221a5', '5\u221a3', '9\u221a5', '\u221a45'],
+      explanation:'\\(45 = 9 \\times 5\\), sehingga \\(\\sqrt{45} = \\sqrt{9}\\times\\sqrt{5} = 3\\sqrt{5}\\).' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'\\(5^{\\frac{2}{3}} \\times 5^{\\frac{1}{3}}\\)', right:'5', answer:'5',
+      options:['5', '25', '5^(1/3)', '1'],
+      explanation:'Jumlahkan pangkatnya: \\(\\dfrac{2}{3}+\\dfrac{1}{3}=1\\), sehingga hasilnya \\(5^1 = 5\\).' }
+  ]
+};
+
+const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  typeOrder.forEach(function(t){
+    document.getElementById('btn-'+t).classList.toggle('active', t === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quiz-area');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function renderCard(q){
+  const levelClass = q.level === 'mudah' ? 'lvl-mudah' : (q.level === 'sedang' ? 'lvl-sedang' : 'lvl-sukar');
+  let body = '';
+  if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+
+  const answered = state.answers[q.id];
+  let expHtml = '';
+  if(answered){
+    const cls = answered.correct ? 'exp-correct' : 'exp-wrong';
+    expHtml = '<div class="explanation show ' + cls + '">' + (answered.correct ? '✅ ' : '') + q.explanation + '</div>';
+  }
+
+  return '<div class="question-card" id="card-'+q.id+'">' +
+    '<div class="q-head"><div class="q-num">'+q.num+'</div><span class="q-level '+levelClass+'">'+q.level+'</span></div>' +
+    '<div class="q-text">'+q.text+'</div>' +
+    body +
+    expHtml +
+    '</div>';
+}
+
+function renderPG(q){
+  const answered = state.answers[q.id];
+  let html = '';
+  q.options.forEach(function(opt, idx){
+    let cls = 'opt-btn';
+    let disabled = '';
+    if(answered){
+      disabled = 'disabled';
+      if(idx === q.answer){ cls += ' correct'; }
+      else if(idx === answered.chosen){ cls += ' wrong'; }
+    }
+    html += '<button class="'+cls+'" '+disabled+' onclick="answerPG(\''+q.id+'\','+idx+')">'+opt+'</button>';
+  });
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){ return x.id === qid; });
+  if(state.answers[qid]) return;
+  const correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q);
+}
+
+function renderIS(q){
+  const answered = state.answers[q.id];
+  if(answered){
+    return '<div class="is-row"><input type="text" value="'+(answered.chosen||'')+'" disabled></div>';
+  }
+  return '<div class="is-row">' +
+    '<input type="text" id="input-'+q.id+'" placeholder="Ketik jawabanmu..." onkeydown="if(event.key===\'Enter\'){submitIS(\''+q.id+'\')}">' +
+    '<button class="btn-primary" onclick="submitIS(\''+q.id+'\')">Kirim Jawaban</button>' +
+    '</div>';
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){ return x.id === qid; });
+  const inputEl = document.getElementById('input-'+qid);
+  if(!inputEl) return;
+  const raw = inputEl.value.trim();
+  if(raw === '') return;
+  const norm = raw.toLowerCase().replace(/\s+/g,'');
+  const validAnswers = [q.answer].concat(q.altAnswers || []).map(function(a){ return a.toLowerCase().replace(/\s+/g,''); });
+  const correct = validAnswers.indexOf(norm) !== -1;
+  state.answers[qid] = { chosen: raw, correct: correct };
+  refreshCard(q);
+}
+
+function renderPK(q){
+  const answered = state.answers[q.id];
+  const selected = pkTemp[q.id] || [];
+  let html = '';
+  q.options.forEach(function(opt, idx){
+    let cls = 'opt-btn';
+    let disabled = '';
+    if(answered){
+      disabled = 'disabled';
+      if(q.answers.indexOf(idx) !== -1){ cls += ' correct'; }
+      else if(answered.chosen.indexOf(idx) !== -1){ cls += ' wrong'; }
+    } else if(selected.indexOf(idx) !== -1){
+      cls += ' pk-selected';
+    }
+    html += '<button class="'+cls+'" '+disabled+' onclick="togglePK(\''+q.id+'\','+idx+')">'+opt+'</button>';
+  });
+  if(!answered){
+    html += '<button class="btn-primary" onclick="submitPK(\''+q.id+'\')">Konfirmasi Jawaban</button>';
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const i = pkTemp[qid].indexOf(idx);
+  if(i === -1){ pkTemp[qid].push(idx); } else { pkTemp[qid].splice(i,1); }
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  refreshCard(q);
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  const chosen = pkTemp[qid] || [];
+  const setChosen = new Set(chosen);
+  const setAnswer = new Set(q.answers);
+  const correct = setChosen.size === setAnswer.size && chosen.every(function(v){ return setAnswer.has(v); });
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q);
+}
+
+function renderBS(q){
+  const answered = state.answers[q.id];
+  let clsBenar = 'opt-btn', clsSalah = 'opt-btn', disabled = '';
+  if(answered){
+    disabled = 'disabled';
+    if(q.answer === true){ clsBenar += ' correct'; if(answered.chosen === false){ clsSalah += ' wrong'; } }
+    else { clsSalah += ' correct'; if(answered.chosen === true){ clsBenar += ' wrong'; } }
+  }
+  return '<button class="'+clsBenar+'" '+disabled+' onclick="answerBS(\''+q.id+'\',true)">✅ BENAR</button>' +
+    '<button class="'+clsSalah+'" '+disabled+' onclick="answerBS(\''+q.id+'\',false)">❌ SALAH</button>';
+}
+function answerBS(qid, val){
+  if(state.answers[qid]) return;
+  const q = allQuestions.bs.find(function(x){ return x.id === qid; });
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+}
+
+function renderJD(q){
+  const answered = state.answers[q.id];
+  let optHtml = '<option value="">-- pilih pasangan --</option>';
+  q.options.forEach(function(opt){
+    const sel = answered && answered.chosen === opt ? 'selected' : '';
+    optHtml += '<option value="'+opt+'" '+sel+'>'+opt+'</option>';
+  });
+  const disabled = answered ? 'disabled' : '';
+  return '<div class="jd-row"><div class="jd-left">'+q.left+'</div> &rarr; ' +
+    '<select '+disabled+' onchange="answerJD(\''+q.id+'\', this.value)">'+optHtml+'</select></div>';
+}
+function answerJD(qid, val){
+  if(val === '' || state.answers[qid]) return;
+  const q = allQuestions.jd.find(function(x){ return x.id === qid; });
+  const correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+}
+
+function refreshCard(q){
+  const el = document.getElementById('card-'+q.id);
+  if(el){
+    el.outerHTML = renderCard(q);
+    typesetMath();
+  }
+  updateScoreStrip();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let correct = 0, done = 0;
+    qs.forEach(function(q){
+      if(state.answers[q.id]){
+        done++;
+        if(state.answers[q.id].correct) correct++;
+      }
+    });
+    html += '<div class="score-chip">'+typeLabels[t]+': '+correct+'/'+qs.length+' ('+done+' dijawab)</div>';
+  });
+  strip.innerHTML = html;
+}
+
+function showAnalysis(){
+  let totalQ = 0, totalCorrect = 0, totalAnswered = 0;
+  let typeStats = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let correct = 0, answered = 0;
+    qs.forEach(function(q){
+      totalQ++;
+      if(state.answers[q.id]){
+        answered++; totalAnswered++;
+        if(state.answers[q.id].correct){ correct++; totalCorrect++; }
+      }
+    });
+    typeStats[t] = { correct: correct, total: qs.length };
+  });
+
+  const persen = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
+  document.getElementById('statGrid').innerHTML =
+    '<div class="stat-box"><div class="num">'+totalQ+'</div><div class="lbl">Total Soal</div></div>' +
+    '<div class="stat-box"><div class="num">'+totalCorrect+'</div><div class="lbl">Benar</div></div>' +
+    '<div class="stat-box"><div class="num">'+(totalAnswered-totalCorrect)+'</div><div class="lbl">Salah</div></div>' +
+    '<div class="stat-box"><div class="num">'+persen+'%</div><div class="lbl">Nilai</div></div>';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const st = typeStats[t];
+    const pct = st.total > 0 ? (st.correct / st.total) * 100 : 0;
+    barsHtml += '<div class="type-bar-row"><div class="lbl"><span>'+typeLabels[t]+'</span><span>'+st.correct+'/'+st.total+'</span></div>' +
+      '<div class="type-bar-track"><div class="type-bar-fill" style="width:'+pct+'%"></div></div></div>';
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let grade, emoji, pesan;
+  if(persen >= 90){ grade='A'; emoji='🏆'; pesan='Luar Biasa!'; }
+  else if(persen >= 75){ grade='B'; emoji='⭐'; pesan='Bagus!'; }
+  else if(persen >= 60){ grade='C'; emoji='👍'; pesan='Cukup Baik'; }
+  else if(persen >= 40){ grade='D'; emoji='💪'; pesan='Jangan Menyerah'; }
+  else { grade='E'; emoji='📚'; pesan='Semangat Belajar'; }
+  document.getElementById('gradeBox').innerHTML =
+    '<div class="grade-letter">'+grade+'</div><div>'+emoji+' '+pesan+'</div>';
+
+  document.getElementById('analysisPanel').classList.add('show');
+  document.getElementById('analysisPanel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollspyAndProgress();
+  typesetMath();
+});
+</script>
+</body>
+</html>

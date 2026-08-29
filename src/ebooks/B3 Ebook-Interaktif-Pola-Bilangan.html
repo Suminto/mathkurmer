@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ebook Interaktif — Pola Bilangan | Kelas 8</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12182b;
+  --ink2:#1b2340;
+  --ink3:#232c4d;
+  --gold:#e0b95c;
+  --gold-soft:#f0d68a;
+  --cream:#faf3e6;
+  --paper:#fbf6ec;
+  --paper2:#f4ecd8;
+  --paper-line:#e3d5b3;
+  --text-main:#2c2417;
+  --text-soft:#6b5f47;
+  --def:#eef3ea;
+  --def-border:#7fa87a;
+  --warn:#fbe9df;
+  --warn-border:#c97a4a;
+  --tip:#e8eef7;
+  --tip-border:#5b7fa6;
+  --correct:#d6ead1;
+  --correct-border:#4d8a4a;
+  --wrong:#f6dad3;
+  --wrong-border:#c1503a;
+  --radius:14px;
+  --shadow:0 6px 24px rgba(20,16,8,0.12);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Source Serif 4', serif;
+  background:var(--paper);
+  color:var(--text-main);
+}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; margin:0 0 .4em 0;}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== LAYOUT ===== */
+.app{display:flex; min-height:100vh;}
+.sidebar{
+  width:290px; flex-shrink:0;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:#efe6d0;
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  padding:26px 20px 30px;
+  z-index:50;
+}
+.content{flex:1; min-width:0; padding:0;}
+
+/* Sidebar header */
+.side-eyebrow{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gold-soft); opacity:.85; margin-bottom:8px;
+}
+.side-title{font-size:26px; line-height:1.2; color:#fbf6ea; font-weight:800; margin-bottom:16px;}
+.progress-wrap{height:5px; background:rgba(255,255,255,.12); border-radius:6px; overflow:hidden; margin-bottom:26px;}
+.progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold-soft), var(--gold)); transition:width .15s ease;}
+
+.nav-section-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--gold-soft); margin:22px 0 8px; opacity:.8;
+}
+.nav-section-label:first-of-type{margin-top:0;}
+.nav-link{
+  display:block; padding:9px 12px; margin:2px 0; border-radius:9px;
+  color:#d9d0b8; text-decoration:none; font-size:14.5px; line-height:1.3;
+  border-left:3px solid transparent; transition:.18s ease;
+}
+.nav-link:hover{background:rgba(255,255,255,.06); color:#fff;}
+.nav-link.active{
+  background:rgba(224,185,92,.14); color:var(--gold-soft);
+  border-left:3px solid var(--gold); font-weight:600;
+}
+.nav-sub{margin-left:14px; font-size:13.5px; opacity:.92;}
+.nav-sub .nav-link{padding:6px 10px;}
+
+.menu-toggle{display:none;}
+
+/* ===== CONTENT ===== */
+.hero{
+  padding:70px 60px 56px; position:relative; overflow:hidden;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(224,185,92,0.14), transparent 55%),
+    var(--paper2);
+  border-bottom:1px solid var(--paper-line);
+}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-soft); margin-bottom:14px;}
+.hero h1{font-size:46px; max-width:760px; color:var(--ink); margin-bottom:18px;}
+.hero p{font-size:18px; max-width:640px; color:var(--text-soft); line-height:1.6;}
+.chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.chip{
+  background:#fff; border:1px solid var(--paper-line); border-radius:999px;
+  padding:8px 16px; font-size:13.5px; font-family:'JetBrains Mono',monospace;
+  color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,0.03);
+}
+.chip b{color:var(--text-soft); font-weight:500; margin-right:6px;}
+
+section.materi{
+  padding:56px 60px; max-width:920px; margin:0 auto;
+  border-bottom:1px solid var(--paper-line);
+}
+.sec-label{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold, #a9822c); margin-bottom:10px;}
+section.materi h2{font-size:32px; color:var(--ink); margin-bottom:18px;}
+section.materi p, section.materi li{font-size:17px; line-height:1.75; color:var(--text-main);}
+section.materi ul, section.materi ol{padding-left:22px;}
+
+.callout{
+  border-radius:var(--radius); padding:18px 22px; margin:22px 0;
+  border-left:4px solid; font-size:16px; line-height:1.65;
+}
+.callout-def{background:var(--def); border-color:var(--def-border);}
+.callout-tip{background:var(--tip); border-color:var(--tip-border);}
+.callout-warn{background:var(--warn); border-color:var(--warn-border);}
+.callout-label{font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; margin-bottom:6px; display:block;}
+.callout-def .callout-label{color:#3f6b3b;}
+.callout-tip .callout-label{color:#2f4d6e;}
+.callout-warn .callout-label{color:#96502a;}
+
+.example-box{
+  background:#fff; border:1px solid var(--paper-line); border-radius:var(--radius);
+  padding:20px 24px; margin:22px 0; box-shadow:var(--shadow);
+}
+.example-box .ex-title{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-soft); margin-bottom:10px;}
+
+.shape-row{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin:24px 0; padding:20px; background:#fff; border-radius:var(--radius); border:1px solid var(--paper-line);}
+.shape{display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; font-size:13px;}
+.arrow{font-size:20px; color:var(--text-soft);}
+
+.nature-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin:24px 0;}
+.nature-card{background:#fff; border:1px solid var(--paper-line); border-radius:var(--radius); padding:18px; text-align:center;}
+.nature-card .emoji{font-size:34px; margin-bottom:8px;}
+.nature-card .cap{font-size:14.5px; color:var(--text-soft);}
+
+/* Calculator */
+.calc-box{
+  background:linear-gradient(135deg, #fff, var(--paper2));
+  border:1px solid var(--paper-line); border-radius:var(--radius);
+  padding:24px; margin:26px 0; box-shadow:var(--shadow);
+}
+.calc-box h4{font-size:18px; color:var(--ink); margin-bottom:14px;}
+.calc-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px;}
+.calc-field{flex:1; min-width:120px;}
+.calc-field label{display:block; font-size:12.5px; font-family:'JetBrains Mono',monospace; color:var(--text-soft); margin-bottom:5px;}
+.calc-field input, .calc-field select{
+  width:100%; padding:9px 11px; border:1px solid var(--paper-line); border-radius:9px;
+  font-family:'JetBrains Mono',monospace; font-size:15px; background:#fff; color:var(--ink);
+}
+.calc-btn{
+  background:var(--ink); color:#f0d68a; border:none; padding:11px 22px; border-radius:9px;
+  font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:600; cursor:pointer;
+  transition:.18s ease;
+}
+.calc-btn:hover{background:var(--ink2); transform:translateY(-1px);}
+.calc-result{
+  margin-top:14px; padding:14px 16px; border-radius:9px; background:#fff;
+  border:1px dashed var(--paper-line); font-size:16px; min-height:24px;
+}
+
+/* Latihan */
+section.latihan-head{
+  padding:56px 60px 10px; max-width:920px; margin:0 auto; text-align:center;
+}
+section.latihan-head h2{font-size:34px; color:var(--ink);}
+section.latihan-head p{color:var(--text-soft); font-size:16px;}
+
+.tipe-block{padding:36px 60px 10px; max-width:920px; margin:0 auto;}
+.tipe-title{display:flex; align-items:center; gap:12px; margin-bottom:22px;}
+.tipe-badge{
+  width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  font-family:'JetBrains Mono',monospace; font-weight:700; color:#fff; font-size:15px; flex-shrink:0;
+}
+.tipe-title h3{font-size:24px; color:var(--ink); margin:0;}
+.tipe-desc{color:var(--text-soft); font-size:15px; margin:-14px 0 22px 50px;}
+
+.qcard{
+  background:#fff; border:1px solid var(--paper-line); border-radius:var(--radius);
+  padding:22px 24px; margin-bottom:18px; box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  transition:border-color .2s ease;
+  animation:fadeUp .4s ease both;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.qcard.answered-correct{border-color:var(--correct-border); background:#fbfdf9;}
+.qcard.answered-wrong{border-color:var(--wrong-border); background:#fdfaf9;}
+
+.qhead{display:flex; align-items:flex-start; gap:12px; margin-bottom:14px;}
+.qnum{
+  width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13.5px; color:#fff; flex-shrink:0;
+}
+.qtext{font-size:16.5px; line-height:1.6; color:var(--text-main); padding-top:3px;}
+.qlevel{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em;
+  padding:3px 9px; border-radius:999px; margin-left:auto; flex-shrink:0; align-self:flex-start;
+}
+.lvl-mudah{background:#e3f0dc; color:#3f6b3b;}
+.lvl-sedang{background:#f6ecd2; color:#8a6a1a;}
+.lvl-sukar{background:#f6dcd2; color:#a04a2b;}
+
+.opt-list{display:flex; flex-direction:column; gap:8px; margin-left:42px;}
+.opt-btn{
+  text-align:left; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  background:var(--paper); font-family:'Source Serif 4',serif; font-size:15.5px; cursor:pointer;
+  transition:.16s ease; color:var(--text-main);
+}
+.opt-btn:hover:not(:disabled){transform:translateX(3px); border-color:var(--ink3);}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-border); font-weight:600;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-border);}
+.opt-btn.reveal{background:var(--correct); border-color:var(--correct-border); opacity:.85;}
+
+.bs-row{display:flex; gap:12px; margin-left:42px;}
+.bs-btn{
+  flex:1; padding:12px; border-radius:9px; border:1px solid var(--paper-line); background:var(--paper);
+  font-family:'JetBrains Mono',monospace; font-weight:600; font-size:15px; cursor:pointer; transition:.16s ease;
+}
+.bs-btn:hover:not(:disabled){transform:translateY(-2px);}
+.bs-btn.correct{background:var(--correct); border-color:var(--correct-border);}
+.bs-btn.wrong{background:var(--wrong); border-color:var(--wrong-border);}
+
+.pk-btn{background:var(--paper);}
+.pk-btn.selected{background:var(--tip); border-color:var(--tip-border);}
+.pk-confirm{
+  margin-left:42px; margin-top:10px; background:var(--ink); color:#f0d68a; border:none;
+  padding:9px 18px; border-radius:9px; font-family:'JetBrains Mono',monospace; font-size:13.5px;
+  cursor:pointer; font-weight:600;
+}
+.pk-confirm:disabled{opacity:.5; cursor:default;}
+
+.is-row{display:flex; gap:10px; margin-left:42px;}
+.is-row input{
+  flex:1; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  font-family:'Source Serif 4',serif; font-size:15.5px;
+}
+.is-row button{
+  background:var(--ink); color:#f0d68a; border:none; padding:0 20px; border-radius:9px;
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; cursor:pointer; font-weight:600;
+}
+
+.jd-row{display:flex; align-items:center; gap:14px; margin-left:42px;}
+.jd-left{flex:1; background:var(--paper); border:1px solid var(--paper-line); border-radius:9px; padding:11px 14px; font-size:15.5px;}
+.jd-arrow{color:var(--text-soft);}
+.jd-row select{
+  flex:1; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  font-family:'Source Serif 4',serif; font-size:15px; background:#fff;
+}
+.jd-row.correct select{border-color:var(--correct-border); background:var(--correct);}
+.jd-row.wrong select{border-color:var(--wrong-border); background:var(--wrong);}
+
+.explain{
+  margin:14px 0 0 42px; padding:12px 16px; border-radius:9px; background:var(--tip);
+  border-left:3px solid var(--tip-border); font-size:15px; line-height:1.6; display:none;
+}
+.explain.show{display:block; animation:fadeUp .3s ease;}
+
+/* Summary */
+.summary-wrap{padding:50px 60px 90px; max-width:920px; margin:0 auto;}
+.summary-card{
+  background:linear-gradient(135deg, var(--ink), var(--ink2));
+  color:#f4ecd8; border-radius:20px; padding:36px 40px; box-shadow:var(--shadow);
+}
+.summary-card h3{color:#fff; font-size:26px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:22px 0;}
+.stat-box{background:rgba(255,255,255,.07); border-radius:12px; padding:16px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:700; color:var(--gold-soft);}
+.stat-box .lbl{font-size:12px; color:#d9d0b8; margin-top:4px; font-family:'JetBrains Mono',monospace; text-transform:uppercase;}
+.type-bars{margin:20px 0;}
+.tbar-row{display:flex; align-items:center; gap:12px; margin-bottom:10px;}
+.tbar-label{width:150px; font-family:'JetBrains Mono',monospace; font-size:13px; color:#d9d0b8;}
+.tbar-track{flex:1; height:9px; background:rgba(255,255,255,.12); border-radius:6px; overflow:hidden;}
+.tbar-fill{height:100%; border-radius:6px; transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{
+  text-align:center; margin-top:22px; padding:20px; border-radius:14px;
+  background:rgba(255,255,255,.08);
+}
+.grade-box .grade{font-family:'Playfair Display',serif; font-size:44px; font-weight:800; color:var(--gold-soft);}
+.grade-box .msg{font-size:16px; margin-top:4px;}
+.reset-btn{
+  display:block; margin:22px auto 0; background:var(--gold-soft); color:var(--ink);
+  border:none; padding:12px 28px; border-radius:999px; font-family:'JetBrains Mono',monospace;
+  font-weight:700; font-size:14px; cursor:pointer;
+}
+.reset-btn:hover{background:#fff;}
+
+footer{
+  padding:30px 60px 50px; text-align:center; color:var(--text-soft); font-size:13.5px;
+  font-family:'JetBrains Mono',monospace; border-top:1px solid var(--paper-line);
+}
+footer b{color:var(--ink);}
+
+/* Mobile */
+@media(max-width:900px){
+  .sidebar{
+    position:fixed; left:-300px; top:0; width:280px; height:100vh; transition:left .25s ease;
+    box-shadow:8px 0 30px rgba(0,0,0,0.3);
+  }
+  .sidebar.open{left:0;}
+  .menu-toggle{
+    display:block; position:fixed; top:16px; left:16px; z-index:60;
+    background:var(--ink); color:var(--gold-soft); border:none; padding:10px 14px;
+    border-radius:9px; font-size:15px; font-family:'JetBrains Mono',monospace; cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,0.25);
+  }
+  .overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;
+  }
+  .overlay.show{display:block;}
+  .hero, section.materi, .tipe-block, section.latihan-head, .summary-wrap, footer{padding-left:24px; padding-right:24px;}
+  .hero{padding-top:80px;}
+  .hero h1{font-size:32px;}
+  .opt-list, .bs-row, .is-row, .jd-row, .explain{margin-left:0;}
+  .qtext{font-size:15.5px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .tbar-label{width:110px; font-size:11.5px;}
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle">☰ Menu</button>
+<div class="overlay" id="overlay"></div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="side-eyebrow">Matematika · Kelas 8</div>
+    <div class="side-title">Pola Bilangan</div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+    <div class="nav-section-label">Materi</div>
+    <a href="#materi-a" class="nav-link" data-target="materi-a">A. Pola Bentuk</a>
+    <a href="#materi-b" class="nav-link" data-target="materi-b">B. Pola Bentuk di Alam</a>
+    <a href="#materi-c" class="nav-link" data-target="materi-c">C. Pola Bilangan</a>
+    <a href="#materi-d" class="nav-link" data-target="materi-d">D. Menentukan Nilai Suku ke-n</a>
+    <a href="#materi-e" class="nav-link" data-target="materi-e">E. Pola Bilangan Lainnya</a>
+
+    <div class="nav-section-label">Latihan</div>
+    <a href="#latihan" class="nav-link" data-target="latihan">🖊 Soal Interaktif</a>
+    <div class="nav-sub">
+      <a href="#tipe-pg" class="nav-link" data-target="tipe-pg">1. Pilihan Ganda (Biasa)</a>
+      <a href="#tipe-is" class="nav-link" data-target="tipe-is">2. Isian Singkat</a>
+      <a href="#tipe-pk" class="nav-link" data-target="tipe-pk">3. PG Kompleks</a>
+      <a href="#tipe-bs" class="nav-link" data-target="tipe-bs">4. Benar / Salah</a>
+      <a href="#tipe-jd" class="nav-link" data-target="tipe-jd">5. Menjodohkan</a>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <section class="hero" id="hero">
+      <div class="hero-eyebrow">Matematika · Kelas 8 · Kurikulum Merdeka</div>
+      <h1>Menjelajahi Pola Bilangan</h1>
+      <p>Ebook interaktif ini mengajakmu mengenal pola bentuk, menemukan pola dalam alam, memahami barisan bilangan, serta belajar menentukan nilai suku ke-n — lengkap dengan kalkulator interaktif dan 30 latihan soal otomatis terkoreksi.</p>
+      <div class="chip-row">
+        <div class="chip"><b>A</b>Pola Bentuk</div>
+        <div class="chip"><b>B</b>Pola Bentuk di Alam</div>
+        <div class="chip"><b>C</b>Pola Bilangan</div>
+        <div class="chip"><b>D</b>Nilai Suku ke-n</div>
+        <div class="chip"><b>E</b>Pola Bilangan Lainnya</div>
+        <div class="chip"><b>Latihan</b>30 Soal · 5 Tipe</div>
+      </div>
+    </section>
+
+    <!-- ===== MATERI A ===== -->
+    <section class="materi" id="materi-a">
+      <div class="sec-label">Bagian A</div>
+      <h2>Pola Bentuk</h2>
+      <p><strong>Pola bentuk</strong> adalah susunan gambar atau bangun yang berulang mengikuti aturan tertentu, sehingga bentuk berikutnya dapat diprediksi.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-label">Definisi</span>
+        Pola adalah aturan yang mengatur bagaimana suatu susunan (bentuk, warna, ukuran, atau bilangan) berubah secara teratur dari satu suku ke suku berikutnya.
+      </div>
+
+      <p>Perhatikan pola lingkaran berikut. Setiap tahap ditambahkan satu lingkaran baru:</p>
+      <div class="shape-row">
+        <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;">1</div>
+        <span class="arrow">→</span>
+        <div style="display:flex;gap:4px;">
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+        </div>
+        <span class="arrow">→</span>
+        <div style="display:flex;gap:4px;">
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+        </div>
+        <span class="arrow">→</span>
+        <div style="display:flex;gap:4px;">
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+          <div class="shape" style="width:30px;height:30px;border-radius:50%;background:#c97a4a;"></div>
+        </div>
+        <span class="arrow">→ ?</span>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-title">Contoh Soal</div>
+        <p>Banyak lingkaran pada tahap 1, 2, 3, 4 berturut-turut adalah 1, 2, 3, 4. Berapa banyak lingkaran pada tahap ke-5?</p>
+        <p><strong>Penyelesaian:</strong> Karena polanya bertambah 1 setiap tahap, maka tahap ke-5 memiliki \(5\) lingkaran.</p>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-label">Tips</span>
+        Untuk membaca pola bentuk, perhatikan tiga hal: apa yang <em>bertambah</em>, apa yang <em>berkurang</em>, dan apa yang <em>tetap</em> di setiap tahap.
+      </div>
+    </section>
+
+    <!-- ===== MATERI B ===== -->
+    <section class="materi" id="materi-b">
+      <div class="sec-label">Bagian B</div>
+      <h2>Pola Bentuk di Alam</h2>
+      <p>Pola tidak hanya ditemukan dalam matematika di buku, tetapi juga tersebar luas di alam sekitar kita. Alam sering "menghitung" menggunakan pola-pola yang sangat rapi dan efisien.</p>
+
+      <div class="nature-grid">
+        <div class="nature-card"><div class="emoji">🐝</div><div class="cap"><strong>Sarang lebah</strong><br>berbentuk heksagon (segi enam) beraturan yang saling menyambung tanpa celah.</div></div>
+        <div class="nature-card"><div class="emoji">🌻</div><div class="cap"><strong>Kelopak bunga matahari</strong><br>tersusun dalam spiral yang mengikuti barisan Fibonacci.</div></div>
+        <div class="nature-card"><div class="emoji">🍍</div><div class="cap"><strong>Sisik nanas</strong><br>tersusun dalam pola spiral ganda yang jumlahnya juga mengikuti Fibonacci.</div></div>
+        <div class="nature-card"><div class="emoji">🐚</div><div class="cap"><strong>Cangkang kerang (nautilus)</strong><br>tumbuh membentuk spiral logaritmik yang rasionya konstan.</div></div>
+        <div class="nature-card"><div class="emoji">🕸️</div><div class="cap"><strong>Sarang laba-laba</strong><br>tersusun radial dengan jarak antar benang yang mengikuti pola teratur.</div></div>
+        <div class="nature-card"><div class="emoji">🐍</div><div class="cap"><strong>Corak kulit ular/harimau</strong><br>terbentuk dari pola pengulangan bentuk dan jarak yang konsisten.</div></div>
+      </div>
+
+      <div class="callout callout-def">
+        <span class="callout-label">Tahukah Kamu?</span>
+        Barisan Fibonacci (1, 1, 2, 3, 5, 8, 13, ...) — di mana setiap suku adalah jumlah dua suku sebelumnya — muncul berulang kali di alam karena pola pertumbuhan ini paling efisien dalam memanfaatkan ruang dan cahaya.
+      </div>
+
+      <p>Mempelajari pola bentuk di alam membantu kita memahami bahwa <strong>matematika bukan hanya angka di atas kertas</strong>, tetapi bahasa yang menjelaskan keteraturan dunia nyata.</p>
+    </section>
+
+    <!-- ===== MATERI C ===== -->
+    <section class="materi" id="materi-c">
+      <div class="sec-label">Bagian C</div>
+      <h2>Pola Bilangan</h2>
+      <p><strong>Pola bilangan</strong> adalah susunan bilangan yang dibentuk berdasarkan aturan tertentu, sehingga bilangan berikutnya dapat ditentukan.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-label">Definisi</span>
+        Barisan bilangan adalah kumpulan bilangan yang disusun menurut urutan dan aturan tertentu. Setiap bilangan dalam barisan disebut <strong>suku</strong>, dilambangkan \(U_1, U_2, U_3, \dots, U_n\).
+      </div>
+
+      <p>Beberapa jenis pola bilangan yang umum dipelajari:</p>
+      <ul>
+        <li><strong>Pola bilangan ganjil:</strong> \(1, 3, 5, 7, 9, \dots\)</li>
+        <li><strong>Pola bilangan genap:</strong> \(2, 4, 6, 8, 10, \dots\)</li>
+        <li><strong>Pola bilangan persegi:</strong> \(1, 4, 9, 16, 25, \dots\) (yaitu \(n^2\))</li>
+        <li><strong>Pola bilangan segitiga:</strong> \(1, 3, 6, 10, 15, \dots\)</li>
+        <li><strong>Barisan aritmetika:</strong> memiliki beda (selisih) tetap antar suku, contoh \(2, 5, 8, 11, \dots\)</li>
+        <li><strong>Barisan geometri:</strong> memiliki rasio (perbandingan) tetap antar suku, contoh \(3, 6, 12, 24, \dots\)</li>
+      </ul>
+
+      <div class="example-box">
+        <div class="ex-title">Contoh Soal</div>
+        <p>Tentukan tiga suku berikutnya dari barisan \(4, 7, 10, 13, \dots\)</p>
+        <p><strong>Penyelesaian:</strong> Beda antar suku adalah \(3\) (aritmetika), sehingga tiga suku berikutnya adalah \(16, 19, 22\).</p>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-label">Perhatian</span>
+        Jangan langsung menyimpulkan pola dari dua suku saja. Periksa selisih atau rasio dari minimal tiga pasangan suku berurutan agar polanya benar-benar konsisten.
+      </div>
+    </section>
+
+    <!-- ===== MATERI D ===== -->
+    <section class="materi" id="materi-d">
+      <div class="sec-label">Bagian D</div>
+      <h2>Menentukan Nilai Suku ke-n</h2>
+      <p>Untuk mencari suku ke-\(n\) tanpa harus menuliskan semua suku sebelumnya, kita menggunakan rumus umum barisan.</p>
+
+      <div class="callout callout-def">
+        <span class="callout-label">Rumus Barisan Aritmetika</span>
+        \[ U_n = a + (n-1)b \]
+        dengan \(a\) = suku pertama, \(b\) = beda, \(n\) = nomor suku yang dicari.
+      </div>
+
+      <div class="callout callout-def">
+        <span class="callout-label">Rumus Barisan Geometri</span>
+        \[ U_n = a \times r^{(n-1)} \]
+        dengan \(a\) = suku pertama, \(r\) = rasio, \(n\) = nomor suku yang dicari.
+      </div>
+
+      <div class="example-box">
+        <div class="ex-title">Contoh Soal</div>
+        <p>Barisan aritmetika: \(5, 8, 11, 14, \dots\) — tentukan \(U_{10}\)!</p>
+        <p><strong>Penyelesaian:</strong> \(a = 5\), \(b = 3\), sehingga:</p>
+        <p>\[ U_{10} = 5 + (10-1)\times 3 = 5 + 27 = 32 \]</p>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Suku ke-n</h4>
+        <div class="calc-row">
+          <div class="calc-field">
+            <label>Jenis Barisan</label>
+            <select id="calcJenis" onchange="toggleCalcField()">
+              <option value="aritmetika">Aritmetika</option>
+              <option value="geometri">Geometri</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Suku pertama (a)</label>
+            <input type="number" id="calcA" value="2" step="any">
+          </div>
+          <div class="calc-field" id="calcBWrap">
+            <label id="calcBLabel">Beda (b)</label>
+            <input type="number" id="calcB" value="3" step="any">
+          </div>
+          <div class="calc-field">
+            <label>Suku ke- (n)</label>
+            <input type="number" id="calcN" value="10" min="1" step="1">
+          </div>
+        </div>
+        <button class="calc-btn" onclick="hitungSuku()">Hitung Un</button>
+        <div class="calc-result" id="calcResult">Hasil akan muncul di sini…</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-label">Tips</span>
+        Cara cepat membedakan: jika kamu <em>menjumlahkan</em> bilangan yang sama tiap langkah → aritmetika. Jika kamu <em>mengalikan</em> dengan bilangan yang sama tiap langkah → geometri.
+      </div>
+    </section>
+
+    <!-- ===== MATERI E ===== -->
+    <section class="materi" id="materi-e">
+      <div class="sec-label">Bagian E</div>
+      <h2>Pola Bilangan Lainnya</h2>
+      <p>Selain aritmetika dan geometri, ada beberapa pola bilangan khusus yang sering muncul dalam soal maupun kehidupan sehari-hari.</p>
+
+      <div class="example-box">
+        <div class="ex-title">1. Bilangan Segitiga</div>
+        <p>Terbentuk dari susunan titik membentuk segitiga: \(1, 3, 6, 10, 15, \dots\)</p>
+        <p>Rumus suku ke-\(n\): \[ U_n = \dfrac{n(n+1)}{2} \]</p>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-title">2. Bilangan Persegi (Kuadrat)</div>
+        <p>Terbentuk dari susunan titik membentuk persegi: \(1, 4, 9, 16, 25, \dots\)</p>
+        <p>Rumus suku ke-\(n\): \[ U_n = n^2 \]</p>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-title">3. Bilangan Fibonacci</div>
+        <p>Setiap suku merupakan hasil penjumlahan dua suku sebelumnya: \(1, 1, 2, 3, 5, 8, 13, 21, \dots\)</p>
+        <p>Rumus rekursif: \[ U_n = U_{n-1} + U_{n-2}, \quad U_1 = U_2 = 1 \]</p>
+      </div>
+
+      <div class="example-box">
+        <div class="ex-title">4. Segitiga Pascal</div>
+        <p>Susunan bilangan segitiga di mana setiap bilangan adalah jumlah dua bilangan di atasnya. Baris-barisnya menghasilkan koefisien penting dalam aljabar (misalnya perpangkatan bentuk aljabar).</p>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-label">Perhatian</span>
+        Bilangan Fibonacci menggunakan rumus <em>rekursif</em> (bergantung suku sebelumnya), berbeda dengan rumus aritmetika/geometri yang bersifat <em>eksplisit</em> (langsung dihitung dari \(n\)).
+      </div>
+    </section>
+
+    <!-- ===== LATIHAN ===== -->
+    <section class="latihan-head" id="latihan">
+      <div class="sec-label" style="text-align:center;">Latihan</div>
+      <h2>🖊 Soal Interaktif</h2>
+      <p>30 soal · 5 tipe soal · terkoreksi otomatis dengan penjelasan setiap jawaban</p>
+    </section>
+
+    <!-- PG -->
+    <div class="tipe-block" id="tipe-pg">
+      <div class="tipe-title">
+        <div class="tipe-badge" style="background:#4d8a4a;">PG</div>
+        <h3>1. Pilihan Ganda (Biasa)</h3>
+      </div>
+      <div class="tipe-desc">Pilih satu jawaban yang paling tepat.</div>
+      <div id="pgContainer"></div>
+    </div>
+
+    <!-- IS -->
+    <div class="tipe-block" id="tipe-is">
+      <div class="tipe-title">
+        <div class="tipe-badge" style="background:#c97a4a;">IS</div>
+        <h3>2. Isian Singkat</h3>
+      </div>
+      <div class="tipe-desc">Ketik jawabanmu lalu tekan Enter atau tombol Kirim.</div>
+      <div id="isContainer"></div>
+    </div>
+
+    <!-- PK -->
+    <div class="tipe-block" id="tipe-pk">
+      <div class="tipe-title">
+        <div class="tipe-badge" style="background:#7a5ca6;">PK</div>
+        <h3>3. Pilihan Ganda Kompleks</h3>
+      </div>
+      <div class="tipe-desc">Bisa lebih dari satu jawaban benar. Pilih semua yang tepat, lalu konfirmasi.</div>
+      <div id="pkContainer"></div>
+    </div>
+
+    <!-- BS -->
+    <div class="tipe-block" id="tipe-bs">
+      <div class="tipe-title">
+        <div class="tipe-badge" style="background:#3f6fa6;">BS</div>
+        <h3>4. Benar / Salah</h3>
+      </div>
+      <div class="tipe-desc">Tentukan apakah pernyataan berikut benar atau salah.</div>
+      <div id="bsContainer"></div>
+    </div>
+
+    <!-- JD -->
+    <div class="tipe-block" id="tipe-jd">
+      <div class="tipe-title">
+        <div class="tipe-badge" style="background:#a6853f;">JD</div>
+        <h3>5. Menjodohkan</h3>
+      </div>
+      <div class="tipe-desc">Pasangkan pernyataan di kiri dengan jawaban yang sesuai di kanan.</div>
+      <div id="jdContainer"></div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary-wrap">
+      <div class="summary-card">
+        <h3>📊 Ringkasan Skor</h3>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num" id="statTotal">0/30</div><div class="lbl">Terjawab</div></div>
+          <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lbl">Benar</div></div>
+          <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lbl">Salah</div></div>
+          <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lbl">Nilai</div></div>
+        </div>
+        <div class="type-bars" id="typeBars"></div>
+        <div class="grade-box" id="gradeBox" style="display:none;">
+          <div class="grade" id="gradeLetter">-</div>
+          <div class="msg" id="gradeMsg"></div>
+        </div>
+        <button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua</button>
+      </div>
+    </div>
+
+    <footer>
+      <div><b>Pola Bilangan — Ebook Interaktif</b> · Matematika Kelas 8</div>
+      <div style="margin-top:6px;">5 tipe soal · MathJax · Dibuat oleh <b>Suminto with Claude</b></div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ================= DATA SOAL ================= */
+const allQuestions = {
+  pg: [
+    {id:'pg1', level:'mudah', text:'Perhatikan pola: 2, 4, 6, 8, ... Bilangan berikutnya adalah?', options:['A. 9','B. 10','C. 11','D. 12'], answer:1, explanation:'Pola ini adalah bilangan genap dengan beda 2, sehingga setelah 8 adalah 10.'},
+    {id:'pg2', level:'mudah', text:'Pada barisan aritmetika dengan rumus \\(U_n=a+(n-1)b\\), jika \\(a=3\\) dan \\(b=5\\), maka nilai \\(U_1\\) adalah?', options:['A. 3','B. 5','C. 8','D. 13'], answer:0, explanation:'\\(U_1 = a + (1-1)b = a = 3\\). Suku pertama selalu sama dengan nilai \\(a\\).'},
+    {id:'pg3', level:'sedang', text:'Barisan \\(5, 8, 11, 14, \\dots\\) memiliki suku ke-10 sebesar?', options:['A. 29','B. 30','C. 32','D. 35'], answer:2, explanation:'\\(a=5, b=3\\), maka \\(U_{10}=5+(10-1)\\times3=5+27=32\\).'},
+    {id:'pg4', level:'sedang', text:'Barisan geometri \\(2, 6, 18, 54, \\dots\\) memiliki rasio \\(r\\) sebesar?', options:['A. 2','B. 3','C. 4','D. 9'], answer:1, explanation:'Rasio diperoleh dari \\(6\\div2=3\\), dan diperiksa juga \\(18\\div6=3\\). Jadi \\(r=3\\).'},
+    {id:'pg5', level:'sedang', text:'Banyak titik pada pola bilangan segitiga di suku ke-4 adalah?', options:['A. 6','B. 8','C. 10','D. 12'], answer:2, explanation:'Gunakan rumus \\(U_n=\\dfrac{n(n+1)}{2}\\), sehingga \\(U_4=\\dfrac{4\\times5}{2}=10\\).'},
+    {id:'pg6', level:'sukar', text:'Suatu barisan aritmetika memiliki \\(U_3=11\\) dan \\(U_7=23\\). Beda barisan tersebut adalah?', options:['A. 2','B. 3','C. 4','D. 5'], answer:1, explanation:'Selisih 4 suku (dari \\(U_3\\) ke \\(U_7\\)) adalah \\(23-11=12\\), maka \\(b=12\\div4=3\\).'}
+  ],
+  is: [
+    {id:'is1', level:'mudah', text:'Pola bilangan 1, 3, 5, 7, ... adalah pola bilangan ganjil. Sebutkan dua suku berikutnya (pisahkan dengan koma)!', answer:'9,11', altAnswers:['9, 11','9,11'], explanation:'Pola ganjil bertambah 2 setiap suku, sehingga setelah 7 adalah 9 dan 11.'},
+    {id:'is2', level:'mudah', text:'Barisan 3, 6, 9, 12, ... memiliki beda sebesar ...', answer:'3', altAnswers:['tiga'], explanation:'Selisih tiap suku berurutan adalah \\(6-3=3\\), \\(9-6=3\\), dst. Jadi bedanya 3.'},
+    {id:'is3', level:'sedang', text:'Pola bilangan yang dihasilkan dari rumus \\(U_n=n^2\\) disebut pola bilangan ...', answer:'persegi', altAnswers:['kuadrat','bilangan persegi','bilangan kuadrat'], explanation:'Karena setiap suku merupakan hasil kuadrat dari \\(n\\), pola ini disebut bilangan persegi (kuadrat).'},
+    {id:'is4', level:'sedang', text:'Suku pertama suatu barisan aritmetika adalah 4 dan bedanya 5. Nilai suku ke-6 adalah ...', answer:'29', altAnswers:[], explanation:'\\(U_6=4+(6-1)\\times5=4+25=29\\).'},
+    {id:'is5', level:'sedang', text:'Barisan Fibonacci: 1, 1, 2, 3, 5, 8, ... Nilai suku ke-9 adalah ...', answer:'34', altAnswers:[], explanation:'Lanjutkan barisannya: 1,1,2,3,5,8,13,21,34. Suku ke-9 adalah 34.'},
+    {id:'is6', level:'sukar', text:'Suatu barisan geometri memiliki suku pertama 3 dan rasio 2. Nilai suku ke-7 adalah ...', answer:'192', altAnswers:[], explanation:'\\(U_7=3\\times2^{(7-1)}=3\\times64=192\\).'}
+  ],
+  pk: [
+    {id:'pk1', level:'mudah', text:'Manakah bilangan berikut yang termasuk pola bilangan genap?', options:['A. 2','B. 4','C. 7','D. 10'], answers:[0,1,3], explanation:'Bilangan genap habis dibagi 2: 2, 4, dan 10 benar; 7 adalah bilangan ganjil.'},
+    {id:'pk2', level:'mudah', text:'Perhatikan pola bilangan ganjil 1, 3, 5, 7, ... Manakah pernyataan yang benar?', options:['A. Bedanya adalah 2','B. Semua sukunya habis dibagi 2','C. Rumus suku ke-n adalah \\(2n-1\\)','D. Barisan dimulai dari 1'], answers:[0,2,3], explanation:'Bilangan ganjil tidak habis dibagi 2, sehingga pernyataan B salah. A, C, dan D benar.'},
+    {id:'pk3', level:'sedang', text:'Manakah yang merupakan contoh pola bentuk yang ada di alam?', options:['A. Sarang lebah (heksagon)','B. Kelopak bunga matahari (Fibonacci)','C. Papan catur','D. Susunan sisik nanas'], answers:[0,1,3], explanation:'Sarang lebah, kelopak bunga matahari, dan sisik nanas adalah pola alami. Papan catur adalah buatan manusia, bukan pola alam.'},
+    {id:'pk4', level:'sedang', text:'Diketahui barisan aritmetika dengan \\(a=2\\) dan \\(b=4\\). Manakah pernyataan yang benar?', options:['A. \\(U_1=2\\)','B. \\(U_2=6\\)','C. \\(U_3=8\\)','D. \\(U_4=10\\)'], answers:[0,1], explanation:'\\(U_1=2\\), \\(U_2=2+4=6\\) (benar). \\(U_3=2+2\\times4=10\\) (bukan 8), \\(U_4=2+3\\times4=14\\) (bukan 10). Jadi hanya A dan B benar.'},
+    {id:'pk5', level:'sedang', text:'Pilih bilangan-bilangan berikut yang termasuk bilangan segitiga (1, 3, 6, 10, 15, ...)!', options:['A. 1','B. 3','C. 5','D. 6'], answers:[0,1,3], explanation:'Bilangan segitiga adalah 1, 3, 6, 10, 15, ... Angka 5 bukan bagian dari barisan ini.'},
+    {id:'pk6', level:'sukar', text:'Barisan 2, 5, 10, 17, 26, ... mengikuti pola \\(U_n=n^2+1\\). Manakah pernyataan yang benar?', options:['A. \\(U_1=2\\)','B. \\(U_5=26\\)','C. Beda antar suku selalu tetap','D. Beda antar suku bertambah 2 setiap langkah'], answers:[0,1,3], explanation:'\\(U_1=1^2+1=2\\) dan \\(U_5=5^2+1=26\\) benar. Beda antar suku (3,5,7,9) tidak tetap tetapi bertambah 2 setiap langkah, jadi C salah dan D benar.'}
+  ],
+  bs: [
+    {id:'bs1', level:'mudah', text:'Pola bilangan 1, 4, 9, 16, 25 adalah barisan bilangan persegi.', answer:true, explanation:'Benar, karena setiap suku merupakan hasil kuadrat: \\(1^2,2^2,3^2,4^2,5^2\\).'},
+    {id:'bs2', level:'mudah', text:'Barisan aritmetika memiliki rasio yang tetap antar sukunya.', answer:false, explanation:'Salah. Barisan aritmetika memiliki beda (selisih) yang tetap, sedangkan rasio tetap adalah ciri barisan geometri.'},
+    {id:'bs3', level:'sedang', text:'Sarang lebah yang berbentuk heksagon merupakan salah satu contoh pola bentuk di alam.', answer:true, explanation:'Benar, sarang lebah adalah contoh nyata pola bentuk heksagon yang terjadi secara alami.'},
+    {id:'bs4', level:'sedang', text:'Rumus suku ke-n untuk barisan geometri adalah \\(U_n=a+(n-1)b\\).', answer:false, explanation:'Salah. Rumus tersebut adalah rumus barisan aritmetika. Barisan geometri menggunakan rumus \\(U_n=a\\times r^{(n-1)}\\).'},
+    {id:'bs5', level:'sedang', text:'Bilangan Fibonacci diperoleh dengan menjumlahkan dua suku sebelumnya.', answer:true, explanation:'Benar, misalnya \\(U_n=U_{n-1}+U_{n-2}\\), seperti pada barisan 1,1,2,3,5,8,...'},
+    {id:'bs6', level:'sukar', text:'Barisan 100, 90, 80, 70, ... adalah barisan aritmetika dengan beda \\(-10\\).', answer:true, explanation:'Benar, setiap suku berkurang 10 dari suku sebelumnya, sehingga bedanya adalah \\(-10\\).'}
+  ],
+  jd: [
+    {id:'jd1', level:'mudah', left:'Barisan 2, 4, 6, 8, ...', answer:'Pola bilangan genap', options:['Pola bilangan genap','Pola bilangan ganjil','Pola bilangan segitiga','Pola bilangan Fibonacci'], explanation:'Barisan ini bertambah 2 dan semua sukunya habis dibagi 2, sehingga disebut pola bilangan genap.'},
+    {id:'jd2', level:'mudah', left:'Barisan 1, 3, 5, 7, ...', answer:'Pola bilangan ganjil', options:['Pola bilangan ganjil','Pola bilangan persegi','Rumus suku ke-n barisan aritmetika','Pola bilangan genap'], explanation:'Barisan ini terdiri dari bilangan-bilangan yang tidak habis dibagi 2, yaitu pola bilangan ganjil.'},
+    {id:'jd3', level:'sedang', left:'Barisan 1, 3, 6, 10, 15, ...', answer:'Pola bilangan segitiga', options:['Pola bilangan segitiga','Pola bilangan persegi','Pola bilangan Fibonacci','Pola bilangan genap'], explanation:'Barisan ini terbentuk dari susunan titik membentuk segitiga, sesuai rumus \\(U_n=\\frac{n(n+1)}{2}\\).'},
+    {id:'jd4', level:'sedang', left:'Barisan 1, 4, 9, 16, 25, ...', answer:'Pola bilangan persegi', options:['Pola bilangan persegi','Pola bilangan segitiga','Pola bilangan ganjil','Rumus suku ke-n barisan aritmetika'], explanation:'Setiap suku merupakan hasil kuadrat \\(n^2\\), sehingga disebut pola bilangan persegi.'},
+    {id:'jd5', level:'sedang', left:'Barisan 1, 1, 2, 3, 5, 8, ...', answer:'Pola bilangan Fibonacci', options:['Pola bilangan Fibonacci','Pola bilangan genap','Pola bilangan segitiga','Pola bilangan persegi'], explanation:'Setiap suku adalah jumlah dari dua suku sebelumnya, ciri khas barisan Fibonacci.'},
+    {id:'jd6', level:'sukar', left:'\\(U_n=a+(n-1)b\\)', answer:'Rumus suku ke-n barisan aritmetika', options:['Rumus suku ke-n barisan aritmetika','Pola bilangan Fibonacci','Pola bilangan segitiga','Pola bilangan ganjil'], explanation:'Rumus ini digunakan untuk menentukan suku ke-n pada barisan aritmetika, dengan \\(a\\) sebagai suku pertama dan \\(b\\) sebagai beda.'}
+  ]
+};
+
+/* ================= STATE ================= */
+const state = { answers:{} };
+let pkTemp = {};
+
+const typeMeta = {
+  pg:{name:'Pilihan Ganda', color:'#4d8a4a'},
+  is:{name:'Isian Singkat', color:'#c97a4a'},
+  pk:{name:'PG Kompleks', color:'#7a5ca6'},
+  bs:{name:'Benar/Salah', color:'#3f6fa6'},
+  jd:{name:'Menjodohkan', color:'#a6853f'}
+};
+
+/* ================= RENDER SOAL ================= */
+function levelBadge(level){
+  const map = {mudah:'lvl-mudah', sedang:'lvl-sedang', sukar:'lvl-sukar'};
+  return `<span class="qlevel ${map[level]}">${level}</span>`;
+}
+
+function renderPG(){
+  const c = document.getElementById('pgContainer');
+  c.innerHTML = allQuestions.pg.map((q,idx)=>`
+    <div class="qcard" id="card-${q.id}">
+      <div class="qhead">
+        <div class="qnum" style="background:${typeMeta.pg.color};">${idx+1}</div>
+        <div class="qtext">${q.text}</div>
+        ${levelBadge(q.level)}
+      </div>
+      <div class="opt-list" id="opts-${q.id}">
+        ${q.options.map((opt,i)=>`<button class="opt-btn" onclick="answerPG('${q.id}',${i})">${opt}</button>`).join('')}
+      </div>
+      <div class="explain" id="explain-${q.id}"></div>
+    </div>`).join('');
+}
+
+function answerPG(qid, chosen){
+  const q = allQuestions.pg.find(x=>x.id===qid);
+  if(state.answers[qid]) return;
+  const correct = chosen === q.answer;
+  state.answers[qid] = {type:'pg', correct};
+  const optsWrap = document.getElementById('opts-'+qid);
+  [...optsWrap.children].forEach((btn,i)=>{
+    btn.disabled = true;
+    if(i===q.answer) btn.classList.add('correct');
+    else if(i===chosen) btn.classList.add('wrong');
+  });
+  document.getElementById('card-'+qid).classList.add(correct?'answered-correct':'answered-wrong');
+  showExplain(qid, q.explanation, correct);
+  refreshAll();
+}
+
+function renderIS(){
+  const c = document.getElementById('isContainer');
+  c.innerHTML = allQuestions.is.map((q,idx)=>`
+    <div class="qcard" id="card-${q.id}">
+      <div class="qhead">
+        <div class="qnum" style="background:${typeMeta.is.color};">${idx+1}</div>
+        <div class="qtext">${q.text}</div>
+        ${levelBadge(q.level)}
+      </div>
+      <div class="is-row">
+        <input type="text" id="input-${q.id}" placeholder="Ketik jawabanmu..." onkeydown="if(event.key==='Enter')submitIS('${q.id}')">
+        <button onclick="submitIS('${q.id}')">Kirim</button>
+      </div>
+      <div class="explain" id="explain-${q.id}"></div>
+    </div>`).join('');
+}
+
+function submitIS(qid){
+  if(state.answers[qid]) return;
+  const q = allQuestions.is.find(x=>x.id===qid);
+  const input = document.getElementById('input-'+qid);
+  const val = input.value.trim().toLowerCase();
+  if(!val) return;
+  const candidates = [q.answer, ...(q.altAnswers||[])].map(a=>a.toLowerCase().replace(/\s+/g,''));
+  const norm = val.replace(/\s+/g,'');
+  const correct = candidates.includes(norm);
+  state.answers[qid] = {type:'is', correct};
+  input.disabled = true;
+  const card = document.getElementById('card-'+qid);
+  card.classList.add(correct?'answered-correct':'answered-wrong');
+  showExplain(qid, (correct?'✅ Benar! ':'❌ Kurang tepat. Jawaban: '+q.answer+'. ')+q.explanation, correct);
+  refreshAll();
+}
+
+function renderPK(){
+  const c = document.getElementById('pkContainer');
+  c.innerHTML = allQuestions.pk.map((q,idx)=>`
+    <div class="qcard" id="card-${q.id}">
+      <div class="qhead">
+        <div class="qnum" style="background:${typeMeta.pk.color};">${idx+1}</div>
+        <div class="qtext">${q.text}</div>
+        ${levelBadge(q.level)}
+      </div>
+      <div class="opt-list" id="opts-${q.id}">
+        ${q.options.map((opt,i)=>`<button class="opt-btn pk-btn" onclick="togglePK('${q.id}',${i})">${opt}</button>`).join('')}
+      </div>
+      <button class="pk-confirm" id="confirm-${q.id}" onclick="submitPK('${q.id}')">Konfirmasi Jawaban</button>
+      <div class="explain" id="explain-${q.id}"></div>
+    </div>`).join('');
+}
+
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = new Set();
+  const set = pkTemp[qid];
+  if(set.has(idx)) set.delete(idx); else set.add(idx);
+  const optsWrap = document.getElementById('opts-'+qid);
+  [...optsWrap.children][idx].classList.toggle('selected');
+}
+
+function submitPK(qid){
+  if(state.answers[qid]) return;
+  const q = allQuestions.pk.find(x=>x.id===qid);
+  const chosen = pkTemp[qid] || new Set();
+  const correctSet = new Set(q.answers);
+  const correct = chosen.size===correctSet.size && [...chosen].every(v=>correctSet.has(v));
+  state.answers[qid] = {type:'pk', correct};
+  const optsWrap = document.getElementById('opts-'+qid);
+  [...optsWrap.children].forEach((btn,i)=>{
+    btn.disabled = true;
+    btn.classList.remove('selected');
+    if(correctSet.has(i)) btn.classList.add('correct');
+    else if(chosen.has(i)) btn.classList.add('wrong');
+  });
+  document.getElementById('confirm-'+qid).disabled = true;
+  document.getElementById('card-'+qid).classList.add(correct?'answered-correct':'answered-wrong');
+  showExplain(qid, q.explanation, correct);
+  refreshAll();
+}
+
+function renderBS(){
+  const c = document.getElementById('bsContainer');
+  c.innerHTML = allQuestions.bs.map((q,idx)=>`
+    <div class="qcard" id="card-${q.id}">
+      <div class="qhead">
+        <div class="qnum" style="background:${typeMeta.bs.color};">${idx+1}</div>
+        <div class="qtext">${q.text}</div>
+        ${levelBadge(q.level)}
+      </div>
+      <div class="bs-row" id="opts-${q.id}">
+        <button class="bs-btn" onclick="answerBS('${q.id}',true)">✅ BENAR</button>
+        <button class="bs-btn" onclick="answerBS('${q.id}',false)">❌ SALAH</button>
+      </div>
+      <div class="explain" id="explain-${q.id}"></div>
+    </div>`).join('');
+}
+
+function answerBS(qid, chosen){
+  if(state.answers[qid]) return;
+  const q = allQuestions.bs.find(x=>x.id===qid);
+  const correct = chosen === q.answer;
+  state.answers[qid] = {type:'bs', correct};
+  const wrap = document.getElementById('opts-'+qid);
+  [...wrap.children].forEach((btn,i)=>{
+    btn.disabled = true;
+    const btnVal = i===0;
+    if(btnVal===q.answer) btn.classList.add('correct');
+    else if(btnVal===chosen) btn.classList.add('wrong');
+  });
+  document.getElementById('card-'+qid).classList.add(correct?'answered-correct':'answered-wrong');
+  showExplain(qid, q.explanation, correct);
+  refreshAll();
+}
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function renderJD(){
+  const c = document.getElementById('jdContainer');
+  c.innerHTML = allQuestions.jd.map((q,idx)=>{
+    const opts = shuffle(q.options);
+    return `
+    <div class="qcard" id="card-${q.id}">
+      <div class="qhead">
+        <div class="qnum" style="background:${typeMeta.jd.color};">${idx+1}</div>
+        <div class="qtext">${q.left}</div>
+        ${levelBadge(q.level)}
+      </div>
+      <div class="jd-row" id="row-${q.id}">
+        <div class="jd-left">${q.left}</div>
+        <div class="jd-arrow">→</div>
+        <select id="select-${q.id}" onchange="answerJD('${q.id}', this.value)">
+          <option value="">-- pilih pasangan --</option>
+          ${opts.map(o=>`<option value="${o.replace(/"/g,'&quot;')}">${o}</option>`).join('')}
+        </select>
+      </div>
+      <div class="explain" id="explain-${q.id}"></div>
+    </div>`;
+  }).join('');
+}
+
+function answerJD(qid, val){
+  if(state.answers[qid] || !val) return;
+  const q = allQuestions.jd.find(x=>x.id===qid);
+  const correct = val === q.answer;
+  state.answers[qid] = {type:'jd', correct};
+  document.getElementById('select-'+qid).disabled = true;
+  document.getElementById('row-'+qid).classList.add(correct?'correct':'wrong');
+  document.getElementById('card-'+qid).classList.add(correct?'answered-correct':'answered-wrong');
+  showExplain(qid, (correct?'✅ Tepat! ':'❌ Pasangan yang benar: "'+q.answer+'". ')+q.explanation, correct);
+  refreshAll();
+}
+
+function showExplain(qid, text, correct){
+  const el = document.getElementById('explain-'+qid);
+  el.innerHTML = `<strong>${correct?'✅ Benar!':'❌ Kurang tepat.'}</strong> ${text}`;
+  el.classList.add('show');
+  if(window.MathJax && MathJax.typesetPromise){ MathJax.typesetPromise([el]); }
+}
+
+/* ================= SUMMARY / SCORE ================= */
+function refreshAll(){
+  updateSummary();
+}
+
+function updateSummary(){
+  const allIds = Object.values(allQuestions).flat().map(q=>q.id);
+  const total = allIds.length;
+  let answered=0, benar=0;
+  const perType = {pg:{a:0,b:0,t:allQuestions.pg.length}, is:{a:0,b:0,t:allQuestions.is.length}, pk:{a:0,b:0,t:allQuestions.pk.length}, bs:{a:0,b:0,t:allQuestions.bs.length}, jd:{a:0,b:0,t:allQuestions.jd.length}};
+
+  Object.entries(state.answers).forEach(([qid, res])=>{
+    answered++;
+    if(res.correct) benar++;
+    perType[res.type].a++;
+    if(res.correct) perType[res.type].b++;
+  });
+
+  const salah = answered - benar;
+  const nilai = total>0 ? Math.round((benar/total)*100) : 0;
+
+  document.getElementById('statTotal').textContent = `${answered}/${total}`;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  document.getElementById('statNilai').textContent = `${nilai}%`;
+
+  const bars = document.getElementById('typeBars');
+  bars.innerHTML = Object.entries(perType).map(([type, d])=>{
+    const pct = d.t>0 ? (d.b/d.t)*100 : 0;
+    return `<div class="tbar-row">
+      <div class="tbar-label">${typeMeta[type].name} (${d.b}/${d.t})</div>
+      <div class="tbar-track"><div class="tbar-fill" style="width:${pct}%; background:${typeMeta[type].color};"></div></div>
+    </div>`;
+  }).join('');
+
+  const gradeBox = document.getElementById('gradeBox');
+  if(answered === total){
+    gradeBox.style.display = 'block';
+    let grade, emoji, msg, color;
+    if(nilai>=90){grade='A';emoji='🏆';msg='Luar Biasa!';color='#e0b95c';}
+    else if(nilai>=75){grade='B';emoji='⭐';msg='Bagus!';color='#e0b95c';}
+    else if(nilai>=60){grade='C';emoji='👍';msg='Cukup Baik';color='#e0b95c';}
+    else if(nilai>=40){grade='D';emoji='💪';msg='Jangan Menyerah';color='#e0b95c';}
+    else {grade='E';emoji='📚';msg='Semangat Belajar';color='#e0b95c';}
+    document.getElementById('gradeLetter').textContent = `${emoji} ${grade}`;
+    document.getElementById('gradeMsg').textContent = msg;
+  } else {
+    gradeBox.style.display = 'none';
+  }
+
+  updateProgress();
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  renderPG(); renderIS(); renderPK(); renderBS(); renderJD();
+  updateSummary();
+  if(window.MathJax && MathJax.typesetPromise){ MathJax.typesetPromise(); }
+  document.getElementById('hero').scrollIntoView({behavior:'smooth'});
+}
+
+/* ================= KALKULATOR ================= */
+function toggleCalcField(){
+  const jenis = document.getElementById('calcJenis').value;
+  const label = document.getElementById('calcBLabel');
+  label.textContent = jenis==='aritmetika' ? 'Beda (b)' : 'Rasio (r)';
+}
+
+function hitungSuku(){
+  const jenis = document.getElementById('calcJenis').value;
+  const a = parseFloat(document.getElementById('calcA').value);
+  const b = parseFloat(document.getElementById('calcB').value);
+  const n = parseInt(document.getElementById('calcN').value);
+  const resultEl = document.getElementById('calcResult');
+  if(isNaN(a) || isNaN(b) || isNaN(n) || n<1){
+    resultEl.innerHTML = '⚠️ Mohon isi semua nilai dengan benar (n minimal 1).';
+    return;
+  }
+  let un, formula;
+  if(jenis==='aritmetika'){
+    un = a + (n-1)*b;
+    formula = `\\(U_{${n}} = ${a} + (${n}-1)\\times${b} = ${un}\\)`;
+  } else {
+    un = a * Math.pow(b, n-1);
+    formula = `\\(U_{${n}} = ${a} \\times ${b}^{(${n}-1)} = ${un}\\)`;
+  }
+  resultEl.innerHTML = `Hasil: ${formula}`;
+  if(window.MathJax && MathJax.typesetPromise){ MathJax.typesetPromise([resultEl]); }
+}
+
+/* ================= SCROLLSPY + PROGRESS ================= */
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = [...navLinks].map(l=>document.getElementById(l.dataset.target)).filter(Boolean);
+
+function updateProgress(){
+  const doc = document.documentElement;
+  const scrollTop = window.scrollY || doc.scrollTop;
+  const scrollHeight = doc.scrollHeight - doc.clientHeight;
+  const pct = scrollHeight>0 ? (scrollTop/scrollHeight)*100 : 0;
+  document.getElementById('progressBar').style.width = pct+'%';
+}
+
+function updateScrollspy(){
+  let currentId = sections[0] ? sections[0].id : null;
+  const scrollPos = window.scrollY + 140;
+  sections.forEach(sec=>{
+    if(sec.offsetTop <= scrollPos) currentId = sec.id;
+  });
+  navLinks.forEach(link=>{
+    link.classList.toggle('active', link.dataset.target === currentId);
+  });
+}
+
+window.addEventListener('scroll', ()=>{
+  updateProgress();
+  updateScrollspy();
+}, {passive:true});
+
+navLinks.forEach(link=>{
+  link.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const target = document.getElementById(link.dataset.target);
+    if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    closeSidebar();
+  });
+});
+
+/* ================= MOBILE SIDEBAR ================= */
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const menuToggle = document.getElementById('menuToggle');
+
+function openSidebar(){ sidebar.classList.add('open'); overlay.classList.add('show'); }
+function closeSidebar(){ sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+menuToggle.addEventListener('click', ()=>{
+  sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+});
+overlay.addEventListener('click', closeSidebar);
+
+/* ================= INIT ================= */
+renderPG(); renderIS(); renderPK(); renderBS(); renderJD();
+updateSummary();
+updateProgress();
+updateScrollspy();
+</script>
+</body>
+</html>

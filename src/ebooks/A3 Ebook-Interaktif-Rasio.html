@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rasio (Perbandingan) — Matematika Kelas 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4', serif;
+  background:var(--paper);
+  color:var(--text-dark);
+  display:flex;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:290px; flex-shrink:0;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column;
+  border-right:1px solid var(--ink-border);
+  z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink3); border-radius:3px;}
+.side-header{
+  padding:26px 22px 16px; border-bottom:1px solid var(--ink-border);
+}
+.side-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px;
+  color:var(--gold); text-transform:uppercase;
+}
+.side-title{
+  font-size:22px; font-weight:700; margin-top:8px; line-height:1.25; color:var(--cream);
+}
+.side-sub{
+  font-size:12.5px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;
+}
+.progress-wrap{
+  padding:16px 22px; border-bottom:1px solid var(--ink-border);
+}
+.progress-track{
+  height:6px; background:var(--ink3); border-radius:4px; overflow:hidden;
+}
+#progressBar{
+  height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+  transition:width .25s ease;
+}
+.progress-txt{font-size:11px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;}
+nav{padding:14px 12px 30px; flex:1;}
+.nav-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft);
+  padding:14px 10px 8px; text-transform:uppercase; opacity:.85;
+}
+.nav-link{
+  display:block; padding:10px 12px; margin:2px 0; border-radius:8px;
+  color:var(--cream-dim); text-decoration:none; font-size:14.5px;
+  transition:background .18s ease, color .18s ease;
+  border-left:3px solid transparent;
+}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left:3px solid var(--gold);}
+.nav-sub{padding-left:12px; border-left:1px solid var(--ink-border); margin:2px 0 10px 22px;}
+.nav-sub a{
+  display:block; padding:7px 10px; font-size:13px; color:var(--cream-dim); text-decoration:none;
+  border-radius:6px; transition:background .18s ease, color .18s ease; cursor:pointer;
+}
+.nav-sub a:hover, .nav-sub a.active{background:var(--ink3); color:var(--gold-soft);}
+
+#menuToggle{
+  display:none; position:fixed; top:14px; left:14px; z-index:200;
+  width:44px; height:44px; border-radius:10px; border:1px solid var(--ink-border);
+  background:var(--ink); color:var(--gold-soft); font-size:20px; cursor:pointer;
+}
+#overlay{display:none; position:fixed; inset:0; background:rgba(20,26,46,.6); z-index:60;}
+
+/* ===== CONTENT ===== */
+#content{flex:1; min-width:0; padding:0;}
+.hero{
+  background:linear-gradient(160deg, var(--ink) 0%, var(--ink2) 55%, var(--ink3) 100%);
+  color:var(--cream); padding:70px 60px 56px; position:relative; overflow:hidden;
+}
+.hero::after{
+  content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px;
+  border-radius:50%; background:radial-gradient(circle, rgba(224,169,77,.18), transparent 70%);
+}
+.hero-label{font-family:'JetBrains Mono',monospace; letter-spacing:3px; color:var(--gold); font-size:13px; text-transform:uppercase;}
+.hero h1{font-size:44px; margin-top:14px; line-height:1.15; max-width:640px;}
+.hero p{margin-top:16px; color:var(--cream-dim); max-width:600px; font-size:16.5px; line-height:1.7;}
+.chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.chip{
+  font-family:'JetBrains Mono',monospace; font-size:12px; padding:7px 14px; border-radius:20px;
+  background:var(--ink3); border:1px solid var(--ink-border); color:var(--gold-soft);
+}
+
+.mat-section{padding:56px 60px; border-bottom:1px solid var(--paper-line); max-width:900px;}
+.mat-section .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.mat-section h2{font-size:30px; margin-top:14px;}
+.mat-section h3{font-size:20px; margin-top:30px; margin-bottom:10px; color:var(--text-mid);}
+.mat-section p{line-height:1.85; margin-top:12px; font-size:16.5px; color:var(--text-dark);}
+.mat-section ul, .mat-section ol{margin:14px 0 14px 26px; line-height:1.9; font-size:16px;}
+
+.callout{
+  margin:20px 0; padding:18px 22px; border-radius:10px; border-left:5px solid;
+  font-size:15.5px; line-height:1.75;
+}
+.callout .co-title{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; display:block;}
+.def{background:var(--def); border-color:var(--def-b);}
+.def .co-title{color:#3f6b32;}
+.note{background:var(--note); border-color:var(--note-b);}
+.note .co-title{color:#a06a1e;}
+.warn{background:var(--warn); border-color:var(--warn-b);}
+.warn .co-title{color:#9a3c34;}
+
+.example-box{
+  margin:20px 0; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  padding:20px 24px;
+}
+.example-box .ex-title{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:1.5px; color:var(--gold);
+  background:var(--ink); display:inline-block; padding:4px 12px; border-radius:6px; margin-bottom:12px;
+}
+.example-box ol{margin-left:22px; line-height:2;}
+.example-box .step-label{font-weight:600; color:var(--text-mid); font-family:'JetBrains Mono',monospace; font-size:13px;}
+
+.calc-box{
+  margin:24px 0; background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 26px;
+  box-shadow:0 10px 30px rgba(20,26,46,.25);
+}
+.calc-box h4{color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
+.calc-row input, .calc-row select{
+  font-family:'JetBrains Mono',monospace; font-size:15px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--ink-border); background:var(--ink2); color:var(--cream); width:90px;
+}
+.calc-row select{width:auto;}
+.calc-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--gold); color:var(--ink); font-weight:700; cursor:pointer; transition:transform .15s ease, background .15s ease;
+}
+.calc-btn:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{
+  margin-top:12px; padding:12px 16px; background:var(--ink2); border-radius:8px; border:1px solid var(--ink-border);
+  font-family:'JetBrains Mono',monospace; font-size:15px; min-height:22px; color:var(--gold-soft);
+}
+
+/* ===== LATIHAN ===== */
+.latihan-section{padding:56px 60px 90px; background:var(--paper);}
+.latihan-header{max-width:900px;}
+.latihan-header .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.latihan-header h2{font-size:30px; margin-top:14px;}
+.latihan-header p{margin-top:10px; color:var(--text-mid); font-size:15.5px; max-width:640px; line-height:1.7;}
+
+.quiz-nav{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 20px;}
+.qbtn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:10px 18px; border-radius:24px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-mid); cursor:pointer;
+  transition:all .18s ease;
+}
+.qbtn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+.qbtn:hover{transform:translateY(-1px);}
+
+.score-strip{
+  display:flex; flex-wrap:wrap; gap:14px; margin-bottom:24px; max-width:900px;
+}
+.score-item{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:8px 14px; border-radius:8px;
+  background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid);
+}
+.score-item b{color:var(--text-dark);}
+
+#quizArea{max-width:820px;}
+.question-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px;
+  margin-bottom:20px; animation:fadeUp .35s ease;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.q-top{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+.q-num{
+  width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft);
+  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; flex-shrink:0;
+}
+.level-badge{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:.5px;
+}
+.level-mudah{background:#dff0da; color:#3f6b32;}
+.level-sedang{background:#fdf0df; color:#a06a1e;}
+.level-sukar{background:#fbe1df; color:#9a3c34;}
+.q-text{font-size:16.5px; line-height:1.7; margin-bottom:16px;}
+.q-options{display:flex; flex-direction:column; gap:9px;}
+.opt-btn{
+  text-align:left; padding:11px 16px; border-radius:9px; border:1px solid var(--paper-line);
+  background:var(--paper2); font-family:'Source Serif 4',serif; font-size:15.5px; cursor:pointer;
+  transition:all .18s ease; color:var(--text-dark);
+}
+.opt-btn:hover{background:#f0e6cc; transform:translateX(3px);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.opt-btn:disabled{cursor:default;}
+.bs-row{display:flex; gap:12px;}
+.bs-btn{
+  flex:1; padding:13px; border-radius:9px; border:1px solid var(--paper-line); background:var(--paper2);
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; font-weight:700; cursor:pointer; transition:all .18s ease;
+}
+.bs-btn:hover{transform:translateY(-2px);}
+.bs-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.bs-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{font-weight:600; min-width:160px;}
+.jd-row select{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-dark);
+}
+.jd-row select.correct{background:var(--correct); border-color:var(--correct-b);}
+.jd-row select.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.pk-confirm{margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none; background:var(--ink); color:var(--gold-soft); cursor:pointer;}
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{
+  flex:1; min-width:180px; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  font-family:'Source Serif 4',serif; font-size:15.5px; background:var(--paper2); color:var(--text-dark);
+}
+.is-row input.correct{background:var(--correct); border-color:var(--correct-b);}
+.is-row input.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.is-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer;
+}
+.explanation{
+  margin-top:14px; padding:14px 18px; border-radius:9px; background:var(--note); border-left:4px solid var(--note-b);
+  font-size:14.5px; line-height:1.7; display:none;
+}
+.explanation.show{display:block;}
+
+.analysis-btn-wrap{max-width:820px; text-align:center; margin:30px 0;}
+.analysis-btn{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:14px 32px; border-radius:26px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer; transition:all .2s ease;
+}
+.analysis-btn:hover{background:var(--ink2); transform:translateY(-2px);}
+
+#analysisPanel{max-width:820px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:#fff; border:1px solid var(--paper-line); border-radius:12px; padding:18px; text-align:center;}
+.stat-box .num{font-size:28px; font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--ink);}
+.stat-box .lab{font-size:12px; color:var(--text-mid); margin-top:4px; font-family:'JetBrains Mono',monospace;}
+.type-bars{margin:24px 0;}
+.type-bar-row{margin-bottom:14px;}
+.type-bar-row .tb-label{font-size:13.5px; font-family:'JetBrains Mono',monospace; margin-bottom:6px; color:var(--text-mid);}
+.type-bar-track{height:14px; background:var(--paper2); border-radius:7px; overflow:hidden; border:1px solid var(--paper-line);}
+.type-bar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{
+  text-align:center; padding:30px; border-radius:16px; margin:26px 0; color:#fff;
+  background:linear-gradient(135deg, var(--ink), var(--ink3));
+}
+.grade-box .grade-letter{font-size:52px; font-family:'Playfair Display',serif; font-weight:800;}
+.grade-box .grade-msg{font-size:16px; margin-top:6px; color:var(--gold-soft);}
+.reset-btn{
+  display:block; margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:12px 26px;
+  border-radius:24px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer;
+}
+
+footer{
+  padding:34px 60px; background:var(--ink); color:var(--cream-dim); font-size:13px; text-align:center;
+  font-family:'JetBrains Mono',monospace; line-height:1.9;
+}
+footer b{color:var(--gold-soft);}
+
+@media (max-width:900px){
+  #menuToggle{display:block;}
+  #sidebar{position:fixed; top:0; left:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.4);}
+  #sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}
+  .hero, .mat-section, .latihan-section{padding-left:26px; padding-right:26px;}
+  .hero{padding-top:90px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .jd-row{flex-direction:column; align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<aside id="sidebar">
+  <div class="side-header">
+    <div class="side-label">Matematika · Kelas 7</div>
+    <div class="side-title">Rasio (Perbandingan)</div>
+    <div class="side-sub">Ebook Interaktif</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div id="progressBar"></div></div>
+    <div class="progress-txt" id="progressTxt">0% dibaca</div>
+  </div>
+  <nav>
+    <div class="nav-label">Materi</div>
+    <a href="#hero" class="nav-link" data-target="hero">Pendahuluan</a>
+    <a href="#matA" class="nav-link" data-target="matA">A. Pengertian Perbandingan</a>
+    <a href="#matB" class="nav-link" data-target="matB">B. Perbandingan Senilai</a>
+    <a href="#matC" class="nav-link" data-target="matC">C. Perbandingan Berbalik Nilai</a>
+    <a href="#matD" class="nav-link" data-target="matD">D. Skala dan Peta</a>
+    <a href="#matE" class="nav-link" data-target="matE">E. Grafik Perbandingan</a>
+    <a href="#matF" class="nav-link" data-target="matF">F. Perbandingan sebagai Rumus Aljabar</a>
+    <div class="nav-label">Latihan</div>
+    <a href="#latihan" class="nav-link" data-target="latihan">Latihan Soal</a>
+    <div class="nav-sub">
+      <a data-type="pg" onclick="showType('pg')">Pilihan Ganda Biasa</a>
+      <a data-type="is" onclick="showType('is')">Isian Singkat</a>
+      <a data-type="pk" onclick="showType('pk')">PG Kompleks</a>
+      <a data-type="bs" onclick="showType('bs')">Benar/Salah</a>
+      <a data-type="jd" onclick="showType('jd')">Menjodohkan</a>
+    </div>
+  </nav>
+</aside>
+
+<main id="content">
+
+  <section id="hero" class="hero">
+    <div class="hero-label">Ebook Interaktif · Matematika Kelas 7</div>
+    <h1>Rasio (Perbandingan)</h1>
+    <p>Memahami perbandingan dua besaran, perbandingan senilai dan berbalik nilai, penerapannya pada skala peta, grafik, hingga rumus aljabar — lengkap dengan contoh langkah demi langkah, kalkulator interaktif, dan 25 soal latihan otomatis-terkoreksi.</p>
+    <div class="chip-row">
+      <div class="chip">A. Pengertian Perbandingan</div>
+      <div class="chip">B. Perbandingan Senilai</div>
+      <div class="chip">C. Perbandingan Berbalik Nilai</div>
+      <div class="chip">D. Skala dan Peta</div>
+      <div class="chip">E. Grafik Perbandingan</div>
+      <div class="chip">F. Rumus Aljabar Perbandingan</div>
+    </div>
+  </section>
+
+  <section id="matA" class="mat-section">
+    <span class="sec-label">Bagian A</span>
+    <h2>Pengertian Perbandingan</h2>
+    <p>Perbandingan (rasio) adalah cara membandingkan dua besaran sejenis. Perbandingan antara \(a\) dan \(b\) ditulis \(a:b\) atau \(\dfrac{a}{b}\), dengan \(b \neq 0\).</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Perbandingan \(a:b\) menyatakan hubungan besar \(a\) terhadap besar \(b\) dalam satuan yang sama. Perbandingan dapat disederhanakan dengan membagi kedua nilai dengan FPB-nya.
+    </div>
+
+    <h3>Menyederhanakan Perbandingan</h3>
+    <p>Sama seperti pecahan, perbandingan disederhanakan dengan membagi kedua bilangan dengan Faktor Persekutuan Terbesar (FPB).</p>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Sederhanakan perbandingan 24 : 36.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Cari FPB dari 24 dan 36, yaitu 12.</li>
+        <li><span class="step-label">Langkah 2:</span> Bagi kedua bilangan dengan 12: \(24 \div 12 = 2\) dan \(36 \div 12 = 3\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi \(24:36 = 2:3\).</li>
+      </ol>
+    </div>
+
+    <h3>Perbandingan Tiga Besaran</h3>
+    <p>Perbandingan juga dapat melibatkan tiga besaran sekaligus, ditulis \(a:b:c\). Contoh: uang Andi, Budi, dan Citra dengan perbandingan \(2:3:5\) berarti untuk setiap 2 bagian milik Andi, Budi memiliki 3 bagian dan Citra 5 bagian.</p>
+
+    <div class="callout note">
+      <span class="co-title">Tips</span>
+      Perbandingan hanya berlaku untuk besaran yang sejenis dan memiliki satuan yang sama. Ubah satuan terlebih dahulu jika berbeda, misalnya meter dengan sentimeter, sebelum membandingkan.
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Penyederhanaan Rasio</h4>
+      <div class="calc-row">
+        <input type="number" id="rsA" placeholder="a" value="24">
+        <span>:</span>
+        <input type="number" id="rsB" placeholder="b" value="36">
+        <button class="calc-btn" onclick="hitungRasio()">Sederhanakan</button>
+      </div>
+      <div class="calc-result" id="rsResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matB" class="mat-section">
+    <span class="sec-label">Bagian B</span>
+    <h2>Perbandingan Senilai</h2>
+    <p>Perbandingan senilai (proporsional langsung) terjadi ketika dua besaran berubah dengan arah yang sama: jika satu besaran diperbesar, besaran lainnya juga diperbesar dengan rasio yang tetap.</p>
+
+    <div class="callout def">
+      <span class="co-title">Ciri-Ciri</span>
+      Rasio antara kedua besaran selalu tetap: \(\dfrac{a_1}{b_1} = \dfrac{a_2}{b_2}\). Jika digambar sebagai grafik, bentuknya garis lurus yang melalui titik asal \((0,0)\).
+    </div>
+
+    <h3>Contoh Situasi Perbandingan Senilai</h3>
+    <ul>
+      <li>Jumlah barang dan total harga (harga per satuan tetap).</li>
+      <li>Jarak tempuh dan waktu, pada kecepatan tetap.</li>
+      <li>Banyak bahan resep dan jumlah porsi yang dihasilkan.</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Harga 3 kg apel adalah Rp45.000. Berapa harga 5 kg apel dengan perbandingan senilai?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Tuliskan sebagai perbandingan: \(\dfrac{3}{45.000} = \dfrac{5}{x}\).</li>
+        <li><span class="step-label">Langkah 2:</span> Kalikan silang: \(3x = 5 \times 45.000 = 225.000\).</li>
+        <li><span class="step-label">Langkah 3:</span> Bagi kedua ruas dengan 3: \(x = 75.000\).</li>
+        <li><span class="step-label">Langkah 4:</span> Jadi harga 5 kg apel adalah Rp75.000.</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Perbandingan Senilai</h4>
+      <div class="calc-row">
+        <input type="number" id="svA1" placeholder="a₁" value="3">
+        <span>:</span>
+        <input type="number" id="svB1" placeholder="b₁" value="45000">
+        <span>=</span>
+        <input type="number" id="svA2" placeholder="a₂" value="5">
+        <span>: x</span>
+        <button class="calc-btn" onclick="hitungSenilai()">Hitung x</button>
+      </div>
+      <div class="calc-result" id="svResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matC" class="mat-section">
+    <span class="sec-label">Bagian C</span>
+    <h2>Perbandingan Berbalik Nilai</h2>
+    <p>Perbandingan berbalik nilai (proporsional terbalik) terjadi ketika satu besaran diperbesar, besaran lainnya justru diperkecil, sedemikian rupa sehingga hasil kali keduanya tetap.</p>
+
+    <div class="callout def">
+      <span class="co-title">Ciri-Ciri</span>
+      Hasil kali antara kedua besaran selalu tetap: \(a_1 \times b_1 = a_2 \times b_2\). Grafiknya berbentuk kurva menurun (hiperbola), bukan garis lurus.
+    </div>
+
+    <h3>Contoh Situasi Perbandingan Berbalik Nilai</h3>
+    <ul>
+      <li>Kecepatan kendaraan dan waktu tempuh, untuk jarak yang tetap.</li>
+      <li>Banyak pekerja dan waktu penyelesaian suatu pekerjaan.</li>
+      <li>Banyak kran yang menyala dan waktu mengisi bak dengan volume tetap.</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Suatu pekerjaan dapat diselesaikan oleh 8 pekerja dalam 15 hari. Berapa hari yang dibutuhkan jika dikerjakan oleh 12 pekerja?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Gunakan rumus hasil kali tetap: \(a_1 \times b_1 = a_2 \times b_2\).</li>
+        <li><span class="step-label">Langkah 2:</span> Substitusi: \(8 \times 15 = 12 \times x\), sehingga \(120 = 12x\).</li>
+        <li><span class="step-label">Langkah 3:</span> Bagi kedua ruas dengan 12: \(x = 10\).</li>
+        <li><span class="step-label">Langkah 4:</span> Jadi pekerjaan selesai dalam 10 hari.</li>
+      </ol>
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Perhatikan</span>
+      Jangan tertukar dengan perbandingan senilai! Kata kunci "semakin banyak pekerja, semakin cepat selesai" menandakan hubungan berbalik nilai, bukan senilai.
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Perbandingan Berbalik Nilai</h4>
+      <div class="calc-row">
+        <input type="number" id="bnA1" placeholder="a₁" value="8">
+        <span>×</span>
+        <input type="number" id="bnB1" placeholder="b₁" value="15">
+        <span>=</span>
+        <input type="number" id="bnA2" placeholder="a₂" value="12">
+        <span>× x</span>
+        <button class="calc-btn" onclick="hitungBerbalik()">Hitung x</button>
+      </div>
+      <div class="calc-result" id="bnResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matD" class="mat-section">
+    <span class="sec-label">Bagian D</span>
+    <h2>Skala dan Peta</h2>
+    <p>Skala adalah perbandingan antara jarak pada peta/gambar dengan jarak sebenarnya. Skala merupakan salah satu penerapan langsung dari perbandingan senilai.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Skala \(1:n\) berarti setiap 1 satuan panjang pada peta mewakili \(n\) satuan panjang sebenarnya. Rumus: \(\text{Skala} = \dfrac{\text{Jarak pada peta}}{\text{Jarak sebenarnya}}\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Jarak dua kota pada peta berskala 1:500.000 adalah 8 cm. Berapa jarak sebenarnya?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Gunakan rumus: Jarak sebenarnya \(= \) jarak pada peta \(\times\) penyebut skala.</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung: \(8 \times 500.000 = 4.000.000\) cm.</li>
+        <li><span class="step-label">Langkah 3:</span> Ubah ke kilometer: \(4.000.000 \text{ cm} = 40 \text{ km}\).</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Ingat</span>
+      Semakin kecil angka penyebut pada skala (misalnya 1:25.000), semakin detail petanya (skala besar). Sebaliknya, skala 1:1.000.000 mencakup wilayah luas namun kurang detail (skala kecil).
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Skala Peta</h4>
+      <div class="calc-row">
+        <span>Skala 1 :</span>
+        <input type="number" id="skN" placeholder="penyebut" value="500000">
+        <span>Jarak peta (cm):</span>
+        <input type="number" id="skJarak" placeholder="cm" value="8">
+        <button class="calc-btn" onclick="hitungSkala()">Hitung Jarak Sebenarnya</button>
+      </div>
+      <div class="calc-result" id="skResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matE" class="mat-section">
+    <span class="sec-label">Bagian E</span>
+    <h2>Grafik Perbandingan</h2>
+    <p>Bentuk grafik dapat membantu membedakan perbandingan senilai dan berbalik nilai secara visual, tanpa perlu menghitung rasio atau hasil kali terlebih dahulu.</p>
+
+    <h3>Grafik Perbandingan Senilai</h3>
+    <div class="callout def">
+      <span class="co-title">Ciri Grafik</span>
+      Berbentuk garis lurus (linear) yang melewati titik asal \((0,0)\). Semakin besar nilai \(x\), semakin besar pula nilai \(y\), dengan kemiringan (gradien) tetap.
+    </div>
+
+    <h3>Grafik Perbandingan Berbalik Nilai</h3>
+    <div class="callout def">
+      <span class="co-title">Ciri Grafik</span>
+      Berbentuk kurva melengkung menurun (hiperbola) yang mendekati sumbu-x dan sumbu-y tetapi tidak pernah menyentuhnya. Semakin besar nilai \(x\), semakin kecil nilai \(y\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Membaca Grafik</span>
+      <p>Sebuah grafik menunjukkan titik-titik \((1,5)\), \((2,10)\), \((3,15)\), yang jika dihubungkan membentuk garis lurus melalui titik asal.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Periksa rasio \(\dfrac{y}{x}\) pada tiap titik: \(\dfrac{5}{1}=5\), \(\dfrac{10}{2}=5\), \(\dfrac{15}{3}=5\).</li>
+        <li><span class="step-label">Langkah 2:</span> Karena rasio selalu tetap (5) dan grafiknya garis lurus melalui titik asal, ini adalah perbandingan senilai.</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Tips Membedakan</span>
+      Garis lurus melalui titik asal → perbandingan senilai. Kurva menurun yang melengkung → perbandingan berbalik nilai.
+    </div>
+  </section>
+
+  <section id="matF" class="mat-section">
+    <span class="sec-label">Bagian F</span>
+    <h2>Perbandingan sebagai Rumus Aljabar</h2>
+    <p>Hubungan perbandingan dapat dituliskan sebagai rumus aljabar yang melibatkan suatu konstanta perbandingan, biasa dilambangkan dengan \(k\).</p>
+
+    <div class="callout def">
+      <span class="co-title">Rumus Perbandingan Senilai</span>
+      \(y = kx\), dengan \(k\) adalah konstanta perbandingan (rasio tetap \(\dfrac{y}{x}\)).
+    </div>
+    <div class="callout def">
+      <span class="co-title">Rumus Perbandingan Berbalik Nilai</span>
+      \(y = \dfrac{k}{x}\), dengan \(k\) adalah konstanta perbandingan (hasil kali tetap \(x \times y\)).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Diketahui \(y = kx\) merupakan perbandingan senilai. Jika \(y = 20\) saat \(x = 4\), tentukan nilai \(y\) saat \(x = 9\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Cari nilai \(k\) terlebih dahulu: \(20 = k \times 4\), sehingga \(k = 5\).</li>
+        <li><span class="step-label">Langkah 2:</span> Substitusikan \(k=5\) dan \(x=9\) ke rumus: \(y = 5 \times 9\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi \(y = 45\).</li>
+      </ol>
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Perhatikan</span>
+      Pastikan mengenali dulu jenis perbandingannya (senilai atau berbalik nilai) sebelum memilih rumus \(y=kx\) atau \(y=\dfrac{k}{x}\), karena keduanya memberikan hasil yang sangat berbeda.
+    </div>
+  </section>
+
+  <section id="latihan" class="latihan-section">
+    <div class="latihan-header">
+      <span class="sec-label">Latihan</span>
+      <h2>Latihan Soal Rasio (Perbandingan)</h2>
+      <p>25 soal dengan 5 tipe berbeda. Pilih tipe soal di bawah, jawab, dan lihat penjelasannya secara langsung. Setelah selesai, klik "Lihat Analisis" untuk melihat hasil keseluruhan.</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="qbtn active" data-type="pg" onclick="showType('pg')">🔤 Pilihan Ganda Biasa</button>
+      <button class="qbtn" data-type="is" onclick="showType('is')">✏️ Isian Singkat</button>
+      <button class="qbtn" data-type="pk" onclick="showType('pk')">☑️ PG Kompleks</button>
+      <button class="qbtn" data-type="bs" onclick="showType('bs')">✅ Benar/Salah</button>
+      <button class="qbtn" data-type="jd" onclick="showType('jd')">🔗 Menjodohkan</button>
+    </div>
+
+    <div class="score-strip" id="scoreStrip"></div>
+
+    <div id="quizArea"></div>
+
+    <div class="analysis-btn-wrap">
+      <button class="analysis-btn" onclick="showAnalysis()">📊 Lihat Analisis Hasil</button>
+    </div>
+
+    <div id="analysisPanel" hidden>
+      <h3 style="margin-bottom:14px;">Analisis Hasil Belajar</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">TOTAL SOAL</div></div>
+        <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lab">BENAR</div></div>
+        <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lab">SALAH</div></div>
+        <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lab">NILAI</div></div>
+      </div>
+      <div class="type-bars" id="typeBars"></div>
+      <div class="grade-box">
+        <div class="grade-letter" id="gradeLetter">-</div>
+        <div class="grade-msg" id="gradeMsg">Belum ada data</div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua Soal</button>
+    </div>
+  </section>
+
+  <footer>
+    Ebook Interaktif Matematika Kelas 7 — Rasio (Perbandingan)<br>
+    Dibuat oleh <b>Suminto</b> bersama <b>Claude</b><br>
+    Satu file HTML, dapat dibuka langsung di peramban tanpa koneksi internet (kecuali font &amp; rumus matematika).
+  </footer>
+</main>
+
+<script>
+/* ============ SIDEBAR TOGGLE (mobile) ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('.nav-link, .nav-sub a').forEach(function(a){
+  a.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ SCROLLSPY + PROGRESS BAR ============ */
+const sectionIds = ['hero','matA','matB','matC','matD','matE','matF','latihan'];
+function updateScrollSpy(){
+  let current = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140){ current = id; }
+    }
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? Math.min(100, Math.round((scrollTop / docHeight) * 100)) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = pct + '% dibaca';
+}
+window.addEventListener('scroll', updateScrollSpy);
+window.addEventListener('resize', updateScrollSpy);
+
+/* ============ KALKULATOR: FPB & Penyederhanaan Rasio ============ */
+function gcd(a, b){
+  a = Math.abs(a); b = Math.abs(b);
+  while(b){ const t = b; b = a % b; a = t; }
+  return a || 1;
+}
+function hitungRasio(){
+  const a = parseFloat(document.getElementById('rsA').value) || 0;
+  const b = parseFloat(document.getElementById('rsB').value) || 0;
+  const out = document.getElementById('rsResult');
+  if(a === 0 || b === 0){ out.innerHTML = '⚠️ Nilai a dan b tidak boleh nol.'; return; }
+  const g = gcd(a, b);
+  const sA = a / g, sB = b / g;
+  out.innerHTML = `${a} : ${b} disederhanakan menjadi <b>${sA} : ${sB}</b> (FPB = ${g})`;
+}
+
+/* ============ KALKULATOR: Perbandingan Senilai ============ */
+function hitungSenilai(){
+  const a1 = parseFloat(document.getElementById('svA1').value) || 0;
+  const b1 = parseFloat(document.getElementById('svB1').value) || 0;
+  const a2 = parseFloat(document.getElementById('svA2').value) || 0;
+  const out = document.getElementById('svResult');
+  if(a1 === 0){ out.innerHTML = '⚠️ Nilai a₁ tidak boleh nol.'; return; }
+  const x = (b1 * a2) / a1;
+  out.innerHTML = `${a1} : ${b1} = ${a2} : x → <b>x = ${x.toLocaleString('id-ID')}</b>`;
+}
+
+/* ============ KALKULATOR: Perbandingan Berbalik Nilai ============ */
+function hitungBerbalik(){
+  const a1 = parseFloat(document.getElementById('bnA1').value) || 0;
+  const b1 = parseFloat(document.getElementById('bnB1').value) || 0;
+  const a2 = parseFloat(document.getElementById('bnA2').value) || 0;
+  const out = document.getElementById('bnResult');
+  if(a2 === 0){ out.innerHTML = '⚠️ Nilai a₂ tidak boleh nol.'; return; }
+  const x = (a1 * b1) / a2;
+  out.innerHTML = `${a1} × ${b1} = ${a2} × x → <b>x = ${x.toLocaleString('id-ID')}</b>`;
+}
+
+/* ============ KALKULATOR: Skala Peta ============ */
+function hitungSkala(){
+  const n = parseFloat(document.getElementById('skN').value) || 0;
+  const jarakPeta = parseFloat(document.getElementById('skJarak').value) || 0;
+  const out = document.getElementById('skResult');
+  if(n === 0){ out.innerHTML = '⚠️ Penyebut skala tidak boleh nol.'; return; }
+  const cmSebenarnya = jarakPeta * n;
+  const mSebenarnya = cmSebenarnya / 100;
+  const kmSebenarnya = cmSebenarnya / 100000;
+  out.innerHTML = `Skala 1:${n.toLocaleString('id-ID')}, jarak peta ${jarakPeta} cm → jarak sebenarnya = <b>${cmSebenarnya.toLocaleString('id-ID')} cm</b> = ${mSebenarnya.toLocaleString('id-ID')} m = <b>${kmSebenarnya.toLocaleString('id-ID')} km</b>`;
+}
+
+/* ============ BANK SOAL ============ */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1, text:'Bentuk sederhana dari perbandingan \\(24:36\\) adalah...', options:['2:3','3:4','4:6','1:2'], answer:0, explanation:'FPB dari 24 dan 36 adalah 12, sehingga \\(24:36 = 2:3\\).' },
+    { id:'pg2', type:'pg', level:'sedang', num:2, text:'Harga 3 kg apel adalah Rp45.000. Dengan perbandingan senilai, harga 5 kg apel adalah...', options:['Rp75.000','Rp60.000','Rp90.000','Rp70.000'], answer:0, explanation:'Harga per kg \\(= 45.000 \\div 3 = 15.000\\). Untuk 5 kg: \\(5 \\times 15.000 = 75.000\\).' },
+    { id:'pg3', type:'pg', level:'sedang', num:3, text:'Suatu pekerjaan selesai dalam 15 hari oleh 8 pekerja. Jika dikerjakan 12 pekerja (berbalik nilai), waktu yang dibutuhkan adalah...', options:['10 hari','12 hari','20 hari','6 hari'], answer:0, explanation:'\\(8 \\times 15 = 120\\). Untuk 12 pekerja: \\(120 \\div 12 = 10\\) hari.' },
+    { id:'pg4', type:'pg', level:'sedang', num:4, text:'Jarak dua kota pada peta berskala 1:500.000 adalah 8 cm. Jarak sebenarnya adalah...', options:['40 km','4 km','400 km','50 km'], answer:0, explanation:'\\(8 \\times 500.000 = 4.000.000\\) cm \\(= 40\\) km.' },
+    { id:'pg5', type:'pg', level:'sukar', num:5, text:'Diketahui \\(y = kx\\). Jika \\(y=20\\) saat \\(x=4\\), maka nilai \\(y\\) saat \\(x=9\\) adalah...', options:['45','36','40','50'], answer:0, explanation:'\\(k = 20 \\div 4 = 5\\). Saat \\(x=9\\): \\(y = 5 \\times 9 = 45\\).' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1, text:'Sederhanakan perbandingan \\(18:24\\).', answer:'3:4', altAnswers:['3 : 4'], explanation:'FPB dari 18 dan 24 adalah 6, sehingga \\(18:24 = 3:4\\).' },
+    { id:'is2', type:'is', level:'sedang', num:2, text:'Jika 4 buku berharga Rp32.000, berapa harga 7 buku dengan perbandingan senilai?', answer:'Rp56.000', altAnswers:['56000','56.000','rp56000','rp56.000'], explanation:'Harga per buku \\(= 32.000 \\div 4 = 8.000\\). Untuk 7 buku: \\(7 \\times 8.000 = 56.000\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3, text:'Sebuah mobil menempuh jarak tetap dalam 6 jam dengan kecepatan 60 km/jam. Berapa jam waktu tempuh jika kecepatan 80 km/jam?', answer:'4,5 jam', altAnswers:['4.5 jam','4,5','4.5'], explanation:'Jarak tetap \\(= 60 \\times 6 = 360\\) km. Waktu baru \\(= 360 \\div 80 = 4{,}5\\) jam.' },
+    { id:'is4', type:'is', level:'sedang', num:4, text:'Skala sebuah peta adalah 1:250.000. Jika jarak sebenarnya 15 km, berapa cm jarak pada peta?', answer:'6 cm', altAnswers:['6','6cm'], explanation:'\\(15\\) km \\(= 1.500.000\\) cm. Jarak pada peta \\(= 1.500.000 \\div 250.000 = 6\\) cm.' },
+    { id:'is5', type:'is', level:'sukar', num:5, text:'Diketahui hubungan berbalik nilai \\(y = \\dfrac{k}{x}\\). Jika \\(y=12\\) saat \\(x=5\\), tentukan nilai \\(k\\).', answer:'60', altAnswers:['k=60','k = 60'], explanation:'\\(k = x \\times y = 5 \\times 12 = 60\\).' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1, text:'Pilih pasangan rasio berikut yang senilai dengan \\(3:4\\):', options:['6:8','9:12','2:3','15:20'], answers:[0,1,3], explanation:'\\(6:8\\), \\(9:12\\), dan \\(15:20\\) semuanya dapat disederhanakan menjadi \\(3:4\\). Sedangkan \\(2:3\\) tidak senilai.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2, text:'Pilih pernyataan yang benar mengenai perbandingan senilai:', options:['Grafiknya berupa garis lurus melalui titik asal','Jika x naik, y juga naik','Hasil kali x dan y selalu tetap','Rasio y/x selalu tetap'], answers:[0,1,3], explanation:'Perbandingan senilai dicirikan oleh rasio yang tetap dan grafik garis lurus melalui titik asal. "Hasil kali selalu tetap" adalah ciri perbandingan berbalik nilai, bukan senilai.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3, text:'Pilih contoh situasi yang termasuk perbandingan berbalik nilai:', options:['Kecepatan dan waktu tempuh untuk jarak tetap','Banyak pekerja dan waktu penyelesaian pekerjaan','Jumlah barang dan total harga','Banyak kran menyala dan waktu mengisi bak dengan volume tetap'], answers:[0,1,3], explanation:'Kecepatan-waktu, pekerja-waktu, dan kran-waktu adalah contoh berbalik nilai. Sedangkan jumlah barang dan total harga adalah contoh perbandingan senilai.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4, text:'Peta memiliki skala 1:100.000. Pilih pernyataan yang benar:', options:['1 cm pada peta mewakili 1 km sebenarnya','1 cm pada peta mewakili 100.000 cm sebenarnya','Peta ini termasuk peta skala besar (lebih detail dari 1:1.000.000)','1 cm pada peta mewakili 1.000 km sebenarnya'], answers:[0,1,2], explanation:'\\(1\\) cm \\(\\times 100.000 = 100.000\\) cm \\(= 1\\) km, sehingga pernyataan 1, 2, dan 3 benar. Pernyataan 4 salah karena nilainya jauh lebih besar dari perhitungan sebenarnya.' },
+    { id:'pk5', type:'pk', level:'sedang', num:5, text:'Diketahui \\(y = kx\\) dengan \\(k=3\\). Pilih pernyataan yang benar:', options:['Saat x=2, y=6','Saat x=5, y=15','Grafiknya berupa kurva hiperbola','Grafiknya berupa garis lurus'], answers:[0,1,3], explanation:'\\(y=3x\\): saat \\(x=2\\), \\(y=6\\); saat \\(x=5\\), \\(y=15\\); grafiknya garis lurus (bukan hiperbola, karena ini perbandingan senilai).' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1, text:'Perbandingan \\(12:18\\) jika disederhanakan menjadi \\(2:3\\).', answer:true, explanation:'✅ Benar. FPB dari 12 dan 18 adalah 6, sehingga \\(12:18 = 2:3\\).' },
+    { id:'bs2', type:'bs', level:'sedang', num:2, text:'Pada perbandingan senilai, jika salah satu besaran diperbesar maka besaran lainnya juga diperbesar dengan rasio tetap.', answer:true, explanation:'✅ Benar. Itulah ciri utama perbandingan senilai — rasio \\(\\dfrac{a}{b}\\) selalu konstan.' },
+    { id:'bs3', type:'bs', level:'sedang', num:3, text:'Pada perbandingan berbalik nilai, hasil kali kedua besaran selalu berubah-ubah.', answer:false, explanation:'❌ Salah. Pada perbandingan berbalik nilai, justru hasil kali kedua besaran selalu tetap (\\(a_1 \\times b_1 = a_2 \\times b_2\\)).' },
+    { id:'bs4', type:'bs', level:'sedang', num:4, text:'Peta dengan skala 1:1.000.000 menunjukkan wilayah yang lebih detail dibanding peta berskala 1:25.000.', answer:false, explanation:'❌ Salah. Semakin besar angka penyebut skala, semakin kurang detail (skala kecil). Peta 1:25.000 justru jauh lebih detail daripada 1:1.000.000.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5, text:'Grafik dari perbandingan berbalik nilai berbentuk garis lurus melewati titik asal \\((0,0)\\).', answer:false, explanation:'❌ Salah. Garis lurus melalui titik asal adalah ciri perbandingan senilai. Perbandingan berbalik nilai grafiknya berbentuk kurva menurun (hiperbola).' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1, left:'Perbandingan 15:20 disederhanakan menjadi', answer:'3:4', options:['3:4','4:5','5:6','2:3'], explanation:'FPB dari 15 dan 20 adalah 5, sehingga \\(15:20 = 3:4\\).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2, left:'Ciri grafik perbandingan senilai', answer:'Garis lurus melalui titik asal', options:['Garis lurus melalui titik asal','Kurva menurun (hiperbola)','Garis lurus tidak melalui titik asal','Grafik naik lalu turun'], explanation:'Perbandingan senilai selalu digambarkan sebagai garis lurus yang melewati titik \\((0,0)\\).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3, left:'Rumus perbandingan berbalik nilai', answer:'a₁ × b₁ = a₂ × b₂', options:['a₁ × b₁ = a₂ × b₂','a₁/b₁ = a₂/b₂','a₁ + b₁ = a₂ + b₂','a₁ − b₁ = a₂ − b₂'], explanation:'Pada perbandingan berbalik nilai, hasil kali kedua besaran selalu tetap.' },
+    { id:'jd4', type:'jd', level:'sukar', num:4, left:'Skala 1:50.000, jarak peta 4 cm', answer:'2 km', options:['2 km','4 km','5 km','20 km'], explanation:'\\(4 \\times 50.000 = 200.000\\) cm \\(= 2\\) km.' },
+    { id:'jd5', type:'jd', level:'sedang', num:5, left:'Bentuk rumus aljabar perbandingan senilai', answer:'y = kx', options:['y = kx','y = k/x','y = x + k','y = k − x'], explanation:'Perbandingan senilai memiliki bentuk rumus \\(y = kx\\), dengan \\(k\\) konstanta perbandingan.' }
+  ]
+};
+const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.qbtn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-type') === type); });
+  document.querySelectorAll('.nav-sub a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-type') === type); });
+  renderQuestions(type);
+  window.scrollTo({ top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth' });
+  typesetMath();
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quizArea');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function levelBadge(level){
+  const cls = level === 'mudah' ? 'level-mudah' : (level === 'sedang' ? 'level-sedang' : 'level-sukar');
+  return `<span class="level-badge ${cls}">${level}</span>`;
+}
+
+function renderCard(q){
+  let body = '';
+  if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  const answered = state.answers[q.id];
+  const explClass = answered ? 'explanation show' : 'explanation';
+  return `<div class="question-card" id="card-${q.id}">
+    <div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text || (q.left ? 'Cocokkan: <b>' + q.left + '</b>' : '')}</div>
+    ${body}
+    <div class="${explClass}" id="expl-${q.id}">${q.explanation}</div>
+  </div>`;
+}
+
+function renderBS(q){
+  const answered = state.answers[q.id];
+  const trueClass = answered ? (q.answer === true ? 'correct' : (answered.chosen === true ? 'wrong' : '')) : '';
+  const falseClass = answered ? (q.answer === false ? 'correct' : (answered.chosen === false ? 'wrong' : '')) : '';
+  return `<div class="bs-row">
+    <button class="bs-btn ${trueClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', true)">✅ BENAR</button>
+    <button class="bs-btn ${falseClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', false)">❌ SALAH</button>
+  </div>`;
+}
+function answerBS(qid, val){
+  const q = allQuestions.bs.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPG(q){
+  const answered = state.answers[q.id];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    if(answered){
+      if(idx === q.answer) cls = 'correct';
+      else if(idx === answered.chosen) cls = 'wrong';
+    }
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="answerPG('${q.id}', ${idx})">${opt}</button>`;
+  });
+  html += '</div>';
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){ return x.id === qid; });
+  const correct = (idx === q.answer);
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderJD(q){
+  const answered = state.answers[q.id];
+  let cls = '';
+  if(answered){ cls = answered.correct ? 'correct' : 'wrong'; }
+  let opts = '<option value="">-- pilih --</option>';
+  q.options.forEach(function(opt){
+    const sel = answered && answered.chosen === opt ? 'selected' : '';
+    opts += `<option value="${opt}" ${sel}>${opt}</option>`;
+  });
+  return `<div class="jd-row">
+    <select class="${cls}" ${answered ? 'disabled' : ''} onchange="answerJD('${q.id}', this.value)">${opts}</select>
+  </div>`;
+}
+function answerJD(qid, val){
+  if(!val) return;
+  const q = allQuestions.jd.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPK(q){
+  const answered = state.answers[q.id];
+  if(!pkTemp[q.id]) pkTemp[q.id] = [];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    const chosenSet = answered ? answered.chosen : pkTemp[q.id];
+    const isChosen = chosenSet.includes(idx);
+    if(answered){
+      const isCorrectOpt = q.answers.includes(idx);
+      if(isCorrectOpt) cls = 'correct';
+      else if(isChosen) cls = 'wrong';
+    }
+    const marker = isChosen ? '☑' : '☐';
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="togglePK('${q.id}', ${idx})">${marker} ${opt}</button>`;
+  });
+  html += '</div>';
+  if(!answered){
+    html += `<button class="pk-confirm" onclick="submitPK('${q.id}')">Konfirmasi Jawaban</button>`;
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const pos = pkTemp[qid].indexOf(idx);
+  if(pos >= 0) pkTemp[qid].splice(pos, 1);
+  else pkTemp[qid].push(idx);
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  rerenderCardBody(q);
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  const chosen = (pkTemp[qid] || []).slice().sort();
+  const correctArr = q.answers.slice().sort();
+  const correct = JSON.stringify(chosen) === JSON.stringify(correctArr);
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderIS(q){
+  const answered = state.answers[q.id];
+  const cls = answered ? (answered.correct ? 'correct' : 'wrong') : '';
+  const val = answered ? answered.chosen : '';
+  return `<div class="is-row">
+    <input type="text" id="input-${q.id}" class="${cls}" value="${val}" placeholder="Ketik jawabanmu..." ${answered ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){submitIS('${q.id}')}">
+    ${answered ? '' : `<button class="is-btn" onclick="submitIS('${q.id}')">Kirim Jawaban</button>`}
+  </div>`;
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){ return x.id === qid; });
+  const inputEl = document.getElementById('input-' + qid);
+  const raw = inputEl.value.trim().toLowerCase();
+  const mainAns = (q.answer || '').toLowerCase();
+  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase(); });
+  const correct = raw === mainAns || alts.includes(raw) || alts.some(function(a){ return raw.includes(a) || a.includes(raw); }) || raw.includes(mainAns) || mainAns.includes(raw);
+  state.answers[qid] = { chosen: inputEl.value.trim(), correct: !!correct };
+  refreshCard(q, !!correct);
+}
+
+function rerenderCardBody(q){
+  const card = document.getElementById('card-' + q.id);
+  if(!card) return;
+  let body = '';
+  if(q.type === 'pk'){ body = renderPK(q); }
+  const explDiv = card.querySelector('.explanation');
+  const qTextDiv = card.querySelector('.q-text');
+  card.innerHTML = `<div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text}</div>
+    ${body}
+    <div class="${explDiv.className}" id="expl-${q.id}">${q.explanation}</div>`;
+  typesetMath();
+}
+
+function refreshCard(q, correct){
+  const card = document.getElementById('card-' + q.id);
+  if(card){
+    const temp = document.createElement('div');
+    temp.innerHTML = renderCard(q);
+    card.innerHTML = temp.firstElementChild.innerHTML;
+    const explDiv = document.getElementById('expl-' + q.id);
+    if(explDiv) explDiv.classList.add('show');
+  }
+  updateProgress();
+  updateScoreStrip();
+  typesetMath();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let benar = 0, total = qs.length;
+    qs.forEach(function(q){
+      if(state.answers[q.id]){ if(state.answers[q.id].correct) benar++; }
+    });
+    html += `<div class="score-item">${typeLabels[t]}: <b>${benar}/${total}</b></div>`;
+  });
+  strip.innerHTML = html;
+}
+function updateProgress(){
+  updateScoreStrip();
+}
+
+function showAnalysis(){
+  let total = 0, benar = 0, salah = 0;
+  const perType = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let tb = 0;
+    qs.forEach(function(q){
+      total++;
+      const a = state.answers[q.id];
+      if(a){
+        if(a.correct){ benar++; tb++; } else { salah++; }
+      } else {
+        salah++;
+      }
+    });
+    perType[t] = tb;
+  });
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  const nilai = total > 0 ? Math.round((benar / total) * 100) : 0;
+  document.getElementById('statNilai').textContent = nilai + '%';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    const b = perType[t];
+    const pct = qs.length > 0 ? Math.round((b / qs.length) * 100) : 0;
+    barsHtml += `<div class="type-bar-row">
+      <div class="tb-label">${typeLabels[t]}: ${b}/${qs.length}</div>
+      <div class="type-bar-track"><div class="type-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let grade, msg;
+  if(nilai >= 90){ grade = 'A'; msg = '🏆 Luar Biasa!'; }
+  else if(nilai >= 75){ grade = 'B'; msg = '⭐ Bagus!'; }
+  else if(nilai >= 60){ grade = 'C'; msg = '👍 Cukup Baik'; }
+  else if(nilai >= 40){ grade = 'D'; msg = '💪 Jangan Menyerah'; }
+  else { grade = 'E'; msg = '📚 Semangat Belajar'; }
+  document.getElementById('gradeLetter').textContent = grade;
+  document.getElementById('gradeMsg').textContent = msg;
+
+  document.getElementById('analysisPanel').hidden = false;
+  document.getElementById('analysisPanel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').hidden = true;
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollSpy();
+  typesetMath();
+});
+</script>
+</body>
+</html>

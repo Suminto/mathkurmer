@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operasi Aljabar — Ebook Interaktif Kelas 9</title>
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141a2e;
+    --ink2:#1c2340;
+    --ink3:#2a3358;
+    --ink-border:#3a4470;
+    --cream:#f3ecd9;
+    --cream-dim:#c9c2ab;
+    --gold:#e0a94d;
+    --gold-soft:#f1cd8a;
+    --paper:#fbf6ea;
+    --paper2:#f4ecd8;
+    --paper-line:#e3d7b8;
+    --text-dark:#2b2416;
+    --text-mid:#5b5137;
+    --def:#eef4ea; --def-b:#7fae6b;
+    --note:#fdf0df; --note-b:#d99a45;
+    --warn:#fbeaea; --warn-b:#c1584f;
+    --correct:#dff0da; --correct-b:#4f9a4f;
+    --wrong:#fbe1df; --wrong-b:#c1584f;
+    --radius:14px;
+    --shadow:0 8px 30px rgba(20,26,46,0.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Source Serif 4', serif;
+    background:var(--paper);
+    color:var(--text-dark);
+    display:flex;
+    min-height:100vh;
+  }
+  /* ===== SIDEBAR ===== */
+  #sidebar{
+    width:300px;
+    flex-shrink:0;
+    background:linear-gradient(180deg,var(--ink) 0%, var(--ink2) 100%);
+    color:var(--cream);
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    padding:26px 20px 40px;
+    border-right:1px solid var(--ink-border);
+    z-index:50;
+  }
+  #sidebar::-webkit-scrollbar{width:6px;}
+  #sidebar::-webkit-scrollbar-thumb{background:var(--ink3);border-radius:4px;}
+  .sb-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    margin-bottom:6px;
+  }
+  .sb-title{
+    font-family:'Playfair Display',serif;
+    font-size:26px;
+    font-weight:800;
+    line-height:1.2;
+    margin:0 0 18px;
+    color:var(--cream);
+  }
+  .progress-track{
+    height:5px;
+    background:rgba(255,255,255,0.12);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:26px;
+  }
+  #progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+    transition:width .25s ease;
+  }
+  .nav-section-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+    margin:22px 0 8px;
+    padding-left:10px;
+    border-left:2px solid var(--ink-border);
+  }
+  nav ul{list-style:none;margin:0;padding:0;}
+  .nav-link{
+    display:block;
+    padding:9px 10px;
+    border-radius:8px;
+    color:var(--cream-dim);
+    text-decoration:none;
+    font-size:14.5px;
+    line-height:1.35;
+    transition:.18s ease;
+    border-left:2px solid transparent;
+  }
+  .nav-link:hover{background:rgba(255,255,255,0.06);color:var(--cream);}
+  .nav-link.active{
+    background:rgba(224,169,77,0.15);
+    color:var(--gold-soft);
+    border-left:2px solid var(--gold);
+    font-weight:600;
+  }
+  .nav-sub{padding-left:16px;}
+  .nav-sub .nav-link{font-size:13px;padding:7px 10px;}
+  #menu-toggle{
+    display:none;
+    position:fixed;
+    top:14px; left:14px;
+    z-index:100;
+    background:var(--ink);
+    color:var(--cream);
+    border:1px solid var(--ink-border);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:15px;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  /* ===== CONTENT ===== */
+  #content{
+    flex:1;
+    min-width:0;
+    padding:0 0 80px;
+  }
+  .section-inner{
+    max-width:760px;
+    margin:0 auto;
+    padding:60px 36px 10px;
+  }
+  /* Hero */
+  #hero{
+    background:radial-gradient(circle at top right, #3a2f52 0%, var(--ink) 60%);
+    color:var(--cream);
+    padding:70px 36px 56px;
+  }
+  #hero .section-inner{padding-top:0;}
+  .hero-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    margin-bottom:14px;
+  }
+  .hero-title{
+    font-family:'Playfair Display',serif;
+    font-size:44px;
+    font-weight:800;
+    line-height:1.15;
+    margin:0 0 18px;
+  }
+  .hero-desc{
+    font-size:18px;
+    color:var(--cream-dim);
+    max-width:600px;
+    line-height:1.6;
+    margin-bottom:28px;
+  }
+  .chip-row{display:flex;flex-wrap:wrap;gap:9px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid var(--ink-border);
+    color:var(--cream);
+    padding:7px 13px;
+    border-radius:999px;
+  }
+  /* Section headers */
+  .sec-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:8px;
+  }
+  h2.sec-title{
+    font-family:'Playfair Display',serif;
+    font-size:32px;
+    font-weight:700;
+    margin:0 0 22px;
+    color:var(--text-dark);
+    border-bottom:2px solid var(--paper-line);
+    padding-bottom:16px;
+  }
+  h3.sub-title{
+    font-family:'Playfair Display',serif;
+    font-size:22px;
+    font-weight:700;
+    margin:34px 0 12px;
+    color:var(--text-dark);
+  }
+  p{line-height:1.8;font-size:16.5px;color:var(--text-mid);}
+  strong{color:var(--text-dark);}
+  .callout{
+    border-left:4px solid var(--def-b);
+    background:var(--def);
+    padding:16px 20px;
+    border-radius:0 10px 10px 0;
+    margin:18px 0;
+    font-size:15.5px;
+    color:var(--text-dark);
+  }
+  .callout.note{border-color:var(--note-b);background:var(--note);}
+  .callout.warn{border-color:var(--warn-b);background:var(--warn);}
+  .callout-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-weight:700;
+    display:block;
+    margin-bottom:6px;
+    color:var(--text-mid);
+  }
+  .example-box{
+    background:var(--paper2);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    padding:18px 22px;
+    margin:18px 0;
+  }
+  .example-box .ex-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:8px;
+    display:block;
+  }
+  /* Kalkulator interaktif */
+  .calc-box{
+    background:var(--ink);
+    color:var(--cream);
+    border-radius:var(--radius);
+    padding:24px 26px;
+    margin:24px 0;
+    box-shadow:var(--shadow);
+  }
+  .calc-box .calc-title{
+    font-family:'Playfair Display',serif;
+    font-size:19px;
+    font-weight:700;
+    margin:0 0 14px;
+    color:var(--gold-soft);
+  }
+  .calc-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
+  .calc-row label{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--cream-dim);}
+  .calc-row input{
+    width:70px;
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid var(--ink-border);
+    background:var(--ink2);
+    color:var(--cream);
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+  }
+  .calc-btn{
+    background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+    color:var(--ink);
+    border:none;
+    padding:9px 18px;
+    border-radius:8px;
+    font-weight:700;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    cursor:pointer;
+    transition:.15s ease;
+  }
+  .calc-btn:hover{transform:translateY(-1px);}
+  .calc-result{
+    margin-top:12px;
+    padding:12px 16px;
+    background:rgba(255,255,255,0.06);
+    border-radius:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:14.5px;
+    min-height:20px;
+    line-height:1.7;
+  }
+  /* ===== LATIHAN ===== */
+  #latihan{background:var(--paper2);}
+  .type-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+  .type-btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    padding:9px 15px;
+    border-radius:999px;
+    border:1.5px solid var(--paper-line);
+    background:var(--paper);
+    color:var(--text-mid);
+    cursor:pointer;
+    transition:.15s ease;
+    font-weight:600;
+  }
+  .type-btn.active{background:var(--ink);color:var(--gold-soft);border-color:var(--ink);}
+  .score-strip{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    padding:14px 18px;
+    margin-bottom:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--text-mid);
+  }
+  .score-strip b{color:var(--text-dark);}
+  .q-card{
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    padding:22px 24px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(43,36,22,0.05);
+    animation:fadeUp .35s ease;
+    transition:border-color .2s ease;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .q-card.correct{border-color:var(--correct-b);}
+  .q-card.wrong{border-color:var(--wrong-b);}
+  .q-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .q-num{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--ink);color:var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+    flex-shrink:0;
+  }
+  .q-level{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    padding:3px 9px;
+    border-radius:999px;
+    font-weight:700;
+  }
+  .q-level.mudah{background:#dff0da;color:#2f6b2f;}
+  .q-level.sedang{background:#fdefd4;color:#8a5a12;}
+  .q-level.sukar{background:#fbe1df;color:#a13a32;}
+  .q-text{font-size:16.5px;color:var(--text-dark);margin-bottom:14px;line-height:1.7;}
+  .opt-btn{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:var(--paper2);
+    border:1.5px solid var(--paper-line);
+    color:var(--text-dark);
+    padding:11px 15px;
+    border-radius:9px;
+    margin-bottom:8px;
+    cursor:pointer;
+    font-family:'Source Serif 4',serif;
+    font-size:15px;
+    transition:.15s ease;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateX(3px);border-color:var(--gold);}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.sel-correct{background:var(--correct);border-color:var(--correct-b);}
+  .opt-btn.sel-wrong{background:var(--wrong);border-color:var(--wrong-b);}
+  .opt-btn.reveal{background:var(--correct);border-color:var(--correct-b);}
+  .bsjd-row{display:flex;gap:10px;}
+  .bs-btn{
+    flex:1;
+    padding:12px;
+    border-radius:9px;
+    border:1.5px solid var(--paper-line);
+    background:var(--paper2);
+    cursor:pointer;
+    font-weight:700;
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+  }
+  .is-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .is-row input{
+    flex:1;
+    min-width:180px;
+    padding:11px 14px;
+    border-radius:9px;
+    border:1.5px solid var(--paper-line);
+    font-family:'Source Serif 4',serif;
+    font-size:15px;
+  }
+  .jd-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 0;
+    border-bottom:1px dashed var(--paper-line);
+  }
+  .jd-left{flex:1;font-size:15px;}
+  .jd-row select{
+    flex:1;
+    padding:9px 10px;
+    border-radius:8px;
+    border:1.5px solid var(--paper-line);
+    font-family:'Source Serif 4',serif;
+    font-size:14.5px;
+  }
+  .jd-icon{width:20px;text-align:center;font-size:15px;}
+  .explain-box{
+    margin-top:14px;
+    padding:13px 16px;
+    background:var(--note);
+    border-left:4px solid var(--note-b);
+    border-radius:0 8px 8px 0;
+    font-size:14.5px;
+    color:var(--text-dark);
+    display:none;
+    line-height:1.6;
+  }
+  .explain-box.show{display:block;}
+  #analysis-panel{
+    display:none;
+    background:var(--ink);
+    color:var(--cream);
+    border-radius:var(--radius);
+    padding:32px 30px;
+    margin-top:10px;
+    box-shadow:var(--shadow);
+  }
+  #analysis-panel.show{display:block;}
+  .an-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;margin:0 0 20px;color:var(--gold-soft);}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px;}
+  .stat-box{background:rgba(255,255,255,0.06);border-radius:10px;padding:14px;text-align:center;}
+  .stat-box .num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--gold-soft);}
+  .stat-box .lab{font-size:11px;color:var(--cream-dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+  .type-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;}
+  .type-bar-row .tlabel{width:70px;flex-shrink:0;font-family:'JetBrains Mono',monospace;color:var(--cream-dim);}
+  .type-bar-track{flex:1;height:10px;background:rgba(255,255,255,0.1);border-radius:5px;overflow:hidden;}
+  .type-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));border-radius:5px;transition:width .8s cubic-bezier(.4,0,.2,1);}
+  .grade-box{
+    text-align:center;
+    padding:24px;
+    border-radius:var(--radius);
+    margin:20px 0;
+    background:linear-gradient(135deg,rgba(224,169,77,0.18),rgba(241,205,138,0.1));
+    border:1px solid var(--ink-border);
+  }
+  .grade-box .g-letter{font-family:'Playfair Display',serif;font-size:48px;font-weight:800;color:var(--gold-soft);}
+  .reset-btn{
+    background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+    color:var(--ink);border:none;padding:12px 26px;border-radius:9px;
+    font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px;
+  }
+  .analisis-btn-wrap{text-align:center;margin:24px 0;}
+  .analisis-btn{
+    background:var(--ink);color:var(--gold-soft);
+    border:1.5px solid var(--ink);
+    padding:13px 28px;border-radius:9px;font-weight:700;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  }
+  /* Footer */
+  footer{
+    max-width:760px;
+    margin:0 auto;
+    padding:40px 36px 60px;
+    text-align:center;
+    color:var(--text-mid);
+    font-size:13.5px;
+    border-top:1px solid var(--paper-line);
+  }
+  footer .fname{font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:6px;}
+  mjx-container{font-size:104% !important;}
+  /* Responsive */
+  @media(max-width:900px){
+    #sidebar{
+      position:fixed;
+      left:0; top:0;
+      transform:translateX(-100%);
+      width:280px;
+      transition:transform .25s ease;
+      box-shadow:var(--shadow);
+    }
+    #sidebar.open{transform:translateX(0);}
+    #menu-toggle{display:block;}
+    #content{padding-top:10px;}
+    .hero-title{font-size:32px;}
+    .section-inner{padding:44px 22px 10px;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    #hero{padding:80px 22px 40px;}
+  }
+  #overlay{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(0,0,0,0.45);
+    z-index:40;
+  }
+  #overlay.show{display:block;}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- ============ SIDEBAR ============ -->
+<aside id="sidebar">
+  <div class="sb-label">Matematika · Kelas 9</div>
+  <div class="sb-title">Operasi Aljabar</div>
+  <div class="progress-track"><div id="progress-fill"></div></div>
+
+  <div class="nav-section-label">Materi</div>
+  <nav>
+    <ul>
+      <li><a class="nav-link" href="#hero" data-target="hero">📖 Sampul</a></li>
+      <li><a class="nav-link" href="#materi-a" data-target="materi-a">A. Menyederhanakan Bentuk Aljabar</a></li>
+      <li><a class="nav-link" href="#materi-b" data-target="materi-b">B. Penjumlahan &amp; Pengurangan</a></li>
+      <li><a class="nav-link" href="#materi-c" data-target="materi-c">C. Perkalian Suku Dua</a></li>
+      <li><a class="nav-link" href="#materi-d" data-target="materi-d">D. Pemfaktoran</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#materi-d1" data-target="materi-d1">1. Faktor Persekutuan</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#materi-d2" data-target="materi-d2">2. Selisih Dua Kuadrat</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#materi-d3" data-target="materi-d3">3. Bentuk ax²+bx+c</a></li>
+      <li><a class="nav-link" href="#materi-e" data-target="materi-e">E. Pecahan Aljabar</a></li>
+      <li><a class="nav-link" href="#materi-f" data-target="materi-f">F. Persamaan Bentuk Aljabar</a></li>
+      <li><a class="nav-link" href="#materi-g" data-target="materi-g">G. Soal Cerita</a></li>
+    </ul>
+  </nav>
+
+  <div class="nav-section-label">Latihan Soal Interaktif</div>
+  <nav>
+    <ul>
+      <li><a class="nav-link" href="#latihan" data-target="latihan">🖊 Soal Interaktif</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#latihan" data-target="latihan" onclick="showType('pg')">1. Pilihan Ganda (Biasa)</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#latihan" data-target="latihan" onclick="showType('is')">2. Isian Singkat</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#latihan" data-target="latihan" onclick="showType('pk')">3. PG Kompleks</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#latihan" data-target="latihan" onclick="showType('bs')">4. Benar / Salah</a></li>
+      <li class="nav-sub"><a class="nav-link" href="#latihan" data-target="latihan" onclick="showType('jd')">5. Menjodohkan</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- ============ CONTENT ============ -->
+<main id="content">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="section-inner">
+      <div class="hero-label">Matematika · Kelas 9</div>
+      <h1 class="hero-title">Operasi Aljabar</h1>
+      <p class="hero-desc">Ebook interaktif ini mengajakmu memahami cara menyederhanakan, menjumlahkan, mengalikan, memfaktorkan, dan menyelesaikan persamaan dalam bentuk aljabar — lengkap dengan kalkulator bantu dan 25 latihan soal otomatis terkoreksi.</p>
+      <div class="chip-row">
+        <span class="chip">A. Menyederhanakan</span>
+        <span class="chip">B. Jumlah &amp; Kurang</span>
+        <span class="chip">C. Perkalian Suku Dua</span>
+        <span class="chip">D. Pemfaktoran</span>
+        <span class="chip">E. Pecahan Aljabar</span>
+        <span class="chip">F. Persamaan</span>
+        <span class="chip">G. Soal Cerita</span>
+        <span class="chip">🖊 25 Latihan · 5 Tipe</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- A. MENYEDERHANAKAN -->
+  <section id="materi-a">
+    <div class="section-inner">
+      <div class="sec-label">Bagian A</div>
+      <h2 class="sec-title">Menyederhanakan Bentuk Aljabar</h2>
+      <p>Bentuk aljabar tersusun dari <strong>variabel</strong>, <strong>koefisien</strong>, dan <strong>konstanta</strong>. Menyederhanakan bentuk aljabar berarti menggabungkan <strong>suku-suku sejenis</strong> — yaitu suku yang memiliki variabel dan pangkat yang sama.</p>
+
+      <div class="callout">
+        <span class="callout-tag">Definisi</span>
+        Dua suku disebut <em>sejenis</em> jika variabel dan pangkatnya identik. Contoh: \(3x\) dan \(5x\) sejenis, tetapi \(3x\) dan \(3x^2\) tidak sejenis.
+      </div>
+
+      <p>Untuk menyederhanakan, kita cukup menjumlahkan atau mengurangkan koefisien dari suku-suku sejenis, sedangkan variabelnya tetap.</p>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh</span>
+        \[ 5x + 3x - 2x = (5+3-2)x = 6x \]
+        \[ 4a + 7b - a + 2b = (4a - a) + (7b+2b) = 3a + 9b \]
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-tag">Hati-hati</span>
+        Suku dengan pangkat berbeda seperti \(x\) dan \(x^2\) <strong>tidak boleh</strong> digabungkan, meskipun variabelnya sama.
+      </div>
+
+      <div class="calc-box">
+        <div class="calc-title">🧮 Kalkulator Suku Sejenis (ax + bx)</div>
+        <div class="calc-row">
+          <label>a</label><input type="number" id="ca-a" value="5">
+          <span>x  +</span>
+          <label>b</label><input type="number" id="ca-b" value="3">
+          <span>x</span>
+          <button class="calc-btn" onclick="hitungSejenis()">Hitung</button>
+        </div>
+        <div class="calc-result" id="ca-result">Masukkan nilai a dan b, lalu klik Hitung.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B. JUMLAH KURANG -->
+  <section id="materi-b">
+    <div class="section-inner">
+      <div class="sec-label">Bagian B</div>
+      <h2 class="sec-title">Menjumlahkan dan Mengurangkan Dua Bentuk Aljabar</h2>
+      <p>Menjumlahkan atau mengurangkan dua bentuk aljabar dilakukan dengan menggabungkan suku-suku sejenis dari kedua bentuk tersebut. Saat mengurangkan, tanda setiap suku pada bentuk kedua harus dibalik terlebih dahulu (dikalikan -1).</p>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh — Penjumlahan</span>
+        \[ (3x + 2y) + (5x - 6y) = (3x+5x) + (2y-6y) = 8x - 4y \]
+      </div>
+      <div class="example-box">
+        <span class="ex-label">Contoh — Pengurangan</span>
+        \[ (7p + 4q) - (2p - 5q) = 7p + 4q - 2p + 5q = 5p + 9q \]
+      </div>
+
+      <div class="callout note">
+        <span class="callout-tag">Tips</span>
+        Gunakan tanda kurung untuk menandai kelompok suku sebelum mengurangkan — ini membantu menghindari kesalahan tanda.
+      </div>
+    </div>
+  </section>
+
+  <!-- C. PERKALIAN SUKU DUA -->
+  <section id="materi-c">
+    <div class="section-inner">
+      <div class="sec-label">Bagian C</div>
+      <h2 class="sec-title">Perkalian Suku Dua Aljabar</h2>
+      <p>Perkalian dua suku dua, misalnya \((a+b)(c+d)\), dilakukan dengan metode <strong>distribusi (FOIL)</strong>: setiap suku pada faktor pertama dikalikan dengan setiap suku pada faktor kedua.</p>
+
+      <div class="callout">
+        <span class="callout-tag">Rumus Umum</span>
+        \[ (x+a)(x+b) = x^2 + (a+b)x + ab \]
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh</span>
+        \[ (x+3)(x+4) = x^2 + 4x + 3x + 12 = x^2 + 7x + 12 \]
+        \[ (2x-1)(x+5) = 2x^2 + 10x - x - 5 = 2x^2 + 9x - 5 \]
+      </div>
+
+      <div class="callout note">
+        <span class="callout-tag">Kasus Khusus — Kuadrat Sempurna</span>
+        \[ (x+a)^2 = x^2 + 2ax + a^2 \qquad (x-a)^2 = x^2 - 2ax + a^2 \]
+      </div>
+
+      <div class="calc-box">
+        <div class="calc-title">🧮 Kalkulator Perkalian (x + a)(x + b)</div>
+        <div class="calc-row">
+          <span>(x +</span><label></label><input type="number" id="cc-a" value="3">
+          <span>)(x +</span><label></label><input type="number" id="cc-b" value="4"><span>)</span>
+          <button class="calc-btn" onclick="hitungPerkalian()">Hitung</button>
+        </div>
+        <div class="calc-result" id="cc-result">Masukkan nilai a dan b, lalu klik Hitung.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- D. PEMFAKTORAN -->
+  <section id="materi-d">
+    <div class="section-inner">
+      <div class="sec-label">Bagian D</div>
+      <h2 class="sec-title">Pemfaktoran Bentuk Aljabar</h2>
+      <p>Pemfaktoran adalah kebalikan dari perkalian — mengubah bentuk penjumlahan/pengurangan menjadi bentuk perkalian faktor-faktornya. Ada tiga teknik utama yang akan kita pelajari.</p>
+
+      <div id="materi-d1"></div>
+      <h3 class="sub-title">1. Faktor Persekutuan Terbesar (FPB)</h3>
+      <p>Jika setiap suku memiliki faktor yang sama, faktor tersebut dapat dikeluarkan.</p>
+      <div class="example-box">
+        <span class="ex-label">Contoh</span>
+        \[ 6x^2 + 9x = 3x(2x + 3) \]
+      </div>
+
+      <div id="materi-d2"></div>
+      <h3 class="sub-title">2. Selisih Dua Kuadrat</h3>
+      <div class="callout">
+        <span class="callout-tag">Rumus</span>
+        \[ a^2 - b^2 = (a-b)(a+b) \]
+      </div>
+      <div class="example-box">
+        <span class="ex-label">Contoh</span>
+        \[ x^2 - 25 = (x-5)(x+5) \]
+      </div>
+
+      <div id="materi-d3"></div>
+      <h3 class="sub-title">3. Bentuk \(ax^2+bx+c\)</h3>
+      <p>Untuk \(a=1\), carilah dua bilangan yang hasil kalinya \(c\) dan jumlahnya \(b\).</p>
+      <div class="example-box">
+        <span class="ex-label">Contoh</span>
+        \[ x^2 + 5x + 6 = (x+2)(x+3) \quad \text{karena } 2\times3=6,\ 2+3=5 \]
+        \[ x^2 - 7x + 12 = (x-3)(x-4) \]
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-tag">Hati-hati</span>
+        Perhatikan tanda! Jika \(c\) positif dan \(b\) negatif, kedua bilangan bertanda negatif. Jika \(c\) negatif, salah satu bilangan positif dan satunya negatif.
+      </div>
+    </div>
+  </section>
+
+  <!-- E. PECAHAN ALJABAR -->
+  <section id="materi-e">
+    <div class="section-inner">
+      <div class="sec-label">Bagian E</div>
+      <h2 class="sec-title">Pecahan Aljabar</h2>
+      <p>Pecahan aljabar disederhanakan dengan memfaktorkan pembilang dan penyebut, lalu mencoret faktor yang sama (dengan syarat penyebut tidak sama dengan nol).</p>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh — Menyederhanakan</span>
+        \[ \frac{x^2-4}{x-2} = \frac{(x-2)(x+2)}{x-2} = x+2, \quad x \neq 2 \]
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh — Operasi Pecahan</span>
+        \[ \frac{2}{x} + \frac{3}{x} = \frac{5}{x} \qquad \frac{1}{x} + \frac{1}{y} = \frac{y+x}{xy} \]
+      </div>
+
+      <div class="callout note">
+        <span class="callout-tag">Syarat</span>
+        Penyebut pecahan aljabar tidak boleh bernilai nol — ini menentukan syarat nilai \(x\) yang diperbolehkan (domain).
+      </div>
+    </div>
+  </section>
+
+  <!-- F. PERSAMAAN -->
+  <section id="materi-f">
+    <div class="section-inner">
+      <div class="sec-label">Bagian F</div>
+      <h2 class="sec-title">Persamaan dalam Bentuk Aljabar</h2>
+      <p>Menyelesaikan persamaan aljabar berarti mencari nilai variabel yang membuat persamaan bernilai benar, dengan menjaga kesetaraan kedua ruas (apa yang dilakukan di ruas kiri harus dilakukan juga di ruas kanan).</p>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh</span>
+        \[ 2x + 5 = 17 \]
+        \[ 2x = 17 - 5 = 12 \]
+        \[ x = 6 \]
+      </div>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh — Variabel di Kedua Ruas</span>
+        \[ 3x + 4 = x + 10 \]
+        \[ 3x - x = 10 - 4 \]
+        \[ 2x = 6 \ \Rightarrow\ x = 3 \]
+      </div>
+
+      <div class="calc-box">
+        <div class="calc-title">🧮 Kalkulator Persamaan ax + b = c</div>
+        <div class="calc-row">
+          <label>a</label><input type="number" id="cf-a" value="2">
+          <span>x +</span>
+          <label>b</label><input type="number" id="cf-b" value="5">
+          <span>=</span>
+          <label>c</label><input type="number" id="cf-c" value="17">
+          <button class="calc-btn" onclick="hitungPersamaan()">Hitung x</button>
+        </div>
+        <div class="calc-result" id="cf-result">Masukkan nilai a, b, c, lalu klik Hitung x.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- G. SOAL CERITA -->
+  <section id="materi-g">
+    <div class="section-inner">
+      <div class="sec-label">Bagian G</div>
+      <h2 class="sec-title">Soal Cerita Aljabar</h2>
+      <p>Soal cerita mengajak kita mengubah kalimat sehari-hari menjadi bentuk atau persamaan aljabar, lalu menyelesaikannya seperti biasa.</p>
+
+      <div class="example-box">
+        <span class="ex-label">Contoh</span>
+        Harga 3 buku dan 2 pensil adalah Rp26.000, sedangkan harga 1 buku dan 2 pensil adalah Rp14.000. Berapa harga satu buku?
+        <br><br>
+        Misalkan harga buku = \(b\) dan harga pensil = \(p\):
+        \[ 3b + 2p = 26000 \qquad b + 2p = 14000 \]
+        Kurangkan kedua persamaan:
+        \[ 2b = 12000 \ \Rightarrow\ b = 6000 \]
+        Jadi harga satu buku adalah <strong>Rp6.000</strong>.
+      </div>
+
+      <div class="callout note">
+        <span class="callout-tag">Strategi</span>
+        Langkah menyelesaikan soal cerita: (1) tentukan variabel, (2) ubah kalimat menjadi persamaan/bentuk aljabar, (3) selesaikan, (4) tuliskan kesimpulan sesuai konteks soal.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LATIHAN ============ -->
+  <section id="latihan">
+    <div class="section-inner">
+      <div class="sec-label">Latihan</div>
+      <h2 class="sec-title">🖊 Soal Interaktif</h2>
+      <p>Pilih tipe soal di bawah ini. Setiap soal dilengkapi penjelasan otomatis setelah kamu menjawab.</p>
+
+      <div class="type-nav">
+        <button class="type-btn" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda</button>
+        <button class="type-btn" data-type="is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="type-btn" data-type="pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="type-btn" data-type="bs" onclick="showType('bs')">4. Benar / Salah</button>
+        <button class="type-btn" data-type="jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="score-strip"></div>
+
+      <div id="quiz-area"></div>
+
+      <div class="explain-box show" id="global-explain" style="display:none;"></div>
+
+      <div class="analisis-btn-wrap">
+        <button class="analisis-btn" onclick="showAnalysis()">📊 Lihat Analisis Akhir</button>
+      </div>
+
+      <div id="analysis-panel">
+        <div class="an-title">📊 Hasil Analisis</div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num" id="st-total">0</div><div class="lab">Total Soal</div></div>
+          <div class="stat-box"><div class="num" id="st-correct">0</div><div class="lab">Benar</div></div>
+          <div class="stat-box"><div class="num" id="st-wrong">0</div><div class="lab">Salah</div></div>
+          <div class="stat-box"><div class="num" id="st-percent">0%</div><div class="lab">Nilai</div></div>
+        </div>
+        <div id="type-bars"></div>
+        <div class="grade-box">
+          <div class="g-letter" id="g-letter">-</div>
+          <div id="g-msg" style="margin-top:6px;color:var(--cream-dim);"></div>
+        </div>
+        <div style="text-align:center;"><button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua</button></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fname">Operasi Aljabar — Ebook Interaktif</div>
+    Matematika · Kelas 9 · 5 tipe soal · 25 latihan · Dirender dengan MathJax<br>
+    Dibuat oleh <strong>Suminto with Claude</strong>
+  </footer>
+
+</main>
+
+<script>
+/* ============ SCROLLSPY + PROGRESS + MOBILE MENU ============ */
+const sections = ['hero','materi-a','materi-b','materi-c','materi-d','materi-d1','materi-d2','materi-d3','materi-e','materi-f','materi-g','latihan'];
+const navLinks = document.querySelectorAll('.nav-link');
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('.nav-link').forEach(a=>{
+  a.addEventListener('click',()=>{
+    if(window.innerWidth<=900){ toggleSidebar(); }
+  });
+});
+
+function updateScrollspy(){
+  const scrollY = window.scrollY;
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docH>0 ? (scrollY/docH)*100 : 0;
+  document.getElementById('progress-fill').style.width = Math.min(100,pct)+'%';
+
+  let current = 'hero';
+  for(const id of sections){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140) current = id;
+    }
+  }
+  // map submateri d1/d2/d3 highlight to their own link, else main
+  navLinks.forEach(l=>{
+    l.classList.remove('active');
+    if(l.dataset.target === current) l.classList.add('active');
+  });
+}
+window.addEventListener('scroll', updateScrollspy);
+window.addEventListener('load', updateScrollspy);
+
+/* ============ KALKULATOR MATERI ============ */
+function hitungSejenis(){
+  const a = parseFloat(document.getElementById('ca-a').value)||0;
+  const b = parseFloat(document.getElementById('ca-b').value)||0;
+  const hasil = a+b;
+  document.getElementById('ca-result').innerHTML =
+    `(${a}x) + (${b}x) = <strong>${hasil}x</strong>`;
+}
+function hitungPerkalian(){
+  const a = parseFloat(document.getElementById('cc-a').value)||0;
+  const b = parseFloat(document.getElementById('cc-b').value)||0;
+  const jum = a+b, kali = a*b;
+  document.getElementById('cc-result').innerHTML =
+    `(x + ${a})(x + ${b}) = x² + ${jum}x + ${kali}`;
+}
+function hitungPersamaan(){
+  const a = parseFloat(document.getElementById('cf-a').value);
+  const b = parseFloat(document.getElementById('cf-b').value);
+  const c = parseFloat(document.getElementById('cf-c').value);
+  if(!a){ document.getElementById('cf-result').innerHTML = 'Nilai a tidak boleh 0.'; return; }
+  const x = (c-b)/a;
+  document.getElementById('cf-result').innerHTML =
+    `${a}x + ${b} = ${c}  →  ${a}x = ${c-b}  →  x = <strong>${x}</strong>`;
+}
+
+/* ============ BANK SOAL ============ */
+const allQuestions = {
+  pg: [
+    {id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Bentuk sederhana dari \\(3x + 5x - 2x\\) adalah...',
+      options:['A. 4x','B. 6x','C. 8x','D. 10x'], answer:1,
+      explanation:'✅ 3x + 5x - 2x = (3+5-2)x = 6x. Semua suku sejenis (variabel x), jadi tinggal jumlahkan koefisiennya.'},
+    {id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Hasil dari \\(5a + 3b - 2a + 7b\\) adalah...',
+      options:['A. 3a + 10b','B. 7a + 10b','C. 3a + 4b','D. 8a + 3b'], answer:0,
+      explanation:'✅ Kelompokkan suku sejenis: (5a-2a) + (3b+7b) = 3a + 10b.'},
+    {id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Hasil perkalian \\((2x+3)(x-4)\\) adalah...',
+      options:['A. 2x² - 5x - 12','B. 2x² + 5x - 12','C. 2x² - 11x - 12','D. 2x² - 5x + 12'], answer:0,
+      explanation:'✅ (2x+3)(x-4) = 2x² -8x +3x -12 = 2x² -5x -12.'},
+    {id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Faktor dari \\(x^2 - 9\\) adalah...',
+      options:['A. (x-3)(x-3)','B. (x+3)(x+3)','C. (x-3)(x+3)','D. (x-9)(x+1)'], answer:2,
+      explanation:'✅ x²-9 adalah selisih dua kuadrat: a²-b² = (a-b)(a+b), dengan a=x, b=3, sehingga (x-3)(x+3).'},
+    {id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Harga 2 pulpen dan 1 buku adalah Rp13.000. Jika harga 1 pulpen adalah Rp4.000, harga 1 buku adalah...',
+      options:['A. Rp4.000','B. Rp5.000','C. Rp9.000','D. Rp13.000'], answer:1,
+      explanation:'✅ 2(4000) + b = 13000 → 8000 + b = 13000 → b = 5000. Harga buku Rp5.000.'}
+  ],
+  is: [
+    {id:'is1', type:'is', level:'mudah', num:1,
+      text:'Sederhanakan bentuk \\(4p - 7p + 10p\\). Hasilnya adalah ... p',
+      answer:'7', altAnswers:['7p'],
+      explanation:'✅ 4p - 7p + 10p = (4-7+10)p = 7p.'},
+    {id:'is2', type:'is', level:'sedang', num:2,
+      text:'Jumlah dari \\((3x+2)\\) dan \\((5x-6)\\) adalah 8x + ... (isi angkanya, boleh negatif)',
+      answer:'-4', altAnswers:['-4'],
+      explanation:'✅ (3x+2)+(5x-6) = 8x + (2-6) = 8x - 4, sehingga bagian konstanta adalah -4.'},
+    {id:'is3', type:'is', level:'sedang', num:3,
+      text:'Hasil pemfaktoran dari \\(x^2 + 5x + 6\\) adalah (x + 2)( ... )',
+      answer:'x+3', altAnswers:['x + 3'],
+      explanation:'✅ Cari dua bilangan yang hasil kalinya 6 dan jumlahnya 5, yaitu 2 dan 3, sehingga (x+2)(x+3).'},
+    {id:'is4', type:'is', level:'sukar', num:4,
+      text:'Bentuk sederhana dari pecahan aljabar \\(\\dfrac{x^2-4}{x-2}\\) adalah x + ...',
+      answer:'2', altAnswers:['x+2'],
+      explanation:'✅ x²-4 = (x-2)(x+2), sehingga (x-2)(x+2)/(x-2) = x+2, dengan syarat x ≠ 2.'},
+    {id:'is5', type:'is', level:'sedang', num:5,
+      text:'Nilai x dari persamaan \\(2x + 5 = 17\\) adalah...',
+      answer:'6', altAnswers:['x=6','x = 6'],
+      explanation:'✅ 2x = 17-5 = 12, sehingga x = 6.'}
+  ],
+  pk: [
+    {id:'pk1', type:'pk', level:'mudah', num:1,
+      text:'Manakah suku-suku di bawah ini yang sejenis dengan \\(3x^2\\)? (pilih semua yang benar)',
+      options:['A. 4x','B. -5x²','C. 7','D. 2x²'], answers:[1,3],
+      explanation:'✅ Suku sejenis dengan 3x² harus memiliki variabel x berpangkat 2, yaitu -5x² dan 2x². 4x (pangkat 1) dan 7 (konstanta) bukan sejenis.'},
+    {id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Manakah pemfaktoran berikut yang BENAR? (pilih semua yang benar)',
+      options:['A. x²-16 = (x-4)(x+4)','B. x²+7x+12 = (x+3)(x+4)','C. x²-5x+6 = (x-1)(x-6)','D. 6x+9 = 3(2x+3)'], answers:[0,1,3],
+      explanation:'✅ A benar (selisih kuadrat). B benar (3×4=12, 3+4=7). C salah, seharusnya (x-2)(x-3) karena 2×3=6 dan 2+3=5. D benar (FPB 3).'},
+    {id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Manakah hasil perkalian suku dua berikut yang BENAR? (pilih semua yang benar)',
+      options:['A. (x+2)(x+5) = x²+7x+10','B. (x-3)² = x²-6x+9','C. (x+1)(x-1) = x²-1','D. (2x+1)(x+2) = 2x²+3x+2'], answers:[0,1,2],
+      explanation:'✅ A benar: 2+5=7, 2×5=10. B benar: kuadrat selisih, (x-3)²=x²-6x+9. C benar: selisih kuadrat, (x+1)(x-1)=x²-1. D SALAH: (2x+1)(x+2)=2x²+4x+x+2=2x²+5x+2, bukan 2x²+3x+2.'},
+    {id:'pk4', type:'pk', level:'sukar', num:4,
+      text:'Diketahui pecahan aljabar \\(\\dfrac{x^2-1}{x+1}\\). Manakah pernyataan berikut yang BENAR? (pilih semua yang benar)',
+      options:['A. Bentuk sederhananya adalah x - 1','B. Syaratnya x ≠ -1','C. Bentuk sederhananya adalah x + 1','D. Pembilang dapat difaktorkan menjadi (x-1)(x+1)'], answers:[0,1,3],
+      explanation:'✅ (x²-1)/(x+1) = (x-1)(x+1)/(x+1) = x-1, dengan syarat x≠-1. Jadi A, B, D benar; C salah.'},
+    {id:'pk5', type:'pk', level:'sedang', num:5,
+      text:'Sebuah persegi panjang punya panjang (x+3) dan lebar (x-2). Manakah pernyataan berikut yang BENAR tentang luasnya? (pilih semua yang benar)',
+      options:['A. Luas = x²+x-6','B. Luas = x²+5x-6','C. Keliling = 2(2x+1) = 4x+2','D. Luas dapat ditulis sebagai (x+3)(x-2)'], answers:[0,2,3],
+      explanation:'✅ Luas = (x+3)(x-2) = x²+x-6 (A benar, B salah). Keliling = 2[(x+3)+(x-2)] = 2(2x+1) = 4x+2 (C benar). D adalah bentuk faktornya, juga benar.'}
+  ],
+  bs: [
+    {id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Pernyataan: \\(3x + 4x = 7x\\)',
+      answer:true,
+      explanation:'✅ BENAR. 3x dan 4x adalah suku sejenis, sehingga 3x+4x = 7x.'},
+    {id:'bs2', type:'bs', level:'sedang', num:2,
+      text:'Pernyataan: \\((a+b)^2 = a^2 + b^2\\)',
+      answer:false,
+      explanation:'❌ SALAH. Bentuk yang benar adalah (a+b)² = a² + 2ab + b². Suku tengah 2ab sering terlupa.'},
+    {id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Pernyataan: \\(x^2 - 16\\) dapat difaktorkan menjadi \\((x-4)(x+4)\\)',
+      answer:true,
+      explanation:'✅ BENAR. x²-16 adalah selisih dua kuadrat (4²=16), sehingga (x-4)(x+4).'},
+    {id:'bs4', type:'bs', level:'sukar', num:4,
+      text:'Pernyataan: untuk \\(x \\neq 0\\), \\(\\dfrac{2x}{4x} = 2\\)',
+      answer:false,
+      explanation:'❌ SALAH. 2x/4x = 2/4 = 1/2 (bukan 2), karena x pada pembilang dan penyebut saling coret, menyisakan angka 2/4.'},
+    {id:'bs5', type:'bs', level:'mudah', num:5,
+      text:'Pernyataan: dalam kalimat "harga 3 pensil dan 2 buku" yang dituliskan sebagai \\(3p + 2b\\), suku p dan b bukan suku sejenis',
+      answer:true,
+      explanation:'✅ BENAR. p (pensil) dan b (buku) adalah variabel yang berbeda, sehingga bukan suku sejenis dan tidak bisa digabungkan.'}
+  ],
+  jd: [
+    {id:'jd1', type:'jd', level:'sedang', num:1,
+      left:'\\(x^2 - 9\\)', answer:'(x-3)(x+3)',
+      options:['(x-3)(x+3)','(x-9)(x+1)','(x-3)(x-3)','x(x-9)'],
+      explanation:'✅ x²-9 adalah selisih dua kuadrat, sehingga difaktorkan menjadi (x-3)(x+3).'},
+    {id:'jd2', type:'jd', level:'mudah', num:2,
+      left:'\\(2x + 3x\\)', answer:'5x',
+      options:['5x','6x','5x²','x'],
+      explanation:'✅ 2x+3x adalah suku sejenis, hasilnya (2+3)x = 5x.'},
+    {id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'\\((x+2)(x+3)\\)', answer:'x²+5x+6',
+      options:['x²+5x+6','x²+6x+5','x²+5x+5','x²-5x+6'],
+      explanation:'✅ (x+2)(x+3) = x²+3x+2x+6 = x²+5x+6.'},
+    {id:'jd4', type:'jd', level:'mudah', num:4,
+      left:'\\(4x^2 / 2x\\)', answer:'2x',
+      options:['2x','2x²','8x','x'],
+      explanation:'✅ 4x²/2x = (4/2)·(x²/x) = 2x.'},
+    {id:'jd5', type:'jd', level:'mudah', num:5,
+      left:'\\(3(x+4)\\)', answer:'3x+12',
+      options:['3x+12','3x+4','x+12','3x+7'],
+      explanation:'✅ Distribusi: 3(x+4) = 3x + 12.'}
+  ]
+};
+
+/* ============ STATE ============ */
+const state = { answers:{}, currentType:'pg', matchSelections:{} };
+let pkTemp = {};
+let currentType = 'pg';
+
+function totalQuestions(){
+  return Object.values(allQuestions).reduce((s,arr)=>s+arr.length,0);
+}
+
+function showType(type){
+  currentType = type;
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active', b.dataset.type===type));
+  renderQuestions(type);
+  updateScoreStrip();
+  typesetMath();
+}
+
+function renderQuestions(type){
+  const area = document.getElementById('quiz-area');
+  const qs = allQuestions[type];
+  area.innerHTML = qs.map(q=>renderCard(q)).join('');
+}
+
+function renderCard(q){
+  let body = '';
+  if(q.type==='pg') body = renderPG(q);
+  else if(q.type==='is') body = renderIS(q);
+  else if(q.type==='pk') body = renderPK(q);
+  else if(q.type==='bs') body = renderBS(q);
+  else if(q.type==='jd') body = renderJD(q);
+
+  const ansState = state.answers[q.id];
+  const cardClass = ansState ? (ansState.correct ? 'correct' : 'wrong') : '';
+
+  return `<div class="q-card ${cardClass}" id="card-${q.id}">
+    <div class="q-top">
+      <div class="q-num">${q.num}</div>
+      <span class="q-level ${q.level}">${q.level}</span>
+    </div>
+    <div class="q-text">${q.left ? q.left : q.text}</div>
+    ${body}
+    <div class="explain-box ${ansState?'show':''}" id="exp-${q.id}">${ansState ? q.explanation : ''}</div>
+  </div>`;
+}
+
+function renderPG(q){
+  const ans = state.answers[q.id];
+  return `<div>${q.options.map((opt,i)=>{
+    let cls='opt-btn';
+    let disabled='';
+    if(ans){
+      disabled='disabled';
+      if(i===q.answer) cls+=' reveal';
+      if(ans.chosen===i && i!==q.answer) cls+=' sel-wrong';
+      if(ans.chosen===i && i===q.answer) cls+=' sel-correct';
+    }
+    return `<button class="${cls}" ${disabled} onclick="answerPG('${q.id}',${i})">${opt}</button>`;
+  }).join('')}</div>`;
+}
+
+function renderIS(q){
+  const ans = state.answers[q.id];
+  const val = ans ? ans.chosen : '';
+  const disabled = ans ? 'disabled' : '';
+  return `<div class="is-row">
+    <input type="text" id="input-${q.id}" placeholder="Ketik jawabanmu..." value="${val}" ${disabled}
+      onkeydown="if(event.key==='Enter'){submitIS('${q.id}')}">
+    <button class="calc-btn" ${disabled} onclick="submitIS('${q.id}')">Kirim Jawaban</button>
+  </div>`;
+}
+
+function renderPK(q){
+  const ans = state.answers[q.id];
+  const chosen = pkTemp[q.id] || (ans ? ans.chosen : []);
+  return `<div>${q.options.map((opt,i)=>{
+    let cls='opt-btn';
+    let mark = chosen.includes(i) ? '✔ ' : '○ ';
+    let disabled='';
+    if(ans){
+      disabled='disabled';
+      if(q.answers.includes(i)) cls+=' reveal';
+      if(chosen.includes(i) && !q.answers.includes(i)) cls+=' sel-wrong';
+    }
+    return `<button class="${cls}" ${disabled} onclick="togglePK('${q.id}',${i})">${mark}${opt}</button>`;
+  }).join('')}
+  ${!ans ? `<button class="calc-btn" style="margin-top:8px;" onclick="submitPK('${q.id}')">Konfirmasi Jawaban</button>` : ''}
+  </div>`;
+}
+
+function renderBS(q){
+  const ans = state.answers[q.id];
+  let clsT='bs-btn', clsF='bs-btn';
+  let disabled='';
+  if(ans){
+    disabled='disabled';
+    if(q.answer===true) clsT+=' reveal'; else clsF+=' reveal';
+    if(ans.chosen===true && q.answer!==true) clsT+=' sel-wrong';
+    if(ans.chosen===false && q.answer!==false) clsF+=' sel-wrong';
+  }
+  return `<div class="bsjd-row">
+    <button class="${clsT}" ${disabled} onclick="answerBS('${q.id}',true)">✅ BENAR</button>
+    <button class="${clsF}" ${disabled} onclick="answerBS('${q.id}',false)">❌ SALAH</button>
+  </div>`;
+}
+
+function renderJD(q){
+  const ans = state.answers[q.id];
+  const opts = q.options;
+  const selected = ans ? ans.chosen : '';
+  const disabled = ans ? 'disabled' : '';
+  return `<div class="jd-row">
+    <div class="jd-left">${q.left}</div>
+    <span class="jd-icon">→</span>
+    <select id="sel-${q.id}" ${disabled} onchange="answerJD('${q.id}', this.value)">
+      <option value="">-- pilih pasangan --</option>
+      ${opts.map(o=>`<option value="${o}" ${selected===o?'selected':''}>${o}</option>`).join('')}
+    </select>
+  </div>`;
+}
+
+/* ============ ANSWER HANDLERS ============ */
+function findQ(id){
+  for(const t in allQuestions){
+    const q = allQuestions[t].find(x=>x.id===id);
+    if(q) return q;
+  }
+}
+
+function answerPG(id, idx){
+  const q = findQ(id);
+  if(state.answers[id]) return;
+  const correct = idx===q.answer;
+  state.answers[id] = {chosen:idx, correct};
+  refreshCard(q);
+}
+
+function submitIS(id){
+  const q = findQ(id);
+  if(state.answers[id]) return;
+  const input = document.getElementById('input-'+id);
+  const val = input.value.trim().toLowerCase();
+  const main = String(q.answer).trim().toLowerCase();
+  const alts = (q.altAnswers||[]).map(a=>a.trim().toLowerCase());
+  const correct = val.length>0 && (val===main || alts.includes(val) || val.includes(main) || main.includes(val));
+  state.answers[id] = {chosen:input.value, correct};
+  refreshCard(q);
+}
+
+function togglePK(id, idx){
+  if(state.answers[id]) return;
+  if(!pkTemp[id]) pkTemp[id]=[];
+  const arr = pkTemp[id];
+  const pos = arr.indexOf(idx);
+  if(pos>-1) arr.splice(pos,1); else arr.push(idx);
+  renderQuestions(currentType);
+  typesetMath();
+}
+
+function submitPK(id){
+  const q = findQ(id);
+  if(state.answers[id]) return;
+  const chosen = pkTemp[id] || [];
+  const setA = new Set(chosen);
+  const setB = new Set(q.answers);
+  const correct = setA.size===setB.size && [...setA].every(x=>setB.has(x));
+  state.answers[id] = {chosen, correct};
+  refreshCard(q);
+}
+
+function answerBS(id, val){
+  const q = findQ(id);
+  if(state.answers[id]) return;
+  const correct = val===q.answer;
+  state.answers[id] = {chosen:val, correct};
+  refreshCard(q);
+}
+
+function answerJD(id, val){
+  const q = findQ(id);
+  if(state.answers[id]) return;
+  if(!val) return;
+  const correct = val===q.answer;
+  state.answers[id] = {chosen:val, correct};
+  refreshCard(q);
+}
+
+function refreshCard(q){
+  renderQuestions(currentType);
+  typesetMath();
+  updateScoreStrip();
+}
+
+/* ============ SCORE STRIP ============ */
+function updateScoreStrip(){
+  const strip = document.getElementById('score-strip');
+  const parts = [];
+  let answered=0, correct=0;
+  Object.values(state.answers).forEach(a=>{answered++; if(a.correct) correct++;});
+  const typeLabels = {pg:'PG',is:'Isian',pk:'PG Kompleks',bs:'B/S',jd:'Jodoh'};
+  for(const t in allQuestions){
+    const qs = allQuestions[t];
+    const done = qs.filter(q=>state.answers[q.id]).length;
+    const corr = qs.filter(q=>state.answers[q.id] && state.answers[q.id].correct).length;
+    parts.push(`${typeLabels[t]}: <b>${corr}/${qs.length}</b>`);
+  }
+  strip.innerHTML = `Total dijawab: <b>${answered}/${totalQuestions()}</b> &nbsp;|&nbsp; ` + parts.join(' &nbsp;·&nbsp; ');
+}
+
+/* ============ ANALYSIS ============ */
+function showAnalysis(){
+  const panel = document.getElementById('analysis-panel');
+  panel.classList.add('show');
+  const total = totalQuestions();
+  let correct=0, wrong=0, answered=0;
+  Object.values(state.answers).forEach(a=>{answered++; if(a.correct) correct++; else wrong++;});
+  const unanswered = total - answered;
+  wrong += unanswered;
+  const percent = Math.round((correct/total)*100);
+
+  document.getElementById('st-total').textContent = total;
+  document.getElementById('st-correct').textContent = correct;
+  document.getElementById('st-wrong').textContent = wrong;
+  document.getElementById('st-percent').textContent = percent+'%';
+
+  const typeLabels = {pg:'PG',is:'Isian',pk:'PG Kompleks',bs:'B/S',jd:'Jodoh'};
+  let barsHtml = '';
+  for(const t in allQuestions){
+    const qs = allQuestions[t];
+    const corr = qs.filter(q=>state.answers[q.id] && state.answers[q.id].correct).length;
+    const pct = Math.round((corr/qs.length)*100);
+    barsHtml += `<div class="type-bar-row">
+      <div class="tlabel">${typeLabels[t]}</div>
+      <div class="type-bar-track"><div class="type-bar-fill" style="width:${pct}%"></div></div>
+      <div style="width:44px;text-align:right;">${corr}/${qs.length}</div>
+    </div>`;
+  }
+  document.getElementById('type-bars').innerHTML = barsHtml;
+
+  let grade='E', emoji='📚', msg='Semangat Belajar, ayo coba lagi!';
+  if(percent>=90){grade='A';emoji='🏆';msg='Luar Biasa!';}
+  else if(percent>=75){grade='B';emoji='⭐';msg='Bagus!';}
+  else if(percent>=60){grade='C';emoji='👍';msg='Cukup Baik';}
+  else if(percent>=40){grade='D';emoji='💪';msg='Jangan Menyerah';}
+  document.getElementById('g-letter').textContent = `${emoji} ${grade}`;
+  document.getElementById('g-msg').textContent = msg;
+
+  panel.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysis-panel').classList.remove('show');
+  renderQuestions(currentType);
+  updateScoreStrip();
+  typesetMath();
+  window.scrollTo({top:document.getElementById('latihan').offsetTop-20, behavior:'smooth'});
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  showType('pg');
+  typesetMath(); /* render seluruh materi statis (Bagian A-G) begitu MathJax siap */
+});
+</script>
+</body>
+</html>

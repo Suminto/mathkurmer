@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eBook Matematika – Persamaan Kuadrat</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)'],['$','$']], displayMath: [['\\[','\\]'],['$$','$$']] },
+  startup: { typeset: true }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root {
+  --ink: #1a1209;
+  --paper: #fdf8f0;
+  --cream: #f5edd8;
+  --amber: #c8892a;
+  --amber-light: #e8b86a;
+  --teal: #1b6b6b;
+  --teal-light: #2a9090;
+  --red: #c0392b;
+  --muted: #7a6a52;
+  --border: #ddd0b8;
+  --shadow: rgba(26,18,9,0.12);
+}
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(--cream);
+color: var(--ink);
+font-family: ‘Source Serif 4’, serif;
+font-size: 17px;
+line-height: 1.8;
+}
+
+/* ── LAYOUT ── */
+.shell { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+width: 280px;
+flex-shrink: 0;
+background: var(--ink);
+color: #e8dcc8;
+position: sticky;
+top: 0;
+height: 100vh;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+transition: transform 0.3s;
+}
+.sidebar-header {
+padding: 32px 24px 20px;
+border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.sidebar-header .label {
+font-family: ‘JetBrains Mono’, monospace;
+font-size: 10px;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(--amber-light);
+margin-bottom: 8px;
+}
+.sidebar-header h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: 20px;
+line-height: 1.3;
+color: #fff;
+}
+nav { padding: 16px 0; flex: 1; }
+.nav-section { padding: 6px 24px 2px; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber-light); font-family: ‘JetBrains Mono’, monospace; margin-top: 8px; }
+.nav-link {
+display: block; padding: 8px 24px; color: #c8bba8; text-decoration: none;
+font-size: 14px; transition: all 0.2s; border-left: 3px solid transparent;
+}
+.nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); border-left-color: var(--amber); }
+.nav-link.active { color: #fff; background: rgba(200,137,42,0.15); border-left-color: var(--amber); }
+.nav-sub { padding-left: 36px; font-size: 13px; }
+.progress-bar { height: 3px; background: rgba(255,255,255,0.1); margin: 0 24px 8px; border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--amber); transition: width 0.4s; }
+
+/* MAIN */
+.main { flex: 1; min-width: 0; }
+
+/* HERO */
+.hero {
+background: var(--ink);
+color: #fff;
+padding: 80px 64px 60px;
+position: relative;
+overflow: hidden;
+}
+.hero::before {
+content: ‘∫√∑π²’;
+position: absolute; top: -20px; right: 40px;
+font-size: 200px; opacity: 0.04; font-family: ‘Playfair Display’, serif;
+line-height: 1; pointer-events: none;
+}
+.hero .kelas { font-family: ‘JetBrains Mono’, monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--amber-light); margin-bottom: 16px; }
+.hero h1 { font-family: ‘Playfair Display’, serif; font-size: clamp(36px,5vw,60px); line-height: 1.1; margin-bottom: 16px; }
+.hero h1 em { font-style: italic; color: var(--amber-light); }
+.hero .desc { color: #b0a48c; max-width: 520px; font-size: 16px; margin-bottom: 32px; }
+.toc-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 100px; font-size: 13px; color: #d0c4b0; }
+
+/* CONTENT */
+.content { padding: 0 64px 80px; max-width: 860px; }
+
+/* SECTION */
+.section { padding-top: 64px; }
+.section-label { font-family: ‘JetBrains Mono’, monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.section-label::after { content: ‘’; flex: 1; height: 1px; background: var(--border); }
+.section h2 { font-family: ‘Playfair Display’, serif; font-size: 32px; line-height: 1.2; margin-bottom: 20px; }
+.section h3 { font-family: ‘Playfair Display’, serif; font-size: 22px; margin: 36px 0 14px; color: var(--teal); }
+.section p { margin-bottom: 16px; }
+.section ul, .section ol { margin: 8px 0 16px 24px; }
+.section li { margin-bottom: 6px; }
+
+/* CALLOUT BOXES */
+.callout {
+border-radius: 4px; padding: 20px 24px; margin: 24px 0;
+border-left: 4px solid;
+}
+.callout-def { background: #eef7f7; border-color: var(--teal); }
+.callout-def .callout-title { color: var(--teal); font-family: ‘JetBrains Mono’, monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.callout-formula { background: #fdf4e3; border-color: var(--amber); }
+.callout-formula .callout-title { color: var(--amber); font-family: ‘JetBrains Mono’, monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.callout-tip { background: #fef9ec; border-color: #e6c840; }
+.callout-tip .callout-title { color: #b8960a; font-family: ‘JetBrains Mono’, monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+
+/* MATH DISPLAY */
+.math-block {
+background: var(--paper);
+border: 1px solid var(--border);
+border-radius: 6px;
+padding: 20px 28px;
+margin: 20px 0;
+text-align: center;
+font-size: 19px;
+box-shadow: 0 2px 8px var(--shadow);
+overflow-x: auto;
+}
+
+/* EXAMPLE CARD */
+.example {
+background: var(--paper);
+border: 1px solid var(--border);
+border-radius: 8px;
+margin: 28px 0;
+overflow: hidden;
+box-shadow: 0 2px 12px var(--shadow);
+}
+.example-header {
+background: var(--teal);
+color: #fff;
+padding: 10px 20px;
+font-family: ‘JetBrains Mono’, monospace;
+font-size: 12px;
+letter-spacing: 1px;
+}
+.example-body { padding: 20px 24px; }
+.step { display: flex; gap: 16px; margin: 12px 0; }
+.step-num {
+width: 28px; height: 28px; border-radius: 50%; background: var(--amber);
+color: #fff; font-weight: 600; font-size: 13px; display: flex; align-items: center;
+justify-content: center; flex-shrink: 0; margin-top: 2px;
+}
+.step-content { flex: 1; }
+
+/* VIDEO */
+.video-wrap {
+margin: 32px 0;
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 0 4px 24px var(--shadow);
+background: #000;
+}
+.video-label {
+background: var(--ink);
+color: var(--amber-light);
+padding: 10px 20px;
+font-family: ‘JetBrains Mono’, monospace;
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+display: flex; align-items: center; gap: 8px;
+}
+.video-label::before { content: ‘▶’; color: var(--amber); }
+.video-wrap iframe { display: block; width: 100%; aspect-ratio: 16/9; border: none; }
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+/* QUIZ */
+.quiz-section {
+background: var(--ink);
+color: #e8dcc8;
+padding: 48px 64px;
+margin-top: 48px;
+}
+.quiz-section h2 { font-family: ‘Playfair Display’, serif; font-size: 28px; color: #fff; margin-bottom: 6px; }
+.quiz-section .subtitle { color: var(--amber-light); font-family: ‘JetBrains Mono’, monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 32px; }
+
+.quiz-card {
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 10px;
+padding: 24px 28px;
+margin-bottom: 24px;
+}
+.quiz-q { font-size: 16px; margin-bottom: 18px; color: #fff; line-height: 1.7; }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+color: #c8bba8; padding: 11px 18px; border-radius: 6px; text-align: left;
+cursor: pointer; font-size: 15px; font-family: ‘Source Serif 4’, serif;
+transition: all 0.2s; display: flex; align-items: flex-start; gap: 12px;
+}
+.option-btn:hover { background: rgba(200,137,42,0.15); border-color: var(--amber); color: #fff; }
+.option-btn.correct { background: rgba(27,107,107,0.4) !important; border-color: var(--teal-light) !important; color: #7fffd4 !important; }
+.option-btn.wrong { background: rgba(192,57,43,0.3) !important; border-color: #e74c3c !important; color: #ffaaaa !important; }
+.option-btn:disabled { cursor: default; }
+.opt-letter { width: 24px; height: 24px; border-radius: 50%; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 1px; font-family: ‘JetBrains Mono’, monospace; }
+.explanation { margin-top: 14px; padding: 12px 16px; background: rgba(255,255,255,0.04); border-radius: 6px; font-size: 14px; color: #a8c8c8; display: none; border-left: 3px solid var(--teal-light); }
+.explanation.show { display: block; }
+.quiz-score {
+background: rgba(200,137,42,0.2); border: 1px solid var(--amber);
+border-radius: 10px; padding: 24px 28px; text-align: center; display: none;
+margin-top: 16px;
+}
+.quiz-score.show { display: block; }
+.score-big { font-family: ‘Playfair Display’, serif; font-size: 64px; color: var(--amber-light); line-height: 1; }
+.score-label { font-family: ‘JetBrains Mono’, monospace; font-size: 11px; letter-spacing: 2px; color: #a0927c; margin-top: 4px; }
+.btn-submit {
+background: var(--amber); color: var(--ink); border: none; padding: 14px 36px;
+border-radius: 6px; font-family: ‘Source Serif 4’, serif; font-size: 16px;
+font-weight: 600; cursor: pointer; margin-top: 8px; transition: all 0.2s;
+}
+.btn-submit:hover { background: var(--amber-light); }
+.btn-reset {
+background: transparent; color: var(--amber-light); border: 1px solid var(--amber);
+padding: 12px 28px; border-radius: 6px; font-family: ‘Source Serif 4’, serif;
+font-size: 15px; cursor: pointer; margin-top: 12px; transition: all 0.2s;
+}
+.btn-reset:hover { background: rgba(200,137,42,0.15); }
+
+/* FILL IN THE BLANK */
+.fill-quiz { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 24px 28px; margin-bottom: 24px; }
+.fill-q { font-size: 16px; color: #fff; margin-bottom: 16px; }
+.fill-input {
+background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+border-radius: 6px; padding: 10px 16px; color: #fff; font-size: 16px;
+font-family: ‘JetBrains Mono’, monospace; width: 160px; text-align: center;
+outline: none; transition: border 0.2s;
+}
+.fill-input:focus { border-color: var(--amber); }
+.fill-input.correct { border-color: var(--teal-light); background: rgba(27,107,107,0.3); }
+.fill-input.wrong { border-color: #e74c3c; background: rgba(192,57,43,0.2); }
+.fill-hint { font-size: 13px; color: #a8c8c8; margin-top: 8px; display: none; }
+.fill-hint.show { display: block; }
+
+/* SECTION DIVIDER LABEL */
+.type-label {
+display: flex; align-items: center; gap: 12px;
+font-family: ‘JetBrains Mono’, monospace; font-size: 10px; letter-spacing: 2.5px;
+text-transform: uppercase; color: var(--amber-light); margin: 36px 0 16px;
+}
+.type-label span { background: var(--amber); color: var(--ink); padding: 3px 10px; border-radius: 4px; font-weight: 700; }
+.type-label::after { content: ‘’; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+
+/* CHECKBOX / PG KOMPLEKS */
+.checkbox-option {
+display: flex; align-items: flex-start; gap: 12px;
+background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+color: #c8bba8; padding: 11px 18px; border-radius: 6px;
+cursor: pointer; font-size: 15px; font-family: ‘Source Serif 4’, serif;
+transition: all 0.2s; margin-bottom: 10px; user-select: none;
+}
+.checkbox-option:hover { background: rgba(200,137,42,0.12); border-color: var(--amber); color: #fff; }
+.checkbox-option.selected { background: rgba(200,137,42,0.2); border-color: var(--amber); color: #fff; }
+.checkbox-option.correct-cb { background: rgba(27,107,107,0.4) !important; border-color: var(--teal-light) !important; color: #7fffd4 !important; }
+.checkbox-option.wrong-cb { background: rgba(192,57,43,0.3) !important; border-color: #e74c3c !important; color: #ffaaaa !important; }
+.checkbox-option.missed-cb { background: rgba(27,107,107,0.2) !important; border-color: var(--teal-light) !important; color: #a8e8cc !important; border-style: dashed !important; }
+.cb-box {
+width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3);
+border-radius: 4px; flex-shrink: 0; display: flex; align-items: center;
+justify-content: center; margin-top: 2px; transition: all 0.15s; font-size: 13px;
+}
+.checkbox-option.selected .cb-box { background: var(--amber); border-color: var(--amber); }
+.checkbox-option.selected .cb-box::after { content: ‘✓’; color: var(--ink); font-weight: 700; }
+
+/* BENAR / SALAH */
+.bs-item {
+background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+border-radius: 8px; padding: 16px 20px; margin-bottom: 14px;
+}
+.bs-pernyataan { font-size: 15px; color: #e0d4c0; margin-bottom: 12px; line-height: 1.6; }
+.bs-buttons { display: flex; gap: 10px; }
+.bs-btn {
+padding: 8px 22px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);
+cursor: pointer; font-size: 14px; font-family: ‘Source Serif 4’, serif;
+font-weight: 600; transition: all 0.2s; background: rgba(255,255,255,0.06); color: #c8bba8;
+}
+.bs-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.bs-btn.benar-active { background: rgba(27,107,107,0.5); border-color: var(--teal-light); color: #7fffd4; }
+.bs-btn.salah-active { background: rgba(192,57,43,0.4); border-color: #e74c3c; color: #ffaaaa; }
+.bs-btn.benar-correct { background: rgba(27,107,107,0.6) !important; border-color: #3dd; color: #7fffd4; }
+.bs-btn.salah-correct { background: rgba(192,57,43,0.5) !important; border-color: #e74c3c; color: #ffaaaa; }
+.bs-feedback { font-size: 13px; margin-top: 10px; color: #a8c8c8; display: none; padding: 8px 12px; border-radius: 5px; background: rgba(255,255,255,0.04); }
+.bs-feedback.show { display: block; }
+
+/* MENJODOHKAN */
+.match-container { display: flex; gap: 16px; flex-wrap: wrap; }
+.match-col { flex: 1; min-width: 200px; }
+.match-col-title { font-family: ‘JetBrains Mono’, monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--amber-light); margin-bottom: 10px; }
+.match-left-item {
+background: rgba(255,255,255,0.07); border: 2px solid rgba(255,255,255,0.15);
+border-radius: 8px; padding: 11px 16px; margin-bottom: 10px; cursor: pointer;
+font-size: 14px; color: #d0c4b0; transition: all 0.2s; min-height: 52px;
+display: flex; align-items: center; gap: 10px; line-height: 1.4;
+}
+.match-left-item:hover { border-color: var(--amber); color: #fff; }
+.match-left-item.selected { border-color: var(--amber); background: rgba(200,137,42,0.2); color: #fff; }
+.match-left-item.matched-ok { border-color: var(--teal-light); background: rgba(27,107,107,0.3); color: #7fffd4; cursor: default; }
+.match-left-item.matched-wrong { border-color: #e74c3c; background: rgba(192,57,43,0.25); color: #ffaaaa; cursor: default; }
+.match-right-item {
+background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.1);
+border-radius: 8px; padding: 11px 16px; margin-bottom: 10px; cursor: pointer;
+font-size: 14px; color: #a8bbb8; transition: all 0.2s; min-height: 52px;
+display: flex; align-items: center; line-height: 1.4;
+}
+.match-right-item:hover:not(.used) { border-color: var(--teal-light); color: #7fffd4; }
+.match-right-item.used { opacity: 0.45; cursor: default; pointer-events: none; }
+.match-num { width: 28px; height: 28px; border-radius: 50%; background: var(--amber); color: var(--ink); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: ‘JetBrains Mono’, monospace; }
+.match-result { margin-top: 14px; font-size: 14px; color: #a8c8c8; display: none; padding: 12px 16px; background: rgba(255,255,255,0.04); border-radius: 6px; border-left: 3px solid var(--teal-light); }
+.match-result.show { display: block; }
+
+/* FOOTER */
+footer { background: var(--ink); color: #6a5c48; padding: 32px 64px; font-family: ‘JetBrains Mono’, monospace; font-size: 12px; }
+
+/* MOBILE TOGGLE */
+.mob-toggle { display: none; }
+
+@media (max-width: 768px) {
+.sidebar { position: fixed; z-index: 100; transform: translateX(-100%); }
+.sidebar.open { transform: translateX(0); }
+.hero { padding: 48px 24px 40px; }
+.content { padding: 0 24px 60px; }
+.quiz-section { padding: 36px 24px; }
+footer { padding: 24px; }
+.mob-toggle {
+display: flex; align-items: center; gap: 8px;
+position: fixed; top: 16px; left: 16px; z-index: 200;
+background: var(--ink); color: #fff; border: none;
+padding: 10px 14px; border-radius: 8px; cursor: pointer;
+font-size: 14px;
+}
+}
+</style>
+
+</head>
+<body>
+
+<button class="mob-toggle" onclick="toggleSidebar()">☰ Menu</button>
+
+<div class="shell">
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="label">Matematika · SMP/SMA</div>
+    <h2>Persamaan Kuadrat</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <nav>
+    <div class="nav-section">Materi</div>
+    <a href="javascript:void(0)" data-target="pengertian" class="nav-link" data-sec="pengertian">A. Pengertian</a>
+    <a href="javascript:void(0)" data-target="menyelesaikan" class="nav-link" data-sec="menyelesaikan">B. Menyelesaikan</a>
+    <a href="javascript:void(0)" data-target="faktor" class="nav-link nav-sub" data-sec="faktor">1. Memfaktorkan</a>
+    <a href="javascript:void(0)" data-target="kuadrat-sempurna" class="nav-link nav-sub" data-sec="kuadrat-sempurna">2. Kuadrat Sempurna</a>
+    <a href="javascript:void(0)" data-target="rumus-abc" class="nav-link nav-sub" data-sec="rumus-abc">3. Rumus ABC</a>
+    <a href="javascript:void(0)" data-target="menyusun" class="nav-link" data-sec="menyusun">C. Menyusun PK</a>
+    <a href="javascript:void(0)" data-target="aplikasi" class="nav-link" data-sec="aplikasi">D. Aplikasi Sehari-hari</a>
+    <div class="nav-section">Latihan</div>
+    <a href="javascript:void(0)" data-target="latihan" class="nav-link" data-sec="latihan">🖊 Soal Interaktif</a>
+    <a href="javascript:void(0)" data-target="latihan-pg" class="nav-link nav-sub" data-sec="latihan-pg">Pilihan Ganda</a>
+    <a href="javascript:void(0)" data-target="latihan-isian" class="nav-link nav-sub" data-sec="latihan-isian">Isian Singkat</a>
+    <a href="javascript:void(0)" data-target="latihan-pgk" class="nav-link nav-sub" data-sec="latihan-pgk">PG Kompleks</a>
+    <a href="javascript:void(0)" data-target="latihan-bs" class="nav-link nav-sub" data-sec="latihan-bs">Benar / Salah</a>
+    <a href="javascript:void(0)" data-target="latihan-jodoh" class="nav-link nav-sub" data-sec="latihan-jodoh">Menjodohkan</a>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<!-- HERO -->
+
+<div class="hero">
+  <div class="kelas">Matematika · Kelas IX / X</div>
+  <h1>Persamaan<br><em>Kuadrat</em></h1>
+  <p class="desc">Memahami bentuk, cara menyelesaikan, menyusun, dan menerapkan persamaan kuadrat dalam kehidupan nyata.</p>
+  <div class="toc-chips">
+    <span class="chip">A. Pengertian</span>
+    <span class="chip">B. Penyelesaian</span>
+    <span class="chip">C. Menyusun PK</span>
+    <span class="chip">D. Aplikasi</span>
+    <span class="chip">🖊 Latihan Interaktif</span>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══════════════════ A. PENGERTIAN ═══════════════════ -->
+
+<section class="section" id="pengertian">
+  <div class="section-label">Bagian A</div>
+  <h2>Pengertian Persamaan Kuadrat</h2>
+
+  <p>Persamaan kuadrat adalah persamaan polinomial berderajat dua dengan satu variabel. Persamaan ini memiliki peran sangat penting dalam matematika karena banyak fenomena alam dan rekayasa yang dapat dimodelkan dengan bentuknya.</p>
+
+  <div class="callout callout-def">
+    <div class="callout-title">📌 Definisi</div>
+    <p><strong>Persamaan kuadrat</strong> adalah persamaan yang berbentuk:</p>
+    <div class="math-block">
+      \[ ax^2 + bx + c = 0 \]
+    </div>
+    <p>di mana \(a, b, c \in \mathbb{R}\), \(a \neq 0\), dan \(x\) adalah variabel.</p>
+  </div>
+
+  <h3>Koefisien & Konstanta</h3>
+  <p>Dalam persamaan \(ax^2 + bx + c = 0\):</p>
+  <ul>
+    <li>\(a\) = koefisien dari \(x^2\) (tidak boleh nol)</li>
+    <li>\(b\) = koefisien dari \(x\)</li>
+    <li>\(c\) = konstanta (suku bebas)</li>
+  </ul>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh — Identifikasi Koefisien</div>
+    <div class="example-body">
+      <p>Persamaan \(3x^2 - 5x + 2 = 0\):</p>
+      <ul>
+        <li>\(a = 3\), \(b = -5\), \(c = 2\)</li>
+      </ul>
+      <p style="margin-top:12px">Persamaan \(x^2 - 9 = 0\):</p>
+      <ul>
+        <li>\(a = 1\), \(b = 0\), \(c = -9\)</li>
+      </ul>
+      <p style="margin-top:12px">Persamaan \(2x^2 + 4x = 0\):</p>
+      <ul>
+        <li>\(a = 2\), \(b = 4\), \(c = 0\)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Tips Identifikasi</div>
+    <p>Pastikan persamaan sudah dalam bentuk <strong>standar</strong> \(ax^2 + bx + c = 0\) sebelum mengidentifikasi koefisien. Pindahkan semua suku ke ruas kiri jika perlu.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ B. MENYELESAIKAN ═══════════════════ -->
+
+<section class="section" id="menyelesaikan">
+  <div class="section-label">Bagian B</div>
+  <h2>Menyelesaikan Persamaan Kuadrat</h2>
+  <p>Ada tiga metode utama menyelesaikan persamaan kuadrat. Pilihan metode bergantung pada bentuk persamaannya.</p>
+</section>
+
+<!-- VIDEO -->
+
+<div class="video-wrap">
+  <div class="video-label">Video Pembelajaran — Persamaan Kuadrat</div>
+  <iframe src="https://www.youtube.com/embed/OkmflJIVEbM" title="Persamaan Kuadrat" allowfullscreen></iframe>
+</div>
+
+<!-- B1. MEMFAKTORKAN -->
+
+<section class="section" id="faktor">
+  <h3>B.1 — Dengan Memfaktorkan</h3>
+  <p>Metode ini berlaku ketika persamaan kuadrat dapat ditulis sebagai hasil kali dua faktor linear.</p>
+
+  <div class="callout callout-formula">
+    <div class="callout-title">📐 Prinsip</div>
+    <p>Jika \(ax^2 + bx + c = (px + q)(rx + s) = 0\), maka:</p>
+    <div class="math-block">
+      \[ px + q = 0 \quad \text{atau} \quad rx + s = 0 \]
+    </div>
+  </div>
+
+  <h3 style="color:var(--muted);font-size:17px;margin-top:8px">Langkah-langkah Memfaktorkan (a = 1):</h3>
+  <ol>
+    <li>Cari dua bilangan \(p\) dan \(q\) sehingga \(p \cdot q = c\) dan \(p + q = b\)</li>
+    <li>Faktorkan menjadi \((x + p)(x + q) = 0\)</li>
+    <li>Selesaikan setiap faktor</li>
+  </ol>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 1 — Memfaktorkan sederhana</div>
+    <div class="example-body">
+      <p>Selesaikan: \(x^2 - 5x + 6 = 0\)</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">Cari dua bilangan dengan hasil kali \(= 6\) dan jumlah \(= -5\).<br>Bilangan tersebut: \(-2\) dan \(-3\), karena \((-2)(-3)=6\) dan \(-2+(-3)=-5\).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">Faktorkan: \((x - 2)(x - 3) = 0\)</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          \(x - 2 = 0 \Rightarrow x = 2\)<br>
+          \(x - 3 = 0 \Rightarrow x = 3\)
+        </div>
+      </div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Himpunan Penyelesaian</div>
+        <p>\(HP = \{2, 3\}\)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 2 — Koefisien a ≠ 1</div>
+    <div class="example-body">
+      <p>Selesaikan: \(2x^2 + 5x - 3 = 0\)</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">Kalikan \(a \cdot c = 2 \cdot (-3) = -6\). Cari dua bilangan dengan hasil kali \(-6\) dan jumlah \(5\): yaitu \(6\) dan \(-1\).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">Urai suku tengah: \(2x^2 + 6x - x - 3 = 0\)</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">Kelompokkan: \(2x(x + 3) - 1(x + 3) = 0\)<br>Faktorkan: \((2x - 1)(x + 3) = 0\)</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          \(x = \dfrac{1}{2}\) atau \(x = -3\)
+        </div>
+      </div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Himpunan Penyelesaian</div>
+        <p>\(HP = \left\{\dfrac{1}{2},\ -3\right\}\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B2. KUADRAT SEMPURNA -->
+
+<section class="section" id="kuadrat-sempurna">
+  <h3>B.2 — Dengan Melengkapkan Kuadrat Sempurna</h3>
+  <p>Metode ini mengubah persamaan kuadrat menjadi bentuk \((x + p)^2 = q\) sehingga akar-akarnya mudah dicari.</p>
+
+  <div class="callout callout-formula">
+    <div class="callout-title">📐 Langkah Umum (untuk a = 1)</div>
+    <ol style="margin-left:16px;margin-top:8px">
+      <li>Pindahkan konstanta ke ruas kanan: \(x^2 + bx = -c\)</li>
+      <li>Tambah kedua ruas dengan \(\left(\dfrac{b}{2}\right)^2\)</li>
+      <li>Ruas kiri menjadi kuadrat sempurna</li>
+      <li>Tarik akar kedua ruas</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh — Melengkapkan Kuadrat Sempurna</div>
+    <div class="example-body">
+      <p>Selesaikan: \(x^2 - 6x + 5 = 0\)</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">Pindahkan konstanta: \(x^2 - 6x = -5\)</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          Tambah kedua ruas dengan \(\left(\dfrac{-6}{2}\right)^2 = 9\):
+          \[x^2 - 6x + 9 = -5 + 9 = 4\]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          Kuadrat sempurna: \((x - 3)^2 = 4\)
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          \(x - 3 = \pm 2\)<br>
+          \(x = 3 + 2 = 5\) atau \(x = 3 - 2 = 1\)
+        </div>
+      </div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Himpunan Penyelesaian</div>
+        <p>\(HP = \{1, 5\}\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B3. RUMUS ABC -->
+
+<section class="section" id="rumus-abc">
+  <h3>B.3 — Dengan Menggunakan Rumus ABC</h3>
+  <p>Rumus kuadrat (rumus ABC) adalah metode paling universal — dapat digunakan untuk <em>semua</em> persamaan kuadrat, termasuk yang tidak dapat difaktorkan.</p>
+
+  <div class="callout callout-formula">
+    <div class="callout-title">📐 Rumus Kuadrat (Rumus ABC)</div>
+    <div class="math-block" style="font-size:22px">
+      \[ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \]
+    </div>
+  </div>
+
+  <h3 style="color:var(--muted);font-size:17px;margin-top:4px">Diskriminan (D)</h3>
+  <p>Nilai \(D = b^2 - 4ac\) menentukan jenis akar:</p>
+  <div class="math-block" style="font-size:15px;text-align:left">
+    \[
+    D > 0 \Rightarrow \text{dua akar real berbeda} \\[6pt]
+    D = 0 \Rightarrow \text{dua akar real sama (kembar)} \\[6pt]
+    D < 0 \Rightarrow \text{tidak ada akar real (akar imajiner)}
+    \]
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 1 — D > 0</div>
+    <div class="example-body">
+      <p>Selesaikan: \(2x^2 - 7x + 3 = 0\)</p>
+      <div class="step"><div class="step-num">1</div><div class="step-content">Identifikasi: \(a=2,\ b=-7,\ c=3\)</div></div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">Hitung diskriminan: \(D = (-7)^2 - 4(2)(3) = 49 - 24 = 25\)</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          \[x = \frac{7 \pm \sqrt{25}}{2 \cdot 2} = \frac{7 \pm 5}{4}\]
+          \(x_1 = \dfrac{7+5}{4} = 3\) atau \(x_2 = \dfrac{7-5}{4} = \dfrac{1}{2}\)
+        </div>
+      </div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Himpunan Penyelesaian</div>
+        <p>\(HP = \left\{3,\ \dfrac{1}{2}\right\}\)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 2 — D = 0 (akar kembar)</div>
+    <div class="example-body">
+      <p>Selesaikan: \(x^2 - 6x + 9 = 0\)</p>
+      <div class="step"><div class="step-num">1</div><div class="step-content">\(a=1,\ b=-6,\ c=9\)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">\(D = (-6)^2 - 4(1)(9) = 36 - 36 = 0\)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">\(x = \dfrac{6 \pm 0}{2} = 3\) (akar kembar)</div></div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Himpunan Penyelesaian</div>
+        <p>\(HP = \{3\}\) (akar ganda)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kalkulator Diskriminan -->
+
+  <div style="background:#fdf4e3;border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:28px 0">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--amber);margin-bottom:12px;text-transform:uppercase">🔢 Kalkulator Rumus ABC</div>
+    <p style="font-size:14px;margin-bottom:14px">Masukkan nilai koefisien untuk menghitung akar persamaan \(ax^2 + bx + c = 0\):</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+      <div>
+        <label style="font-size:13px;display:block;margin-bottom:4px">Nilai a:</label>
+        <input id="calc-a" type="number" value="1" style="width:80px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:'JetBrains Mono',monospace;background:white">
+      </div>
+      <div>
+        <label style="font-size:13px;display:block;margin-bottom:4px">Nilai b:</label>
+        <input id="calc-b" type="number" value="-5" style="width:80px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:'JetBrains Mono',monospace;background:white">
+      </div>
+      <div>
+        <label style="font-size:13px;display:block;margin-bottom:4px">Nilai c:</label>
+        <input id="calc-c" type="number" value="6" style="width:80px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:'JetBrains Mono',monospace;background:white">
+      </div>
+    </div>
+    <button onclick="hitungABC()" style="background:var(--amber);color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:15px;font-family:'Source Serif 4',serif;font-weight:600">Hitung →</button>
+    <div id="calc-result" style="margin-top:16px;font-size:15px;line-height:2;display:none"></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ C. MENYUSUN ═══════════════════ -->
+
+<section class="section" id="menyusun">
+  <div class="section-label">Bagian C</div>
+  <h2>Menyusun Persamaan Kuadrat</h2>
+  <p>Jika diketahui akar-akar suatu persamaan kuadrat, kita dapat menyusun persamaan tersebut menggunakan hubungan antara akar dan koefisien.</p>
+
+  <div class="callout callout-formula">
+    <div class="callout-title">📐 Rumus Menyusun PK dari Akar x₁ dan x₂</div>
+    <div class="math-block">
+      \[ x^2 - (x_1 + x_2)x + x_1 \cdot x_2 = 0 \]
+    </div>
+    <p>Di mana:</p>
+    <ul style="margin-left:16px;margin-top:6px">
+      <li>\(x_1 + x_2 = -\dfrac{b}{a}\) (jumlah akar)</li>
+      <li>\(x_1 \cdot x_2 = \dfrac{c}{a}\) (hasil kali akar)</li>
+    </ul>
+  </div>
+
+  <h3>Hubungan Akar dan Koefisien (Vieta)</h3>
+  <div class="math-block" style="text-align:left;font-size:16px">
+    \[
+    \text{Jika } ax^2 + bx + c = 0 \text{ berakar } x_1 \text{ dan } x_2, \text{ maka:}\\[8pt]
+    x_1 + x_2 = -\frac{b}{a} \qquad \text{dan} \qquad x_1 \cdot x_2 = \frac{c}{a}
+    \]
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 1 — Menyusun dari akar yang diketahui</div>
+    <div class="example-body">
+      <p>Susun persamaan kuadrat yang akar-akarnya \(x_1 = 3\) dan \(x_2 = -2\).</p>
+      <div class="step"><div class="step-num">1</div><div class="step-content">Jumlah akar: \(x_1 + x_2 = 3 + (-2) = 1\)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Hasil kali akar: \(x_1 \cdot x_2 = 3 \times (-2) = -6\)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Substitusikan: \(x^2 - (1)x + (-6) = 0\)</div></div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Persamaan Kuadrat</div>
+        <p>\(x^2 - x - 6 = 0\)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 2 — Menyusun dari transformasi akar</div>
+    <div class="example-body">
+      <p>Diketahui \(x_1\) dan \(x_2\) adalah akar dari \(x^2 - 3x + 1 = 0\). Susun persamaan baru yang akar-akarnya \(2x_1\) dan \(2x_2\).</p>
+      <div class="step"><div class="step-num">1</div><div class="step-content">Dari persamaan asal: \(x_1 + x_2 = 3\) dan \(x_1 x_2 = 1\)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Akar baru: \(2x_1 + 2x_2 = 2(x_1+x_2) = 6\)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">\((2x_1)(2x_2) = 4 \cdot x_1 x_2 = 4\)</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Persamaan baru: \(x^2 - 6x + 4 = 0\)</div></div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Persamaan Kuadrat Baru</div>
+        <p>\(x^2 - 6x + 4 = 0\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════ D. APLIKASI ═══════════════════ -->
+
+<section class="section" id="aplikasi">
+  <div class="section-label">Bagian D</div>
+  <h2>Penggunaan Persamaan Kuadrat dalam Kehidupan Sehari-hari</h2>
+  <p>Persamaan kuadrat muncul dalam berbagai situasi nyata seperti fisika, arsitektur, ekonomi, dan teknik. Berikut beberapa contoh penerapannya.</p>
+
+  <!-- Video aplikasi -->
+
+  <div class="video-wrap">
+    <div class="video-label">Video — Aplikasi Persamaan Kuadrat dalam Kehidupan</div>
+    <iframe src="https://www.youtube.com/embed/zRNH8NFPEC4" title="Aplikasi Persamaan Kuadrat" allowfullscreen></iframe>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 1 — Masalah Luas Tanah</div>
+    <div class="example-body">
+      <p>Sebuah kebun berbentuk persegi panjang memiliki panjang 3 meter lebih dari lebarnya. Jika luas kebun 40 m², tentukan dimensinya!</p>
+      <div class="step"><div class="step-num">1</div><div class="step-content">Misalkan lebar = \(x\) meter, maka panjang = \((x + 3)\) meter.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Model matematika: \(x(x+3) = 40\)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Sederhanakan: \(x^2 + 3x - 40 = 0\)</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Faktorkan: \((x + 8)(x - 5) = 0\)</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content">Solusi: \(x = 5\) (diambil positif) atau \(x = -8\) (tidak valid)</div></div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Kesimpulan</div>
+        <p>Lebar kebun = 5 m, panjang kebun = 8 m</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Contoh 2 — Gerak Benda (Fisika)</div>
+    <div class="example-body">
+      <p>Sebuah bola dilempar ke atas dengan kecepatan awal 20 m/s dari ketinggian 5 m. Persamaan ketinggian: \(h = -5t^2 + 20t + 5\). Kapan bola menyentuh tanah?</p>
+      <div class="step"><div class="step-num">1</div><div class="step-content">Bola menyentuh tanah saat \(h = 0\): \(-5t^2 + 20t + 5 = 0\)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Bagi dengan \(-5\): \(t^2 - 4t - 1 = 0\)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Gunakan rumus ABC: \(t = \dfrac{4 \pm \sqrt{16+4}}{2} = \dfrac{4 \pm \sqrt{20}}{2} = 2 \pm \sqrt{5}\)</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Ambil nilai positif: \(t = 2 + \sqrt{5} \approx 4{,}24\) detik</div></div>
+      <div class="callout callout-def" style="margin-top:12px">
+        <div class="callout-title">✅ Kesimpulan</div>
+        <p>Bola menyentuh tanah setelah \(\approx 4{,}24\) detik</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">💡 Strategi Soal Cerita</div>
+    <ol style="margin-left:16px;margin-top:8px">
+      <li><strong>Baca</strong> soal dengan teliti, tentukan yang dicari</li>
+      <li><strong>Misalkan</strong> variabel untuk besaran yang dicari</li>
+      <li><strong>Buat model</strong> persamaan matematika</li>
+      <li><strong>Selesaikan</strong> persamaan kuadrat</li>
+      <li><strong>Cek</strong> keabsahan solusi (misal: panjang tidak boleh negatif)</li>
+    </ol>
+  </div>
+</section>
+
+</div><!-- .content -->
+
+<!-- ═══════════════════ LATIHAN INTERAKTIF ═══════════════════ -->
+
+<div class="quiz-section" id="latihan">
+  <h2>Latihan Soal Interaktif</h2>
+  <div class="subtitle">5 TIPE SOAL · SETARA AKM / TKA · HOTS</div>
+
+  <!-- TIPE BADGE INFO -->
+
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px">
+    <span style="background:rgba(200,137,42,0.2);border:1px solid var(--amber);color:var(--amber-light);padding:5px 14px;border-radius:100px;font-size:12px;font-family:'JetBrains Mono',monospace">✦ PG Biasa</span>
+    <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);color:#c8bba8;padding:5px 14px;border-radius:100px;font-size:12px;font-family:'JetBrains Mono',monospace">☑ PG Kompleks</span>
+    <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);color:#c8bba8;padding:5px 14px;border-radius:100px;font-size:12px;font-family:'JetBrains Mono',monospace">⊙ Benar/Salah</span>
+    <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);color:#c8bba8;padding:5px 14px;border-radius:100px;font-size:12px;font-family:'JetBrains Mono',monospace">↔ Menjodohkan</span>
+    <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);color:#c8bba8;padding:5px 14px;border-radius:100px;font-size:12px;font-family:'JetBrains Mono',monospace">✎ Isian</span>
+  </div>
+
+  <!-- ══ BAGIAN 1: PILIHAN GANDA ══ -->
+
+  <div class="type-label" id="latihan-pg"><span>A</span> Pilihan Ganda Biasa</div>
+  <div class="quiz-card">
+    <div class="quiz-q">1. Manakah yang merupakan persamaan kuadrat?</div>
+    <div class="quiz-options" id="q1">
+      <button class="option-btn" onclick="pilihJawaban('q1', 0, false, this)"><span class="opt-letter">A</span>\(3x + 2 = 0\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q1', 1, true, this)"><span class="opt-letter">B</span>\(x^2 - 4x + 3 = 0\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q1', 2, false, this)"><span class="opt-letter">C</span>\(x^3 - x = 0\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q1', 3, false, this)"><span class="opt-letter">D</span>\(\dfrac{1}{x} + 2 = 0\)</button>
+    </div>
+    <div class="explanation" id="exp-q1">✅ <strong>Benar!</strong> \(x^2 - 4x + 3 = 0\) berbentuk \(ax^2+bx+c=0\) dengan \(a=1 \neq 0\). Pilihan lain berderajat 1, 3, atau bukan polinomial.</div>
+  </div>
+
+  <!-- SOAL 2 -->
+
+  <div class="quiz-card">
+    <div class="quiz-q">2. Akar-akar persamaan \(x^2 - 5x + 6 = 0\) adalah…</div>
+    <div class="quiz-options" id="q2">
+      <button class="option-btn" onclick="pilihJawaban('q2', 0, false, this)"><span class="opt-letter">A</span>\(x = 1\) dan \(x = 6\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q2', 1, false, this)"><span class="opt-letter">B</span>\(x = -2\) dan \(x = -3\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q2', 2, true, this)"><span class="opt-letter">C</span>\(x = 2\) dan \(x = 3\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q2', 3, false, this)"><span class="opt-letter">D</span>\(x = 5\) dan \(x = 1\)</button>
+    </div>
+    <div class="explanation" id="exp-q2">✅ \(x^2-5x+6=(x-2)(x-3)=0\), sehingga \(x=2\) atau \(x=3\).</div>
+  </div>
+
+  <!-- SOAL 3 -->
+
+  <div class="quiz-card">
+    <div class="quiz-q">3. Nilai diskriminan persamaan \(x^2 - 4x + 4 = 0\) adalah…</div>
+    <div class="quiz-options" id="q3">
+      <button class="option-btn" onclick="pilihJawaban('q3', 0, false, this)"><span class="opt-letter">A</span>\(D = 8\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q3', 1, true, this)"><span class="opt-letter">B</span>\(D = 0\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q3', 2, false, this)"><span class="opt-letter">C</span>\(D = 4\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q3', 3, false, this)"><span class="opt-letter">D</span>\(D = -4\)</button>
+    </div>
+    <div class="explanation" id="exp-q3">✅ \(D = b^2 - 4ac = (-4)^2 - 4(1)(4) = 16 - 16 = 0\). Karena D = 0, persamaan memiliki akar kembar \(x = 2\).</div>
+  </div>
+
+  <!-- SOAL 4 -->
+
+  <div class="quiz-card">
+    <div class="quiz-q">4. Persamaan kuadrat yang akar-akarnya \(x_1 = 4\) dan \(x_2 = -1\) adalah…</div>
+    <div class="quiz-options" id="q4">
+      <button class="option-btn" onclick="pilihJawaban('q4', 0, false, this)"><span class="opt-letter">A</span>\(x^2 + 3x - 4 = 0\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q4', 1, false, this)"><span class="opt-letter">B</span>\(x^2 + 5x + 4 = 0\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q4', 2, true, this)"><span class="opt-letter">C</span>\(x^2 - 3x - 4 = 0\)</button>
+      <button class="option-btn" onclick="pilihJawaban('q4', 3, false, this)"><span class="opt-letter">D</span>\(x^2 - 5x + 4 = 0\)</button>
+    </div>
+    <div class="explanation" id="exp-q4">✅ Jumlah akar = \(4+(-1)=3\), hasil kali akar = \(4 \times (-1)=-4\). Persamaan: \(x^2 - 3x - 4 = 0\).</div>
+  </div>
+
+  <!-- SOAL 5 -->
+
+  <div class="quiz-card">
+    <div class="quiz-q">5. Panjang sebidang tanah 5 m lebih dari lebarnya. Jika luas tanah = 24 m², lebar tanah adalah…</div>
+    <div class="quiz-options" id="q5">
+      <button class="option-btn" onclick="pilihJawaban('q5', 0, false, this)"><span class="opt-letter">A</span>3 m</button>
+      <button class="option-btn" onclick="pilihJawaban('q5', 1, true, this)"><span class="opt-letter">B</span>3 m (lebar) dan 8 m (panjang)</button>
+      <button class="option-btn" onclick="pilihJawaban('q5', 2, false, this)"><span class="opt-letter">C</span>4 m</button>
+      <button class="option-btn" onclick="pilihJawaban('q5', 3, false, this)"><span class="opt-letter">D</span>6 m</button>
+    </div>
+    <div class="explanation" id="exp-q5">✅ Misalkan lebar = \(x\), panjang = \(x+5\). Maka \(x(x+5)=24 \Rightarrow x^2+5x-24=0 \Rightarrow (x+8)(x-3)=0\). Lebar = 3 m (positif).</div>
+  </div>
+
+  <!-- FILL IN THE BLANK -->
+
+  <div class="type-label" id="latihan-isian"><span>B</span> Isian Singkat</div>
+
+  <div class="fill-quiz">
+    <div class="fill-q">6. Untuk persamaan \(3x^2 - 7x + 2 = 0\), nilai diskriminan D = <input class="fill-input" id="fill1" type="number" placeholder="?"> </div>
+    <button onclick="cekFill('fill1', 25, 'exp-fill1')" style="background:var(--teal-light);color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:14px;margin-top:8px">Cek ✓</button>
+    <div class="fill-hint" id="exp-fill1">Petunjuk: \(D = b^2 - 4ac = (-7)^2 - 4(3)(2) = 49 - 24 = 25\) ✅</div>
+  </div>
+
+  <div class="fill-quiz">
+    <div class="fill-q">7. Jumlah akar persamaan \(x^2 - 8x + 15 = 0\) adalah <input class="fill-input" id="fill2" type="number" placeholder="?"></div>
+    <button onclick="cekFill('fill2', 8, 'exp-fill2')" style="background:var(--teal-light);color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:14px;margin-top:8px">Cek ✓</button>
+    <div class="fill-hint" id="exp-fill2">Petunjuk: \(x_1 + x_2 = -\frac{b}{a} = -\frac{-8}{1} = 8\) ✅</div>
+  </div>
+
+  <div class="fill-quiz">
+    <div class="fill-q">8. Hasil kali akar persamaan \(2x^2 + x - 6 = 0\) adalah <input class="fill-input" id="fill3" type="number" placeholder="?"></div>
+    <button onclick="cekFill('fill3', -3, 'exp-fill3')" style="background:var(--teal-light);color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:14px;margin-top:8px">Cek ✓</button>
+    <div class="fill-hint" id="exp-fill3">Petunjuk: \(x_1 \cdot x_2 = \frac{c}{a} = \frac{-6}{2} = -3\) ✅</div>
+  </div>
+
+  <!-- ══ BAGIAN C: PG KOMPLEKS ══ -->
+
+  <div class="type-label" id="latihan-pgk"><span>C</span> Pilihan Ganda Kompleks <span style="font-size:10px;background:rgba(200,137,42,0.3);padding:2px 8px;border-radius:4px;margin-left:4px">Boleh pilih lebih dari satu</span></div>
+
+  <div class="quiz-card" id="pgk1-card">
+    <div class="quiz-q">9. Pernyataan berikut yang <strong>BENAR</strong> tentang persamaan \(x^2 - 4 = 0\) adalah… <em style="font-size:13px;color:#a8a8a8">(Pilih semua yang benar)</em></div>
+    <div id="pgk1">
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk1', 0)"><div class="cb-box"></div><span>Akar-akarnya adalah \(x = 2\) dan \(x = -2\)</span></div>
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk1', 1)"><div class="cb-box"></div><span>Diskriminannya \(D = 16\)</span></div>
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk1', 2)"><div class="cb-box"></div><span>Persamaan dapat difaktorkan menjadi \((x-2)(x+2)=0\)</span></div>
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk1', 3)"><div class="cb-box"></div><span>Jumlah akar-akarnya adalah \(4\)</span></div>
+    </div>
+    <button onclick="cekCB('pgk1', [0,1,2], 'exp-pgk1')" style="background:var(--amber);color:var(--ink);border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;margin-top:4px">Cek Jawaban ✓</button>
+    <div class="explanation" id="exp-pgk1">✅ Benar: (A) \(x=\pm2\), (B) \(D=0-4(1)(-4)=16\), (C) \((x-2)(x+2)=0\). ❌ Salah: (D) Jumlah akar = \(x_1+x_2 = -\frac{b}{a} = 0\), bukan 4.</div>
+  </div>
+
+  <div class="quiz-card" id="pgk2-card">
+    <div class="quiz-q">10. Diberikan persamaan \(2x^2 - 8x + 6 = 0\). Manakah pernyataan yang <strong>BENAR</strong>? <em style="font-size:13px;color:#a8a8a8">(Pilih semua yang benar)</em></div>
+    <div id="pgk2">
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk2', 0)"><div class="cb-box"></div><span>Persamaan memiliki dua akar real berbeda</span></div>
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk2', 1)"><div class="cb-box"></div><span>Salah satu akarnya adalah \(x = 3\)</span></div>
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk2', 2)"><div class="cb-box"></div><span>Hasil kali akar-akarnya adalah \(3\)</span></div>
+      <div class="checkbox-option" onclick="toggleCB(this, 'pgk2', 3)"><div class="cb-box"></div><span>Diskriminannya bernilai negatif</span></div>
+    </div>
+    <button onclick="cekCB('pgk2', [0,1,2], 'exp-pgk2')" style="background:var(--amber);color:var(--ink);border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;margin-top:4px">Cek Jawaban ✓</button>
+    <div class="explanation" id="exp-pgk2">✅ Bagi persamaan dengan 2: \(x^2-4x+3=0 \Rightarrow (x-1)(x-3)=0\). Akar: \(x=1\) dan \(x=3\). Maka (A) ✅ dua akar berbeda, (B) ✅ \(x=3\) adalah akar, (C) ✅ hasil kali akar \(=\frac{c}{a}=\frac{6}{2}=3\). (D) ❌ \(D=16-24=-8<0\) … tunggu, \(D=(-8)^2-4(2)(6)=64-48=16>0\). Jadi (D) salah.</div>
+  </div>
+
+  <!-- ══ BAGIAN D: BENAR / SALAH ══ -->
+
+  <div class="type-label" id="latihan-bs"><span>D</span> Benar / Salah</div>
+  <div class="quiz-card">
+    <p style="font-size:14px;color:#a8bbb8;margin-bottom:20px;font-style:italic">Tentukan apakah setiap pernyataan berikut Benar atau Salah. Klik tombol yang sesuai!</p>
+
+```
+<!-- BS 1 -->
+<div class="bs-item" id="bs1">
+  <div class="bs-pernyataan">11. Persamaan \(x^2 + 1 = 0\) tidak memiliki akar real.</div>
+  <div class="bs-buttons">
+    <button class="bs-btn" onclick="pilihBS('bs1', true, true)">✓ Benar</button>
+    <button class="bs-btn" onclick="pilihBS('bs1', false, true)">✗ Salah</button>
+  </div>
+  <div class="bs-feedback" id="bsfb1">✅ <strong>Benar!</strong> Diskriminan \(D = 0 - 4(1)(1) = -4 < 0\), sehingga tidak ada akar real.</div>
+</div>
+
+<!-- BS 2 -->
+<div class="bs-item" id="bs2">
+  <div class="bs-pernyataan">12. Jika \(D = 0\), maka persamaan kuadrat memiliki dua akar yang berbeda.</div>
+  <div class="bs-buttons">
+    <button class="bs-btn" onclick="pilihBS('bs2', true, false)">✓ Benar</button>
+    <button class="bs-btn" onclick="pilihBS('bs2', false, false)">✗ Salah</button>
+  </div>
+  <div class="bs-feedback" id="bsfb2">✅ <strong>Salah!</strong> Jika \(D = 0\), maka persamaan kuadrat memiliki <em>akar kembar</em> (dua akar yang sama), bukan dua akar berbeda.</div>
+</div>
+
+<!-- BS 3 -->
+<div class="bs-item" id="bs3">
+  <div class="bs-pernyataan">13. Persamaan \(x^2 - 7x + 12 = 0\) dapat diselesaikan dengan memfaktorkan menjadi \((x-3)(x-4)=0\).</div>
+  <div class="bs-buttons">
+    <button class="bs-btn" onclick="pilihBS('bs3', true, true)">✓ Benar</button>
+    <button class="bs-btn" onclick="pilihBS('bs3', false, true)">✗ Salah</button>
+  </div>
+  <div class="bs-feedback" id="bsfb3">✅ <strong>Benar!</strong> \((x-3)(x-4) = x^2 - 7x + 12\) ✓. Akarnya \(x=3\) dan \(x=4\).</div>
+</div>
+
+<!-- BS 4 -->
+<div class="bs-item" id="bs4">
+  <div class="bs-pernyataan">14. Untuk persamaan \(3x^2 + 6x + 3 = 0\), jumlah akar-akarnya adalah \(-2\) dan hasil kalinya adalah \(1\).</div>
+  <div class="bs-buttons">
+    <button class="bs-btn" onclick="pilihBS('bs4', true, true)">✓ Benar</button>
+    <button class="bs-btn" onclick="pilihBS('bs4', false, true)">✗ Salah</button>
+  </div>
+  <div class="bs-feedback" id="bsfb4">✅ <strong>Benar!</strong> \(x_1+x_2 = -\frac{6}{3} = -2\) dan \(x_1 \cdot x_2 = \frac{3}{3} = 1\). Keduanya benar!</div>
+</div>
+
+<!-- BS 5 -->
+<div class="bs-item" id="bs5">
+  <div class="bs-pernyataan">15. Sebuah persamaan kuadrat dengan koefisien \(a = 0\) tetap disebut persamaan kuadrat asalkan \(b \neq 0\).</div>
+  <div class="bs-buttons">
+    <button class="bs-btn" onclick="pilihBS('bs5', true, false)">✓ Benar</button>
+    <button class="bs-btn" onclick="pilihBS('bs5', false, false)">✗ Salah</button>
+  </div>
+  <div class="bs-feedback" id="bsfb5">✅ <strong>Salah!</strong> Syarat utama persamaan kuadrat adalah \(a \neq 0\). Jika \(a = 0\), persamaan menjadi linear \(bx + c = 0\).</div>
+</div>
+```
+
+  </div>
+
+  <!-- ══ BAGIAN E: MENJODOHKAN ══ -->
+
+  <div class="type-label" id="latihan-jodoh"><span>E</span> Menjodohkan</div>
+  <div class="quiz-card">
+    <p style="font-size:14px;color:#a8bbb8;margin-bottom:20px;font-style:italic">Klik item di kolom kiri, kemudian klik pasangannya di kolom kanan!</p>
+
+```
+<div class="match-container">
+  <div class="match-col">
+    <div class="match-col-title">Persamaan / Konsep</div>
+    <div class="match-left-item" id="ml1" onclick="pilihKiri('ml1', 0)"><div class="match-num">1</div><span>\(x^2 - 9 = 0\)</span></div>
+    <div class="match-left-item" id="ml2" onclick="pilihKiri('ml2', 1)"><div class="match-num">2</div><span>\(D < 0\)</span></div>
+    <div class="match-left-item" id="ml3" onclick="pilihKiri('ml3', 2)"><div class="match-num">3</div><span>Akar-akar: \(x_1=2,\ x_2=-5\)</span></div>
+    <div class="match-left-item" id="ml4" onclick="pilihKiri('ml4', 3)"><div class="match-num">4</div><span>Melengkapkan \(x^2+6x\) menjadi kuadrat sempurna</span></div>
+    <div class="match-left-item" id="ml5" onclick="pilihKiri('ml5', 4)"><div class="match-num">5</div><span>\(x = \dfrac{-b \pm \sqrt{b^2-4ac}}{2a}\)</span></div>
+  </div>
+  <div class="match-col">
+    <div class="match-col-title">Pasangan / Jawaban</div>
+    <div class="match-right-item" id="mr_a" onclick="pilihKanan('mr_a', 2)"><span>A. Persamaan \(x^2 + 3x - 10 = 0\)</span></div>
+    <div class="match-right-item" id="mr_b" onclick="pilihKanan('mr_b', 4)"><span>B. Rumus kuadrat / Rumus ABC</span></div>
+    <div class="match-right-item" id="mr_c" onclick="pilihKanan('mr_c', 1)"><span>C. Tidak ada akar real</span></div>
+    <div class="match-right-item" id="mr_d" onclick="pilihKanan('mr_d', 3)"><span>D. Tambahkan \(\left(\dfrac{6}{2}\right)^2 = 9\) → \((x+3)^2\)</span></div>
+    <div class="match-right-item" id="mr_e" onclick="pilihKanan('mr_e', 0)"><span>E. Akar-akarnya \(x = 3\) dan \(x = -3\)</span></div>
+  </div>
+</div>
+<div class="match-result" id="match-result"></div>
+<div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+  <button onclick="cekMatch()" style="background:var(--amber);color:var(--ink);border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600">Cek Semua ✓</button>
+  <button onclick="resetMatch()" style="background:transparent;color:var(--amber-light);border:1px solid var(--amber);padding:9px 20px;border-radius:6px;cursor:pointer;font-size:13px">Reset ↺</button>
+</div>
+```
+
+  </div>
+
+  <!-- SKOR -->
+
+  <div style="margin-top:32px;text-align:center">
+    <button class="btn-submit" onclick="hitungSkor()">Lihat Rekap Skor 📊</button>
+  </div>
+
+  <div class="quiz-score" id="quizScore">
+    <div class="score-big" id="scoreNum">0</div>
+    <div class="score-label" id="scoreLabel">POIN TOTAL</div>
+    <div id="scoreBars" style="margin-top:20px;text-align:left;max-width:400px;margin-inline:auto"></div>
+    <div id="scoreMsg" style="margin-top:16px;font-size:15px;color:#c8bba8"></div>
+    <button class="btn-reset" onclick="resetKuis()">Ulangi Semua ↺</button>
+  </div>
+</div>
+
+<footer>
+  <div>eBook Matematika — Persamaan Kuadrat</div>
+  <div style="margin-top:4px;color:#4a3c28">5 Tipe Soal Interaktif · Setara AKM/TKA · MathJax · HTML5</div>
+</footer>
+
+</main>
+</div>
+
+<script>
+// ── KALKULATOR ABC ──
+function hitungABC() {
+  const a = parseFloat(document.getElementById('calc-a').value);
+  const b = parseFloat(document.getElementById('calc-b').value);
+  const c = parseFloat(document.getElementById('calc-c').value);
+  const result = document.getElementById('calc-result');
+  result.style.display = 'block';
+  if (a === 0) { result.innerHTML = '⚠️ Nilai a tidak boleh 0.'; return; }
+  const D = b*b - 4*a*c;
+  const fmt = n => Number.isInteger(n) ? n.toString() : n.toFixed(3);
+  let html = `<strong>Diskriminan:</strong> D = ${fmt(D)}<br>`;
+  if (D > 0) {
+    const x1 = (-b + Math.sqrt(D)) / (2*a);
+    const x2 = (-b - Math.sqrt(D)) / (2*a);
+    html += `<strong>Jenis akar:</strong> Dua akar real berbeda<br>`;
+    html += `<strong>x₁ =</strong> ${fmt(x1)}, <strong>x₂ =</strong> ${fmt(x2)}`;
+  } else if (D === 0) {
+    const x = -b / (2*a);
+    html += `<strong>Jenis akar:</strong> Akar kembar<br><strong>x₁ = x₂ =</strong> ${fmt(x)}`;
+  } else {
+    html += `<strong>Jenis akar:</strong> Tidak ada akar real (D < 0)`;
+  }
+  result.innerHTML = html;
+  if (window.MathJax) MathJax.typeset([result]);
+}
+
+// ── PG BIASA ──
+const userAnswers = {};
+let quizDone = false;
+
+function pilihJawaban(qId, idx, isCorrect, btn) {
+  if (quizDone) return;
+  const container = document.getElementById(qId);
+  const btns = container.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    userAnswers[qId] = true;
+  } else {
+    btn.classList.add('wrong');
+    userAnswers[qId] = false;
+    btns.forEach(b => { if (b.getAttribute('onclick').includes('true')) b.classList.add('correct'); });
+  }
+  const exp = document.getElementById('exp-' + qId);
+  if (exp) { exp.classList.add('show'); if (window.MathJax) MathJax.typeset([exp]); }
+}
+
+// ── ISIAN ──
+function cekFill(inputId, jawaban, expId) {
+  const el = document.getElementById(inputId);
+  const exp = document.getElementById(expId);
+  el.classList.remove('correct','wrong');
+  const benar = parseFloat(el.value) === jawaban;
+  el.classList.add(benar ? 'correct' : 'wrong');
+  exp.classList.add('show');
+  if (!isianScored[inputId]) { isianScored[inputId] = benar; }
+  if (window.MathJax) MathJax.typeset([exp]);
+}
+const isianScored = {};
+
+// ── PG KOMPLEKS (CHECKBOX) ──
+const cbState = {};
+const cbScored = {};
+
+function toggleCB(el, groupId, idx) {
+  if (cbScored[groupId]) return;
+  if (!cbState[groupId]) cbState[groupId] = new Set();
+  if (cbState[groupId].has(idx)) {
+    cbState[groupId].delete(idx);
+    el.classList.remove('selected');
+  } else {
+    cbState[groupId].add(idx);
+    el.classList.add('selected');
+  }
+}
+
+function cekCB(groupId, correctIdxs, expId) {
+  if (cbScored[groupId]) return;
+  const selected = cbState[groupId] || new Set();
+  const correct = new Set(correctIdxs);
+  const container = document.getElementById(groupId);
+  const items = container.querySelectorAll('.checkbox-option');
+  let allRight = true;
+
+  items.forEach((item, idx) => {
+    const isCorrect = correct.has(idx);
+    const isSelected = selected.has(idx);
+    item.style.pointerEvents = 'none';
+    if (isSelected && isCorrect) item.classList.add('correct-cb');
+    else if (isSelected && !isCorrect) { item.classList.add('wrong-cb'); allRight = false; }
+    else if (!isSelected && isCorrect) { item.classList.add('missed-cb'); allRight = false; }
+  });
+
+  cbScored[groupId] = allRight;
+  pgkScores[groupId] = allRight;
+
+  const exp = document.getElementById(expId);
+  exp.classList.add('show');
+  if (window.MathJax) MathJax.typeset([exp]);
+}
+const pgkScores = {};
+
+// ── BENAR / SALAH ──
+const bsAnswered = {};
+const bsScores = {};
+
+function pilihBS(itemId, pilihanBenar, jawabanBenar) {
+  if (bsAnswered[itemId]) return;
+  bsAnswered[itemId] = true;
+  const item = document.getElementById(itemId);
+  const btns = item.querySelectorAll('.bs-btn');
+  const feedback = document.getElementById('bsfb' + itemId.replace('bs',''));
+  const isRight = (pilihanBenar === jawabanBenar);
+  bsScores[itemId] = isRight;
+
+  btns.forEach(btn => {
+    btn.disabled = true;
+    const isBenarBtn = btn.textContent.includes('Benar');
+    if (isBenarBtn && jawabanBenar) btn.classList.add('benar-correct');
+    if (!isBenarBtn && !jawabanBenar) btn.classList.add('salah-correct');
+    if (isBenarBtn && pilihanBenar) btn.classList.add('benar-active');
+    if (!isBenarBtn && !pilihanBenar) btn.classList.add('salah-active');
+  });
+
+  feedback.classList.add('show');
+  if (window.MathJax) MathJax.typeset([feedback]);
+}
+
+// ── MENJODOHKAN ──
+let matchSelected = null; // { side: 'kiri'/'kanan', id, idx }
+const matchPairs = {}; // leftIdx -> rightIdx matched
+// Correct pairs: left idx -> right idx: 0->4(E), 1->2(C), 2->0(A), 3->3(D), 4->1(B)
+const matchCorrect = { 0: 4, 1: 2, 2: 0, 3: 3, 4: 1 };
+const rightIdMap = ['mr_a','mr_b','mr_c','mr_d','mr_e'];
+const leftIdMap  = ['ml1','ml2','ml3','ml4','ml5'];
+
+function pilihKiri(id, idx) {
+  const el = document.getElementById(id);
+  if (el.classList.contains('matched-ok') || el.classList.contains('matched-wrong')) return;
+  // deselect others
+  leftIdMap.forEach(lid => { if (lid !== id) document.getElementById(lid).classList.remove('selected'); });
+  el.classList.toggle('selected');
+  matchSelected = el.classList.contains('selected') ? { side: 'kiri', id, idx } : null;
+}
+
+function pilihKanan(id, correctLeftIdx) {
+  const el = document.getElementById(id);
+  if (el.classList.contains('used')) return;
+  if (!matchSelected || matchSelected.side !== 'kiri') return;
+
+  const leftEl = document.getElementById(matchSelected.id);
+  const leftIdx = matchSelected.idx;
+
+  leftEl.classList.remove('selected');
+  matchPairs[leftIdx] = rightIdMap.indexOf(id);
+
+  // Show label on left item
+  const rightText = el.querySelector('span').textContent.trim().charAt(0); // letter A-E
+  leftEl.dataset.matched = id;
+
+  // Mark right as used
+  el.classList.add('used');
+  leftEl.dataset.matchedRight = id;
+  leftEl.style.opacity = '0.85';
+  leftEl.style.borderStyle = 'dashed';
+  leftEl.style.borderColor = 'rgba(200,137,42,0.5)';
+
+  matchSelected = null;
+}
+
+function cekMatch() {
+  let benar = 0;
+  for (let li = 0; li < 5; li++) {
+    const leftEl = document.getElementById(leftIdMap[li]);
+    const matchedRightId = leftEl.dataset.matchedRight;
+    if (!matchedRightId) {
+      leftEl.classList.add('matched-wrong');
+      continue;
+    }
+    const rightIdx = rightIdMap.indexOf(matchedRightId);
+    const correct = (matchCorrect[li] === rightIdx);
+    leftEl.style.borderStyle = 'solid';
+    leftEl.style.opacity = '1';
+    if (correct) { leftEl.classList.add('matched-ok'); benar++; }
+    else { leftEl.classList.add('matched-wrong'); }
+  }
+  matchScoreVal = benar;
+  const res = document.getElementById('match-result');
+  const labels = ['A','B','C','D','E'];
+  const correctAnswers = `Kunci: 1-E, 2-C, 3-A, 4-D, 5-B`;
+  res.innerHTML = `Skor menjodohkan: <strong>${benar}/5</strong>. ${correctAnswers}`;
+  res.classList.add('show');
+  if (window.MathJax) MathJax.typeset([res]);
+}
+
+function resetMatch() {
+  leftIdMap.forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('selected','matched-ok','matched-wrong');
+    el.style.opacity = ''; el.style.borderStyle = ''; el.style.borderColor = '';
+    delete el.dataset.matchedRight; delete el.dataset.matched;
+  });
+  rightIdMap.forEach(id => document.getElementById(id).classList.remove('used'));
+  matchSelected = null;
+  Object.keys(matchPairs).forEach(k => delete matchPairs[k]);
+  matchScoreVal = 0;
+  const res = document.getElementById('match-result');
+  res.classList.remove('show'); res.innerHTML = '';
+}
+let matchScoreVal = 0;
+
+// ── SKOR TOTAL ──
+function hitungSkor() {
+  // PG (5 soal, 1 poin each)
+  const qs = ['q1','q2','q3','q4','q5'];
+  let pgBenar = qs.filter(q => userAnswers[q]).length;
+
+  // Isian (3 soal)
+  let isianBenar = Object.values(isianScored).filter(Boolean).length;
+
+  // PGK (2 soal)
+  let pgkBenar = Object.values(pgkScores).filter(Boolean).length;
+
+  // Benar/Salah (5 soal)
+  let bsBenar = Object.values(bsScores).filter(Boolean).length;
+
+  // Menjodohkan
+  let jodohBenar = matchScoreVal;
+
+  const total = pgBenar + isianBenar + pgkBenar + bsBenar + jodohBenar;
+  const maks = 20;
+
+  const scoreDiv = document.getElementById('quizScore');
+  document.getElementById('scoreNum').textContent = total + ' / ' + maks;
+  document.getElementById('scoreLabel').textContent = 'TOTAL POIN';
+
+  const pct = Math.round((total/maks)*100);
+  const msg = pct >= 90 ? '🏆 Luar biasa! Siap menghadapi AKM/TKA!' :
+              pct >= 75 ? '🎉 Bagus! Tinggal sedikit lagi sempurna.' :
+              pct >= 60 ? '👍 Cukup baik. Latihan beberapa soal lagi.' :
+              pct >= 40 ? '📚 Pelajari kembali materi yang belum dikuasai.' :
+              '🔍 Coba baca ulang semua materi dan ulangi lagi!';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  document.getElementById('scoreBars').innerHTML = `
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#a8a8a8;margin-bottom:4px"><span>Pilihan Ganda</span><span>${pgBenar}/5</span></div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:4px;height:8px"><div style="width:${pgBenar*20}%;background:var(--amber);height:8px;border-radius:4px;transition:width 0.6s"></div></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#a8a8a8;margin-bottom:4px"><span>Isian Singkat</span><span>${isianBenar}/3</span></div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:4px;height:8px"><div style="width:${Math.round(isianBenar/3*100)}%;background:#5bc8af;height:8px;border-radius:4px;transition:width 0.6s 0.1s"></div></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#a8a8a8;margin-bottom:4px"><span>PG Kompleks</span><span>${pgkBenar}/2</span></div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:4px;height:8px"><div style="width:${pgkBenar*50}%;background:#f0a060;height:8px;border-radius:4px;transition:width 0.6s 0.2s"></div></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#a8a8a8;margin-bottom:4px"><span>Benar / Salah</span><span>${bsBenar}/5</span></div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:4px;height:8px"><div style="width:${bsBenar*20}%;background:#7ec8e3;height:8px;border-radius:4px;transition:width 0.6s 0.3s"></div></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#a8a8a8;margin-bottom:4px"><span>Menjodohkan</span><span>${jodohBenar}/5</span></div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:4px;height:8px"><div style="width:${jodohBenar*20}%;background:#c89fd4;height:8px;border-radius:4px;transition:width 0.6s 0.4s"></div></div>
+    </div>
+    <div style="margin-top:14px;font-size:22px;font-weight:700;color:var(--amber-light);text-align:center">${pct}% dikuasai</div>
+  `;
+  scoreDiv.classList.add('show');
+  quizDone = true;
+  scoreDiv.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetKuis() {
+  // PG
+  ['q1','q2','q3','q4','q5'].forEach(q => {
+    const container = document.getElementById(q);
+    const btns = container.querySelectorAll('.option-btn');
+    btns.forEach(b => { b.disabled = false; b.classList.remove('correct','wrong'); });
+    const exp = document.getElementById('exp-' + q);
+    if (exp) exp.classList.remove('show');
+    delete userAnswers[q];
+  });
+
+  // Isian
+  ['fill1','fill2','fill3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = ''; el.classList.remove('correct','wrong');
+    delete isianScored[id];
+  });
+  ['exp-fill1','exp-fill2','exp-fill3'].forEach(id => document.getElementById(id).classList.remove('show'));
+
+  // PGK
+  ['pgk1','pgk2'].forEach(gid => {
+    const container = document.getElementById(gid);
+    container.querySelectorAll('.checkbox-option').forEach(el => {
+      el.classList.remove('selected','correct-cb','wrong-cb','missed-cb');
+      el.style.pointerEvents = '';
+    });
+    const exp = document.getElementById('exp-' + gid);
+    if (exp) exp.classList.remove('show');
+    delete cbState[gid]; delete cbScored[gid]; delete pgkScores[gid];
+  });
+
+  // BS
+  ['bs1','bs2','bs3','bs4','bs5'].forEach(id => {
+    const item = document.getElementById(id);
+    item.querySelectorAll('.bs-btn').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('benar-active','salah-active','benar-correct','salah-correct');
+    });
+    const num = id.replace('bs','');
+    const fb = document.getElementById('bsfb' + num);
+    if (fb) fb.classList.remove('show');
+    delete bsAnswered[id]; delete bsScores[id];
+  });
+
+  // Match
+  resetMatch();
+
+  quizDone = false;
+  document.getElementById('quizScore').classList.remove('show');
+  document.getElementById('scoreBars').innerHTML = '';
+}
+
+// ── SIDEBAR NAV ──
+const sections = ['pengertian','menyelesaikan','faktor','kuadrat-sempurna','rumus-abc','menyusun','aplikasi','latihan','latihan-pg','latihan-isian','latihan-pgk','latihan-bs','latihan-jodoh'];
+const navLinks = document.querySelectorAll('.nav-link[data-sec]');
+const progressFill = document.getElementById('progressFill');
+
+// Tangkap semua klik link nav — cegah sepenuhnya navigasi browser/iframe
+navLinks.forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var targetId = this.dataset.target || this.dataset.sec;
+    var el = document.getElementById(targetId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return false;
+  });
+});
+
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 180) cur = id;
+  });
+  navLinks.forEach(l => l.classList.toggle('active', l.dataset.sec === cur));
+  const scrollPct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  progressFill.style.width = Math.min(scrollPct, 100) + '%';
+});
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
