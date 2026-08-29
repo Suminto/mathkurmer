@@ -8,6 +8,6 @@ deskripsi: >-
   Murid dapat melakukan perbandingan dan pengurutan pecahan dengan pembilang satu dan antar pecahan dengan penyebut yang sama; mengenal dan dapat menerapkan pecahan senilai, memiliki intuisi pecahan dan desimal, serta dapat menentukan pecahan sebagai desimal dan persen.
 bab:
   - ebookLabel: Buka Ebook Interaktif
-    judul: Aljabr1
-    ringkasan: Aljabar 1
+    judul: "Penjumlahan "
+    ringkasan: Penjumlahan
 ---
