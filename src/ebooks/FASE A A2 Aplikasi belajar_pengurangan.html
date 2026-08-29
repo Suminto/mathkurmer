@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Pengurangan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .screen {
+            background: linear-gradient(135deg, #fff5f0 0%, #ffe0cc 100%);
+            border: 4px solid #ff6b6b;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 170px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .question {
+            font-size: 30px;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .answer-display {
+            font-size: 28px;
+            color: #764ba2;
+            margin-top: 5px;
+            min-height: 35px;
+        }
+
+        .message {
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .score-display {
+            font-size: 20px;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+
+        .limit-section {
+            margin-bottom: 20px;
+        }
+
+        .limit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #ffd3a5 0%, #fd9853 100%);
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        .limit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .limit-btn:active {
+            transform: scale(0.97);
+        }
+
+        .limit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .limit-info {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 14px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .number-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .num-btn {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            color: #333;
+        }
+
+        .num-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .num-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .num-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .special-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%) !important;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 6px 12px rgba(255, 107, 107, 0.4) !important;
+        }
+
+        .special-btn:hover {
+            box-shadow: 0 8px 16px rgba(255, 107, 107, 0.6) !important;
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%) !important;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 6px 12px rgba(81, 207, 102, 0.4) !important;
+        }
+
+        .enter-btn:hover {
+            box-shadow: 0 8px 16px rgba(81, 207, 102, 0.6) !important;
+        }
+
+        .success {
+            color: #4CAF50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .attempt-info {
+            font-size: 16px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.3s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Belajar Pengurangan</h1>
+
+        <div class="screen" id="screen">
+            <div class="question" id="question">Tekan LIMIT untuk Mulai!</div>
+            <div class="answer-display" id="answerDisplay"></div>
+            <div class="message" id="message"></div>
+            <div class="score-display" id="scoreDisplay">Skor: 0</div>
+            <div class="attempt-info" id="attemptInfo"></div>
+        </div>
+
+        <div class="limit-section">
+            <button class="limit-btn" id="limitBtn" onclick="pressLimit()">🎯 LIMIT</button>
+            <div class="limit-info" id="limitInfo">Batas belum diatur</div>
+        </div>
+
+        <div class="number-pad">
+            <button class="num-btn" onclick="addDigit(7)">7</button>
+            <button class="num-btn" onclick="addDigit(8)">8</button>
+            <button class="num-btn" onclick="addDigit(9)">9</button>
+            <button class="num-btn" onclick="addDigit(4)">4</button>
+            <button class="num-btn" onclick="addDigit(5)">5</button>
+            <button class="num-btn" onclick="addDigit(6)">6</button>
+            <button class="num-btn" onclick="addDigit(1)">1</button>
+            <button class="num-btn" onclick="addDigit(2)">2</button>
+            <button class="num-btn" onclick="addDigit(3)">3</button>
+            <button class="num-btn" onclick="addDigit(0)">0</button>
+            <button class="num-btn special-btn" onclick="deleteLast()">Del</button>
+            <button class="num-btn enter-btn" onclick="checkAnswer()">Enter</button>
+        </div>
+
+        <div class="footer">dibuat Claude by Suminto</div>
+    </div>
+
+    <script>
+        let limit = null;
+        let num1 = 0;
+        let num2 = 0;
+        let correctAnswer = 0;
+        let userAnswer = '';
+        let attempts = 0;
+        const maxAttempts = 3;
+
+        const totalQuestionsPerSet = 10;
+        let questionIndex = 0;
+        let sessionScore = 0;
+        let sessionStats = [];
+        let questionActive = false;
+
+        const messages = {
+            correct: [
+                '🎉 Hebat! Jawaban Benar!',
+                '⭐ Luar Biasa!',
+                '🌟 Pintar Sekali!',
+                '👏 Kamu Juara!',
+                '💯 Perfect!',
+                '🏆 Mantap!',
+                '✨ Bagus Sekali!'
+            ],
+            wrong: [
+                '❌ Ups! Coba lagi ya!',
+                '🤔 Belum tepat, coba lagi!',
+                '💭 Yuk, pikirkan lagi!',
+                '🔄 Ayo, coba sekali lagi!'
+            ],
+            finalWrong: '😢 Jawaban yang benar adalah: '
+        };
+
+        function pressLimit() {
+            const input = window.prompt('Masukkan batas maksimal hasil pengurangan (misal 20):', limit || '20');
+            if (input === null) return; // dibatalkan
+
+            const val = parseInt(input, 10);
+            if (isNaN(val) || val < 1) {
+                alert('Masukkan bilangan bulat minimal 1 ya!');
+                return;
+            }
+
+            limit = val;
+            document.getElementById('limitInfo').textContent = `Batas hasil: 0 - ${limit}`;
+            startSession();
+        }
+
+        function startSession() {
+            questionIndex = 0;
+            sessionScore = 0;
+            sessionStats = [];
+            updateScoreDisplay();
+            document.getElementById('limitBtn').disabled = true;
+            generateQuestion();
+        }
+
+        function generateQuestion() {
+            questionActive = true;
+            attempts = 0;
+            userAnswer = '';
+            document.getElementById('answerDisplay').textContent = '';
+            document.getElementById('attemptInfo').textContent = '';
+
+            // Hasil pengurangan acak antara 0 sampai limit (tidak boleh negatif)
+            correctAnswer = Math.floor(Math.random() * (limit + 1)); // 0..limit
+            // num2 (pengurang) acak, lalu num1 (yang dikurangi) = num2 + hasil
+            num2 = Math.floor(Math.random() * (limit + 1));
+            num1 = num2 + correctAnswer;
+
+            document.getElementById('question').textContent = `${num1} - ${num2} = ?`;
+            document.getElementById('message').innerHTML = `📝 Soal ${questionIndex + 1}/${totalQuestionsPerSet} — Ketik jawabanmu!`;
+            document.getElementById('message').className = 'message';
+        }
+
+        function addDigit(digit) {
+            if (!questionActive || attempts >= maxAttempts) return;
+
+            userAnswer += digit;
+            document.getElementById('answerDisplay').textContent = userAnswer;
+        }
+
+        function deleteLast() {
+            if (!questionActive || attempts >= maxAttempts) return;
+
+            userAnswer = userAnswer.slice(0, -1);
+            document.getElementById('answerDisplay').textContent = userAnswer;
+        }
+
+        function checkAnswer() {
+            if (!questionActive) return;
+            if (userAnswer === '') return;
+            if (attempts >= maxAttempts) return;
+
+            const answer = parseInt(userAnswer, 10);
+            attempts++;
+
+            if (answer === correctAnswer) {
+                let score = 0;
+                if (attempts === 1) score = 10;
+                else if (attempts === 2) score = 7;
+                else if (attempts === 3) score = 5;
+
+                sessionScore += score;
+                updateScoreDisplay();
+                sessionStats.push({ num1, num2, correctAnswer, attempts, success: true, score });
+
+                const randomMessage = messages.correct[Math.floor(Math.random() * messages.correct.length)];
+                document.getElementById('message').innerHTML = `${randomMessage}<br>+${score} poin!`;
+                document.getElementById('message').className = 'message success bounce';
+                document.getElementById('attemptInfo').textContent = '';
+
+                questionActive = false;
+                setTimeout(() => {
+                    advanceQuestion();
+                }, 2000);
+
+            } else {
+                playSiren();
+
+                if (attempts < maxAttempts) {
+                    const randomWrongMessage = messages.wrong[Math.floor(Math.random() * messages.wrong.length)];
+                    document.getElementById('message').textContent = randomWrongMessage;
+                    document.getElementById('message').className = 'message error shake';
+                    document.getElementById('attemptInfo').textContent = `Kesempatan ${attempts}/3`;
+
+                    userAnswer = '';
+                    document.getElementById('answerDisplay').textContent = '';
+                } else {
+                    sessionStats.push({ num1, num2, correctAnswer, attempts, success: false, score: 0 });
+
+                    document.getElementById('message').innerHTML = `${messages.finalWrong}${correctAnswer}<br>+0 poin`;
+                    document.getElementById('message').className = 'message error';
+                    document.getElementById('attemptInfo').textContent = 'Kesempatan habis';
+
+                    questionActive = false;
+                    setTimeout(() => {
+                        advanceQuestion();
+                    }, 3000);
+                }
+            }
+        }
+
+        function advanceQuestion() {
+            questionIndex++;
+            if (questionIndex < totalQuestionsPerSet) {
+                generateQuestion();
+            } else {
+                showStatistics();
+            }
+        }
+
+        function showStatistics() {
+            questionActive = false;
+
+            const maxScore = totalQuestionsPerSet * 10;
+            const correct1 = sessionStats.filter(s => s.success && s.attempts === 1).length;
+            const correct2 = sessionStats.filter(s => s.success && s.attempts === 2).length;
+            const correct3 = sessionStats.filter(s => s.success && s.attempts === 3).length;
+            const failed = sessionStats.filter(s => !s.success).length;
+            const totalCorrect = correct1 + correct2 + correct3;
+            const avgScore = (sessionScore / totalQuestionsPerSet).toFixed(1);
+
+            document.getElementById('question').textContent = '📊 Statistik Hasil';
+            document.getElementById('answerDisplay').textContent = '';
+            document.getElementById('message').innerHTML = `
+                Total Skor: <b>${sessionScore} / ${maxScore}</b><br>
+                Rata-rata Skor: ${avgScore}<br>
+                Benar percobaan ke-1: ${correct1}<br>
+                Benar percobaan ke-2: ${correct2}<br>
+                Benar percobaan ke-3: ${correct3}<br>
+                Gagal (3x salah): ${failed}<br>
+                Total Benar: ${totalCorrect}/${totalQuestionsPerSet}
+            `;
+            document.getElementById('message').className = 'message';
+            document.getElementById('attemptInfo').textContent = 'Tekan LIMIT untuk 10 soal baru';
+
+            document.getElementById('limitBtn').disabled = false;
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('scoreDisplay').textContent = `Skor: ${sessionScore}`;
+        }
+
+        function playSiren() {
+            // Membuat suara siren sederhana menggunakan Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 800;
+            oscillator.type = 'square';
+            gainNode.gain.value = 0.3;
+
+            oscillator.start();
+
+            setTimeout(() => {
+                oscillator.frequency.value = 400;
+            }, 100);
+
+            setTimeout(() => {
+                oscillator.frequency.value = 800;
+            }, 200);
+
+            setTimeout(() => {
+                oscillator.stop();
+            }, 300);
+        }
+
+        // Mencegah input keyboard (jawaban hanya lewat tombol angka di layar)
+        document.addEventListener('keydown', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keypress', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keyup', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
