@@ -11,4 +11,11 @@ bab:
 
       Di bawah ada link untuk aplikasi penjumlahan 
     ebookUrl: /ebooks/FASE A A1 Aplikasi belajar_penjumlahan.html
+  - ebookLabel: Buka Aplikasi Interaktif Pengurangan
+    judul: Pengurangan
+    ringkasan: |-
+      Pengurangan Bilangan
+
+      Di bawah ada link untuk aplikasi Pengurangan
+    ebookUrl: /ebooks/FASE A A2 Aplikasi belajar_pengurangan.html
 ---
