@@ -25,8 +25,14 @@ bab:
     ebookUrl: /ebooks/2 Ebook-Interaktif-Bilangan-rasional-kelas7.html
     ebookLabel: "Buka Ebook Interaktif: Bilangan Rasional"
   - ebookLabel: Buka Ebook Interaktif Rasio
-    judul: Rasio
-    ringkasan: Rasio
+    judul: Rasio atau Perbandingan
+    ringkasan: >-
+      Rasio atau Perbandingan\
+
+      Pada suatuperbandingan dua besaran yang sejenis, kedua satuannya harus sama.
+
+
+      Perbandinganantara a dan b ditulis a : b atau (a/b), dimana a dan b adalah bilangan asli.
     ebookUrl: /ebooks/3 Ebook-Interaktif-Rasio-kelas7.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Aritmetika Sosial
