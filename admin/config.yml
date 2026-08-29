@@ -52,7 +52,7 @@ collections:
           - { label: "Sub-judul (Lede)", name: "lede", widget: "string" }
           - label: "Isi Paragraf"
             name: "isi"
-            widget: "markdown"
+            widget: "text"
             hint: "Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
       - name: "about"
         label: "About"
@@ -62,7 +62,7 @@ collections:
           - { label: "Judul Utama", name: "judul", widget: "string" }
           - label: "Isi Paragraf"
             name: "isi"
-            widget: "markdown"
+            widget: "text"
             hint: "Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
           - { label: "Baris Kredit di Bawah", name: "creditLine", widget: "string" }
 
@@ -74,11 +74,9 @@ collections:
         label: "Bilangan — Fase A"
         file: "content/bilangan/fase-a.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "bilangan" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "A" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -91,7 +89,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -100,11 +98,9 @@ collections:
         label: "Bilangan — Fase B"
         file: "content/bilangan/fase-b.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "bilangan" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "B" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -117,7 +113,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -126,11 +122,9 @@ collections:
         label: "Bilangan — Fase C"
         file: "content/bilangan/fase-c.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "bilangan" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "C" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -143,7 +137,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -152,11 +146,9 @@ collections:
         label: "Bilangan — Fase D"
         file: "content/bilangan/fase-d.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "bilangan" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "D" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -169,7 +161,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -178,11 +170,9 @@ collections:
         label: "Bilangan — Fase E"
         file: "content/bilangan/fase-e.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "bilangan" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "E" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -195,7 +185,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -204,11 +194,9 @@ collections:
         label: "Bilangan — Fase F"
         file: "content/bilangan/fase-f.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "bilangan" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "F" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -221,7 +209,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -230,11 +218,9 @@ collections:
         label: "Aljabar — Fase A"
         file: "content/aljabar/fase-a.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "aljabar" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "A" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -247,7 +233,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -256,11 +242,9 @@ collections:
         label: "Aljabar — Fase B"
         file: "content/aljabar/fase-b.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "aljabar" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "B" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -273,7 +257,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -282,11 +266,9 @@ collections:
         label: "Aljabar — Fase C"
         file: "content/aljabar/fase-c.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "aljabar" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "C" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -299,7 +281,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -308,11 +290,9 @@ collections:
         label: "Aljabar — Fase D"
         file: "content/aljabar/fase-d.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "aljabar" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "D" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -325,7 +305,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -334,11 +314,9 @@ collections:
         label: "Aljabar — Fase E"
         file: "content/aljabar/fase-e.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "aljabar" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "E" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -351,7 +329,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -360,11 +338,9 @@ collections:
         label: "Aljabar — Fase F"
         file: "content/aljabar/fase-f.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "aljabar" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "F" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -377,7 +353,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -386,11 +362,9 @@ collections:
         label: "Pengukuran — Fase A"
         file: "content/pengukuran/fase-a.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "pengukuran" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "A" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -403,7 +377,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -412,11 +386,9 @@ collections:
         label: "Pengukuran — Fase B"
         file: "content/pengukuran/fase-b.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "pengukuran" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "B" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -429,7 +401,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -438,11 +410,9 @@ collections:
         label: "Pengukuran — Fase C"
         file: "content/pengukuran/fase-c.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "pengukuran" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "C" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -455,7 +425,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -464,11 +434,9 @@ collections:
         label: "Pengukuran — Fase D"
         file: "content/pengukuran/fase-d.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "pengukuran" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "D" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -481,7 +449,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -490,11 +458,9 @@ collections:
         label: "Pengukuran — Fase E"
         file: "content/pengukuran/fase-e.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "pengukuran" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "E" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -507,7 +473,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -516,11 +482,9 @@ collections:
         label: "Pengukuran — Fase F"
         file: "content/pengukuran/fase-f.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "pengukuran" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "F" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -533,7 +497,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -542,11 +506,9 @@ collections:
         label: "Geometri — Fase A"
         file: "content/geometri/fase-a.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "geometri" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "A" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -559,7 +521,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -568,11 +530,9 @@ collections:
         label: "Geometri — Fase B"
         file: "content/geometri/fase-b.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "geometri" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "B" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -585,7 +545,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -594,11 +554,9 @@ collections:
         label: "Geometri — Fase C"
         file: "content/geometri/fase-c.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "geometri" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "C" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -611,7 +569,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -620,11 +578,9 @@ collections:
         label: "Geometri — Fase D"
         file: "content/geometri/fase-d.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "geometri" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "D" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -637,7 +593,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -646,11 +602,9 @@ collections:
         label: "Geometri — Fase E"
         file: "content/geometri/fase-e.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "geometri" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "E" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -663,7 +617,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -672,11 +626,9 @@ collections:
         label: "Geometri — Fase F"
         file: "content/geometri/fase-f.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "geometri" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "F" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -689,7 +641,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -698,11 +650,9 @@ collections:
         label: "Analisis Data dan Peluang — Fase A"
         file: "content/analisis-data-peluang/fase-a.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "analisis-data-peluang" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "A" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -715,7 +665,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -724,11 +674,9 @@ collections:
         label: "Analisis Data dan Peluang — Fase B"
         file: "content/analisis-data-peluang/fase-b.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "analisis-data-peluang" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "B" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -741,7 +689,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -750,11 +698,9 @@ collections:
         label: "Analisis Data dan Peluang — Fase C"
         file: "content/analisis-data-peluang/fase-c.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "analisis-data-peluang" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "C" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -767,7 +713,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -776,11 +722,9 @@ collections:
         label: "Analisis Data dan Peluang — Fase D"
         file: "content/analisis-data-peluang/fase-d.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "analisis-data-peluang" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "D" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -793,7 +737,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -802,11 +746,9 @@ collections:
         label: "Analisis Data dan Peluang — Fase E"
         file: "content/analisis-data-peluang/fase-e.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "analisis-data-peluang" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "E" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -819,7 +761,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
@@ -828,11 +770,9 @@ collections:
         label: "Analisis Data dan Peluang — Fase F"
         file: "content/analisis-data-peluang/fase-f.md"
         fields:
-          - { label: "Domain (jangan diubah)", name: "domain", widget: "hidden", default: "analisis-data-peluang" }
-          - { label: "Fase (jangan diubah)", name: "fase", widget: "hidden", default: "F" }
           - label: "Deskripsi Singkat Fase"
             name: "deskripsi"
-            widget: "markdown"
+            widget: "text"
             required: false
             hint: "Ringkasan singkat isi Fase ini. Untuk rumus matematika, tulis seperti biasa: \\(x+y\\) untuk rumus di tengah kalimat, atau \\[x+y\\] untuk rumus berdiri sendiri."
           - label: "Daftar Bab"
@@ -845,7 +785,7 @@ collections:
               - { label: "Judul Bab", name: "judul", widget: "string", hint: "Contoh: Bab 1: Bilangan Bulat" }
               - label: "Ringkasan Materi"
                 name: "ringkasan"
-                widget: "markdown"
+                widget: "text"
                 hint: "Materi singkat Bab ini. Rumus matematika: \\(x+y\\) (inline) atau \\[x+y\\] (berdiri sendiri)."
               - { label: "Link Ebook Interaktif (opsional)", name: "ebookUrl", widget: "string", required: false, hint: "Contoh: /ebooks/nama-file.html — upload file ebook ke folder src/ebooks/ lewat GitHub, lalu isi nama filenya di sini" }
               - { label: "Teks Tombol Ebook (opsional)", name: "ebookLabel", widget: "string", required: false, default: "Buka Ebook Interaktif" }
