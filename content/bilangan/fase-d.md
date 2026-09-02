@@ -34,10 +34,25 @@ bab:
 
       Perbandingan antara a dan b ditulis a : b atau  \( \tfrac{a}{b} \), dimana a dan b adalah bilangan asli.
     ebookUrl: /ebooks/3 Ebook-Interaktif-Rasio-kelas7.html
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Aritmetika Sosial
     judul: Aritmetika Sosial
-    ringkasan: Aritmetika Sosial
-  - ebookLabel: Buka Ebook Interaktif
+    ringkasan: >-
+      Dalam kehidupan sehari-hari, kita biasa menggunakan perhitungan atau
+      matematika untuk melakukan jual-beli.
+
+
+      Apakah kamu pernah melakukan kegiatan jual-beli? Pernahkah membandingkan harga barang toko satu dengan toko lainnya dikarenakan ingin mendapatkan harga terbaik dari barang yang akan dibeli?
+
+
+      Mari kita bahas bersama masalah tentang Aritmetika Sosial di Bab ini.
+    ebookUrl: /ebooks/A4 Ebook-Interaktif-Aritmetika-Sosial.html
+  - ebookLabel: Buka Ebook Interaktif Bilangan Berpangkat dan Bentuk Akar
     judul: Bilangan Berpangkat dan Bentuk Akar
-    ringkasan: Bilangan Berpangkat dan Bentuk Akar
+    ringkasan: Melalui pembelajaran bilangan berpangkat dan bentuk akar, siswa
+      memiliki pengalaman belajar mendeskripsikan, menjelaskan sifat bentuk
+      pangkat berdasarkan hasil pengamatan; Menyelesaikan permasalahan nyata
+      yang berhubungan dengan perpangkatan dan operasi matematika; Menggunakan
+      bentuk baku untuk menuliskan bilangan yang sangat besar dan bilangan yang
+      sangat kecil.
+    ebookUrl: /ebooks/A5 Ebook-Interaktif-Bilangan-Berpangkat-dan-Bentuk-Akar.html
 ---
