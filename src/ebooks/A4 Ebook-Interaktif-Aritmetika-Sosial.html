@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aritmetika Sosial — Matematika Kelas 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4', serif;
+  background:var(--paper);
+  color:var(--text-dark);
+  display:flex;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:290px; flex-shrink:0;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column;
+  border-right:1px solid var(--ink-border);
+  z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink3); border-radius:3px;}
+.side-header{
+  padding:26px 22px 16px; border-bottom:1px solid var(--ink-border);
+}
+.side-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px;
+  color:var(--gold); text-transform:uppercase;
+}
+.side-title{
+  font-size:22px; font-weight:700; margin-top:8px; line-height:1.25; color:var(--cream);
+}
+.side-sub{
+  font-size:12.5px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;
+}
+.progress-wrap{
+  padding:16px 22px; border-bottom:1px solid var(--ink-border);
+}
+.progress-track{
+  height:6px; background:var(--ink3); border-radius:4px; overflow:hidden;
+}
+#progressBar{
+  height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+  transition:width .25s ease;
+}
+.progress-txt{font-size:11px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;}
+nav{padding:14px 12px 30px; flex:1;}
+.nav-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft);
+  padding:14px 10px 8px; text-transform:uppercase; opacity:.85;
+}
+.nav-link{
+  display:block; padding:10px 12px; margin:2px 0; border-radius:8px;
+  color:var(--cream-dim); text-decoration:none; font-size:14.5px;
+  transition:background .18s ease, color .18s ease;
+  border-left:3px solid transparent;
+}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left:3px solid var(--gold);}
+.nav-sub{padding-left:12px; border-left:1px solid var(--ink-border); margin:2px 0 10px 22px;}
+.nav-sub a{
+  display:block; padding:7px 10px; font-size:13px; color:var(--cream-dim); text-decoration:none;
+  border-radius:6px; transition:background .18s ease, color .18s ease; cursor:pointer;
+}
+.nav-sub a:hover, .nav-sub a.active{background:var(--ink3); color:var(--gold-soft);}
+
+#menuToggle{
+  display:none; position:fixed; top:14px; left:14px; z-index:200;
+  width:44px; height:44px; border-radius:10px; border:1px solid var(--ink-border);
+  background:var(--ink); color:var(--gold-soft); font-size:20px; cursor:pointer;
+}
+#overlay{display:none; position:fixed; inset:0; background:rgba(20,26,46,.6); z-index:60;}
+
+/* ===== CONTENT ===== */
+#content{flex:1; min-width:0; padding:0;}
+.hero{
+  background:linear-gradient(160deg, var(--ink) 0%, var(--ink2) 55%, var(--ink3) 100%);
+  color:var(--cream); padding:70px 60px 56px; position:relative; overflow:hidden;
+}
+.hero::after{
+  content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px;
+  border-radius:50%; background:radial-gradient(circle, rgba(224,169,77,.18), transparent 70%);
+}
+.hero-label{font-family:'JetBrains Mono',monospace; letter-spacing:3px; color:var(--gold); font-size:13px; text-transform:uppercase;}
+.hero h1{font-size:44px; margin-top:14px; line-height:1.15; max-width:640px;}
+.hero p{margin-top:16px; color:var(--cream-dim); max-width:600px; font-size:16.5px; line-height:1.7;}
+.chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.chip{
+  font-family:'JetBrains Mono',monospace; font-size:12px; padding:7px 14px; border-radius:20px;
+  background:var(--ink3); border:1px solid var(--ink-border); color:var(--gold-soft);
+}
+
+.mat-section{padding:56px 60px; border-bottom:1px solid var(--paper-line); max-width:900px;}
+.mat-section .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.mat-section h2{font-size:30px; margin-top:14px;}
+.mat-section h3{font-size:20px; margin-top:30px; margin-bottom:10px; color:var(--text-mid);}
+.mat-section p{line-height:1.85; margin-top:12px; font-size:16.5px; color:var(--text-dark);}
+.mat-section ul, .mat-section ol{margin:14px 0 14px 26px; line-height:1.9; font-size:16px;}
+
+.callout{
+  margin:20px 0; padding:18px 22px; border-radius:10px; border-left:5px solid;
+  font-size:15.5px; line-height:1.75;
+}
+.callout .co-title{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; display:block;}
+.def{background:var(--def); border-color:var(--def-b);}
+.def .co-title{color:#3f6b32;}
+.note{background:var(--note); border-color:var(--note-b);}
+.note .co-title{color:#a06a1e;}
+.warn{background:var(--warn); border-color:var(--warn-b);}
+.warn .co-title{color:#9a3c34;}
+
+.example-box{
+  margin:20px 0; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  padding:20px 24px;
+}
+.example-box .ex-title{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:1.5px; color:var(--gold);
+  background:var(--ink); display:inline-block; padding:4px 12px; border-radius:6px; margin-bottom:12px;
+}
+.example-box ol{margin-left:22px; line-height:2;}
+.example-box .step-label{font-weight:600; color:var(--text-mid); font-family:'JetBrains Mono',monospace; font-size:13px;}
+
+.calc-box{
+  margin:24px 0; background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 26px;
+  box-shadow:0 10px 30px rgba(20,26,46,.25);
+}
+.calc-box h4{color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
+.calc-row input, .calc-row select{
+  font-family:'JetBrains Mono',monospace; font-size:15px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--ink-border); background:var(--ink2); color:var(--cream); width:110px;
+}
+.calc-row select{width:auto;}
+.calc-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--gold); color:var(--ink); font-weight:700; cursor:pointer; transition:transform .15s ease, background .15s ease;
+}
+.calc-btn:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{
+  margin-top:12px; padding:12px 16px; background:var(--ink2); border-radius:8px; border:1px solid var(--ink-border);
+  font-family:'JetBrains Mono',monospace; font-size:15px; min-height:22px; color:var(--gold-soft);
+}
+
+/* ===== LATIHAN ===== */
+.latihan-section{padding:56px 60px 90px; background:var(--paper);}
+.latihan-header{max-width:900px;}
+.latihan-header .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.latihan-header h2{font-size:30px; margin-top:14px;}
+.latihan-header p{margin-top:10px; color:var(--text-mid); font-size:15.5px; max-width:640px; line-height:1.7;}
+
+.quiz-nav{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 20px;}
+.qbtn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:10px 18px; border-radius:24px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-mid); cursor:pointer;
+  transition:all .18s ease;
+}
+.qbtn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+.qbtn:hover{transform:translateY(-1px);}
+
+.score-strip{
+  display:flex; flex-wrap:wrap; gap:14px; margin-bottom:24px; max-width:900px;
+}
+.score-item{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:8px 14px; border-radius:8px;
+  background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid);
+}
+.score-item b{color:var(--text-dark);}
+
+#quizArea{max-width:820px;}
+.question-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px;
+  margin-bottom:20px; animation:fadeUp .35s ease;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.q-top{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+.q-num{
+  width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft);
+  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; flex-shrink:0;
+}
+.level-badge{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:.5px;
+}
+.level-mudah{background:#dff0da; color:#3f6b32;}
+.level-sedang{background:#fdf0df; color:#a06a1e;}
+.level-sukar{background:#fbe1df; color:#9a3c34;}
+.q-text{font-size:16.5px; line-height:1.7; margin-bottom:16px;}
+.q-options{display:flex; flex-direction:column; gap:9px;}
+.opt-btn{
+  text-align:left; padding:11px 16px; border-radius:9px; border:1px solid var(--paper-line);
+  background:var(--paper2); font-family:'Source Serif 4',serif; font-size:15.5px; cursor:pointer;
+  transition:all .18s ease; color:var(--text-dark);
+}
+.opt-btn:hover{background:#f0e6cc; transform:translateX(3px);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.opt-btn:disabled{cursor:default;}
+.bs-row{display:flex; gap:12px;}
+.bs-btn{
+  flex:1; padding:13px; border-radius:9px; border:1px solid var(--paper-line); background:var(--paper2);
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; font-weight:700; cursor:pointer; transition:all .18s ease;
+}
+.bs-btn:hover{transform:translateY(-2px);}
+.bs-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.bs-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{font-weight:600; min-width:160px;}
+.jd-row select{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-dark);
+}
+.jd-row select.correct{background:var(--correct); border-color:var(--correct-b);}
+.jd-row select.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.pk-confirm{margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none; background:var(--ink); color:var(--gold-soft); cursor:pointer;}
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{
+  flex:1; min-width:180px; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  font-family:'Source Serif 4',serif; font-size:15.5px; background:var(--paper2); color:var(--text-dark);
+}
+.is-row input.correct{background:var(--correct); border-color:var(--correct-b);}
+.is-row input.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.is-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer;
+}
+.explanation{
+  margin-top:14px; padding:14px 18px; border-radius:9px; background:var(--note); border-left:4px solid var(--note-b);
+  font-size:14.5px; line-height:1.7; display:none;
+}
+.explanation.show{display:block;}
+
+.analysis-btn-wrap{max-width:820px; text-align:center; margin:30px 0;}
+.analysis-btn{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:14px 32px; border-radius:26px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer; transition:all .2s ease;
+}
+.analysis-btn:hover{background:var(--ink2); transform:translateY(-2px);}
+
+#analysisPanel{max-width:820px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:#fff; border:1px solid var(--paper-line); border-radius:12px; padding:18px; text-align:center;}
+.stat-box .num{font-size:28px; font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--ink);}
+.stat-box .lab{font-size:12px; color:var(--text-mid); margin-top:4px; font-family:'JetBrains Mono',monospace;}
+.type-bars{margin:24px 0;}
+.type-bar-row{margin-bottom:14px;}
+.type-bar-row .tb-label{font-size:13.5px; font-family:'JetBrains Mono',monospace; margin-bottom:6px; color:var(--text-mid);}
+.type-bar-track{height:14px; background:var(--paper2); border-radius:7px; overflow:hidden; border:1px solid var(--paper-line);}
+.type-bar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{
+  text-align:center; padding:30px; border-radius:16px; margin:26px 0; color:#fff;
+  background:linear-gradient(135deg, var(--ink), var(--ink3));
+}
+.grade-box .grade-letter{font-size:52px; font-family:'Playfair Display',serif; font-weight:800;}
+.grade-box .grade-msg{font-size:16px; margin-top:6px; color:var(--gold-soft);}
+.reset-btn{
+  display:block; margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:12px 26px;
+  border-radius:24px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer;
+}
+
+footer{
+  padding:34px 60px; background:var(--ink); color:var(--cream-dim); font-size:13px; text-align:center;
+  font-family:'JetBrains Mono',monospace; line-height:1.9;
+}
+footer b{color:var(--gold-soft);}
+
+@media (max-width:900px){
+  #menuToggle{display:block;}
+  #sidebar{position:fixed; top:0; left:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.4);}
+  #sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}
+  .hero, .mat-section, .latihan-section{padding-left:26px; padding-right:26px;}
+  .hero{padding-top:90px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .jd-row{flex-direction:column; align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<aside id="sidebar">
+  <div class="side-header">
+    <div class="side-label">Matematika · Kelas 7</div>
+    <div class="side-title">Aritmetika Sosial</div>
+    <div class="side-sub">Ebook Interaktif</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div id="progressBar"></div></div>
+    <div class="progress-txt" id="progressTxt">0% dibaca</div>
+  </div>
+  <nav>
+    <div class="nav-label">Materi</div>
+    <a href="#hero" class="nav-link" data-target="hero">Pendahuluan</a>
+    <a href="#matA" class="nav-link" data-target="matA">A. Pecahan (Persentase)</a>
+    <a href="#matB" class="nav-link" data-target="matB">B. Uang dalam Perdagangan</a>
+    <a href="#matC" class="nav-link" data-target="matC">C. Persentase Untung/Rugi</a>
+    <a href="#matD" class="nav-link" data-target="matD">D. Potongan Harga</a>
+    <a href="#matE" class="nav-link" data-target="matE">E. Bruto, Tara, dan Neto</a>
+    <a href="#matF" class="nav-link" data-target="matF">F. Perhitungan Bunga Bank</a>
+    <a href="#matG" class="nav-link" data-target="matG">G. Pajak</a>
+    <div class="nav-label">Latihan</div>
+    <a href="#latihan" class="nav-link" data-target="latihan">Latihan Soal</a>
+    <div class="nav-sub">
+      <a data-type="pg" onclick="showType('pg')">Pilihan Ganda Biasa</a>
+      <a data-type="is" onclick="showType('is')">Isian Singkat</a>
+      <a data-type="pk" onclick="showType('pk')">PG Kompleks</a>
+      <a data-type="bs" onclick="showType('bs')">Benar/Salah</a>
+      <a data-type="jd" onclick="showType('jd')">Menjodohkan</a>
+    </div>
+  </nav>
+</aside>
+
+<main id="content">
+
+  <section id="hero" class="hero">
+    <div class="hero-label">Ebook Interaktif · Matematika Kelas 7</div>
+    <h1>Aritmetika Sosial</h1>
+    <p>Menerapkan matematika dalam kehidupan ekonomi sehari-hari: jual beli, untung-rugi, diskon, berat kemasan, bunga bank, hingga pajak — lengkap dengan contoh langkah demi langkah, kalkulator interaktif, dan 25 soal latihan otomatis-terkoreksi.</p>
+    <div class="chip-row">
+      <div class="chip">A. Pecahan (Persentase)</div>
+      <div class="chip">B. Uang dalam Perdagangan</div>
+      <div class="chip">C. Persentase Untung/Rugi</div>
+      <div class="chip">D. Potongan Harga</div>
+      <div class="chip">E. Bruto, Tara, Neto</div>
+      <div class="chip">F. Bunga Bank</div>
+      <div class="chip">G. Pajak</div>
+    </div>
+  </section>
+
+  <section id="matA" class="mat-section">
+    <span class="sec-label">Bagian A</span>
+    <h2>Pecahan (Persentase)</h2>
+    <p>Sebelum mempelajari aritmetika sosial lebih jauh, penting untuk menguasai kembali konsep persentase, karena hampir seluruh perhitungan untung-rugi, diskon, bunga, dan pajak menggunakan persentase.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Persentase (\(p\%\)) adalah pecahan dengan penyebut 100: \(p\% = \dfrac{p}{100}\). Persen digunakan untuk menyatakan bagian dari keseluruhan secara praktis.
+    </div>
+
+    <h3>Konversi Pecahan, Desimal, dan Persen</h3>
+    <ul>
+      <li>Pecahan → Persen: kalikan dengan 100%, contoh \(\dfrac{3}{8} \times 100\% = 37{,}5\%\).</li>
+      <li>Persen → Pecahan: bagi dengan 100 lalu sederhanakan, contoh \(35\% = \dfrac{35}{100} = \dfrac{7}{20}\).</li>
+      <li>Persen → Desimal: bagi dengan 100, contoh \(20\% = 0{,}2\).</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Ubahlah pecahan \(\dfrac{7}{20}\) menjadi bentuk persen.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Kalikan pecahan dengan 100%: \(\dfrac{7}{20} \times 100\%\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung: \(\dfrac{700}{20}\% = 35\%\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi \(\dfrac{7}{20} = 35\%\).</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Tips</span>
+      Hafalkan beberapa nilai persen umum: \(\dfrac{1}{2}=50\%\), \(\dfrac{1}{4}=25\%\), \(\dfrac{1}{5}=20\%\), \(\dfrac{1}{10}=10\%\) — akan sangat membantu mempercepat perhitungan aritmetika sosial.
+    </div>
+  </section>
+
+  <section id="matB" class="mat-section">
+    <span class="sec-label">Bagian B</span>
+    <h2>Uang dalam Perdagangan</h2>
+    <p>Dalam kegiatan jual beli terdapat beberapa istilah penting yang menjadi dasar seluruh perhitungan aritmetika sosial.</p>
+
+    <div class="callout def">
+      <span class="co-title">Istilah Penting</span>
+      <b>Harga pembelian (modal)</b>: uang yang dikeluarkan untuk membeli/memperoleh barang.<br>
+      <b>Harga penjualan</b>: uang yang diterima ketika barang dijual kembali.<br>
+      <b>Modal</b>: seluruh biaya yang dikeluarkan, termasuk biaya produksi atau ongkos tambahan.
+    </div>
+
+    <h3>Hubungan Harga Beli dan Harga Jual</h3>
+    <p>Selisih antara harga penjualan dan harga pembelian akan menentukan apakah suatu usaha mengalami keuntungan atau kerugian — konsep ini akan dibahas lebih detail pada bagian berikutnya.</p>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Seorang pedagang membeli 10 kg jeruk dengan harga Rp150.000. Berapa harga pembelian (modal) per kilogram?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Bagi total harga pembelian dengan banyak barang: \(150.000 \div 10\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hasilnya adalah Rp15.000 per kilogram.</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Tips</span>
+      Selalu catat harga pembelian per satuan barang sebelum menghitung keuntungan atau kerugian, agar perhitungan persentase lebih mudah dan akurat.
+    </div>
+  </section>
+
+  <section id="matC" class="mat-section">
+    <span class="sec-label">Bagian C</span>
+    <h2>Persentase Keuntungan atau Kerugian</h2>
+    <p>Keuntungan (untung) terjadi ketika harga penjualan lebih besar dari harga pembelian. Sebaliknya, kerugian (rugi) terjadi ketika harga penjualan lebih kecil dari harga pembelian.</p>
+
+    <div class="callout def">
+      <span class="co-title">Rumus</span>
+      Untung \(= \) Harga Jual \(-\) Harga Beli (jika hasilnya positif).<br>
+      Rugi \(= \) Harga Beli \(-\) Harga Jual (jika harga jual lebih kecil).<br>
+      Persentase Untung/Rugi \(= \dfrac{\text{Untung atau Rugi}}{\text{Harga Beli}} \times 100\%\).
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Perhatikan</span>
+      Persentase untung dan rugi selalu dihitung berdasarkan <b>harga beli</b>, bukan harga jual!
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Seorang pedagang membeli sepatu seharga Rp200.000 dan menjualnya seharga Rp240.000. Berapa persentase keuntungannya?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Hitung besar untung: \(240.000 - 200.000 = 40.000\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung persentase: \(\dfrac{40.000}{200.000} \times 100\% = 20\%\).</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Untung / Rugi</h4>
+      <div class="calc-row">
+        <span>Harga Beli:</span>
+        <input type="number" id="urBeli" placeholder="Rp" value="200000">
+        <span>Harga Jual:</span>
+        <input type="number" id="urJual" placeholder="Rp" value="240000">
+        <button class="calc-btn" onclick="hitungUntungRugi()">Hitung</button>
+      </div>
+      <div class="calc-result" id="urResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matD" class="mat-section">
+    <span class="sec-label">Bagian D</span>
+    <h2>Potongan Harga (Diskon)</h2>
+    <p>Diskon adalah potongan harga yang diberikan penjual, biasanya dinyatakan dalam persen dari harga awal barang.</p>
+
+    <div class="callout def">
+      <span class="co-title">Rumus</span>
+      Besar Diskon \(= \) Persen Diskon \(\times\) Harga Awal.<br>
+      Harga Setelah Diskon \(= \) Harga Awal \(-\) Besar Diskon.
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Harga baju Rp180.000 didiskon 25%. Berapa harga setelah diskon?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Hitung besar diskon: \(25\% \times 180.000 = 45.000\).</li>
+        <li><span class="step-label">Langkah 2:</span> Kurangi harga awal dengan diskon: \(180.000 - 45.000 = 135.000\).</li>
+      </ol>
+    </div>
+
+    <h3>Diskon Ganda (Diskon Bertingkat)</h3>
+    <p>Diskon ganda seperti "20% + 10%" tidak sama dengan diskon tunggal 30%, karena diskon kedua dihitung dari harga setelah diskon pertama, bukan dari harga awal.</p>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Harga sepatu Rp500.000 mendapat diskon ganda 20% + 10%. Berapa harga akhirnya?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Diskon pertama: \(20\% \times 500.000 = 100.000\), harga menjadi \(400.000\).</li>
+        <li><span class="step-label">Langkah 2:</span> Diskon kedua dihitung dari harga baru: \(10\% \times 400.000 = 40.000\).</li>
+        <li><span class="step-label">Langkah 3:</span> Harga akhir: \(400.000 - 40.000 = 360.000\).</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Diskon</h4>
+      <div class="calc-row">
+        <span>Harga Awal:</span>
+        <input type="number" id="dsHarga" placeholder="Rp" value="180000">
+        <span>Diskon (%):</span>
+        <input type="number" id="dsPersen" placeholder="%" value="25">
+        <button class="calc-btn" onclick="hitungDiskon()">Hitung</button>
+      </div>
+      <div class="calc-result" id="dsResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matE" class="mat-section">
+    <span class="sec-label">Bagian E</span>
+    <h2>Bruto, Tara, dan Neto</h2>
+    <p>Istilah ini biasa digunakan pada kemasan barang, terutama bahan makanan atau produk dalam karung/kotak.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      <b>Bruto</b>: berat kotor, yaitu berat barang beserta kemasannya.<br>
+      <b>Tara</b>: berat kemasan saja (tanpa isi).<br>
+      <b>Neto</b>: berat bersih, yaitu berat barang tanpa kemasan.<br>
+      Rumus: \(\text{Bruto} = \text{Neto} + \text{Tara}\), sehingga \(\text{Neto} = \text{Bruto} - \text{Tara}\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Sebuah karung beras memiliki bruto 52 kg dan tara 2 kg. Berapa berat neto beras tersebut?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Gunakan rumus \(\text{Neto} = \text{Bruto} - \text{Tara}\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung: \(52 - 2 = 50\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi berat neto beras adalah 50 kg.</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Persentase Tara</span>
+      Persentase tara terhadap bruto dihitung dengan: \(\%\text{Tara} = \dfrac{\text{Tara}}{\text{Bruto}} \times 100\%\).
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Bruto, Tara, Neto</h4>
+      <div class="calc-row">
+        <span>Bruto (kg):</span>
+        <input type="number" id="btBruto" placeholder="kg" value="52">
+        <span>Tara (kg):</span>
+        <input type="number" id="btTara" placeholder="kg" value="2">
+        <button class="calc-btn" onclick="hitungBrutoTaraNeto()">Hitung Neto</button>
+      </div>
+      <div class="calc-result" id="btResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matF" class="mat-section">
+    <span class="sec-label">Bagian F</span>
+    <h2>Perhitungan Bunga Bank</h2>
+    <p>Bunga bank adalah imbalan yang diberikan bank kepada nasabah yang menyimpan uangnya (tabungan atau deposito), biasanya dihitung dengan sistem bunga tunggal untuk tingkat SMP.</p>
+
+    <div class="callout def">
+      <span class="co-title">Rumus Bunga Tunggal</span>
+      \(\text{Bunga} = \text{Modal} \times \dfrac{\text{Persen Bunga per Tahun}}{100} \times \dfrac{\text{Lama Menabung (bulan)}}{12}\)
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Modal Rp2.000.000 disimpan dengan bunga tunggal 6% per tahun. Berapa bunga yang diperoleh setelah 8 bulan?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Substitusikan ke rumus: \(\text{Bunga} = 2.000.000 \times \dfrac{6}{100} \times \dfrac{8}{12}\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung bertahap: \(2.000.000 \times 0{,}06 = 120.000\), lalu \(120.000 \times \dfrac{8}{12} = 80.000\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi bunga yang diperoleh adalah Rp80.000.</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Tips</span>
+      Total tabungan akhir \(= \) Modal \(+\) Bunga. Pada contoh di atas, total tabungan setelah 8 bulan adalah \(2.000.000 + 80.000 = 2.080.000\).
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Bunga Bank</h4>
+      <div class="calc-row">
+        <span>Modal:</span>
+        <input type="number" id="bbModal" placeholder="Rp" value="2000000">
+        <span>Bunga/tahun (%):</span>
+        <input type="number" id="bbPersen" placeholder="%" value="6">
+        <span>Lama (bulan):</span>
+        <input type="number" id="bbBulan" placeholder="bulan" value="8">
+        <button class="calc-btn" onclick="hitungBungaBank()">Hitung</button>
+      </div>
+      <div class="calc-result" id="bbResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matG" class="mat-section">
+    <span class="sec-label">Bagian G</span>
+    <h2>Pajak</h2>
+    <p>Pajak adalah pungutan wajib yang dikenakan pemerintah atas transaksi jual beli, penghasilan, atau kepemilikan barang. Salah satu pajak yang sering dijumpai adalah Pajak Pertambahan Nilai (PPN).</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      PPN adalah pajak yang dikenakan atas setiap pertambahan nilai barang/jasa, dan pada akhirnya dibayar oleh konsumen. Rumus: \(\text{Harga Termasuk Pajak} = \text{Harga Barang} + (\text{Persen Pajak} \times \text{Harga Barang})\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Harga sebuah barang sebelum pajak adalah Rp400.000. Jika dikenakan PPN 11%, berapa total harga yang harus dibayar?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Hitung besar pajak: \(11\% \times 400.000 = 44.000\).</li>
+        <li><span class="step-label">Langkah 2:</span> Tambahkan ke harga awal: \(400.000 + 44.000 = 444.000\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi total harga yang harus dibayar adalah Rp444.000.</li>
+      </ol>
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Perhatikan</span>
+      Selain PPN, terdapat juga pajak penghasilan (PPh) yang dikenakan atas gaji atau pendapatan seseorang — namun perhitungan PPh biasanya dipelajari lebih lanjut di jenjang yang lebih tinggi.
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Pajak (PPN)</h4>
+      <div class="calc-row">
+        <span>Harga Barang:</span>
+        <input type="number" id="pjHarga" placeholder="Rp" value="400000">
+        <span>Pajak (%):</span>
+        <input type="number" id="pjPersen" placeholder="%" value="11">
+        <button class="calc-btn" onclick="hitungPajak()">Hitung</button>
+      </div>
+      <div class="calc-result" id="pjResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="latihan" class="latihan-section">
+    <div class="latihan-header">
+      <span class="sec-label">Latihan</span>
+      <h2>Latihan Soal Aritmetika Sosial</h2>
+      <p>25 soal dengan 5 tipe berbeda. Pilih tipe soal di bawah, jawab, dan lihat penjelasannya secara langsung. Setelah selesai, klik "Lihat Analisis" untuk melihat hasil keseluruhan.</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="qbtn active" data-type="pg" onclick="showType('pg')">🔤 Pilihan Ganda Biasa</button>
+      <button class="qbtn" data-type="is" onclick="showType('is')">✏️ Isian Singkat</button>
+      <button class="qbtn" data-type="pk" onclick="showType('pk')">☑️ PG Kompleks</button>
+      <button class="qbtn" data-type="bs" onclick="showType('bs')">✅ Benar/Salah</button>
+      <button class="qbtn" data-type="jd" onclick="showType('jd')">🔗 Menjodohkan</button>
+    </div>
+
+    <div class="score-strip" id="scoreStrip"></div>
+
+    <div id="quizArea"></div>
+
+    <div class="analysis-btn-wrap">
+      <button class="analysis-btn" onclick="showAnalysis()">📊 Lihat Analisis Hasil</button>
+    </div>
+
+    <div id="analysisPanel" hidden>
+      <h3 style="margin-bottom:14px;">Analisis Hasil Belajar</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">TOTAL SOAL</div></div>
+        <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lab">BENAR</div></div>
+        <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lab">SALAH</div></div>
+        <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lab">NILAI</div></div>
+      </div>
+      <div class="type-bars" id="typeBars"></div>
+      <div class="grade-box">
+        <div class="grade-letter" id="gradeLetter">-</div>
+        <div class="grade-msg" id="gradeMsg">Belum ada data</div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua Soal</button>
+    </div>
+  </section>
+
+  <footer>
+    Ebook Interaktif Matematika Kelas 7 — Aritmetika Sosial<br>
+    Dibuat oleh <b>Suminto</b> bersama <b>Claude</b><br>
+    Satu file HTML, dapat dibuka langsung di peramban tanpa koneksi internet (kecuali font &amp; rumus matematika).
+  </footer>
+</main>
+
+<script>
+/* ============ SIDEBAR TOGGLE (mobile) ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('.nav-link, .nav-sub a').forEach(function(a){
+  a.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ SCROLLSPY + PROGRESS BAR ============ */
+const sectionIds = ['hero','matA','matB','matC','matD','matE','matF','matG','latihan'];
+function updateScrollSpy(){
+  let current = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140){ current = id; }
+    }
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? Math.min(100, Math.round((scrollTop / docHeight) * 100)) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = pct + '% dibaca';
+}
+window.addEventListener('scroll', updateScrollSpy);
+window.addEventListener('resize', updateScrollSpy);
+
+/* ============ KALKULATOR: Untung / Rugi ============ */
+function hitungUntungRugi(){
+  const beli = parseFloat(document.getElementById('urBeli').value) || 0;
+  const jual = parseFloat(document.getElementById('urJual').value) || 0;
+  const out = document.getElementById('urResult');
+  if(beli === 0){ out.innerHTML = '⚠️ Harga beli tidak boleh nol.'; return; }
+  const selisih = jual - beli;
+  const persen = (Math.abs(selisih) / beli) * 100;
+  if(selisih > 0){
+    out.innerHTML = `Untung = ${selisih.toLocaleString('id-ID')} → <b>Untung ${persen.toFixed(2)}%</b>`;
+  } else if(selisih < 0){
+    out.innerHTML = `Rugi = ${Math.abs(selisih).toLocaleString('id-ID')} → <b>Rugi ${persen.toFixed(2)}%</b>`;
+  } else {
+    out.innerHTML = `Tidak untung, tidak rugi (impas).`;
+  }
+}
+
+/* ============ KALKULATOR: Diskon ============ */
+function hitungDiskon(){
+  const harga = parseFloat(document.getElementById('dsHarga').value) || 0;
+  const persen = parseFloat(document.getElementById('dsPersen').value) || 0;
+  const out = document.getElementById('dsResult');
+  const besarDiskon = (persen / 100) * harga;
+  const hargaAkhir = harga - besarDiskon;
+  out.innerHTML = `Diskon ${persen}% dari Rp${harga.toLocaleString('id-ID')} = Rp${besarDiskon.toLocaleString('id-ID')} → Harga akhir = <b>Rp${hargaAkhir.toLocaleString('id-ID')}</b>`;
+}
+
+/* ============ KALKULATOR: Bruto, Tara, Neto ============ */
+function hitungBrutoTaraNeto(){
+  const bruto = parseFloat(document.getElementById('btBruto').value) || 0;
+  const tara = parseFloat(document.getElementById('btTara').value) || 0;
+  const out = document.getElementById('btResult');
+  if(bruto === 0){ out.innerHTML = '⚠️ Bruto tidak boleh nol.'; return; }
+  const neto = bruto - tara;
+  const persenTara = (tara / bruto) * 100;
+  out.innerHTML = `Neto = ${bruto} − ${tara} = <b>${neto} kg</b> (persentase tara = ${persenTara.toFixed(2)}%)`;
+}
+
+/* ============ KALKULATOR: Bunga Bank ============ */
+function hitungBungaBank(){
+  const modal = parseFloat(document.getElementById('bbModal').value) || 0;
+  const persen = parseFloat(document.getElementById('bbPersen').value) || 0;
+  const bulan = parseFloat(document.getElementById('bbBulan').value) || 0;
+  const out = document.getElementById('bbResult');
+  const bunga = modal * (persen / 100) * (bulan / 12);
+  const total = modal + bunga;
+  out.innerHTML = `Bunga = Rp${bunga.toLocaleString('id-ID', {maximumFractionDigits:2})} → Total tabungan = <b>Rp${total.toLocaleString('id-ID', {maximumFractionDigits:2})}</b>`;
+}
+
+/* ============ KALKULATOR: Pajak ============ */
+function hitungPajak(){
+  const harga = parseFloat(document.getElementById('pjHarga').value) || 0;
+  const persen = parseFloat(document.getElementById('pjPersen').value) || 0;
+  const out = document.getElementById('pjResult');
+  const pajak = (persen / 100) * harga;
+  const total = harga + pajak;
+  out.innerHTML = `Pajak ${persen}% dari Rp${harga.toLocaleString('id-ID')} = Rp${pajak.toLocaleString('id-ID')} → Total dibayar = <b>Rp${total.toLocaleString('id-ID')}</b>`;
+}
+
+/* ============ BANK SOAL ============ */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1, text:'Bentuk persen dari pecahan \\(\\dfrac{3}{8}\\) adalah...', options:['37,5%','3,8%','35%','38%'], answer:0, explanation:'\\(\\dfrac{3}{8} \\times 100\\% = 37{,}5\\%\\).' },
+    { id:'pg2', type:'pg', level:'sedang', num:2, text:'Seorang pedagang membeli sepatu seharga Rp200.000 dan menjualnya seharga Rp240.000. Persentase keuntungannya adalah...', options:['20%','16,7%','25%','40%'], answer:0, explanation:'Untung \\(= 240.000-200.000=40.000\\). Persentase \\(= \\dfrac{40.000}{200.000}\\times100\\%=20\\%\\).' },
+    { id:'pg3', type:'pg', level:'sedang', num:3, text:'Harga baju Rp180.000 didiskon 25%. Harga setelah diskon adalah...', options:['Rp135.000','Rp155.000','Rp145.000','Rp160.000'], answer:0, explanation:'Diskon \\(=25\\%\\times180.000=45.000\\). Harga akhir \\(=180.000-45.000=135.000\\).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4, text:'Sebuah karung beras memiliki bruto 52 kg dan tara 2 kg. Berat neto beras tersebut adalah...', options:['50 kg','54 kg','48 kg','52 kg'], answer:0, explanation:'Neto \\(=\\) Bruto \\(-\\) Tara \\(=52-2=50\\) kg.' },
+    { id:'pg5', type:'pg', level:'sukar', num:5, text:'Modal Rp2.000.000 disimpan dengan bunga tunggal 6% per tahun. Bunga setelah 8 bulan adalah...', options:['Rp80.000','Rp120.000','Rp96.000','Rp60.000'], answer:0, explanation:'Bunga \\(= 2.000.000 \\times \\dfrac{6}{100} \\times \\dfrac{8}{12} = 80.000\\).' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1, text:'Ubahlah pecahan \\(\\dfrac{7}{20}\\) menjadi bentuk persen.', answer:'35%', altAnswers:['35','35 persen'], explanation:'\\(\\dfrac{7}{20} \\times 100\\% = 35\\%\\).' },
+    { id:'is2', type:'is', level:'sedang', num:2, text:'Seorang pedagang membeli buah seharga Rp50.000 dan menjualnya seharga Rp42.000. Berapa persen kerugiannya?', answer:'16%', altAnswers:['16','16 persen'], explanation:'Rugi \\(=50.000-42.000=8.000\\). Persentase \\(=\\dfrac{8.000}{50.000}\\times100\\%=16\\%\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3, text:'Sebuah tas berharga Rp300.000 mendapat diskon 15%. Berapa harga tas setelah diskon?', answer:'Rp255.000', altAnswers:['255000','255.000','rp255000','rp255.000'], explanation:'Diskon \\(=15\\%\\times300.000=45.000\\). Harga akhir \\(=300.000-45.000=255.000\\).' },
+    { id:'is4', type:'is', level:'sedang', num:4, text:'Sekarung pupuk memiliki neto 48 kg dan tara 2 kg. Berapa berat bruto pupuk tersebut?', answer:'50 kg', altAnswers:['50','50kg'], explanation:'Bruto \\(=\\) Neto \\(+\\) Tara \\(=48+2=50\\) kg.' },
+    { id:'is5', type:'is', level:'sukar', num:5, text:'Harga sebuah barang sebelum pajak adalah Rp400.000. Jika dikenakan PPN 11%, berapa total harga yang harus dibayar?', answer:'Rp444.000', altAnswers:['444000','444.000','rp444000','rp444.000'], explanation:'Pajak \\(=11\\%\\times400.000=44.000\\). Total \\(=400.000+44.000=444.000\\).' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1, text:'Pilih istilah yang berkaitan langsung dengan uang dalam perdagangan:', options:['Harga pembelian','Harga penjualan','Bruto','Modal'], answers:[0,1,3], explanation:'Harga pembelian, harga penjualan, dan modal adalah istilah uang dalam perdagangan. Bruto adalah istilah berat kemasan, bukan istilah uang.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2, text:'Pilih pernyataan yang benar tentang untung dan rugi:', options:['Untung terjadi jika harga jual lebih besar dari harga beli','Rugi terjadi jika harga jual lebih kecil dari harga beli','Persentase untung dihitung dari harga jual','Persentase untung dihitung dari harga beli'], answers:[0,1,3], explanation:'Persentase untung/rugi selalu dihitung berdasarkan harga beli, bukan harga jual — sehingga pernyataan 3 salah.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3, text:'Toko memberikan diskon 20% untuk barang seharga Rp100.000. Pilih pernyataan yang benar:', options:['Besar diskon Rp20.000','Harga setelah diskon Rp80.000','Harga setelah diskon Rp120.000','Besar diskon Rp80.000'], answers:[0,1], explanation:'Diskon \\(=20\\%\\times100.000=20.000\\). Harga akhir \\(=100.000-20.000=80.000\\). Pilihan 3 dan 4 salah.' },
+    { id:'pk4', type:'pk', level:'sedang', num:4, text:'Pilih pernyataan yang benar mengenai bruto, tara, dan neto:', options:['Bruto = Neto + Tara','Neto = Bruto − Tara','Tara adalah berat bersih barang','Neto adalah berat bersih barang tanpa kemasan'], answers:[0,1,3], explanation:'Tara adalah berat kemasan, bukan berat bersih — sehingga pernyataan 3 salah. Tiga pernyataan lainnya benar.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5, text:'Modal Rp1.000.000 dengan bunga tunggal 5% per tahun. Pilih pernyataan yang benar:', options:['Bunga 1 tahun = Rp50.000','Bunga 6 bulan = Rp25.000','Total setelah 1 tahun = Rp1.050.000','Bunga tidak dipengaruhi oleh lama menabung'], answers:[0,1,2], explanation:'Bunga bergantung pada lama menabung, sehingga pernyataan 4 salah. Tiga pernyataan lainnya benar berdasarkan rumus bunga tunggal.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1, text:'Pecahan \\(\\dfrac{1}{4}\\) sama dengan \\(25\\%\\).', answer:true, explanation:'✅ Benar. \\(\\dfrac{1}{4} \\times 100\\% = 25\\%\\).' },
+    { id:'bs2', type:'bs', level:'sedang', num:2, text:'Jika harga jual lebih rendah dari harga beli, pedagang mengalami keuntungan.', answer:false, explanation:'❌ Salah. Jika harga jual lebih rendah dari harga beli, pedagang mengalami kerugian, bukan keuntungan.' },
+    { id:'bs3', type:'bs', level:'sedang', num:3, text:'Diskon ganda 10% dan 10% sama saja dengan diskon tunggal 20%.', answer:false, explanation:'❌ Salah. Diskon kedua dihitung dari harga setelah diskon pertama, sehingga hasil akhirnya sedikit kurang dari diskon tunggal 20%.' },
+    { id:'bs4', type:'bs', level:'sedang', num:4, text:'Tara adalah selisih antara bruto dan neto.', answer:true, explanation:'✅ Benar. Karena \\(\\text{Bruto} = \\text{Neto} + \\text{Tara}\\), maka \\(\\text{Tara} = \\text{Bruto} - \\text{Neto}\\).' },
+    { id:'bs5', type:'bs', level:'sukar', num:5, text:'Pajak Pertambahan Nilai (PPN) selalu ditanggung oleh penjual, bukan pembeli.', answer:false, explanation:'❌ Salah. PPN pada akhirnya dibebankan kepada pembeli/konsumen sebagai tambahan dari harga barang.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1, left:'Bentuk persen dari 1/2', answer:'50%', options:['50%','25%','75%','20%'], explanation:'\\(\\dfrac{1}{2} \\times 100\\% = 50\\%\\).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2, left:'Rumus persentase untung', answer:'Untung ÷ Harga Beli × 100%', options:['Untung ÷ Harga Beli × 100%','Untung ÷ Harga Jual × 100%','Harga Jual − Harga Beli','Harga Beli − Harga Jual'], explanation:'Persentase untung dihitung dengan membagi besar untung terhadap harga beli, dikali 100%.' },
+    { id:'jd3', type:'jd', level:'sedang', num:3, left:'Bruto 60 kg, Tara 5 kg', answer:'Neto 55 kg', options:['Neto 55 kg','Neto 65 kg','Neto 50 kg','Neto 60 kg'], explanation:'Neto \\(=\\) Bruto \\(-\\) Tara \\(=60-5=55\\) kg.' },
+    { id:'jd4', type:'jd', level:'sukar', num:4, left:'Modal Rp500.000, bunga 4% per tahun, 1 tahun', answer:'Bunga Rp20.000', options:['Bunga Rp20.000','Bunga Rp40.000','Bunga Rp2.000','Bunga Rp200.000'], explanation:'Bunga \\(=500.000\\times\\dfrac{4}{100}\\times\\dfrac{12}{12}=20.000\\).' },
+    { id:'jd5', type:'jd', level:'sedang', num:5, left:'Rumus harga setelah diskon', answer:'Harga Awal − Diskon', options:['Harga Awal − Diskon','Harga Awal + Diskon','Harga Awal × Diskon','Diskon − Harga Awal'], explanation:'Harga setelah diskon diperoleh dengan mengurangkan besar diskon dari harga awal.' }
+  ]
+};
+const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.qbtn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-type') === type); });
+  document.querySelectorAll('.nav-sub a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-type') === type); });
+  renderQuestions(type);
+  window.scrollTo({ top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth' });
+  typesetMath();
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quizArea');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function levelBadge(level){
+  const cls = level === 'mudah' ? 'level-mudah' : (level === 'sedang' ? 'level-sedang' : 'level-sukar');
+  return `<span class="level-badge ${cls}">${level}</span>`;
+}
+
+function renderCard(q){
+  let body = '';
+  if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  const answered = state.answers[q.id];
+  const explClass = answered ? 'explanation show' : 'explanation';
+  return `<div class="question-card" id="card-${q.id}">
+    <div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text || (q.left ? 'Cocokkan: <b>' + q.left + '</b>' : '')}</div>
+    ${body}
+    <div class="${explClass}" id="expl-${q.id}">${q.explanation}</div>
+  </div>`;
+}
+
+function renderBS(q){
+  const answered = state.answers[q.id];
+  const trueClass = answered ? (q.answer === true ? 'correct' : (answered.chosen === true ? 'wrong' : '')) : '';
+  const falseClass = answered ? (q.answer === false ? 'correct' : (answered.chosen === false ? 'wrong' : '')) : '';
+  return `<div class="bs-row">
+    <button class="bs-btn ${trueClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', true)">✅ BENAR</button>
+    <button class="bs-btn ${falseClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', false)">❌ SALAH</button>
+  </div>`;
+}
+function answerBS(qid, val){
+  const q = allQuestions.bs.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPG(q){
+  const answered = state.answers[q.id];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    if(answered){
+      if(idx === q.answer) cls = 'correct';
+      else if(idx === answered.chosen) cls = 'wrong';
+    }
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="answerPG('${q.id}', ${idx})">${opt}</button>`;
+  });
+  html += '</div>';
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){ return x.id === qid; });
+  const correct = (idx === q.answer);
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderJD(q){
+  const answered = state.answers[q.id];
+  let cls = '';
+  if(answered){ cls = answered.correct ? 'correct' : 'wrong'; }
+  let opts = '<option value="">-- pilih --</option>';
+  q.options.forEach(function(opt){
+    const sel = answered && answered.chosen === opt ? 'selected' : '';
+    opts += `<option value="${opt}" ${sel}>${opt}</option>`;
+  });
+  return `<div class="jd-row">
+    <select class="${cls}" ${answered ? 'disabled' : ''} onchange="answerJD('${q.id}', this.value)">${opts}</select>
+  </div>`;
+}
+function answerJD(qid, val){
+  if(!val) return;
+  const q = allQuestions.jd.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPK(q){
+  const answered = state.answers[q.id];
+  if(!pkTemp[q.id]) pkTemp[q.id] = [];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    const chosenSet = answered ? answered.chosen : pkTemp[q.id];
+    const isChosen = chosenSet.includes(idx);
+    if(answered){
+      const isCorrectOpt = q.answers.includes(idx);
+      if(isCorrectOpt) cls = 'correct';
+      else if(isChosen) cls = 'wrong';
+    }
+    const marker = isChosen ? '☑' : '☐';
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="togglePK('${q.id}', ${idx})">${marker} ${opt}</button>`;
+  });
+  html += '</div>';
+  if(!answered){
+    html += `<button class="pk-confirm" onclick="submitPK('${q.id}')">Konfirmasi Jawaban</button>`;
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const pos = pkTemp[qid].indexOf(idx);
+  if(pos >= 0) pkTemp[qid].splice(pos, 1);
+  else pkTemp[qid].push(idx);
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  rerenderCardBody(q);
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  const chosen = (pkTemp[qid] || []).slice().sort();
+  const correctArr = q.answers.slice().sort();
+  const correct = JSON.stringify(chosen) === JSON.stringify(correctArr);
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderIS(q){
+  const answered = state.answers[q.id];
+  const cls = answered ? (answered.correct ? 'correct' : 'wrong') : '';
+  const val = answered ? answered.chosen : '';
+  return `<div class="is-row">
+    <input type="text" id="input-${q.id}" class="${cls}" value="${val}" placeholder="Ketik jawabanmu..." ${answered ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){submitIS('${q.id}')}">
+    ${answered ? '' : `<button class="is-btn" onclick="submitIS('${q.id}')">Kirim Jawaban</button>`}
+  </div>`;
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){ return x.id === qid; });
+  const inputEl = document.getElementById('input-' + qid);
+  const raw = inputEl.value.trim().toLowerCase();
+  const mainAns = (q.answer || '').toLowerCase();
+  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase(); });
+  const correct = raw === mainAns || alts.includes(raw) || alts.some(function(a){ return raw.includes(a) || a.includes(raw); }) || raw.includes(mainAns) || mainAns.includes(raw);
+  state.answers[qid] = { chosen: inputEl.value.trim(), correct: !!correct };
+  refreshCard(q, !!correct);
+}
+
+function rerenderCardBody(q){
+  const card = document.getElementById('card-' + q.id);
+  if(!card) return;
+  let body = '';
+  if(q.type === 'pk'){ body = renderPK(q); }
+  const explDiv = card.querySelector('.explanation');
+  card.innerHTML = `<div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text}</div>
+    ${body}
+    <div class="${explDiv.className}" id="expl-${q.id}">${q.explanation}</div>`;
+  typesetMath();
+}
+
+function refreshCard(q, correct){
+  const card = document.getElementById('card-' + q.id);
+  if(card){
+    const temp = document.createElement('div');
+    temp.innerHTML = renderCard(q);
+    card.innerHTML = temp.firstElementChild.innerHTML;
+    const explDiv = document.getElementById('expl-' + q.id);
+    if(explDiv) explDiv.classList.add('show');
+  }
+  updateProgress();
+  updateScoreStrip();
+  typesetMath();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let benar = 0, total = qs.length;
+    qs.forEach(function(q){
+      if(state.answers[q.id]){ if(state.answers[q.id].correct) benar++; }
+    });
+    html += `<div class="score-item">${typeLabels[t]}: <b>${benar}/${total}</b></div>`;
+  });
+  strip.innerHTML = html;
+}
+function updateProgress(){
+  updateScoreStrip();
+}
+
+function showAnalysis(){
+  let total = 0, benar = 0, salah = 0;
+  const perType = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let tb = 0;
+    qs.forEach(function(q){
+      total++;
+      const a = state.answers[q.id];
+      if(a){
+        if(a.correct){ benar++; tb++; } else { salah++; }
+      } else {
+        salah++;
+      }
+    });
+    perType[t] = tb;
+  });
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  const nilai = total > 0 ? Math.round((benar / total) * 100) : 0;
+  document.getElementById('statNilai').textContent = nilai + '%';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    const b = perType[t];
+    const pct = qs.length > 0 ? Math.round((b / qs.length) * 100) : 0;
+    barsHtml += `<div class="type-bar-row">
+      <div class="tb-label">${typeLabels[t]}: ${b}/${qs.length}</div>
+      <div class="type-bar-track"><div class="type-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let grade, msg;
+  if(nilai >= 90){ grade = 'A'; msg = '🏆 Luar Biasa!'; }
+  else if(nilai >= 75){ grade = 'B'; msg = '⭐ Bagus!'; }
+  else if(nilai >= 60){ grade = 'C'; msg = '👍 Cukup Baik'; }
+  else if(nilai >= 40){ grade = 'D'; msg = '💪 Jangan Menyerah'; }
+  else { grade = 'E'; msg = '📚 Semangat Belajar'; }
+  document.getElementById('gradeLetter').textContent = grade;
+  document.getElementById('gradeMsg').textContent = msg;
+
+  document.getElementById('analysisPanel').hidden = false;
+  document.getElementById('analysisPanel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').hidden = true;
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollSpy();
+  typesetMath();
+});
+</script>
+</body>
+</html>
