@@ -292,7 +292,7 @@
         };
 
         function pressLimit() {
-            const input = window.prompt('Masukkan batas maksimal hasil pengurangan (misal 20):', limit || '20');
+            const input = window.prompt('Masukkan batas maksimal bilangan yang dikurangi (misal 10):', limit || '10');
             if (input === null) return; // dibatalkan
 
             const val = parseInt(input, 10);
@@ -302,7 +302,7 @@
             }
 
             limit = val;
-            document.getElementById('limitInfo').textContent = `Batas hasil: 0 - ${limit}`;
+            document.getElementById('limitInfo').textContent = `Batas bilangan yang dikurangi: 0 - ${limit}`;
             startSession();
         }
 
@@ -322,11 +322,11 @@
             document.getElementById('answerDisplay').textContent = '';
             document.getElementById('attemptInfo').textContent = '';
 
-            // Hasil pengurangan acak antara 0 sampai limit (tidak boleh negatif)
-            correctAnswer = Math.floor(Math.random() * (limit + 1)); // 0..limit
-            // num2 (pengurang) acak, lalu num1 (yang dikurangi) = num2 + hasil
-            num2 = Math.floor(Math.random() * (limit + 1));
-            num1 = num2 + correctAnswer;
+            // Bilangan yang dikurangi (num1) dibatasi maksimal LIMIT
+            num1 = Math.floor(Math.random() * (limit + 1)); // 0..limit
+            // Pengurang (num2) diacak dari 0 sampai num1, agar hasil tidak negatif
+            num2 = Math.floor(Math.random() * (num1 + 1));
+            correctAnswer = num1 - num2;
 
             document.getElementById('question').textContent = `${num1} - ${num2} = ?`;
             document.getElementById('message').innerHTML = `📝 Soal ${questionIndex + 1}/${totalQuestionsPerSet} — Ketik jawabanmu!`;
