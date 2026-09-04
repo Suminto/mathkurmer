@@ -16,7 +16,8 @@ isi: >+
   Konten situs ini terus diperbarui secara bertahap.
 
 
-  Saran dan Kritik yang membangun bisa kirim melalui WA di +628193123124
+  Saran dan Kritik yang membangun bisa kirim melalui WA di **+6281931231247**
+
 
   Yang mau donasi boleh kirim ke Dana di no yang sama. Terima Kasih.
 
