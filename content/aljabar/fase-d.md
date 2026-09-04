@@ -9,9 +9,17 @@ deskripsi: >-
 
   Murid dapat memahami relasi dan fungsi (domain, kodomain, range) serta menyajikannya dalam bentuk diagram panah, tabel, himpunan pasangan berurutan, dan grafik; membedakan beberapa fungsi non linear dari fungsi linear secara grafik; menyelesaikan persamaan dan pertidaksamaan linear satu variabel; menyajikan, menganalisis, dan menyelesaikan masalah dengan menggunakan relasi, fungsi dan persamaan linear; serta menyelesaikan sistem persaman linear dua variabel melalui beberapa cara untuk penyelesaian masalah.
 bab:
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Bentuk Aljabar
     judul: Bentuk ALjabar
-    ringkasan: Bentuk ALjabar
+    ringkasan: Aljabar adalah salah satu cabang penting dalam matematika. Kata
+      Aljabar berasal dari kata al-jabr yang diambil dari buku karangan Muhammad
+      ibn Musa Al-Khwarizmi (780-850 SM), yaitu kitab al-jabr wa al-nuqubalah
+      yang membahas tentang cara menyelesaikan persamaan-persamaan aljabar.
+      Pemakaian nama Aljabar ini sebagai penghormatan kepada Al-Khwarizmi atas
+      jasa-jasanya dalam mengembangkan aljabar melalui karya-karya tulisnya.
+      Al-Khwarizmi adalah ahli matematika dan ahli astronomi yang termasyur yang
+      tinggal di Baghdad (Irak) pada permulaan abad ke-9.
+    ebookUrl: /ebooks/B1 Ebook-Interaktif-Bentuk-Aljabar.html
   - ebookLabel: Buka Ebook Interaktif
     judul: PLSV dan PtLSV
     ringkasan: Persamaan Linear Satu Variabel
