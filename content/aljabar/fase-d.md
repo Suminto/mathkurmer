@@ -22,7 +22,12 @@ bab:
     ebookUrl: /ebooks/B1 Ebook-Interaktif-Bentuk-Aljabar.html
   - ebookLabel: Buka Ebook Interaktif
     judul: PLSV dan PtLSV
-    ringkasan: Persamaan Linear Satu Variabel
+    ringkasan: >-
+      Persamaan Linear Satu Variabel adalah kalimat matematika yang hanya
+      memiliki satu variabel.
+
+
+      Pertidaksamaan linear dengan satu variabel adalah kalimat matematika yang menggunakan tanda pertidaksamaan dan peubahnya berpangkat satu.
   - ebookLabel: Buka Ebook Interaktif Pola Bilangan
     judul: Pola Bilangan
     ringkasan: Pola Bilangan
