@@ -38,7 +38,14 @@ bab:
     ebookUrl: /ebooks/B4 Ebook-Interaktif-Relasi-dan-Fungsi.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Bidang Cartesius
-    ringkasan: Bidang Cartesius
+    ringkasan: >-
+      Matematika mempunyai cara praktis untuk menentukan letak suatu benda.
+      Caranya yaitu : menggunakan sistem koordinat Cartesius. 
+
+      Istilah Cartesius (baca Kartesius) digunakan untuk mengenang ahli matematika sekaligus filsuf dari Perancis Descartes, yang perannya besar dalam menggabungkan aljabar dan geometri (Cartesius adalah latinisasi untuk Descartes). 
+
+
+      Hasil kerjanya sangat berpengaruh dalam perkembangan geometri analitik, kalkulus, dan kartografi. Ide dasar sistem ini dikembangkan pada tahun 1637 dalam dua tulisan karya Descartes. Pada bagian kedua dari tulisannya Discourse on Method, beliau memperkenalkan ide baru untuk menggambarkan posisi titik atau obyek pada sebuah permukaan, dengan menggunakan dua sumbu yang tegak lurus antara satu dengan yang lain. 
   - ebookLabel: Buka Ebook Interaktif Persamaan Garis Lurus
     judul: Persamaan Garis Lurus
     ringkasan: Persamaan Garis Lurus
