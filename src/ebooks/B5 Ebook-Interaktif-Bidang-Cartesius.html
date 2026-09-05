@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bidang Kartesius — Matematika Kelas 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4', serif;
+  background:var(--paper);
+  color:var(--text-dark);
+  display:flex;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:290px; flex-shrink:0;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column;
+  border-right:1px solid var(--ink-border);
+  z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink3); border-radius:3px;}
+.side-header{
+  padding:26px 22px 16px; border-bottom:1px solid var(--ink-border);
+}
+.side-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px;
+  color:var(--gold); text-transform:uppercase;
+}
+.side-title{
+  font-size:22px; font-weight:700; margin-top:8px; line-height:1.25; color:var(--cream);
+}
+.side-sub{
+  font-size:12.5px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;
+}
+.progress-wrap{
+  padding:16px 22px; border-bottom:1px solid var(--ink-border);
+}
+.progress-track{
+  height:6px; background:var(--ink3); border-radius:4px; overflow:hidden;
+}
+#progressBar{
+  height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+  transition:width .25s ease;
+}
+.progress-txt{font-size:11px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;}
+nav{padding:14px 12px 30px; flex:1;}
+.nav-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft);
+  padding:14px 10px 8px; text-transform:uppercase; opacity:.85;
+}
+.nav-link{
+  display:block; padding:9px 12px; margin:2px 0; border-radius:8px;
+  color:var(--cream-dim); text-decoration:none; font-size:14px;
+  transition:background .18s ease, color .18s ease;
+  border-left:3px solid transparent;
+}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left:3px solid var(--gold);}
+.nav-sub{padding-left:12px; border-left:1px solid var(--ink-border); margin:2px 0 10px 22px;}
+.nav-sub a{
+  display:block; padding:7px 10px; font-size:13px; color:var(--cream-dim); text-decoration:none;
+  border-radius:6px; transition:background .18s ease, color .18s ease; cursor:pointer;
+}
+.nav-sub a:hover, .nav-sub a.active{background:var(--ink3); color:var(--gold-soft);}
+
+#menuToggle{
+  display:none; position:fixed; top:14px; left:14px; z-index:200;
+  width:44px; height:44px; border-radius:10px; border:1px solid var(--ink-border);
+  background:var(--ink); color:var(--gold-soft); font-size:20px; cursor:pointer;
+}
+#overlay{display:none; position:fixed; inset:0; background:rgba(20,26,46,.6); z-index:60;}
+
+/* ===== CONTENT ===== */
+#content{flex:1; min-width:0; padding:0;}
+.hero{
+  background:linear-gradient(160deg, var(--ink) 0%, var(--ink2) 55%, var(--ink3) 100%);
+  color:var(--cream); padding:70px 60px 56px; position:relative; overflow:hidden;
+}
+.hero::after{
+  content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px;
+  border-radius:50%; background:radial-gradient(circle, rgba(224,169,77,.18), transparent 70%);
+}
+.hero-label{font-family:'JetBrains Mono',monospace; letter-spacing:3px; color:var(--gold); font-size:13px; text-transform:uppercase;}
+.hero h1{font-size:42px; margin-top:14px; line-height:1.15; max-width:640px; color:#ffd873;}
+.hero p{margin-top:16px; color:var(--cream-dim); max-width:600px; font-size:16.5px; line-height:1.7;}
+.chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.chip{
+  font-family:'JetBrains Mono',monospace; font-size:12px; padding:7px 14px; border-radius:20px;
+  background:var(--ink3); border:1px solid var(--ink-border); color:var(--gold-soft);
+}
+
+.mat-section{padding:56px 60px; border-bottom:1px solid var(--paper-line); max-width:900px;}
+.mat-section .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.mat-section h2{font-size:28px; margin-top:14px;}
+.mat-section h3{font-size:20px; margin-top:30px; margin-bottom:10px; color:var(--text-mid);}
+.mat-section p{line-height:1.85; margin-top:12px; font-size:16.5px; color:var(--text-dark);}
+.mat-section ul, .mat-section ol{margin:14px 0 14px 26px; line-height:1.9; font-size:16px;}
+
+.callout{
+  margin:20px 0; padding:18px 22px; border-radius:10px; border-left:5px solid;
+  font-size:15.5px; line-height:1.75;
+}
+.callout .co-title{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; display:block;}
+.def{background:var(--def); border-color:var(--def-b);}
+.def .co-title{color:#3f6b32;}
+.note{background:var(--note); border-color:var(--note-b);}
+.note .co-title{color:#a06a1e;}
+.warn{background:var(--warn); border-color:var(--warn-b);}
+.warn .co-title{color:#9a3c34;}
+
+.example-box{
+  margin:20px 0; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  padding:20px 24px;
+}
+.example-box .ex-title{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:1.5px; color:var(--gold);
+  background:var(--ink); display:inline-block; padding:4px 12px; border-radius:6px; margin-bottom:12px;
+}
+.example-box ol{margin-left:22px; line-height:2;}
+.example-box .step-label{font-weight:600; color:var(--text-mid); font-family:'JetBrains Mono',monospace; font-size:13px;}
+
+.kartesius-viz{
+  margin:20px 0; padding:20px; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  text-align:center;
+}
+.kartesius-viz svg{max-width:100%; height:auto;}
+
+.calc-box{
+  margin:24px 0; background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 26px;
+  box-shadow:0 10px 30px rgba(20,26,46,.25);
+}
+.calc-box h4{color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
+.calc-row input, .calc-row select{
+  font-family:'JetBrains Mono',monospace; font-size:15px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--ink-border); background:var(--ink2); color:var(--cream); width:80px;
+}
+.calc-row select{width:auto;}
+.calc-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--gold); color:var(--ink); font-weight:700; cursor:pointer; transition:transform .15s ease, background .15s ease;
+}
+.calc-btn:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{
+  margin-top:12px; padding:12px 16px; background:var(--ink2); border-radius:8px; border:1px solid var(--ink-border);
+  font-family:'JetBrains Mono',monospace; font-size:15px; min-height:22px; color:var(--gold-soft);
+}
+
+/* ===== LATIHAN ===== */
+.latihan-section{padding:56px 60px 90px; background:var(--paper);}
+.latihan-header{max-width:900px;}
+.latihan-header .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.latihan-header h2{font-size:30px; margin-top:14px;}
+.latihan-header p{margin-top:10px; color:var(--text-mid); font-size:15.5px; max-width:640px; line-height:1.7;}
+
+.quiz-nav{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 20px;}
+.qbtn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:10px 18px; border-radius:24px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-mid); cursor:pointer;
+  transition:all .18s ease;
+}
+.qbtn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+.qbtn:hover{transform:translateY(-1px);}
+
+.score-strip{
+  display:flex; flex-wrap:wrap; gap:14px; margin-bottom:24px; max-width:900px;
+}
+.score-item{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:8px 14px; border-radius:8px;
+  background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid);
+}
+.score-item b{color:var(--text-dark);}
+
+#quizArea{max-width:820px;}
+.question-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px;
+  margin-bottom:20px; animation:fadeUp .35s ease;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.q-top{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+.q-num{
+  width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft);
+  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; flex-shrink:0;
+}
+.level-badge{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:.5px;
+}
+.level-mudah{background:#dff0da; color:#3f6b32;}
+.level-sedang{background:#fdf0df; color:#a06a1e;}
+.level-sukar{background:#fbe1df; color:#9a3c34;}
+.q-text{font-size:16.5px; line-height:1.7; margin-bottom:16px;}
+.q-options{display:flex; flex-direction:column; gap:9px;}
+.opt-btn{
+  text-align:left; padding:11px 16px; border-radius:9px; border:1px solid var(--paper-line);
+  background:var(--paper2); font-family:'Source Serif 4',serif; font-size:15.5px; cursor:pointer;
+  transition:all .18s ease; color:var(--text-dark);
+}
+.opt-btn:hover{background:#f0e6cc; transform:translateX(3px);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.opt-btn:disabled{cursor:default;}
+.bs-row{display:flex; gap:12px;}
+.bs-btn{
+  flex:1; padding:13px; border-radius:9px; border:1px solid var(--paper-line); background:var(--paper2);
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; font-weight:700; cursor:pointer; transition:all .18s ease;
+}
+.bs-btn:hover{transform:translateY(-2px);}
+.bs-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.bs-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{font-weight:600; min-width:160px;}
+.jd-row select{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-dark);
+}
+.jd-row select.correct{background:var(--correct); border-color:var(--correct-b);}
+.jd-row select.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.pk-confirm{margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none; background:var(--ink); color:var(--gold-soft); cursor:pointer;}
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{
+  flex:1; min-width:180px; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  font-family:'Source Serif 4',serif; font-size:15.5px; background:var(--paper2); color:var(--text-dark);
+}
+.is-row input.correct{background:var(--correct); border-color:var(--correct-b);}
+.is-row input.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.is-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer;
+}
+.explanation{
+  margin-top:14px; padding:14px 18px; border-radius:9px; background:var(--note); border-left:4px solid var(--note-b);
+  font-size:14.5px; line-height:1.7; display:none;
+}
+.explanation.show{display:block;}
+
+.analysis-btn-wrap{max-width:820px; text-align:center; margin:30px 0;}
+.analysis-btn{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:14px 32px; border-radius:26px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer; transition:all .2s ease;
+}
+.analysis-btn:hover{background:var(--ink2); transform:translateY(-2px);}
+
+#analysisPanel{max-width:820px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:#fff; border:1px solid var(--paper-line); border-radius:12px; padding:18px; text-align:center;}
+.stat-box .num{font-size:28px; font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--ink);}
+.stat-box .lab{font-size:12px; color:var(--text-mid); margin-top:4px; font-family:'JetBrains Mono',monospace;}
+.type-bars{margin:24px 0;}
+.type-bar-row{margin-bottom:14px;}
+.type-bar-row .tb-label{font-size:13.5px; font-family:'JetBrains Mono',monospace; margin-bottom:6px; color:var(--text-mid);}
+.type-bar-track{height:14px; background:var(--paper2); border-radius:7px; overflow:hidden; border:1px solid var(--paper-line);}
+.type-bar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{
+  text-align:center; padding:30px; border-radius:16px; margin:26px 0; color:#fff;
+  background:linear-gradient(135deg, var(--ink), var(--ink3));
+}
+.grade-box .grade-letter{font-size:52px; font-family:'Playfair Display',serif; font-weight:800;}
+.grade-box .grade-msg{font-size:16px; margin-top:6px; color:var(--gold-soft);}
+.reset-btn{
+  display:block; margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:12px 26px;
+  border-radius:24px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer;
+}
+
+footer{
+  padding:34px 60px; background:var(--ink); color:var(--cream-dim); font-size:13px; text-align:center;
+  font-family:'JetBrains Mono',monospace; line-height:1.9;
+}
+footer b{color:var(--gold-soft);}
+
+@media (max-width:900px){
+  #menuToggle{display:block;}
+  #sidebar{position:fixed; top:0; left:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.4);}
+  #sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}
+  .hero, .mat-section, .latihan-section{padding-left:26px; padding-right:26px;}
+  .hero{padding-top:90px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .jd-row{flex-direction:column; align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<aside id="sidebar">
+  <div class="side-header">
+    <div class="side-label">Matematika · Kelas 8</div>
+    <div class="side-title">Bidang Kartesius</div>
+    <div class="side-sub">Ebook Interaktif</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div id="progressBar"></div></div>
+    <div class="progress-txt" id="progressTxt">0% dibaca</div>
+  </div>
+  <nav>
+    <div class="nav-label">Materi</div>
+    <a href="#hero" class="nav-link" data-target="hero">Pendahuluan</a>
+    <a href="#matA" class="nav-link" data-target="matA">A. Tempat Kedudukan / Locus</a>
+    <a href="#matB" class="nav-link" data-target="matB">B. Denah Letak Benda</a>
+    <a href="#matC" class="nav-link" data-target="matC">C. Posisi Titik thd Sumbu X &amp; Y</a>
+    <a href="#matD" class="nav-link" data-target="matD">D. Posisi Titik thd O dan (a,b)</a>
+    <a href="#matE" class="nav-link" data-target="matE">E. Koordinat Kartesius Titik</a>
+    <a href="#matF" class="nav-link" data-target="matF">F. Daerah/Kuadran</a>
+    <a href="#matG" class="nav-link" data-target="matG">G. Koordinat Kutub/Polar</a>
+    <a href="#matH" class="nav-link" data-target="matH">H. Masalah Kontekstual</a>
+    <div class="nav-label">Latihan</div>
+    <a href="#latihan" class="nav-link" data-target="latihan">Latihan Soal</a>
+    <div class="nav-sub">
+      <a data-type="pg" onclick="showType('pg')">Pilihan Ganda Biasa</a>
+      <a data-type="is" onclick="showType('is')">Isian Singkat</a>
+      <a data-type="pk" onclick="showType('pk')">PG Kompleks</a>
+      <a data-type="bs" onclick="showType('bs')">Benar/Salah</a>
+      <a data-type="jd" onclick="showType('jd')">Menjodohkan</a>
+    </div>
+  </nav>
+</aside>
+
+<main id="content">
+
+  <section id="hero" class="hero">
+    <div class="hero-label">Ebook Interaktif · Matematika Kelas 8</div>
+    <h1>Bidang Kartesius</h1>
+    <p>Menjelajahi sistem koordinat: dari tempat kedudukan, membaca denah, posisi titik terhadap sumbu dan titik lain, kuadran, hingga koordinat kutub — lengkap dengan visualisasi, kalkulator interaktif, dan 25 soal latihan otomatis-terkoreksi.</p>
+    <div class="chip-row">
+      <div class="chip">A. Tempat Kedudukan</div>
+      <div class="chip">B. Denah Letak Benda</div>
+      <div class="chip">C. Posisi thd Sumbu</div>
+      <div class="chip">D. Posisi thd Titik Lain</div>
+      <div class="chip">E. Koordinat Kartesius</div>
+      <div class="chip">F. Kuadran</div>
+      <div class="chip">G. Koordinat Polar</div>
+      <div class="chip">H. Masalah Kontekstual</div>
+    </div>
+  </section>
+
+  <section id="matA" class="mat-section">
+    <span class="sec-label">Bagian A</span>
+    <h2>Tempat Kedudukan / Locus</h2>
+    <p>Tempat kedudukan (locus) adalah salah satu konsep dasar sebelum mempelajari bidang kartesius secara mendalam.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Tempat kedudukan (locus) adalah himpunan semua titik yang memenuhi syarat atau sifat tertentu.
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh</span>
+      <ul>
+        <li>Tempat kedudukan titik-titik yang berjarak sama (misalnya \(r\)) dari sebuah titik pusat \(P\) membentuk sebuah <b>lingkaran</b> berjari-jari \(r\).</li>
+        <li>Tempat kedudukan titik-titik yang berjarak sama dari dua titik \(A\) dan \(B\) membentuk sebuah <b>garis lurus</b> yang tegak lurus dan melalui titik tengah ruas garis \(AB\).</li>
+      </ul>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Kaitan dengan Bidang Kartesius</span>
+      Pada bidang kartesius, tempat kedudukan dapat digambarkan secara tepat menggunakan koordinat, misalnya sebagai kumpulan titik yang memenuhi suatu persamaan atau pertidaksamaan tertentu.
+    </div>
+  </section>
+
+  <section id="matB" class="mat-section">
+    <span class="sec-label">Bagian B</span>
+    <h2>Denah Letak Benda</h2>
+    <p>Denah adalah gambar sederhana yang menunjukkan letak suatu benda atau tempat. Sistem koordinat sangat membantu untuk menyatakan posisi benda pada denah secara tepat dan tidak membingungkan.</p>
+
+    <div class="callout def">
+      <span class="co-title">Konsep</span>
+      Setiap benda atau tempat pada denah dapat dinyatakan dengan pasangan koordinat \((x,y)\), sehingga posisinya dapat ditentukan secara pasti relatif terhadap suatu titik acuan.
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Pada denah sebuah taman, pintu gerbang berada di titik acuan \((0,0)\), kolam berada di titik \((4,3)\), dan gazebo berada di titik \((-2,5)\).</p>
+      <ol>
+        <li><span class="step-label">Kolam:</span> berada 4 satuan ke kanan dan 3 satuan ke atas dari pintu gerbang.</li>
+        <li><span class="step-label">Gazebo:</span> berada 2 satuan ke kiri dan 5 satuan ke atas dari pintu gerbang.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="matC" class="mat-section">
+    <span class="sec-label">Bagian C</span>
+    <h2>Posisi Sebuah Titik terhadap Sumbu X dan Sumbu Y</h2>
+    <p>Setiap titik pada bidang kartesius memiliki jarak tertentu terhadap sumbu X (mendatar) dan sumbu Y (tegak).</p>
+
+    <div class="callout def">
+      <span class="co-title">Rumus</span>
+      Jarak titik \((x,y)\) terhadap sumbu X adalah \(|y|\) (nilai mutlak dari \(y\)).<br>
+      Jarak titik \((x,y)\) terhadap sumbu Y adalah \(|x|\) (nilai mutlak dari \(x\)).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tentukan jarak titik \((3,-5)\) terhadap sumbu X dan sumbu Y.</p>
+      <ol>
+        <li><span class="step-label">Jarak ke sumbu X:</span> \(|-5| = 5\) satuan.</li>
+        <li><span class="step-label">Jarak ke sumbu Y:</span> \(|3| = 3\) satuan.</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Jarak Titik ke Sumbu X dan Y</h4>
+      <div class="calc-row">
+        <span>Titik (</span>
+        <input type="number" id="jsX" placeholder="x" value="3">
+        <span>,</span>
+        <input type="number" id="jsY" placeholder="y" value="-5">
+        <span>)</span>
+        <button class="calc-btn" onclick="hitungJarakSumbu()">Hitung</button>
+      </div>
+      <div class="calc-result" id="jsResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matD" class="mat-section">
+    <span class="sec-label">Bagian D</span>
+    <h2>Posisi Sebuah Titik Terhadap Titik Asal O(0,0) dan Terhadap Titik (a,b)</h2>
+    <p>Posisi suatu titik dapat dijelaskan relatif terhadap titik asal, maupun relatif terhadap titik lain yang bukan titik asal.</p>
+
+    <div class="callout def">
+      <span class="co-title">Terhadap Titik Asal O(0,0)</span>
+      Koordinat \((x,y)\) menunjukkan pergeseran \(x\) satuan secara horizontal (kanan jika positif, kiri jika negatif) dan \(y\) satuan secara vertikal (atas jika positif, bawah jika negatif) dari titik asal.
+    </div>
+    <div class="callout def">
+      <span class="co-title">Terhadap Titik Lain (a,b)</span>
+      Posisi titik \((x,y)\) terhadap titik \((a,b)\) ditentukan dari selisih koordinatnya: bergeser \((x-a)\) satuan secara horizontal dan \((y-b)\) satuan secara vertikal dari titik \((a,b)\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tentukan posisi titik \(P(7,4)\) terhadap titik \(Q(2,4)\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Hitung selisih absis: \(7-2=5\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung selisih ordinat: \(4-4=0\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi, \(P\) berada 5 satuan ke kanan dari \(Q\), dan sejajar (tidak bergeser) secara vertikal.</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Posisi Relatif Antar Dua Titik</h4>
+      <div class="calc-row">
+        <span>P(</span>
+        <input type="number" id="prX1" placeholder="x1" value="7">
+        <span>,</span>
+        <input type="number" id="prY1" placeholder="y1" value="4">
+        <span>) terhadap Q(</span>
+        <input type="number" id="prX2" placeholder="x2" value="2">
+        <span>,</span>
+        <input type="number" id="prY2" placeholder="y2" value="4">
+        <span>)</span>
+        <button class="calc-btn" onclick="hitungPosisiRelatif()">Hitung</button>
+      </div>
+      <div class="calc-result" id="prResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matE" class="mat-section">
+    <span class="sec-label">Bagian E</span>
+    <h2>Koordinat Kartesius Sebuah Titik</h2>
+    <p>Sistem koordinat kartesius terdiri dari dua garis bilangan yang saling tegak lurus, digunakan untuk menyatakan posisi suatu titik secara tepat pada suatu bidang.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Sumbu X (mendatar) dan sumbu Y (tegak) berpotongan tegak lurus di sebuah titik yang disebut <b>titik asal</b>, dilambangkan \(O(0,0)\). Posisi suatu titik dinyatakan sebagai pasangan terurut \((x,y)\), dengan \(x\) disebut <b>absis</b> dan \(y\) disebut <b>ordinat</b>.
+    </div>
+
+    <div class="kartesius-viz">
+      <svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="120" x2="280" y2="120" stroke="#5b5137" stroke-width="2"/>
+        <line x1="150" y1="20" x2="150" y2="220" stroke="#5b5137" stroke-width="2"/>
+        <polygon points="280,120 268,114 268,126" fill="#5b5137"/>
+        <polygon points="150,20 144,32 156,32" fill="#5b5137"/>
+        <text x="270" y="112" font-family="JetBrains Mono, monospace" font-size="12" fill="#2b2416">X</text>
+        <text x="158" y="30" font-family="JetBrains Mono, monospace" font-size="12" fill="#2b2416">Y</text>
+        <text x="155" y="135" font-family="JetBrains Mono, monospace" font-size="11" fill="#5b5137">O(0,0)</text>
+        <circle cx="210" cy="80" r="4" fill="#c1584f"/>
+        <text x="216" y="76" font-family="JetBrains Mono, monospace" font-size="12" fill="#9a3c34">(4,3)</text>
+      </svg>
+      <p style="margin-top:8px; font-size:13.5px; color:var(--text-mid);">Contoh titik \((4,3)\) pada bidang kartesius: 4 satuan ke kanan, 3 satuan ke atas dari titik asal.</p>
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tuliskan koordinat sebuah titik dengan absis \(-3\) dan ordinat \(6\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Absis (\(x\)) selalu ditulis pertama, ordinat (\(y\)) ditulis kedua.</li>
+        <li><span class="step-label">Langkah 2:</span> Jadi koordinatnya adalah \((-3,6)\).</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="matF" class="mat-section">
+    <span class="sec-label">Bagian F</span>
+    <h2>Daerah/Kuadran pada Bidang Kartesius</h2>
+    <p>Sumbu X dan sumbu Y membagi bidang kartesius menjadi empat daerah yang disebut kuadran.</p>
+
+    <div class="callout def">
+      <span class="co-title">Pembagian Kuadran</span>
+      Kuadran I: \(x>0, y>0\).<br>
+      Kuadran II: \(x<0, y>0\).<br>
+      Kuadran III: \(x<0, y<0\).<br>
+      Kuadran IV: \(x>0, y<0\).<br>
+      Titik yang tepat berada pada sumbu X atau sumbu Y tidak termasuk dalam kuadran manapun.
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tentukan kuadran dari titik \((-3,5)\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Perhatikan tanda koordinatnya: \(x=-3\) (negatif), \(y=5\) (positif).</li>
+        <li><span class="step-label">Langkah 2:</span> Kombinasi \(x<0, y>0\) sesuai dengan Kuadran II.</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Penentu Kuadran</h4>
+      <div class="calc-row">
+        <span>Titik (</span>
+        <input type="number" id="kuX" placeholder="x" value="-3">
+        <span>,</span>
+        <input type="number" id="kuY" placeholder="y" value="5">
+        <span>)</span>
+        <button class="calc-btn" onclick="tentukanKuadran()">Tentukan</button>
+      </div>
+      <div class="calc-result" id="kuResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matG" class="mat-section">
+    <span class="sec-label">Bagian G</span>
+    <h2>Koordinat Kutub/Polar</h2>
+    <p>Selain koordinat kartesius, posisi suatu titik juga dapat dinyatakan menggunakan koordinat kutub (polar), yang menggunakan jarak dan sudut.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      Koordinat kutub \((r,\theta)\) menyatakan posisi titik dengan \(r\) sebagai jarak dari titik asal (kutub) ke titik tersebut, dan \(\theta\) sebagai sudut yang dibentuk terhadap sumbu X positif (diukur berlawanan arah jarum jam).
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Rumus Konversi Kartesius ke Polar</span>
+      \(r = \sqrt{x^2+y^2}\)<br>
+      \(\tan \theta = \dfrac{y}{x}\)
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Ubahlah titik kartesius \((3,4)\) menjadi koordinat kutub.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Hitung \(r\): \(r=\sqrt{3^2+4^2}=\sqrt{9+16}=\sqrt{25}=5\).</li>
+        <li><span class="step-label">Langkah 2:</span> Hitung \(\theta\): \(\tan \theta = \dfrac{4}{3}\), sehingga \(\theta \approx 53{,}13°\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi koordinat kutubnya adalah \((5, 53{,}13°)\).</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Konversi Kartesius ke Polar</h4>
+      <div class="calc-row">
+        <span>Titik (</span>
+        <input type="number" id="poX" placeholder="x" value="3">
+        <span>,</span>
+        <input type="number" id="poY" placeholder="y" value="4">
+        <span>)</span>
+        <button class="calc-btn" onclick="hitungPolar()">Konversi</button>
+      </div>
+      <div class="calc-result" id="poResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matH" class="mat-section">
+    <span class="sec-label">Bagian H</span>
+    <h2>Masalah Kontekstual Terkait Bidang Kartesius</h2>
+    <p>Sistem koordinat kartesius banyak digunakan dalam kehidupan sehari-hari, seperti pada peta, GPS, denah bangunan, hingga permainan strategi.</p>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Pada denah sekolah, gerbang berada di titik \((0,0)\) dan ruang kelas berada di titik \((6,8)\). Berapa jarak lurus dari gerbang ke ruang kelas?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Gunakan rumus jarak dua titik (mirip rumus \(r\) pada koordinat kutub): \(d=\sqrt{x^2+y^2}\).</li>
+        <li><span class="step-label">Langkah 2:</span> Substitusi: \(d=\sqrt{6^2+8^2}=\sqrt{36+64}=\sqrt{100}=10\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi jarak lurus dari gerbang ke ruang kelas adalah 10 satuan.</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Catatan</span>
+      Materi bagian ini disesuaikan menjadi "Masalah Kontekstual Terkait Bidang Kartesius" karena topik yang tercantum sebelumnya ("PtLSV") berasal dari materi persamaan/pertidaksamaan linear, bukan bagian dari Bidang Kartesius.
+    </div>
+  </section>
+
+  <section id="latihan" class="latihan-section">
+    <div class="latihan-header">
+      <span class="sec-label">Latihan</span>
+      <h2>Latihan Soal Bidang Kartesius</h2>
+      <p>25 soal dengan 5 tipe berbeda. Pilih tipe soal di bawah, jawab, dan lihat penjelasannya secara langsung. Setelah selesai, klik "Lihat Analisis" untuk melihat hasil keseluruhan.</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="qbtn active" data-type="pg" onclick="showType('pg')">🔤 Pilihan Ganda Biasa</button>
+      <button class="qbtn" data-type="is" onclick="showType('is')">✏️ Isian Singkat</button>
+      <button class="qbtn" data-type="pk" onclick="showType('pk')">☑️ PG Kompleks</button>
+      <button class="qbtn" data-type="bs" onclick="showType('bs')">✅ Benar/Salah</button>
+      <button class="qbtn" data-type="jd" onclick="showType('jd')">🔗 Menjodohkan</button>
+    </div>
+
+    <div class="score-strip" id="scoreStrip"></div>
+
+    <div id="quizArea"></div>
+
+    <div class="analysis-btn-wrap">
+      <button class="analysis-btn" onclick="showAnalysis()">📊 Lihat Analisis Hasil</button>
+    </div>
+
+    <div id="analysisPanel" hidden>
+      <h3 style="margin-bottom:14px;">Analisis Hasil Belajar</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">TOTAL SOAL</div></div>
+        <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lab">BENAR</div></div>
+        <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lab">SALAH</div></div>
+        <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lab">NILAI</div></div>
+      </div>
+      <div class="type-bars" id="typeBars"></div>
+      <div class="grade-box">
+        <div class="grade-letter" id="gradeLetter">-</div>
+        <div class="grade-msg" id="gradeMsg">Belum ada data</div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua Soal</button>
+    </div>
+  </section>
+
+  <footer>
+    Ebook Interaktif Matematika Kelas 8 — Bidang Kartesius<br>
+    Dibuat oleh <b>Suminto</b> bersama <b>Claude</b><br>
+    Satu file HTML, dapat dibuka langsung di peramban tanpa koneksi internet (kecuali font &amp; rumus matematika).
+  </footer>
+</main>
+
+<script>
+/* ============ SIDEBAR TOGGLE (mobile) ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('.nav-link, .nav-sub a').forEach(function(a){
+  a.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ SCROLLSPY + PROGRESS BAR ============ */
+const sectionIds = ['hero','matA','matB','matC','matD','matE','matF','matG','matH','latihan'];
+function updateScrollSpy(){
+  let current = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140){ current = id; }
+    }
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? Math.min(100, Math.round((scrollTop / docHeight) * 100)) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = pct + '% dibaca';
+}
+window.addEventListener('scroll', updateScrollSpy);
+window.addEventListener('resize', updateScrollSpy);
+
+/* ============ KALKULATOR: Jarak Titik ke Sumbu X dan Y ============ */
+function hitungJarakSumbu(){
+  const x = parseFloat(document.getElementById('jsX').value) || 0;
+  const y = parseFloat(document.getElementById('jsY').value) || 0;
+  const out = document.getElementById('jsResult');
+  out.innerHTML = `Titik (${x}, ${y}) → jarak ke sumbu X = <b>${Math.abs(y)}</b> satuan, jarak ke sumbu Y = <b>${Math.abs(x)}</b> satuan`;
+}
+
+/* ============ KALKULATOR: Posisi Relatif Antar Dua Titik ============ */
+function hitungPosisiRelatif(){
+  const x1 = parseFloat(document.getElementById('prX1').value) || 0;
+  const y1 = parseFloat(document.getElementById('prY1').value) || 0;
+  const x2 = parseFloat(document.getElementById('prX2').value) || 0;
+  const y2 = parseFloat(document.getElementById('prY2').value) || 0;
+  const out = document.getElementById('prResult');
+  const dx = x1 - x2;
+  const dy = y1 - y2;
+  const arahX = dx > 0 ? `${dx} satuan ke kanan` : (dx < 0 ? `${Math.abs(dx)} satuan ke kiri` : 'sejajar horizontal');
+  const arahY = dy > 0 ? `${dy} satuan ke atas` : (dy < 0 ? `${Math.abs(dy)} satuan ke bawah` : 'sejajar vertikal');
+  const jarak = Math.sqrt(dx*dx + dy*dy);
+  out.innerHTML = `P(${x1},${y1}) terhadap Q(${x2},${y2}): <b>${arahX}</b> dan <b>${arahY}</b>. Jarak lurus PQ = <b>${jarak.toFixed(2)}</b> satuan`;
+}
+
+/* ============ KALKULATOR: Penentu Kuadran ============ */
+function tentukanKuadran(){
+  const x = parseFloat(document.getElementById('kuX').value) || 0;
+  const y = parseFloat(document.getElementById('kuY').value) || 0;
+  const out = document.getElementById('kuResult');
+  let hasil = '';
+  if(x === 0 && y === 0){ hasil = 'Titik asal O(0,0), bukan bagian dari kuadran manapun'; }
+  else if(x === 0){ hasil = 'Terletak tepat pada sumbu Y, bukan bagian dari kuadran manapun'; }
+  else if(y === 0){ hasil = 'Terletak tepat pada sumbu X, bukan bagian dari kuadran manapun'; }
+  else if(x > 0 && y > 0){ hasil = 'Kuadran I'; }
+  else if(x < 0 && y > 0){ hasil = 'Kuadran II'; }
+  else if(x < 0 && y < 0){ hasil = 'Kuadran III'; }
+  else { hasil = 'Kuadran IV'; }
+  out.innerHTML = `Titik (${x}, ${y}) berada pada: <b>${hasil}</b>`;
+}
+
+/* ============ KALKULATOR: Konversi Kartesius ke Polar ============ */
+function hitungPolar(){
+  const x = parseFloat(document.getElementById('poX').value) || 0;
+  const y = parseFloat(document.getElementById('poY').value) || 0;
+  const out = document.getElementById('poResult');
+  const r = Math.sqrt(x*x + y*y);
+  let thetaDeg = Math.atan2(y, x) * (180 / Math.PI);
+  if(thetaDeg < 0){ thetaDeg += 360; }
+  out.innerHTML = `Titik (${x}, ${y}) → r = <b>${r.toFixed(2)}</b>, θ = <b>${thetaDeg.toFixed(2)}°</b> → koordinat kutub (${r.toFixed(2)}, ${thetaDeg.toFixed(2)}°)`;
+}
+
+/* ============ BANK SOAL ============ */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1, text:'Jarak titik \\((3,-5)\\) terhadap sumbu X adalah...', options:['5','3','-5','8'], answer:0, explanation:'Jarak terhadap sumbu X adalah \\(|y|\\), sehingga \\(|-5|=5\\).' },
+    { id:'pg2', type:'pg', level:'sedang', num:2, text:'Titik yang memiliki absis 4 dan ordinat −2 dituliskan sebagai...', options:['(4,-2)','(-2,4)','(4,2)','(-4,-2)'], answer:0, explanation:'Absis (x) ditulis lebih dahulu, ordinat (y) kedua, sehingga penulisannya \\((4,-2)\\).' },
+    { id:'pg3', type:'pg', level:'sedang', num:3, text:'Titik \\((-3,5)\\) terletak pada kuadran...', options:['II','I','III','IV'], answer:0, explanation:'Karena \\(x<0\\) dan \\(y>0\\), titik tersebut berada di Kuadran II.' },
+    { id:'pg4', type:'pg', level:'sedang', num:4, text:'Titik kartesius \\((0,5)\\) jika diubah ke koordinat kutub memiliki jarak r sebesar...', options:['5','0','25','√5'], answer:0, explanation:'\\(r=\\sqrt{0^2+5^2}=\\sqrt{25}=5\\).' },
+    { id:'pg5', type:'pg', level:'sedang', num:5, text:'Titik \\((7,4)\\) berada berapa satuan ke kanan dari titik \\((2,4)\\)?', options:['5','4','7','2'], answer:0, explanation:'Selisih absis \\(=7-2=5\\), sehingga 5 satuan ke kanan.' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1, text:'Titik \\((-4,6)\\) berjarak berapa satuan dari sumbu Y?', answer:'4', altAnswers:['4 satuan'], explanation:'Jarak terhadap sumbu Y adalah \\(|x|\\), sehingga \\(|-4|=4\\).' },
+    { id:'is2', type:'is', level:'sedang', num:2, text:'Tuliskan koordinat sebuah titik dengan absis −3 dan ordinat 7.', answer:'(-3,7)', altAnswers:['(-3, 7)','-3,7'], explanation:'Absis ditulis pertama, ordinat kedua: \\((-3,7)\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3, text:'Titik \\((6,-2)\\) terletak pada kuadran ke berapa?', answer:'IV', altAnswers:['4','kuadran IV','kuadran 4'], explanation:'Karena \\(x>0\\) dan \\(y<0\\), titik tersebut berada di Kuadran IV.' },
+    { id:'is4', type:'is', level:'sedang', num:4, text:'Titik \\((3,4)\\) memiliki jarak r ke titik asal sebesar... (gunakan rumus \\(r=\\sqrt{x^2+y^2}\\))', answer:'5', altAnswers:['5 satuan'], explanation:'\\(r=\\sqrt{3^2+4^2}=\\sqrt{25}=5\\).' },
+    { id:'is5', type:'is', level:'sukar', num:5, text:'Pada denah sederhana, gerbang sekolah berada di titik \\((0,0)\\) dan ruang kelas di titik \\((6,8)\\). Berapa jarak lurus dari gerbang ke ruang kelas?', answer:'10', altAnswers:['10 satuan'], explanation:'\\(d=\\sqrt{6^2+8^2}=\\sqrt{100}=10\\).' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1, text:'Pilih pernyataan yang benar mengenai tempat kedudukan (locus):', options:['Locus adalah himpunan titik-titik yang memenuhi syarat tertentu','Locus titik berjarak sama dari satu titik pusat membentuk lingkaran','Locus selalu berupa satu titik saja','Locus dapat berupa garis, kurva, atau bidang'], answers:[0,1,3], explanation:'Locus adalah himpunan titik (bisa berupa garis, kurva, atau bidang), bukan hanya satu titik saja, sehingga pernyataan ke-3 salah.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2, text:'Pilih pernyataan yang benar mengenai titik \\((-5,2)\\):', options:['Berjarak 5 satuan dari sumbu Y','Berjarak 2 satuan dari sumbu X','Berjarak 5 satuan dari sumbu X','Terletak di kuadran II'], answers:[0,1,3], explanation:'Jarak dari sumbu X adalah \\(|y|=2\\), bukan 5, sehingga pernyataan ke-3 salah.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3, text:'Pilih pasangan titik dan kuadran yang benar:', options:['(2,3) di kuadran I','(-2,3) di kuadran II','(-2,-3) di kuadran III','(2,-3) di kuadran II'], answers:[0,1,2], explanation:'\\((2,-3)\\) seharusnya berada di Kuadran IV (x>0, y<0), bukan Kuadran II, sehingga pernyataan ke-4 salah.' },
+    { id:'pk4', type:'pk', level:'sedang', num:4, text:'Pilih pernyataan yang benar mengenai konversi koordinat kartesius ke polar:', options:['r = √(x²+y²)','tan θ = y/x','x = r cos θ dan y = r sin θ','r selalu bernilai negatif'], answers:[0,1,2], explanation:'Jarak \\(r\\) selalu bernilai positif atau nol (karena berasal dari akar kuadrat), sehingga pernyataan ke-4 salah.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5, text:'Diketahui titik P(5,8) dan titik Q(2,3). Pilih pernyataan yang benar mengenai posisi P terhadap Q:', options:['P berada 3 satuan ke kanan Q','P berada 5 satuan ke atas Q','P berada di kuadran yang sama dengan Q','P berada di sebelah kiri Q'], answers:[0,1,2], explanation:'Selisih absis \\(5-2=3\\) (ke kanan) dan selisih ordinat \\(8-3=5\\) (ke atas), sehingga P berada di sebelah kanan, bukan kiri Q — pernyataan ke-4 salah.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1, text:'Tempat kedudukan titik-titik yang berjarak sama dari dua titik tertentu membentuk garis lurus (sumbu tegak lurus di tengah kedua titik).', answer:true, explanation:'✅ Benar. Garis tersebut disebut sumbu (garis bagi) tegak lurus dari ruas garis yang menghubungkan dua titik tersebut.' },
+    { id:'bs2', type:'bs', level:'sedang', num:2, text:'Jarak suatu titik terhadap sumbu X ditentukan oleh nilai mutlak koordinat y.', answer:true, explanation:'✅ Benar. Jarak terhadap sumbu X \\(=|y|\\).' },
+    { id:'bs3', type:'bs', level:'sedang', num:3, text:'Pada koordinat (x,y), nilai x disebut ordinat dan y disebut absis.', answer:false, explanation:'❌ Salah. Seharusnya \\(x\\) disebut absis dan \\(y\\) disebut ordinat — pernyataan ini terbalik.' },
+    { id:'bs4', type:'bs', level:'sedang', num:4, text:'Titik (0,5) terletak tepat pada sumbu Y, bukan pada salah satu dari empat kuadran.', answer:true, explanation:'✅ Benar. Titik yang tepat berada pada salah satu sumbu tidak termasuk dalam kuadran manapun.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5, text:'Pada koordinat kutub, jarak r selalu diukur dari titik asal (kutub) ke titik yang dimaksud.', answer:true, explanation:'✅ Benar. Itulah definisi \\(r\\) pada koordinat kutub/polar.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1, left:'Denah taman: gerbang di (2,3)', answer:'Sebelah kanan atas titik asal', options:['Sebelah kanan atas titik asal','Sebelah kiri atas titik asal','Sebelah kanan bawah titik asal','Tepat di titik asal'], explanation:'Karena \\(x=2>0\\) dan \\(y=3>0\\), posisinya berada di sebelah kanan atas titik asal (Kuadran I).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2, left:'Titik (-4,6), terletak di kuadran', answer:'II', options:['II','I','III','IV'], explanation:'Karena \\(x<0\\) dan \\(y>0\\), titik tersebut berada di Kuadran II.' },
+    { id:'jd3', type:'jd', level:'sedang', num:3, left:'Absis dan ordinat pada titik (7,-2)', answer:'absis 7, ordinat -2', options:['absis 7, ordinat -2','absis -2, ordinat 7','absis 7, ordinat 2','absis -7, ordinat -2'], explanation:'Absis adalah koordinat pertama (7), ordinat adalah koordinat kedua (-2).' },
+    { id:'jd4', type:'jd', level:'sukar', num:4, left:'Titik (6,8), jarak r ke titik asal', answer:'10', options:['10','14','48','2'], explanation:'\\(r=\\sqrt{6^2+8^2}=\\sqrt{100}=10\\).' },
+    { id:'jd5', type:'jd', level:'sedang', num:5, left:'Titik yang terletak tepat di titik asal', answer:'(0,0)', options:['(0,0)','(1,1)','(0,1)','(1,0)'], explanation:'Titik asal selalu dilambangkan \\(O(0,0)\\).' }
+  ]
+};
+const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.qbtn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-type') === type); });
+  document.querySelectorAll('.nav-sub a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-type') === type); });
+  renderQuestions(type);
+  window.scrollTo({ top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth' });
+  typesetMath();
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quizArea');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function levelBadge(level){
+  const cls = level === 'mudah' ? 'level-mudah' : (level === 'sedang' ? 'level-sedang' : 'level-sukar');
+  return `<span class="level-badge ${cls}">${level}</span>`;
+}
+
+function renderCard(q){
+  let body = '';
+  if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  const answered = state.answers[q.id];
+  const explClass = answered ? 'explanation show' : 'explanation';
+  return `<div class="question-card" id="card-${q.id}">
+    <div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text || (q.left ? 'Cocokkan: <b>' + q.left + '</b>' : '')}</div>
+    ${body}
+    <div class="${explClass}" id="expl-${q.id}">${q.explanation}</div>
+  </div>`;
+}
+
+function renderBS(q){
+  const answered = state.answers[q.id];
+  const trueClass = answered ? (q.answer === true ? 'correct' : (answered.chosen === true ? 'wrong' : '')) : '';
+  const falseClass = answered ? (q.answer === false ? 'correct' : (answered.chosen === false ? 'wrong' : '')) : '';
+  return `<div class="bs-row">
+    <button class="bs-btn ${trueClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', true)">✅ BENAR</button>
+    <button class="bs-btn ${falseClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', false)">❌ SALAH</button>
+  </div>`;
+}
+function answerBS(qid, val){
+  const q = allQuestions.bs.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPG(q){
+  const answered = state.answers[q.id];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    if(answered){
+      if(idx === q.answer) cls = 'correct';
+      else if(idx === answered.chosen) cls = 'wrong';
+    }
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="answerPG('${q.id}', ${idx})">${opt}</button>`;
+  });
+  html += '</div>';
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){ return x.id === qid; });
+  const correct = (idx === q.answer);
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderJD(q){
+  const answered = state.answers[q.id];
+  let cls = '';
+  if(answered){ cls = answered.correct ? 'correct' : 'wrong'; }
+  let opts = '<option value="">-- pilih --</option>';
+  q.options.forEach(function(opt){
+    const sel = answered && answered.chosen === opt ? 'selected' : '';
+    opts += `<option value="${opt}" ${sel}>${opt}</option>`;
+  });
+  return `<div class="jd-row">
+    <select class="${cls}" ${answered ? 'disabled' : ''} onchange="answerJD('${q.id}', this.value)">${opts}</select>
+  </div>`;
+}
+function answerJD(qid, val){
+  if(!val) return;
+  const q = allQuestions.jd.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPK(q){
+  const answered = state.answers[q.id];
+  if(!pkTemp[q.id]) pkTemp[q.id] = [];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    const chosenSet = answered ? answered.chosen : pkTemp[q.id];
+    const isChosen = chosenSet.includes(idx);
+    if(answered){
+      const isCorrectOpt = q.answers.includes(idx);
+      if(isCorrectOpt) cls = 'correct';
+      else if(isChosen) cls = 'wrong';
+    }
+    const marker = isChosen ? '☑' : '☐';
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="togglePK('${q.id}', ${idx})">${marker} ${opt}</button>`;
+  });
+  html += '</div>';
+  if(!answered){
+    html += `<button class="pk-confirm" onclick="submitPK('${q.id}')">Konfirmasi Jawaban</button>`;
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const pos = pkTemp[qid].indexOf(idx);
+  if(pos >= 0) pkTemp[qid].splice(pos, 1);
+  else pkTemp[qid].push(idx);
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  rerenderCardBody(q);
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  const chosen = (pkTemp[qid] || []).slice().sort();
+  const correctArr = q.answers.slice().sort();
+  const correct = JSON.stringify(chosen) === JSON.stringify(correctArr);
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderIS(q){
+  const answered = state.answers[q.id];
+  const cls = answered ? (answered.correct ? 'correct' : 'wrong') : '';
+  const val = answered ? answered.chosen : '';
+  return `<div class="is-row">
+    <input type="text" id="input-${q.id}" class="${cls}" value="${val}" placeholder="Ketik jawabanmu..." ${answered ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){submitIS('${q.id}')}">
+    ${answered ? '' : `<button class="is-btn" onclick="submitIS('${q.id}')">Kirim Jawaban</button>`}
+  </div>`;
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){ return x.id === qid; });
+  const inputEl = document.getElementById('input-' + qid);
+  const raw = inputEl.value.trim().toLowerCase().replace(/\s+/g, '');
+  const mainAns = (q.answer || '').toLowerCase().replace(/\s+/g, '');
+  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase().replace(/\s+/g, ''); });
+  const correct = raw === mainAns || alts.includes(raw);
+  state.answers[qid] = { chosen: inputEl.value.trim(), correct: !!correct };
+  refreshCard(q, !!correct);
+}
+
+function rerenderCardBody(q){
+  const card = document.getElementById('card-' + q.id);
+  if(!card) return;
+  let body = '';
+  if(q.type === 'pk'){ body = renderPK(q); }
+  const explDiv = card.querySelector('.explanation');
+  card.innerHTML = `<div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text}</div>
+    ${body}
+    <div class="${explDiv.className}" id="expl-${q.id}">${q.explanation}</div>`;
+  typesetMath();
+}
+
+function refreshCard(q, correct){
+  const card = document.getElementById('card-' + q.id);
+  if(card){
+    const temp = document.createElement('div');
+    temp.innerHTML = renderCard(q);
+    card.innerHTML = temp.firstElementChild.innerHTML;
+    const explDiv = document.getElementById('expl-' + q.id);
+    if(explDiv) explDiv.classList.add('show');
+  }
+  updateProgress();
+  updateScoreStrip();
+  typesetMath();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let benar = 0, total = qs.length;
+    qs.forEach(function(q){
+      if(state.answers[q.id]){ if(state.answers[q.id].correct) benar++; }
+    });
+    html += `<div class="score-item">${typeLabels[t]}: <b>${benar}/${total}</b></div>`;
+  });
+  strip.innerHTML = html;
+}
+function updateProgress(){
+  updateScoreStrip();
+}
+
+function showAnalysis(){
+  let total = 0, benar = 0, salah = 0;
+  const perType = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let tb = 0;
+    qs.forEach(function(q){
+      total++;
+      const a = state.answers[q.id];
+      if(a){
+        if(a.correct){ benar++; tb++; } else { salah++; }
+      } else {
+        salah++;
+      }
+    });
+    perType[t] = tb;
+  });
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  const nilai = total > 0 ? Math.round((benar / total) * 100) : 0;
+  document.getElementById('statNilai').textContent = nilai + '%';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    const b = perType[t];
+    const pct = qs.length > 0 ? Math.round((b / qs.length) * 100) : 0;
+    barsHtml += `<div class="type-bar-row">
+      <div class="tb-label">${typeLabels[t]}: ${b}/${qs.length}</div>
+      <div class="type-bar-track"><div class="type-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let grade, msg;
+  if(nilai >= 90){ grade = 'A'; msg = '🏆 Luar Biasa!'; }
+  else if(nilai >= 75){ grade = 'B'; msg = '⭐ Bagus!'; }
+  else if(nilai >= 60){ grade = 'C'; msg = '👍 Cukup Baik'; }
+  else if(nilai >= 40){ grade = 'D'; msg = '💪 Jangan Menyerah'; }
+  else { grade = 'E'; msg = '📚 Semangat Belajar'; }
+  document.getElementById('gradeLetter').textContent = grade;
+  document.getElementById('gradeMsg').textContent = msg;
+
+  document.getElementById('analysisPanel').hidden = false;
+  document.getElementById('analysisPanel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').hidden = true;
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollSpy();
+  typesetMath();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fungsi Kuadrat — Matematika Kelas 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4', serif;
+  background:var(--paper);
+  color:var(--text-dark);
+  display:flex;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:290px; flex-shrink:0;
+  background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column;
+  border-right:1px solid var(--ink-border);
+  z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink3); border-radius:3px;}
+.side-header{
+  padding:26px 22px 16px; border-bottom:1px solid var(--ink-border);
+}
+.side-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px;
+  color:var(--gold); text-transform:uppercase;
+}
+.side-title{
+  font-size:22px; font-weight:700; margin-top:8px; line-height:1.25; color:var(--cream);
+}
+.side-sub{
+  font-size:12.5px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;
+}
+.progress-wrap{
+  padding:16px 22px; border-bottom:1px solid var(--ink-border);
+}
+.progress-track{
+  height:6px; background:var(--ink3); border-radius:4px; overflow:hidden;
+}
+#progressBar{
+  height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+  transition:width .25s ease;
+}
+.progress-txt{font-size:11px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;}
+nav{padding:14px 12px 30px; flex:1;}
+.nav-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:2px; color:var(--gold-soft);
+  padding:14px 10px 8px; text-transform:uppercase; opacity:.85;
+}
+.nav-link{
+  display:block; padding:10px 12px; margin:2px 0; border-radius:8px;
+  color:var(--cream-dim); text-decoration:none; font-size:14.5px;
+  transition:background .18s ease, color .18s ease;
+  border-left:3px solid transparent;
+}
+.nav-link:hover{background:var(--ink3); color:var(--cream);}
+.nav-link.active{background:var(--ink3); color:var(--gold-soft); border-left:3px solid var(--gold);}
+.nav-sub{padding-left:12px; border-left:1px solid var(--ink-border); margin:2px 0 10px 22px;}
+.nav-sub a{
+  display:block; padding:7px 10px; font-size:13px; color:var(--cream-dim); text-decoration:none;
+  border-radius:6px; transition:background .18s ease, color .18s ease; cursor:pointer;
+}
+.nav-sub a:hover, .nav-sub a.active{background:var(--ink3); color:var(--gold-soft);}
+.nav-sub2{padding-left:10px; margin:2px 0 6px 22px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--cream-dim); opacity:.75; line-height:1.8;}
+
+#menuToggle{
+  display:none; position:fixed; top:14px; left:14px; z-index:200;
+  width:44px; height:44px; border-radius:10px; border:1px solid var(--ink-border);
+  background:var(--ink); color:var(--gold-soft); font-size:20px; cursor:pointer;
+}
+#overlay{display:none; position:fixed; inset:0; background:rgba(20,26,46,.6); z-index:60;}
+
+/* ===== CONTENT ===== */
+#content{flex:1; min-width:0; padding:0;}
+.hero{
+  background:linear-gradient(160deg, var(--ink) 0%, var(--ink2) 55%, var(--ink3) 100%);
+  color:var(--cream); padding:70px 60px 56px; position:relative; overflow:hidden;
+}
+.hero::after{
+  content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px;
+  border-radius:50%; background:radial-gradient(circle, rgba(224,169,77,.18), transparent 70%);
+}
+.hero-label{font-family:'JetBrains Mono',monospace; letter-spacing:3px; color:var(--gold); font-size:13px; text-transform:uppercase;}
+.hero h1{font-size:44px; margin-top:14px; line-height:1.15; max-width:640px; color:#ffd873;}
+.hero p{margin-top:16px; color:var(--cream-dim); max-width:600px; font-size:16.5px; line-height:1.7;}
+.chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.chip{
+  font-family:'JetBrains Mono',monospace; font-size:12px; padding:7px 14px; border-radius:20px;
+  background:var(--ink3); border:1px solid var(--ink-border); color:var(--gold-soft);
+}
+
+.mat-section{padding:56px 60px; border-bottom:1px solid var(--paper-line); max-width:900px;}
+.mat-section .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.mat-section h2{font-size:28px; margin-top:14px;}
+.mat-section h3{font-size:20px; margin-top:34px; margin-bottom:10px; color:var(--text-mid); border-top:1px solid var(--paper-line); padding-top:22px;}
+.mat-section h3:first-of-type{border-top:none; padding-top:0;}
+.mat-section p{line-height:1.85; margin-top:12px; font-size:16.5px; color:var(--text-dark);}
+.mat-section ul, .mat-section ol{margin:14px 0 14px 26px; line-height:1.9; font-size:16px;}
+
+.callout{
+  margin:20px 0; padding:18px 22px; border-radius:10px; border-left:5px solid;
+  font-size:15.5px; line-height:1.75;
+}
+.callout .co-title{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; display:block;}
+.def{background:var(--def); border-color:var(--def-b);}
+.def .co-title{color:#3f6b32;}
+.note{background:var(--note); border-color:var(--note-b);}
+.note .co-title{color:#a06a1e;}
+.warn{background:var(--warn); border-color:var(--warn-b);}
+.warn .co-title{color:#9a3c34;}
+
+.example-box{
+  margin:20px 0; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  padding:20px 24px;
+}
+.example-box .ex-title{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:1.5px; color:var(--gold);
+  background:var(--ink); display:inline-block; padding:4px 12px; border-radius:6px; margin-bottom:12px;
+}
+.example-box ol{margin-left:22px; line-height:2;}
+.example-box .step-label{font-weight:600; color:var(--text-mid); font-family:'JetBrains Mono',monospace; font-size:13px;}
+
+.graf-viz{
+  margin:20px 0; padding:20px; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  text-align:center;
+}
+.graf-viz svg{max-width:100%; height:auto;}
+
+.calc-box{
+  margin:24px 0; background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 26px;
+  box-shadow:0 10px 30px rgba(20,26,46,.25);
+}
+.calc-box h4{color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px;}
+.calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
+.calc-row input, .calc-row select{
+  font-family:'JetBrains Mono',monospace; font-size:15px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--ink-border); background:var(--ink2); color:var(--cream); width:80px;
+}
+.calc-row select{width:auto;}
+.calc-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--gold); color:var(--ink); font-weight:700; cursor:pointer; transition:transform .15s ease, background .15s ease;
+}
+.calc-btn:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{
+  margin-top:12px; padding:12px 16px; background:var(--ink2); border-radius:8px; border:1px solid var(--ink-border);
+  font-family:'JetBrains Mono',monospace; font-size:15px; min-height:22px; color:var(--gold-soft);
+}
+
+/* ===== LATIHAN ===== */
+.latihan-section{padding:56px 60px 90px; background:var(--paper);}
+.latihan-header{max-width:900px;}
+.latihan-header .sec-label{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
+  text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
+}
+.latihan-header h2{font-size:30px; margin-top:14px;}
+.latihan-header p{margin-top:10px; color:var(--text-mid); font-size:15.5px; max-width:640px; line-height:1.7;}
+
+.quiz-nav{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 20px;}
+.qbtn{
+  font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:10px 18px; border-radius:24px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-mid); cursor:pointer;
+  transition:all .18s ease;
+}
+.qbtn.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+.qbtn:hover{transform:translateY(-1px);}
+
+.score-strip{
+  display:flex; flex-wrap:wrap; gap:14px; margin-bottom:24px; max-width:900px;
+}
+.score-item{
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:8px 14px; border-radius:8px;
+  background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid);
+}
+.score-item b{color:var(--text-dark);}
+
+#quizArea{max-width:820px;}
+.question-card{
+  background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px;
+  margin-bottom:20px; animation:fadeUp .35s ease;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.q-top{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+.q-num{
+  width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft);
+  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; flex-shrink:0;
+}
+.level-badge{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:12px; text-transform:uppercase; letter-spacing:.5px;
+}
+.level-mudah{background:#dff0da; color:#3f6b32;}
+.level-sedang{background:#fdf0df; color:#a06a1e;}
+.level-sukar{background:#fbe1df; color:#9a3c34;}
+.q-text{font-size:16.5px; line-height:1.7; margin-bottom:16px;}
+.q-options{display:flex; flex-direction:column; gap:9px;}
+.opt-btn{
+  text-align:left; padding:11px 16px; border-radius:9px; border:1px solid var(--paper-line);
+  background:var(--paper2); font-family:'Source Serif 4',serif; font-size:15.5px; cursor:pointer;
+  transition:all .18s ease; color:var(--text-dark);
+}
+.opt-btn:hover{background:#f0e6cc; transform:translateX(3px);}
+.opt-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.opt-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.opt-btn:disabled{cursor:default;}
+.bs-row{display:flex; gap:12px;}
+.bs-btn{
+  flex:1; padding:13px; border-radius:9px; border:1px solid var(--paper-line); background:var(--paper2);
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; font-weight:700; cursor:pointer; transition:all .18s ease;
+}
+.bs-btn:hover{transform:translateY(-2px);}
+.bs-btn.correct{background:var(--correct); border-color:var(--correct-b); color:#2c4a25;}
+.bs-btn.wrong{background:var(--wrong); border-color:var(--wrong-b); color:#6b2622;}
+.jd-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.jd-left{font-weight:600; min-width:160px;}
+.jd-row select{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:9px 12px; border-radius:8px;
+  border:1px solid var(--paper-line); background:var(--paper2); color:var(--text-dark);
+}
+.jd-row select.correct{background:var(--correct); border-color:var(--correct-b);}
+.jd-row select.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.pk-confirm{margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none; background:var(--ink); color:var(--gold-soft); cursor:pointer;}
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{
+  flex:1; min-width:180px; padding:11px 14px; border-radius:9px; border:1px solid var(--paper-line);
+  font-family:'Source Serif 4',serif; font-size:15.5px; background:var(--paper2); color:var(--text-dark);
+}
+.is-row input.correct{background:var(--correct); border-color:var(--correct-b);}
+.is-row input.wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.is-btn{
+  font-family:'JetBrains Mono',monospace; font-size:13px; padding:9px 18px; border-radius:8px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer;
+}
+.explanation{
+  margin-top:14px; padding:14px 18px; border-radius:9px; background:var(--note); border-left:4px solid var(--note-b);
+  font-size:14.5px; line-height:1.7; display:none;
+}
+.explanation.show{display:block;}
+
+.analysis-btn-wrap{max-width:820px; text-align:center; margin:30px 0;}
+.analysis-btn{
+  font-family:'JetBrains Mono',monospace; font-size:14.5px; padding:14px 32px; border-radius:26px; border:none;
+  background:var(--ink); color:var(--gold-soft); cursor:pointer; transition:all .2s ease;
+}
+.analysis-btn:hover{background:var(--ink2); transform:translateY(-2px);}
+
+#analysisPanel{max-width:820px;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:20px 0;}
+.stat-box{background:#fff; border:1px solid var(--paper-line); border-radius:12px; padding:18px; text-align:center;}
+.stat-box .num{font-size:28px; font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--ink);}
+.stat-box .lab{font-size:12px; color:var(--text-mid); margin-top:4px; font-family:'JetBrains Mono',monospace;}
+.type-bars{margin:24px 0;}
+.type-bar-row{margin-bottom:14px;}
+.type-bar-row .tb-label{font-size:13.5px; font-family:'JetBrains Mono',monospace; margin-bottom:6px; color:var(--text-mid);}
+.type-bar-track{height:14px; background:var(--paper2); border-radius:7px; overflow:hidden; border:1px solid var(--paper-line);}
+.type-bar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1);}
+.grade-box{
+  text-align:center; padding:30px; border-radius:16px; margin:26px 0; color:#fff;
+  background:linear-gradient(135deg, var(--ink), var(--ink3));
+}
+.grade-box .grade-letter{font-size:52px; font-family:'Playfair Display',serif; font-weight:800;}
+.grade-box .grade-msg{font-size:16px; margin-top:6px; color:var(--gold-soft);}
+.reset-btn{
+  display:block; margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:13.5px; padding:12px 26px;
+  border-radius:24px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer;
+}
+
+footer{
+  padding:34px 60px; background:var(--ink); color:var(--cream-dim); font-size:13px; text-align:center;
+  font-family:'JetBrains Mono',monospace; line-height:1.9;
+}
+footer b{color:var(--gold-soft);}
+
+@media (max-width:900px){
+  #menuToggle{display:block;}
+  #sidebar{position:fixed; top:0; left:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; box-shadow:0 0 40px rgba(0,0,0,.4);}
+  #sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}
+  .hero, .mat-section, .latihan-section{padding-left:26px; padding-right:26px;}
+  .hero{padding-top:90px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .jd-row{flex-direction:column; align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<aside id="sidebar">
+  <div class="side-header">
+    <div class="side-label">Matematika · Kelas 9</div>
+    <div class="side-title">Fungsi Kuadrat</div>
+    <div class="side-sub">Ebook Interaktif</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div id="progressBar"></div></div>
+    <div class="progress-txt" id="progressTxt">0% dibaca</div>
+  </div>
+  <nav>
+    <div class="nav-label">Materi</div>
+    <a href="#hero" class="nav-link" data-target="hero">Pendahuluan</a>
+    <a href="#matA" class="nav-link" data-target="matA">A. Grafik Fungsi Kuadrat</a>
+    <div class="nav-sub2">y=ax² · y=ax²+c · y=ax²+bx · y=ax²+bx+c</div>
+    <a href="#matB" class="nav-link" data-target="matB">B. Sumbu Simetri &amp; Nilai Optimum</a>
+    <a href="#matC" class="nav-link" data-target="matC">C. Menentukan Fungsi Kuadrat</a>
+    <div class="nav-sub2">3 Titik · Titik Potong X · +Puncak · +Sumbu Y</div>
+    <a href="#matD" class="nav-link" data-target="matD">D. Masalah Kontekstual</a>
+    <div class="nav-label">Latihan</div>
+    <a href="#latihan" class="nav-link" data-target="latihan">Latihan Soal</a>
+    <div class="nav-sub">
+      <a data-type="pg" onclick="showType('pg')">Pilihan Ganda Biasa</a>
+      <a data-type="is" onclick="showType('is')">Isian Singkat</a>
+      <a data-type="pk" onclick="showType('pk')">PG Kompleks</a>
+      <a data-type="bs" onclick="showType('bs')">Benar/Salah</a>
+      <a data-type="jd" onclick="showType('jd')">Menjodohkan</a>
+    </div>
+  </nav>
+</aside>
+
+<main id="content">
+
+  <section id="hero" class="hero">
+    <div class="hero-label">Ebook Interaktif · Matematika Kelas 9</div>
+    <h1>Fungsi Kuadrat</h1>
+    <p>Memahami bentuk dan sifat grafik fungsi kuadrat, sumbu simetri dan nilai optimum, cara menentukan fungsi kuadrat dari berbagai informasi, hingga penerapannya pada masalah nyata — lengkap dengan visualisasi, kalkulator interaktif, dan 25 soal latihan otomatis-terkoreksi.</p>
+    <div class="chip-row">
+      <div class="chip">A. Grafik Fungsi Kuadrat</div>
+      <div class="chip">B. Sumbu Simetri &amp; Nilai Optimum</div>
+      <div class="chip">C. Menentukan Fungsi Kuadrat</div>
+      <div class="chip">D. Masalah Kontekstual</div>
+    </div>
+  </section>
+
+  <section id="matA" class="mat-section">
+    <span class="sec-label">Bagian A</span>
+    <h2>Grafik Fungsi Kuadrat</h2>
+    <p>Fungsi kuadrat adalah fungsi yang berbentuk \(f(x)=ax^2+bx+c\), dengan \(a,b,c\) bilangan real dan \(a \neq 0\). Grafik fungsi kuadrat selalu berbentuk kurva melengkung yang disebut <b>parabola</b>.</p>
+
+    <div class="callout def">
+      <span class="co-title">Arah Bukaan Parabola</span>
+      Jika \(a>0\), parabola terbuka ke <b>atas</b> (cekung ke atas).<br>
+      Jika \(a<0\), parabola terbuka ke <b>bawah</b> (cekung ke bawah).
+    </div>
+
+    <div class="graf-viz">
+      <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="180" x2="300" y2="180" stroke="#5b5137" stroke-width="2"/>
+        <line x1="160" y1="20" x2="160" y2="200" stroke="#5b5137" stroke-width="2"/>
+        <path d="M 60 170 Q 160 20 260 170" fill="none" stroke="#4f9a4f" stroke-width="3"/>
+        <path d="M 60 190 Q 160 190 260 40" fill="none" stroke="#c1584f" stroke-width="0" opacity="0"/>
+        <text x="264" y="165" font-family="JetBrains Mono, monospace" font-size="12" fill="#3f6b32">a &gt; 0</text>
+        <path d="M 60 40 Q 160 190 260 40" fill="none" stroke="#c1584f" stroke-width="3"/>
+        <text x="264" y="50" font-family="JetBrains Mono, monospace" font-size="12" fill="#9a3c34">a &lt; 0</text>
+      </svg>
+      <p style="margin-top:8px; font-size:13.5px; color:var(--text-mid);">Parabola terbuka ke atas jika \(a>0\) (hijau), dan terbuka ke bawah jika \(a<0\) (merah).</p>
+    </div>
+
+    <h3>Bentuk y = ax²</h3>
+    <div class="callout def">
+      <span class="co-title">Sifat</span>
+      Puncak berada tepat di titik asal \(O(0,0)\), dan sumbu simetrinya adalah \(x=0\). Semakin besar nilai \(|a|\), grafik semakin "kurus"/curam; semakin kecil \(|a|\), grafik semakin "gemuk"/landai.
+    </div>
+
+    <h3>Bentuk y = ax² + c</h3>
+    <div class="callout def">
+      <span class="co-title">Sifat</span>
+      Merupakan pergeseran grafik \(y=ax^2\) secara vertikal sejauh \(c\) satuan (ke atas jika \(c>0\), ke bawah jika \(c<0\)). Puncaknya berada di \((0,c)\).
+    </div>
+
+    <h3>Bentuk y = ax² + bx</h3>
+    <div class="callout def">
+      <span class="co-title">Sifat</span>
+      Grafik ini selalu melalui titik asal \(O(0,0)\), karena saat \(x=0\) maka \(y=0\). Namun sumbu simetrinya sudah bergeser dari \(x=0\), tergantung nilai \(a\) dan \(b\).
+    </div>
+
+    <h3>Bentuk y = ax² + bx + c</h3>
+    <div class="callout def">
+      <span class="co-title">Sifat</span>
+      Bentuk umum yang paling lengkap. Grafik memotong sumbu Y tepat di titik \((0,c)\), karena saat \(x=0\) maka \(y=c\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Bandingkan grafik \(y=x^2\), \(y=2x^2\), dan \(y=-x^2\).</p>
+      <ol>
+        <li><span class="step-label">\(y=x^2\):</span> parabola dasar, terbuka ke atas, puncak di \((0,0)\).</li>
+        <li><span class="step-label">\(y=2x^2\):</span> terbuka ke atas juga, tetapi lebih "kurus"/curam dibanding \(y=x^2\) karena \(|a|\) lebih besar.</li>
+        <li><span class="step-label">\(y=-x^2\):</span> bentuknya sama seperti \(y=x^2\) namun terbalik, terbuka ke bawah karena \(a=-1<0\).</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Nilai Fungsi Kuadrat</h4>
+      <div class="calc-row">
+        <span>f(x) =</span>
+        <input type="number" id="nfA" placeholder="a" value="1">
+        <span>x² +</span>
+        <input type="number" id="nfB" placeholder="b" value="-4">
+        <span>x +</span>
+        <input type="number" id="nfC" placeholder="c" value="3">
+        <span>, untuk x =</span>
+        <input type="number" id="nfX" placeholder="x" value="2">
+        <button class="calc-btn" onclick="hitungNilaiFungsi()">Hitung</button>
+      </div>
+      <div class="calc-result" id="nfResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matB" class="mat-section">
+    <span class="sec-label">Bagian B</span>
+    <h2>Sumbu Simetri dan Nilai Optimum</h2>
+    <p>Setiap grafik fungsi kuadrat memiliki sumbu simetri yang membagi parabola menjadi dua bagian yang saling mencerminkan, serta satu titik puncak yang menunjukkan nilai optimum fungsi tersebut.</p>
+
+    <div class="callout def">
+      <span class="co-title">Rumus Sumbu Simetri</span>
+      \(x = -\dfrac{b}{2a}\)
+    </div>
+
+    <div class="callout def">
+      <span class="co-title">Rumus Nilai Optimum</span>
+      Nilai optimum adalah nilai \(y\) pada titik puncak, dapat dihitung dengan mensubstitusikan sumbu simetri ke fungsi, atau menggunakan rumus \(y = -\dfrac{D}{4a}\), dengan \(D=b^2-4ac\) (diskriminan).
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Jenis Nilai Optimum</span>
+      Jika \(a>0\): titik puncak adalah titik <b>minimum</b> (nilai optimum minimum).<br>
+      Jika \(a<0\): titik puncak adalah titik <b>maksimum</b> (nilai optimum maksimum).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tentukan sumbu simetri dan nilai optimum dari \(f(x)=x^2-4x+3\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Identifikasi \(a=1, b=-4, c=3\).</li>
+        <li><span class="step-label">Langkah 2:</span> Sumbu simetri: \(x=-\dfrac{-4}{2(1)}=2\).</li>
+        <li><span class="step-label">Langkah 3:</span> Nilai optimum: \(f(2)=2^2-4(2)+3=4-8+3=-1\).</li>
+        <li><span class="step-label">Langkah 4:</span> Karena \(a=1>0\), nilai optimum \(-1\) merupakan nilai minimum.</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Sumbu Simetri &amp; Nilai Optimum</h4>
+      <div class="calc-row">
+        <span>f(x) =</span>
+        <input type="number" id="soA" placeholder="a" value="1">
+        <span>x² +</span>
+        <input type="number" id="soB" placeholder="b" value="-4">
+        <span>x +</span>
+        <input type="number" id="soC" placeholder="c" value="3">
+        <button class="calc-btn" onclick="hitungSumbuOptimum()">Hitung</button>
+      </div>
+      <div class="calc-result" id="soResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matC" class="mat-section">
+    <span class="sec-label">Bagian C</span>
+    <h2>Menentukan Fungsi Kuadrat</h2>
+    <p>Fungsi kuadrat dapat ditentukan berdasarkan beberapa jenis informasi yang diketahui, dengan memilih bentuk yang paling sesuai.</p>
+
+    <h3>Jika Diketahui 3 Koordinat Titik yang Berbeda</h3>
+    <div class="callout def">
+      <span class="co-title">Cara</span>
+      Substitusikan ketiga titik ke bentuk umum \(y=ax^2+bx+c\), sehingga diperoleh tiga persamaan dengan tiga variabel \(a, b, c\). Selesaikan sistem persamaan tersebut dengan eliminasi atau substitusi.
+    </div>
+
+    <h3>Jika Diketahui Titik Potong dengan Sumbu X</h3>
+    <div class="callout def">
+      <span class="co-title">Cara</span>
+      Jika diketahui titik potong sumbu X di \(x_1\) dan \(x_2\), gunakan bentuk faktor: \(y=a(x-x_1)(x-x_2)\). Substitusikan satu titik lain yang diketahui (misalnya titik potong sumbu Y) untuk menentukan nilai \(a\).
+    </div>
+
+    <h3>Jika Diketahui Titik Potong dengan Sumbu X dan Titik Puncak</h3>
+    <div class="callout def">
+      <span class="co-title">Cara</span>
+      Gunakan bentuk puncak (vertex): \(y=a(x-p)^2+q\), dengan \((p,q)\) adalah titik puncak. Substitusikan salah satu titik potong sumbu X (di mana \(y=0\)) untuk menentukan nilai \(a\).
+    </div>
+
+    <h3>Jika Diketahui Titik Potong dengan Sumbu Y dan Titik Puncak</h3>
+    <div class="callout def">
+      <span class="co-title">Cara</span>
+      Gunakan bentuk puncak: \(y=a(x-p)^2+q\). Substitusikan titik potong sumbu Y, yaitu \((0, y_0)\), untuk menentukan nilai \(a\): \(a=\dfrac{y_0-q}{p^2}\) (dengan syarat \(p \neq 0\)).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Tentukan fungsi kuadrat yang memiliki titik puncak \((2,-3)\) dan melalui titik \((0,5)\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Gunakan bentuk puncak: \(y=a(x-2)^2-3\).</li>
+        <li><span class="step-label">Langkah 2:</span> Substitusikan titik \((0,5)\): \(5=a(0-2)^2-3=4a-3\).</li>
+        <li><span class="step-label">Langkah 3:</span> Selesaikan: \(4a=8 \Rightarrow a=2\).</li>
+        <li><span class="step-label">Langkah 4:</span> Jadi fungsinya adalah \(y=2(x-2)^2-3\), atau dalam bentuk umum \(y=2x^2-8x+5\).</li>
+      </ol>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator: Fungsi dari Titik Puncak &amp; Titik Potong Sumbu Y</h4>
+      <div class="calc-row">
+        <span>Puncak (</span>
+        <input type="number" id="tpP" placeholder="p" value="2">
+        <span>,</span>
+        <input type="number" id="tpQ" placeholder="q" value="-3">
+        <span>), potong sumbu Y di (0,</span>
+        <input type="number" id="tpY0" placeholder="y0" value="5">
+        <span>)</span>
+        <button class="calc-btn" onclick="hitungFungsiDariPuncak()">Tentukan Fungsi</button>
+      </div>
+      <div class="calc-result" id="tpResult">Hasil akan tampil di sini.</div>
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator: Fungsi dari Titik Potong Sumbu X &amp; Satu Titik Lain</h4>
+      <div class="calc-row">
+        <span>Akar x₁ =</span>
+        <input type="number" id="axX1" placeholder="x1" value="1">
+        <span>, x₂ =</span>
+        <input type="number" id="axX2" placeholder="x2" value="3">
+        <span>, titik lain (</span>
+        <input type="number" id="axX3" placeholder="x3" value="0">
+        <span>,</span>
+        <input type="number" id="axY3" placeholder="y3" value="6">
+        <span>)</span>
+        <button class="calc-btn" onclick="hitungFungsiDariAkar()">Tentukan Fungsi</button>
+      </div>
+      <div class="calc-result" id="axResult">Hasil akan tampil di sini.</div>
+    </div>
+  </section>
+
+  <section id="matD" class="mat-section">
+    <span class="sec-label">Bagian D</span>
+    <h2>Masalah Kontekstual Terkait Fungsi Kuadrat</h2>
+    <p>Fungsi kuadrat banyak digunakan untuk memodelkan situasi nyata yang melibatkan nilai maksimum atau minimum, seperti lintasan benda yang dilempar, luas maksimum suatu lahan, atau keuntungan maksimum suatu usaha.</p>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Sebuah bola dilempar ke atas mengikuti fungsi \(h(t)=-5t^2+20t\), dengan \(h\) adalah tinggi bola (meter) dan \(t\) adalah waktu (detik). Tentukan waktu saat bola mencapai tinggi maksimum dan berapa tinggi maksimumnya.</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Identifikasi \(a=-5, b=20\).</li>
+        <li><span class="step-label">Langkah 2:</span> Waktu mencapai tinggi maksimum (sumbu simetri): \(t=-\dfrac{20}{2(-5)}=2\) detik.</li>
+        <li><span class="step-label">Langkah 3:</span> Tinggi maksimum: \(h(2)=-5(2)^2+20(2)=-20+40=20\) meter.</li>
+      </ol>
+    </div>
+
+    <div class="callout note">
+      <span class="co-title">Tips</span>
+      Pada soal kontekstual, langkah pertama yang paling penting adalah mengenali fungsi kuadrat yang diberikan dan menentukan apa yang ditanyakan — apakah nilai maksimum/minimum, waktu tertentu, atau titik potong dengan sumbu tertentu.
+    </div>
+  </section>
+
+  <section id="latihan" class="latihan-section">
+    <div class="latihan-header">
+      <span class="sec-label">Latihan</span>
+      <h2>Latihan Soal Fungsi Kuadrat</h2>
+      <p>25 soal dengan 5 tipe berbeda. Pilih tipe soal di bawah, jawab, dan lihat penjelasannya secara langsung. Setelah selesai, klik "Lihat Analisis" untuk melihat hasil keseluruhan.</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="qbtn active" data-type="pg" onclick="showType('pg')">🔤 Pilihan Ganda Biasa</button>
+      <button class="qbtn" data-type="is" onclick="showType('is')">✏️ Isian Singkat</button>
+      <button class="qbtn" data-type="pk" onclick="showType('pk')">☑️ PG Kompleks</button>
+      <button class="qbtn" data-type="bs" onclick="showType('bs')">✅ Benar/Salah</button>
+      <button class="qbtn" data-type="jd" onclick="showType('jd')">🔗 Menjodohkan</button>
+    </div>
+
+    <div class="score-strip" id="scoreStrip"></div>
+
+    <div id="quizArea"></div>
+
+    <div class="analysis-btn-wrap">
+      <button class="analysis-btn" onclick="showAnalysis()">📊 Lihat Analisis Hasil</button>
+    </div>
+
+    <div id="analysisPanel" hidden>
+      <h3 style="margin-bottom:14px;">Analisis Hasil Belajar</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">TOTAL SOAL</div></div>
+        <div class="stat-box"><div class="num" id="statBenar">0</div><div class="lab">BENAR</div></div>
+        <div class="stat-box"><div class="num" id="statSalah">0</div><div class="lab">SALAH</div></div>
+        <div class="stat-box"><div class="num" id="statNilai">0%</div><div class="lab">NILAI</div></div>
+      </div>
+      <div class="type-bars" id="typeBars"></div>
+      <div class="grade-box">
+        <div class="grade-letter" id="gradeLetter">-</div>
+        <div class="grade-msg" id="gradeMsg">Belum ada data</div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">🔄 Ulangi Semua Soal</button>
+    </div>
+  </section>
+
+  <footer>
+    Ebook Interaktif Matematika Kelas 9 — Fungsi Kuadrat<br>
+    Dibuat oleh <b>Suminto</b> bersama <b>Claude</b><br>
+    Satu file HTML, dapat dibuka langsung di peramban tanpa koneksi internet (kecuali font &amp; rumus matematika).
+  </footer>
+</main>
+
+<script>
+/* ============ SIDEBAR TOGGLE (mobile) ============ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('.nav-link, .nav-sub a').forEach(function(a){
+  a.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ============ SCROLLSPY + PROGRESS BAR ============ */
+const sectionIds = ['hero','matA','matB','matC','matD','latihan'];
+function updateScrollSpy(){
+  let current = sectionIds[0];
+  sectionIds.forEach(function(id){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140){ current = id; }
+    }
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === current);
+  });
+
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? Math.min(100, Math.round((scrollTop / docHeight) * 100)) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = pct + '% dibaca';
+}
+window.addEventListener('scroll', updateScrollSpy);
+window.addEventListener('resize', updateScrollSpy);
+
+/* ============ KALKULATOR: Nilai Fungsi Kuadrat ============ */
+function hitungNilaiFungsi(){
+  const a = parseFloat(document.getElementById('nfA').value) || 0;
+  const b = parseFloat(document.getElementById('nfB').value) || 0;
+  const c = parseFloat(document.getElementById('nfC').value) || 0;
+  const x = parseFloat(document.getElementById('nfX').value) || 0;
+  const out = document.getElementById('nfResult');
+  const y = a*x*x + b*x + c;
+  out.innerHTML = `f(${x}) = ${a}(${x})² + ${b}(${x}) + ${c} = <b>${y}</b>`;
+}
+
+/* ============ KALKULATOR: Sumbu Simetri & Nilai Optimum ============ */
+function hitungSumbuOptimum(){
+  const a = parseFloat(document.getElementById('soA').value) || 0;
+  const b = parseFloat(document.getElementById('soB').value) || 0;
+  const c = parseFloat(document.getElementById('soC').value) || 0;
+  const out = document.getElementById('soResult');
+  if(a === 0){ out.innerHTML = '⚠️ Nilai a tidak boleh nol (bukan fungsi kuadrat).'; return; }
+  const sumbu = -b / (2*a);
+  const nilaiOpt = a*sumbu*sumbu + b*sumbu + c;
+  const jenis = a > 0 ? 'minimum' : 'maksimum';
+  out.innerHTML = `Sumbu simetri: <b>x = ${sumbu.toFixed(2)}</b> · Nilai optimum: <b>y = ${nilaiOpt.toFixed(2)}</b> (${jenis}, karena a${a>0?'>0':'<0'})`;
+}
+
+/* ============ KALKULATOR: Fungsi dari Titik Puncak & Titik Potong Sumbu Y ============ */
+function hitungFungsiDariPuncak(){
+  const p = parseFloat(document.getElementById('tpP').value) || 0;
+  const q = parseFloat(document.getElementById('tpQ').value) || 0;
+  const y0 = parseFloat(document.getElementById('tpY0').value) || 0;
+  const out = document.getElementById('tpResult');
+  if(p === 0){ out.innerHTML = '⚠️ Jika p=0, titik potong sumbu Y sama dengan titik puncak, nilai a tidak dapat ditentukan dengan cara ini.'; return; }
+  const a = (y0 - q) / (p*p);
+  const b = -2*a*p;
+  const c = a*p*p + q;
+  const tandaB = b >= 0 ? '+' : '−';
+  const tandaC = c >= 0 ? '+' : '−';
+  out.innerHTML = `a = (${y0}-(${q}))/${p}² = <b>${a.toFixed(2)}</b> → y = ${a.toFixed(2)}(x-${p})²+${q} = <b>${a.toFixed(2)}x² ${tandaB} ${Math.abs(b).toFixed(2)}x ${tandaC} ${Math.abs(c).toFixed(2)}</b>`;
+}
+
+/* ============ KALKULATOR: Fungsi dari Titik Potong Sumbu X & Satu Titik Lain ============ */
+function hitungFungsiDariAkar(){
+  const x1 = parseFloat(document.getElementById('axX1').value) || 0;
+  const x2 = parseFloat(document.getElementById('axX2').value) || 0;
+  const x3 = parseFloat(document.getElementById('axX3').value) || 0;
+  const y3 = parseFloat(document.getElementById('axY3').value) || 0;
+  const out = document.getElementById('axResult');
+  const faktor3 = (x3 - x1) * (x3 - x2);
+  if(faktor3 === 0){ out.innerHTML = '⚠️ Titik lain tidak boleh sama dengan salah satu akar (hasil bagi menjadi nol).'; return; }
+  const a = y3 / faktor3;
+  const b = -a * (x1 + x2);
+  const c = a * x1 * x2;
+  const tandaB = b >= 0 ? '+' : '−';
+  const tandaC = c >= 0 ? '+' : '−';
+  out.innerHTML = `a = ${y3}/((${x3}-${x1})(${x3}-${x2})) = <b>${a.toFixed(2)}</b> → y = ${a.toFixed(2)}(x-${x1})(x-${x2}) = <b>${a.toFixed(2)}x² ${tandaB} ${Math.abs(b).toFixed(2)}x ${tandaC} ${Math.abs(c).toFixed(2)}</b>`;
+}
+
+/* ============ BANK SOAL ============ */
+const allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1, text:'Grafik fungsi kuadrat \\(y=ax^2+bx+c\\) berbentuk...', options:['Parabola','Garis lurus','Lingkaran','Hiperbola'], answer:0, explanation:'Grafik fungsi kuadrat selalu berbentuk kurva melengkung yang disebut parabola.' },
+    { id:'pg2', type:'pg', level:'sedang', num:2, text:'Grafik \\(y=-3x^2\\) terbuka ke arah...', options:['Bawah','Atas','Kiri','Kanan'], answer:0, explanation:'Karena \\(a=-3<0\\), grafik terbuka ke bawah.' },
+    { id:'pg3', type:'pg', level:'sedang', num:3, text:'Sumbu simetri dari fungsi \\(f(x)=x^2-4x+3\\) adalah...', options:['x=2','x=4','x=-2','x=1'], answer:0, explanation:'\\(x=-\\dfrac{-4}{2(1)}=2\\).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4, text:'Nilai optimum dari fungsi \\(f(x)=x^2-4x+3\\) adalah...', options:['-1','1','3','-3'], answer:0, explanation:'\\(f(2)=4-8+3=-1\\).' },
+    { id:'pg5', type:'pg', level:'sedang', num:5, text:'Fungsi kuadrat yang memiliki titik potong sumbu X di \\(x=1\\) dan \\(x=3\\) dapat dituliskan dalam bentuk faktor sebagai...', options:['y=a(x-1)(x-3)','y=a(x+1)(x+3)','y=a(x-1)(x+3)','y=a(x+1)(x-3)'], answer:0, explanation:'Bentuk faktor menggunakan akar-akarnya langsung: \\(y=a(x-x_1)(x-x_2)=a(x-1)(x-3)\\).' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1, text:'Pada fungsi kuadrat \\(y=ax^2+bx+c\\), syarat agar fungsi tersebut benar-benar kuadrat adalah \\(a \\neq\\) ...', answer:'0', altAnswers:['a≠0','a tidak sama dengan 0'], explanation:'Jika \\(a=0\\), fungsi menjadi linear, bukan kuadrat lagi.' },
+    { id:'is2', type:'is', level:'sedang', num:2, text:'Tentukan sumbu simetri dari fungsi \\(f(x)=2x^2+8x+5\\).', answer:'x=-2', altAnswers:['-2','x = -2'], explanation:'\\(x=-\\dfrac{8}{2(2)}=-2\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3, text:'Tentukan nilai optimum dari fungsi \\(f(x)=-x^2+6x-5\\).', answer:'4', altAnswers:['4 (maksimum)'], explanation:'Sumbu simetri \\(x=3\\), sehingga \\(f(3)=-9+18-5=4\\).' },
+    { id:'is4', type:'is', level:'sedang', num:4, text:'Sebuah fungsi kuadrat memiliki titik puncak (2,-3) dan melalui titik (0,5). Tentukan nilai a.', answer:'2', altAnswers:['a=2'], explanation:'\\(5=a(0-2)^2-3=4a-3 \\Rightarrow a=2\\).' },
+    { id:'is5', type:'is', level:'sukar', num:5, text:'Sebuah bola dilempar ke atas mengikuti fungsi \\(h(t)=-5t^2+20t\\) (h dalam meter, t dalam detik). Tentukan waktu saat bola mencapai ketinggian maksimum.', answer:'2', altAnswers:['2 detik','t=2'], explanation:'\\(t=-\\dfrac{20}{2(-5)}=2\\) detik.' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'sedang', num:1, text:'Pilih pernyataan yang benar mengenai grafik fungsi kuadrat \\(y=ax^2+c\\) dibandingkan \\(y=ax^2\\):', options:['Bentuk grafiknya sama, hanya bergeser vertikal','Puncaknya berada di (0,c)','Sumbu simetrinya tetap x=0','Grafiknya bergeser secara horizontal'], answers:[0,1,2], explanation:'Pergeseran akibat penambahan \\(c\\) bersifat vertikal, bukan horizontal, sehingga pernyataan ke-4 salah.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2, text:'Pilih pernyataan yang benar mengenai titik puncak fungsi kuadrat:', options:['Jika a>0, titik puncak adalah titik minimum','Jika a<0, titik puncak adalah titik maksimum','Sumbu simetri melalui titik puncak','Titik puncak selalu berada di titik asal O(0,0)'], answers:[0,1,2], explanation:'Titik puncak hanya berada di O(0,0) untuk bentuk khusus \\(y=ax^2\\), bukan untuk semua fungsi kuadrat, sehingga pernyataan ke-4 salah.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3, text:'Pilih pernyataan yang benar mengenai cara menentukan fungsi kuadrat:', options:['Jika diketahui 3 titik berbeda, substitusikan ke y=ax²+bx+c untuk membentuk sistem persamaan','Jika diketahui titik potong sumbu X, gunakan bentuk faktor y=a(x-x1)(x-x2)','Jika diketahui titik puncak, gunakan bentuk y=a(x-p)²+q','Fungsi kuadrat hanya bisa ditentukan jika diketahui titik potong sumbu Y saja'], answers:[0,1,2], explanation:'Fungsi kuadrat bisa ditentukan dari berbagai kombinasi informasi (3 titik, akar, titik puncak, dsb), bukan hanya dari titik potong sumbu Y saja, sehingga pernyataan ke-4 salah.' },
+    { id:'pk4', type:'pk', level:'sedang', num:4, text:'Diketahui fungsi \\(f(x)=x^2-2x-3\\). Pilih pernyataan yang benar:', options:['Sumbu simetri x=1','Nilai optimum adalah -4','Titik puncak adalah minimum karena a>0','Grafik terbuka ke bawah'], answers:[0,1,2], explanation:'Karena \\(a=1>0\\), grafik seharusnya terbuka ke atas, bukan ke bawah, sehingga pernyataan ke-4 salah.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5, text:'Sebuah peluru ditembakkan mengikuti fungsi \\(h(t)=-4t^2+16t\\). Pilih pernyataan yang benar:', options:['Waktu mencapai tinggi maksimum adalah t=2 detik','Tinggi maksimum peluru adalah 16 meter','Peluru jatuh ke tanah saat t=4 detik','Grafik lintasan berbentuk parabola terbuka ke atas'], answers:[0,1,2], explanation:'Karena \\(a=-4<0\\), grafik lintasan terbuka ke bawah (bukan ke atas), sehingga pernyataan ke-4 salah.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1, text:'Grafik fungsi kuadrat \\(y=ax^2+bx+c\\) dengan \\(a>0\\) selalu terbuka ke atas.', answer:true, explanation:'✅ Benar. Nilai \\(a>0\\) menandakan parabola terbuka ke atas.' },
+    { id:'bs2', type:'bs', level:'sedang', num:2, text:'Sumbu simetri fungsi kuadrat dihitung dengan rumus \\(x=-\\dfrac{b}{2a}\\).', answer:true, explanation:'✅ Benar. Itulah rumus baku sumbu simetri fungsi kuadrat.' },
+    { id:'bs3', type:'bs', level:'sedang', num:3, text:'Jika \\(a<0\\), maka titik puncak fungsi kuadrat merupakan titik minimum.', answer:false, explanation:'❌ Salah. Jika \\(a<0\\), titik puncak merupakan titik maksimum, bukan minimum.' },
+    { id:'bs4', type:'bs', level:'sedang', num:4, text:'Bentuk faktor \\(y=a(x-x_1)(x-x_2)\\) hanya dapat digunakan jika fungsi kuadrat tersebut memiliki titik potong dengan sumbu X.', answer:true, explanation:'✅ Benar. Bentuk faktor mensyaratkan adanya akar real \\(x_1\\) dan \\(x_2\\), yaitu titik potong dengan sumbu X.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5, text:'Pada masalah lintasan peluru berbentuk fungsi kuadrat, nilai a yang negatif menunjukkan bahwa peluru akan naik terus tanpa pernah turun.', answer:false, explanation:'❌ Salah. Nilai \\(a\\) negatif menunjukkan parabola terbuka ke bawah, artinya peluru naik lalu turun kembali, bukan naik terus-menerus.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1, left:'Grafik y=2x²+3, titik puncak', answer:'(0,3)', options:['(0,3)','(3,0)','(2,3)','(0,2)'], explanation:'Bentuk \\(y=ax^2+c\\) memiliki puncak di \\((0,c)\\), sehingga puncaknya \\((0,3)\\).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2, left:'Sumbu simetri f(x)=x²-6x+5', answer:'x=3', options:['x=3','x=6','x=-3','x=5'], explanation:'\\(x=-\\dfrac{-6}{2(1)}=3\\).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3, left:'Nilai optimum f(x)=x²-6x+5', answer:'-4', options:['-4','4','5','-5'], explanation:'\\(f(3)=9-18+5=-4\\).' },
+    { id:'jd4', type:'jd', level:'sukar', num:4, left:'Bentuk faktor jika akar x=2 dan x=5', answer:'y=a(x-2)(x-5)', options:['y=a(x-2)(x-5)','y=a(x+2)(x+5)','y=a(x-2)(x+5)','y=a(x+2)(x-5)'], explanation:'Bentuk faktor menggunakan akar langsung: \\(y=a(x-2)(x-5)\\).' },
+    { id:'jd5', type:'jd', level:'sedang', num:5, left:'Titik puncak (1,4), fungsi y=a(x-p)²+q menjadi', answer:'y=a(x-1)²+4', options:['y=a(x-1)²+4','y=a(x+1)²+4','y=a(x-4)²+1','y=a(x-1)²-4'], explanation:'Substitusikan \\(p=1\\) dan \\(q=4\\) ke bentuk puncak \\(y=a(x-p)^2+q\\).' }
+  ]
+};
+const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+const typeOrder = ['pg','is','pk','bs','jd'];
+
+const state = { answers:{}, currentType:'pg' };
+let pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.qbtn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-type') === type); });
+  document.querySelectorAll('.nav-sub a').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-type') === type); });
+  renderQuestions(type);
+  window.scrollTo({ top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth' });
+  typesetMath();
+}
+
+function renderQuestions(type){
+  const container = document.getElementById('quizArea');
+  const qs = allQuestions[type];
+  let html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  typesetMath();
+}
+
+function levelBadge(level){
+  const cls = level === 'mudah' ? 'level-mudah' : (level === 'sedang' ? 'level-sedang' : 'level-sukar');
+  return `<span class="level-badge ${cls}">${level}</span>`;
+}
+
+function renderCard(q){
+  let body = '';
+  if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  const answered = state.answers[q.id];
+  const explClass = answered ? 'explanation show' : 'explanation';
+  return `<div class="question-card" id="card-${q.id}">
+    <div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text || (q.left ? 'Cocokkan: <b>' + q.left + '</b>' : '')}</div>
+    ${body}
+    <div class="${explClass}" id="expl-${q.id}">${q.explanation}</div>
+  </div>`;
+}
+
+function renderBS(q){
+  const answered = state.answers[q.id];
+  const trueClass = answered ? (q.answer === true ? 'correct' : (answered.chosen === true ? 'wrong' : '')) : '';
+  const falseClass = answered ? (q.answer === false ? 'correct' : (answered.chosen === false ? 'wrong' : '')) : '';
+  return `<div class="bs-row">
+    <button class="bs-btn ${trueClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', true)">✅ BENAR</button>
+    <button class="bs-btn ${falseClass}" ${answered ? 'disabled' : ''} onclick="answerBS('${q.id}', false)">❌ SALAH</button>
+  </div>`;
+}
+function answerBS(qid, val){
+  const q = allQuestions.bs.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPG(q){
+  const answered = state.answers[q.id];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    if(answered){
+      if(idx === q.answer) cls = 'correct';
+      else if(idx === answered.chosen) cls = 'wrong';
+    }
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="answerPG('${q.id}', ${idx})">${opt}</button>`;
+  });
+  html += '</div>';
+  return html;
+}
+function answerPG(qid, idx){
+  const q = allQuestions.pg.find(function(x){ return x.id === qid; });
+  const correct = (idx === q.answer);
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderJD(q){
+  const answered = state.answers[q.id];
+  let cls = '';
+  if(answered){ cls = answered.correct ? 'correct' : 'wrong'; }
+  let opts = '<option value="">-- pilih --</option>';
+  q.options.forEach(function(opt){
+    const sel = answered && answered.chosen === opt ? 'selected' : '';
+    opts += `<option value="${opt}" ${sel}>${opt}</option>`;
+  });
+  return `<div class="jd-row">
+    <select class="${cls}" ${answered ? 'disabled' : ''} onchange="answerJD('${q.id}', this.value)">${opts}</select>
+  </div>`;
+}
+function answerJD(qid, val){
+  if(!val) return;
+  const q = allQuestions.jd.find(function(x){ return x.id === qid; });
+  const correct = (val === q.answer);
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderPK(q){
+  const answered = state.answers[q.id];
+  if(!pkTemp[q.id]) pkTemp[q.id] = [];
+  let html = '<div class="q-options">';
+  q.options.forEach(function(opt, idx){
+    let cls = '';
+    const chosenSet = answered ? answered.chosen : pkTemp[q.id];
+    const isChosen = chosenSet.includes(idx);
+    if(answered){
+      const isCorrectOpt = q.answers.includes(idx);
+      if(isCorrectOpt) cls = 'correct';
+      else if(isChosen) cls = 'wrong';
+    }
+    const marker = isChosen ? '☑' : '☐';
+    html += `<button class="opt-btn ${cls}" ${answered ? 'disabled' : ''} onclick="togglePK('${q.id}', ${idx})">${marker} ${opt}</button>`;
+  });
+  html += '</div>';
+  if(!answered){
+    html += `<button class="pk-confirm" onclick="submitPK('${q.id}')">Konfirmasi Jawaban</button>`;
+  }
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  const pos = pkTemp[qid].indexOf(idx);
+  if(pos >= 0) pkTemp[qid].splice(pos, 1);
+  else pkTemp[qid].push(idx);
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  rerenderCardBody(q);
+}
+function submitPK(qid){
+  const q = allQuestions.pk.find(function(x){ return x.id === qid; });
+  const chosen = (pkTemp[qid] || []).slice().sort();
+  const correctArr = q.answers.slice().sort();
+  const correct = JSON.stringify(chosen) === JSON.stringify(correctArr);
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q, correct);
+}
+
+function renderIS(q){
+  const answered = state.answers[q.id];
+  const cls = answered ? (answered.correct ? 'correct' : 'wrong') : '';
+  const val = answered ? answered.chosen : '';
+  return `<div class="is-row">
+    <input type="text" id="input-${q.id}" class="${cls}" value="${val}" placeholder="Ketik jawabanmu..." ${answered ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){submitIS('${q.id}')}">
+    ${answered ? '' : `<button class="is-btn" onclick="submitIS('${q.id}')">Kirim Jawaban</button>`}
+  </div>`;
+}
+function submitIS(qid){
+  const q = allQuestions.is.find(function(x){ return x.id === qid; });
+  const inputEl = document.getElementById('input-' + qid);
+  const raw = inputEl.value.trim().toLowerCase().replace(/\s+/g, '');
+  const mainAns = (q.answer || '').toLowerCase().replace(/\s+/g, '');
+  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase().replace(/\s+/g, ''); });
+  const correct = raw === mainAns || alts.includes(raw);
+  state.answers[qid] = { chosen: inputEl.value.trim(), correct: !!correct };
+  refreshCard(q, !!correct);
+}
+
+function rerenderCardBody(q){
+  const card = document.getElementById('card-' + q.id);
+  if(!card) return;
+  let body = '';
+  if(q.type === 'pk'){ body = renderPK(q); }
+  const explDiv = card.querySelector('.explanation');
+  card.innerHTML = `<div class="q-top"><div class="q-num">${q.num}</div>${levelBadge(q.level)}</div>
+    <div class="q-text">${q.text}</div>
+    ${body}
+    <div class="${explDiv.className}" id="expl-${q.id}">${q.explanation}</div>`;
+  typesetMath();
+}
+
+function refreshCard(q, correct){
+  const card = document.getElementById('card-' + q.id);
+  if(card){
+    const temp = document.createElement('div');
+    temp.innerHTML = renderCard(q);
+    card.innerHTML = temp.firstElementChild.innerHTML;
+    const explDiv = document.getElementById('expl-' + q.id);
+    if(explDiv) explDiv.classList.add('show');
+  }
+  updateProgress();
+  updateScoreStrip();
+  typesetMath();
+}
+
+function updateScoreStrip(){
+  const strip = document.getElementById('scoreStrip');
+  let html = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let benar = 0, total = qs.length;
+    qs.forEach(function(q){
+      if(state.answers[q.id]){ if(state.answers[q.id].correct) benar++; }
+    });
+    html += `<div class="score-item">${typeLabels[t]}: <b>${benar}/${total}</b></div>`;
+  });
+  strip.innerHTML = html;
+}
+function updateProgress(){
+  updateScoreStrip();
+}
+
+function showAnalysis(){
+  let total = 0, benar = 0, salah = 0;
+  const perType = {};
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    let tb = 0;
+    qs.forEach(function(q){
+      total++;
+      const a = state.answers[q.id];
+      if(a){
+        if(a.correct){ benar++; tb++; } else { salah++; }
+      } else {
+        salah++;
+      }
+    });
+    perType[t] = tb;
+  });
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statBenar').textContent = benar;
+  document.getElementById('statSalah').textContent = salah;
+  const nilai = total > 0 ? Math.round((benar / total) * 100) : 0;
+  document.getElementById('statNilai').textContent = nilai + '%';
+
+  let barsHtml = '';
+  typeOrder.forEach(function(t){
+    const qs = allQuestions[t];
+    const b = perType[t];
+    const pct = qs.length > 0 ? Math.round((b / qs.length) * 100) : 0;
+    barsHtml += `<div class="type-bar-row">
+      <div class="tb-label">${typeLabels[t]}: ${b}/${qs.length}</div>
+      <div class="type-bar-track"><div class="type-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+  document.getElementById('typeBars').innerHTML = barsHtml;
+
+  let grade, msg;
+  if(nilai >= 90){ grade = 'A'; msg = '🏆 Luar Biasa!'; }
+  else if(nilai >= 75){ grade = 'B'; msg = '⭐ Bagus!'; }
+  else if(nilai >= 60){ grade = 'C'; msg = '👍 Cukup Baik'; }
+  else if(nilai >= 40){ grade = 'D'; msg = '💪 Jangan Menyerah'; }
+  else { grade = 'E'; msg = '📚 Semangat Belajar'; }
+  document.getElementById('gradeLetter').textContent = grade;
+  document.getElementById('gradeMsg').textContent = msg;
+
+  document.getElementById('analysisPanel').hidden = false;
+  document.getElementById('analysisPanel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysisPanel').hidden = true;
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollSpy();
+  typesetMath();
+});
+</script>
+</body>
+</html>
