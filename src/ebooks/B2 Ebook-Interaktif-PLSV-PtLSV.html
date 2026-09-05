@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aritmetika Sosial — Matematika Kelas 7</title>
+<title>PLSV dan PtLSV — Matematika Kelas 7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script>
@@ -71,7 +71,7 @@ h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark);}
   color:var(--gold); text-transform:uppercase;
 }
 .side-title{
-  font-size:22px; font-weight:700; margin-top:8px; line-height:1.25; color:var(--cream);
+  font-size:20px; font-weight:700; margin-top:8px; line-height:1.25; color:var(--cream);
 }
 .side-sub{
   font-size:12.5px; color:var(--cream-dim); margin-top:6px; font-family:'JetBrains Mono',monospace;
@@ -93,8 +93,8 @@ nav{padding:14px 12px 30px; flex:1;}
   padding:14px 10px 8px; text-transform:uppercase; opacity:.85;
 }
 .nav-link{
-  display:block; padding:10px 12px; margin:2px 0; border-radius:8px;
-  color:var(--cream-dim); text-decoration:none; font-size:14.5px;
+  display:block; padding:9px 12px; margin:2px 0; border-radius:8px;
+  color:var(--cream-dim); text-decoration:none; font-size:14px;
   transition:background .18s ease, color .18s ease;
   border-left:3px solid transparent;
 }
@@ -125,7 +125,7 @@ nav{padding:14px 12px 30px; flex:1;}
   border-radius:50%; background:radial-gradient(circle, rgba(224,169,77,.18), transparent 70%);
 }
 .hero-label{font-family:'JetBrains Mono',monospace; letter-spacing:3px; color:var(--gold); font-size:13px; text-transform:uppercase;}
-.hero h1{font-size:44px; margin-top:14px; line-height:1.15; max-width:640px; color:#ffd873;}
+.hero h1{font-size:40px; margin-top:14px; line-height:1.15; max-width:640px; color:#ffd873;}
 .hero p{margin-top:16px; color:var(--cream-dim); max-width:600px; font-size:16.5px; line-height:1.7;}
 .chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
 .chip{
@@ -138,7 +138,7 @@ nav{padding:14px 12px 30px; flex:1;}
   font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:2px; color:var(--gold);
   text-transform:uppercase; background:var(--ink); display:inline-block; padding:5px 12px; border-radius:6px;
 }
-.mat-section h2{font-size:30px; margin-top:14px;}
+.mat-section h2{font-size:28px; margin-top:14px;}
 .mat-section h3{font-size:20px; margin-top:30px; margin-bottom:10px; color:var(--text-mid);}
 .mat-section p{line-height:1.85; margin-top:12px; font-size:16.5px; color:var(--text-dark);}
 .mat-section ul, .mat-section ol{margin:14px 0 14px 26px; line-height:1.9; font-size:16px;}
@@ -166,6 +166,12 @@ nav{padding:14px 12px 30px; flex:1;}
 .example-box ol{margin-left:22px; line-height:2;}
 .example-box .step-label{font-weight:600; color:var(--text-mid); font-family:'JetBrains Mono',monospace; font-size:13px;}
 
+.numberline{
+  margin:20px 0; padding:24px 20px 16px; background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px;
+  text-align:center;
+}
+.numberline svg{max-width:100%; height:auto;}
+
 .calc-box{
   margin:24px 0; background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 26px;
   box-shadow:0 10px 30px rgba(20,26,46,.25);
@@ -174,7 +180,7 @@ nav{padding:14px 12px 30px; flex:1;}
 .calc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
 .calc-row input, .calc-row select{
   font-family:'JetBrains Mono',monospace; font-size:15px; padding:9px 12px; border-radius:8px;
-  border:1px solid var(--ink-border); background:var(--ink2); color:var(--cream); width:110px;
+  border:1px solid var(--ink-border); background:var(--ink2); color:var(--cream); width:80px;
 }
 .calc-row select{width:auto;}
 .calc-btn{
@@ -331,7 +337,7 @@ footer b{color:var(--gold-soft);}
 <aside id="sidebar">
   <div class="side-header">
     <div class="side-label">Matematika · Kelas 7</div>
-    <div class="side-title">Aritmetika Sosial</div>
+    <div class="side-title">PLSV dan PtLSV</div>
     <div class="side-sub">Ebook Interaktif</div>
   </div>
   <div class="progress-wrap">
@@ -341,13 +347,14 @@ footer b{color:var(--gold-soft);}
   <nav>
     <div class="nav-label">Materi</div>
     <a href="#hero" class="nav-link" data-target="hero">Pendahuluan</a>
-    <a href="#matA" class="nav-link" data-target="matA">A. Pecahan (Persentase)</a>
-    <a href="#matB" class="nav-link" data-target="matB">B. Uang dalam Perdagangan</a>
-    <a href="#matC" class="nav-link" data-target="matC">C. Persentase Untung/Rugi</a>
-    <a href="#matD" class="nav-link" data-target="matD">D. Potongan Harga</a>
-    <a href="#matE" class="nav-link" data-target="matE">E. Bruto, Tara, dan Neto</a>
-    <a href="#matF" class="nav-link" data-target="matF">F. Perhitungan Bunga Bank</a>
-    <a href="#matG" class="nav-link" data-target="matG">G. Pajak</a>
+    <a href="#matA" class="nav-link" data-target="matA">A. Kalimat Terbuka</a>
+    <a href="#matB" class="nav-link" data-target="matB">B. Pengertian PLSV</a>
+    <a href="#matC" class="nav-link" data-target="matC">C. Menyelesaikan PLSV</a>
+    <a href="#matD" class="nav-link" data-target="matD">D. Masalah Kontekstual PLSV</a>
+    <a href="#matE" class="nav-link" data-target="matE">E. Tanda Ketaksamaan</a>
+    <a href="#matF" class="nav-link" data-target="matF">F. Pengertian PtLSV</a>
+    <a href="#matG" class="nav-link" data-target="matG">G. Grafik Penyelesaian PtLSV</a>
+    <a href="#matH" class="nav-link" data-target="matH">H. Masalah Kontekstual PtLSV</a>
     <div class="nav-label">Latihan</div>
     <a href="#latihan" class="nav-link" data-target="latihan">Latihan Soal</a>
     <div class="nav-sub">
@@ -364,290 +371,265 @@ footer b{color:var(--gold-soft);}
 
   <section id="hero" class="hero">
     <div class="hero-label">Ebook Interaktif · Matematika Kelas 7</div>
-    <h1>Aritmetika Sosial</h1>
-    <p>Menerapkan matematika dalam kehidupan ekonomi sehari-hari: jual beli, untung-rugi, diskon, berat kemasan, bunga bank, hingga pajak — lengkap dengan contoh langkah demi langkah, kalkulator interaktif, dan 25 soal latihan otomatis-terkoreksi.</p>
+    <h1>Persamaan &amp; Pertidaksamaan Linear Satu Variabel</h1>
+    <p>Memahami kalimat terbuka, menyusun dan menyelesaikan PLSV dan PtLSV, hingga menerapkannya pada masalah sehari-hari — lengkap dengan contoh langkah demi langkah, kalkulator interaktif, dan 25 soal latihan otomatis-terkoreksi.</p>
     <div class="chip-row">
-      <div class="chip">A. Pecahan (Persentase)</div>
-      <div class="chip">B. Uang dalam Perdagangan</div>
-      <div class="chip">C. Persentase Untung/Rugi</div>
-      <div class="chip">D. Potongan Harga</div>
-      <div class="chip">E. Bruto, Tara, Neto</div>
-      <div class="chip">F. Bunga Bank</div>
-      <div class="chip">G. Pajak</div>
+      <div class="chip">A. Kalimat Terbuka</div>
+      <div class="chip">B. Pengertian PLSV</div>
+      <div class="chip">C. Menyelesaikan PLSV</div>
+      <div class="chip">D. Kontekstual PLSV</div>
+      <div class="chip">E. Tanda Ketaksamaan</div>
+      <div class="chip">F. Pengertian PtLSV</div>
+      <div class="chip">G. Grafik Penyelesaian PtLSV</div>
+      <div class="chip">H. Kontekstual PtLSV</div>
     </div>
   </section>
 
   <section id="matA" class="mat-section">
     <span class="sec-label">Bagian A</span>
-    <h2>Pecahan (Persentase)</h2>
-    <p>Sebelum mempelajari aritmetika sosial lebih jauh, penting untuk menguasai kembali konsep persentase, karena hampir seluruh perhitungan untung-rugi, diskon, bunga, dan pajak menggunakan persentase.</p>
+    <h2>Kalimat Terbuka</h2>
+    <p>Sebelum mempelajari persamaan dan pertidaksamaan, penting untuk memahami perbedaan antara kalimat terbuka dan kalimat tertutup (pernyataan).</p>
 
     <div class="callout def">
       <span class="co-title">Definisi</span>
-      Persentase (\(p\%\)) adalah pecahan dengan penyebut 100: \(p\% = \dfrac{p}{100}\). Persen digunakan untuk menyatakan bagian dari keseluruhan secara praktis.
+      <b>Kalimat terbuka</b> adalah kalimat matematika yang memuat variabel, sehingga belum dapat ditentukan nilai kebenarannya (benar atau salah) sampai variabel tersebut diganti dengan nilai tertentu.<br>
+      <b>Kalimat tertutup (pernyataan)</b> adalah kalimat yang sudah pasti bernilai benar atau salah, karena tidak memuat variabel.
     </div>
 
-    <h3>Konversi Pecahan, Desimal, dan Persen</h3>
-    <ul>
-      <li>Pecahan → Persen: kalikan dengan 100%, contoh \(\dfrac{3}{8} \times 100\% = 37{,}5\%\).</li>
-      <li>Persen → Pecahan: bagi dengan 100 lalu sederhanakan, contoh \(35\% = \dfrac{35}{100} = \dfrac{7}{20}\).</li>
-      <li>Persen → Desimal: bagi dengan 100, contoh \(20\% = 0{,}2\).</li>
-    </ul>
-
     <div class="example-box">
-      <span class="ex-title">Contoh Soal</span>
-      <p>Ubahlah pecahan \(\dfrac{7}{20}\) menjadi bentuk persen.</p>
-      <ol>
-        <li><span class="step-label">Langkah 1:</span> Kalikan pecahan dengan 100%: \(\dfrac{7}{20} \times 100\%\).</li>
-        <li><span class="step-label">Langkah 2:</span> Hitung: \(\dfrac{700}{20}\% = 35\%\).</li>
-        <li><span class="step-label">Langkah 3:</span> Jadi \(\dfrac{7}{20} = 35\%\).</li>
-      </ol>
+      <span class="ex-title">Contoh</span>
+      <ul>
+        <li>\(x+3=7\) — kalimat terbuka, karena memuat variabel \(x\) dan belum diketahui benar/salahnya.</li>
+        <li>\(5+2=7\) — kalimat tertutup (pernyataan benar), karena sudah pasti bernilai benar.</li>
+        <li>\(3+2=10\) — kalimat tertutup (pernyataan salah), karena sudah pasti bernilai salah.</li>
+      </ul>
     </div>
 
     <div class="callout note">
-      <span class="co-title">Tips</span>
-      Hafalkan beberapa nilai persen umum: \(\dfrac{1}{2}=50\%\), \(\dfrac{1}{4}=25\%\), \(\dfrac{1}{5}=20\%\), \(\dfrac{1}{10}=10\%\) — akan sangat membantu mempercepat perhitungan aritmetika sosial.
+      <span class="co-title">Penyelesaian Kalimat Terbuka</span>
+      Nilai variabel yang membuat suatu kalimat terbuka menjadi kalimat tertutup yang <b>benar</b> disebut penyelesaian (solusi) dari kalimat terbuka tersebut.
+    </div>
+
+    <div class="calc-box">
+      <h4>🧮 Kalkulator Uji Kalimat Terbuka (ax+b=c)</h4>
+      <div class="calc-row">
+        <input type="number" id="ktA" placeholder="a" value="2">
+        <span>x +</span>
+        <input type="number" id="ktB" placeholder="b" value="3">
+        <span>= </span>
+        <input type="number" id="ktC" placeholder="c" value="11">
+        <span>, uji x =</span>
+        <input type="number" id="ktX" placeholder="x" value="4">
+        <button class="calc-btn" onclick="ujiKalimatTerbuka()">Uji</button>
+      </div>
+      <div class="calc-result" id="ktResult">Hasil akan tampil di sini.</div>
     </div>
   </section>
 
   <section id="matB" class="mat-section">
     <span class="sec-label">Bagian B</span>
-    <h2>Uang dalam Perdagangan</h2>
-    <p>Dalam kegiatan jual beli terdapat beberapa istilah penting yang menjadi dasar seluruh perhitungan aritmetika sosial.</p>
+    <h2>Pengertian Persamaan Linear Satu Variabel (PLSV)</h2>
+    <p>Persamaan Linear Satu Variabel (PLSV) adalah salah satu jenis kalimat terbuka yang sangat sering dijumpai dalam matematika.</p>
 
     <div class="callout def">
-      <span class="co-title">Istilah Penting</span>
-      <b>Harga pembelian (modal)</b>: uang yang dikeluarkan untuk membeli/memperoleh barang.<br>
-      <b>Harga penjualan</b>: uang yang diterima ketika barang dijual kembali.<br>
-      <b>Modal</b>: seluruh biaya yang dikeluarkan, termasuk biaya produksi atau ongkos tambahan.
+      <span class="co-title">Definisi</span>
+      PLSV adalah kalimat terbuka yang dihubungkan oleh tanda sama dengan ("="), hanya memuat <b>satu variabel</b>, dan variabel tersebut berpangkat <b>satu</b>. Bentuk umum: \(ax+b=c\), dengan \(a \neq 0\).
     </div>
-
-    <h3>Hubungan Harga Beli dan Harga Jual</h3>
-    <p>Selisih antara harga penjualan dan harga pembelian akan menentukan apakah suatu usaha mengalami keuntungan atau kerugian — konsep ini akan dibahas lebih detail pada bagian berikutnya.</p>
 
     <div class="example-box">
-      <span class="ex-title">Contoh Soal</span>
-      <p>Seorang pedagang membeli 10 kg jeruk dengan harga Rp150.000. Berapa harga pembelian (modal) per kilogram?</p>
-      <ol>
-        <li><span class="step-label">Langkah 1:</span> Bagi total harga pembelian dengan banyak barang: \(150.000 \div 10\).</li>
-        <li><span class="step-label">Langkah 2:</span> Hasilnya adalah Rp15.000 per kilogram.</li>
-      </ol>
+      <span class="ex-title">Contoh</span>
+      <p>\(2x+3=11\) adalah PLSV karena hanya memuat satu variabel (\(x\)) berpangkat satu, dihubungkan tanda "=".</p>
     </div>
 
-    <div class="callout note">
-      <span class="co-title">Tips</span>
-      Selalu catat harga pembelian per satuan barang sebelum menghitung keuntungan atau kerugian, agar perhitungan persentase lebih mudah dan akurat.
+    <div class="callout warn">
+      <span class="co-title">Bukan PLSV</span>
+      \(x^2+3=12\) bukan PLSV karena variabelnya berpangkat dua. \(x+y=10\) juga bukan PLSV karena memuat dua variabel.
     </div>
   </section>
 
   <section id="matC" class="mat-section">
     <span class="sec-label">Bagian C</span>
-    <h2>Persentase Keuntungan atau Kerugian</h2>
-    <p>Keuntungan (untung) terjadi ketika harga penjualan lebih besar dari harga pembelian. Sebaliknya, kerugian (rugi) terjadi ketika harga penjualan lebih kecil dari harga pembelian.</p>
+    <h2>Menyelesaikan PLSV</h2>
+    <p>Menyelesaikan PLSV berarti mencari nilai variabel yang membuat persamaan tersebut menjadi benar, dengan cara mengisolasi variabel di salah satu ruas.</p>
 
     <div class="callout def">
-      <span class="co-title">Rumus</span>
-      Untung \(= \) Harga Jual \(-\) Harga Beli (jika hasilnya positif).<br>
-      Rugi \(= \) Harga Beli \(-\) Harga Jual (jika harga jual lebih kecil).<br>
-      Persentase Untung/Rugi \(= \dfrac{\text{Untung atau Rugi}}{\text{Harga Beli}} \times 100\%\).
-    </div>
-
-    <div class="callout warn">
-      <span class="co-title">Perhatikan</span>
-      Persentase untung dan rugi selalu dihitung berdasarkan <b>harga beli</b>, bukan harga jual!
+      <span class="co-title">Prinsip Utama</span>
+      Kedua ruas persamaan boleh ditambah, dikurangi, dikalikan, atau dibagi dengan bilangan yang sama (asalkan bukan nol untuk perkalian/pembagian), tanpa mengubah nilai kebenaran persamaan.
     </div>
 
     <div class="example-box">
       <span class="ex-title">Contoh Soal</span>
-      <p>Seorang pedagang membeli sepatu seharga Rp200.000 dan menjualnya seharga Rp240.000. Berapa persentase keuntungannya?</p>
+      <p>Selesaikan persamaan \(2x+3=11\).</p>
       <ol>
-        <li><span class="step-label">Langkah 1:</span> Hitung besar untung: \(240.000 - 200.000 = 40.000\).</li>
-        <li><span class="step-label">Langkah 2:</span> Hitung persentase: \(\dfrac{40.000}{200.000} \times 100\% = 20\%\).</li>
+        <li><span class="step-label">Langkah 1:</span> Kurangi kedua ruas dengan 3: \(2x+3-3=11-3 \Rightarrow 2x=8\).</li>
+        <li><span class="step-label">Langkah 2:</span> Bagi kedua ruas dengan 2: \(x = 4\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi penyelesaiannya adalah \(x=4\).</li>
       </ol>
     </div>
 
     <div class="calc-box">
-      <h4>🧮 Kalkulator Untung / Rugi</h4>
+      <h4>🧮 Kalkulator Penyelesaian PLSV (ax+b=c)</h4>
       <div class="calc-row">
-        <span>Harga Beli:</span>
-        <input type="number" id="urBeli" placeholder="Rp" value="200000">
-        <span>Harga Jual:</span>
-        <input type="number" id="urJual" placeholder="Rp" value="240000">
-        <button class="calc-btn" onclick="hitungUntungRugi()">Hitung</button>
+        <input type="number" id="plsvA" placeholder="a" value="2">
+        <span>x +</span>
+        <input type="number" id="plsvB" placeholder="b" value="3">
+        <span>=</span>
+        <input type="number" id="plsvC" placeholder="c" value="11">
+        <button class="calc-btn" onclick="hitungPLSV()">Selesaikan</button>
       </div>
-      <div class="calc-result" id="urResult">Hasil akan tampil di sini.</div>
+      <div class="calc-result" id="plsvResult">Hasil akan tampil di sini.</div>
     </div>
   </section>
 
   <section id="matD" class="mat-section">
     <span class="sec-label">Bagian D</span>
-    <h2>Potongan Harga (Diskon)</h2>
-    <p>Diskon adalah potongan harga yang diberikan penjual, biasanya dinyatakan dalam persen dari harga awal barang.</p>
-
-    <div class="callout def">
-      <span class="co-title">Rumus</span>
-      Besar Diskon \(= \) Persen Diskon \(\times\) Harga Awal.<br>
-      Harga Setelah Diskon \(= \) Harga Awal \(-\) Besar Diskon.
-    </div>
+    <h2>Masalah Kontekstual Terkait PLSV</h2>
+    <p>PLSV banyak digunakan untuk menyelesaikan masalah sehari-hari dengan cara menerjemahkan kalimat cerita menjadi bentuk aljabar terlebih dahulu.</p>
 
     <div class="example-box">
       <span class="ex-title">Contoh Soal</span>
-      <p>Harga baju Rp180.000 didiskon 25%. Berapa harga setelah diskon?</p>
+      <p>Umur Andi 5 tahun lebih tua dari umur Budi. Jika jumlah umur mereka 25 tahun, berapa umur Budi?</p>
       <ol>
-        <li><span class="step-label">Langkah 1:</span> Hitung besar diskon: \(25\% \times 180.000 = 45.000\).</li>
-        <li><span class="step-label">Langkah 2:</span> Kurangi harga awal dengan diskon: \(180.000 - 45.000 = 135.000\).</li>
-      </ol>
-    </div>
-
-    <h3>Diskon Ganda (Diskon Bertingkat)</h3>
-    <p>Diskon ganda seperti "20% + 10%" tidak sama dengan diskon tunggal 30%, karena diskon kedua dihitung dari harga setelah diskon pertama, bukan dari harga awal.</p>
-
-    <div class="example-box">
-      <span class="ex-title">Contoh Soal</span>
-      <p>Harga sepatu Rp500.000 mendapat diskon ganda 20% + 10%. Berapa harga akhirnya?</p>
-      <ol>
-        <li><span class="step-label">Langkah 1:</span> Diskon pertama: \(20\% \times 500.000 = 100.000\), harga menjadi \(400.000\).</li>
-        <li><span class="step-label">Langkah 2:</span> Diskon kedua dihitung dari harga baru: \(10\% \times 400.000 = 40.000\).</li>
-        <li><span class="step-label">Langkah 3:</span> Harga akhir: \(400.000 - 40.000 = 360.000\).</li>
-      </ol>
-    </div>
-
-    <div class="calc-box">
-      <h4>🧮 Kalkulator Diskon</h4>
-      <div class="calc-row">
-        <span>Harga Awal:</span>
-        <input type="number" id="dsHarga" placeholder="Rp" value="180000">
-        <span>Diskon (%):</span>
-        <input type="number" id="dsPersen" placeholder="%" value="25">
-        <button class="calc-btn" onclick="hitungDiskon()">Hitung</button>
-      </div>
-      <div class="calc-result" id="dsResult">Hasil akan tampil di sini.</div>
-    </div>
-  </section>
-
-  <section id="matE" class="mat-section">
-    <span class="sec-label">Bagian E</span>
-    <h2>Bruto, Tara, dan Neto</h2>
-    <p>Istilah ini biasa digunakan pada kemasan barang, terutama bahan makanan atau produk dalam karung/kotak.</p>
-
-    <div class="callout def">
-      <span class="co-title">Definisi</span>
-      <b>Bruto</b>: berat kotor, yaitu berat barang beserta kemasannya.<br>
-      <b>Tara</b>: berat kemasan saja (tanpa isi).<br>
-      <b>Neto</b>: berat bersih, yaitu berat barang tanpa kemasan.<br>
-      Rumus: \(\text{Bruto} = \text{Neto} + \text{Tara}\), sehingga \(\text{Neto} = \text{Bruto} - \text{Tara}\).
-    </div>
-
-    <div class="example-box">
-      <span class="ex-title">Contoh Soal</span>
-      <p>Sebuah karung beras memiliki bruto 52 kg dan tara 2 kg. Berapa berat neto beras tersebut?</p>
-      <ol>
-        <li><span class="step-label">Langkah 1:</span> Gunakan rumus \(\text{Neto} = \text{Bruto} - \text{Tara}\).</li>
-        <li><span class="step-label">Langkah 2:</span> Hitung: \(52 - 2 = 50\).</li>
-        <li><span class="step-label">Langkah 3:</span> Jadi berat neto beras adalah 50 kg.</li>
-      </ol>
-    </div>
-
-    <div class="callout note">
-      <span class="co-title">Persentase Tara</span>
-      Persentase tara terhadap bruto dihitung dengan: \(\%\text{Tara} = \dfrac{\text{Tara}}{\text{Bruto}} \times 100\%\).
-    </div>
-
-    <div class="calc-box">
-      <h4>🧮 Kalkulator Bruto, Tara, Neto</h4>
-      <div class="calc-row">
-        <span>Bruto (kg):</span>
-        <input type="number" id="btBruto" placeholder="kg" value="52">
-        <span>Tara (kg):</span>
-        <input type="number" id="btTara" placeholder="kg" value="2">
-        <button class="calc-btn" onclick="hitungBrutoTaraNeto()">Hitung Neto</button>
-      </div>
-      <div class="calc-result" id="btResult">Hasil akan tampil di sini.</div>
-    </div>
-  </section>
-
-  <section id="matF" class="mat-section">
-    <span class="sec-label">Bagian F</span>
-    <h2>Perhitungan Bunga Bank</h2>
-    <p>Bunga bank adalah imbalan yang diberikan bank kepada nasabah yang menyimpan uangnya (tabungan atau deposito), biasanya dihitung dengan sistem bunga tunggal untuk tingkat SMP.</p>
-
-    <div class="callout def">
-      <span class="co-title">Rumus Bunga Tunggal</span>
-      \(\text{Bunga} = \text{Modal} \times \dfrac{\text{Persen Bunga per Tahun}}{100} \times \dfrac{\text{Lama Menabung (bulan)}}{12}\)
-    </div>
-
-    <div class="example-box">
-      <span class="ex-title">Contoh Soal</span>
-      <p>Modal Rp2.000.000 disimpan dengan bunga tunggal 6% per tahun. Berapa bunga yang diperoleh setelah 8 bulan?</p>
-      <ol>
-        <li><span class="step-label">Langkah 1:</span> Substitusikan ke rumus: \(\text{Bunga} = 2.000.000 \times \dfrac{6}{100} \times \dfrac{8}{12}\).</li>
-        <li><span class="step-label">Langkah 2:</span> Hitung bertahap: \(2.000.000 \times 0{,}06 = 120.000\), lalu \(120.000 \times \dfrac{8}{12} = 80.000\).</li>
-        <li><span class="step-label">Langkah 3:</span> Jadi bunga yang diperoleh adalah Rp80.000.</li>
+        <li><span class="step-label">Langkah 1:</span> Misalkan umur Budi \(=x\), maka umur Andi \(=x+5\).</li>
+        <li><span class="step-label">Langkah 2:</span> Susun persamaan dari jumlah umur: \(x + (x+5) = 25\).</li>
+        <li><span class="step-label">Langkah 3:</span> Sederhanakan: \(2x+5=25 \Rightarrow 2x=20 \Rightarrow x=10\).</li>
+        <li><span class="step-label">Langkah 4:</span> Jadi umur Budi adalah 10 tahun.</li>
       </ol>
     </div>
 
     <div class="callout note">
       <span class="co-title">Tips</span>
-      Total tabungan akhir \(= \) Modal \(+\) Bunga. Pada contoh di atas, total tabungan setelah 8 bulan adalah \(2.000.000 + 80.000 = 2.080.000\).
+      Selalu mulai dengan memisalkan besaran yang belum diketahui sebagai variabel (biasanya \(x\)), lalu susun hubungan antar besaran menjadi persamaan.
+    </div>
+  </section>
+
+  <section id="matE" class="mat-section">
+    <span class="sec-label">Bagian E</span>
+    <h2>Tanda Ketaksamaan</h2>
+    <p>Sebelum mempelajari pertidaksamaan, perlu dikenali dahulu simbol-simbol ketaksamaan yang digunakan untuk membandingkan dua nilai.</p>
+
+    <div class="callout def">
+      <span class="co-title">Simbol Ketaksamaan</span>
+      \(<\) artinya "kurang dari".<br>
+      \(>\) artinya "lebih dari".<br>
+      \(\leq\) artinya "kurang dari atau sama dengan".<br>
+      \(\geq\) artinya "lebih dari atau sama dengan".<br>
+      \(\neq\) artinya "tidak sama dengan".
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh</span>
+      <p>\(x < 5\) dibaca "x kurang dari 5", artinya nilai x bisa berupa semua bilangan yang lebih kecil dari 5, misalnya 4, 3, 0, atau \(-2\), tetapi tidak termasuk 5 itu sendiri.</p>
+    </div>
+  </section>
+
+  <section id="matF" class="mat-section">
+    <span class="sec-label">Bagian F</span>
+    <h2>Pengertian Pertidaksamaan Linear Satu Variabel (PtLSV)</h2>
+    <p>Pertidaksamaan Linear Satu Variabel (PtLSV) mirip dengan PLSV, namun menggunakan tanda ketaksamaan, bukan tanda sama dengan.</p>
+
+    <div class="callout def">
+      <span class="co-title">Definisi</span>
+      PtLSV adalah kalimat terbuka yang dihubungkan oleh tanda ketaksamaan (\(<, >, \leq,\) atau \(\geq\)), hanya memuat satu variabel berpangkat satu. Bentuk umum: \(ax+b < c\) (atau \(>, \leq, \geq\)), dengan \(a \neq 0\).
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Perbedaan Penting dengan PLSV</span>
+      Penyelesaian PLSV berupa <b>satu nilai</b> tertentu, sedangkan penyelesaian PtLSV berupa <b>himpunan (kumpulan) nilai</b> yang memenuhi.
+    </div>
+
+    <div class="callout warn">
+      <span class="co-title">Aturan Penting</span>
+      Jika kedua ruas pertidaksamaan dikalikan atau dibagi dengan bilangan <b>negatif</b>, maka tanda ketaksamaan harus <b>dibalik arahnya</b>. Contoh: dari \(-2x < 6\), jika dibagi \(-2\), tandanya berbalik menjadi \(x > -3\).
+    </div>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Selesaikan pertidaksamaan \(3x-2 > 7\).</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Tambahkan 2 ke kedua ruas: \(3x > 9\).</li>
+        <li><span class="step-label">Langkah 2:</span> Bagi kedua ruas dengan 3 (bilangan positif, tanda tetap): \(x > 3\).</li>
+      </ol>
     </div>
 
     <div class="calc-box">
-      <h4>🧮 Kalkulator Bunga Bank</h4>
+      <h4>🧮 Kalkulator Penyelesaian PtLSV (ax+b [tanda] c)</h4>
       <div class="calc-row">
-        <span>Modal:</span>
-        <input type="number" id="bbModal" placeholder="Rp" value="2000000">
-        <span>Bunga/tahun (%):</span>
-        <input type="number" id="bbPersen" placeholder="%" value="6">
-        <span>Lama (bulan):</span>
-        <input type="number" id="bbBulan" placeholder="bulan" value="8">
-        <button class="calc-btn" onclick="hitungBungaBank()">Hitung</button>
+        <input type="number" id="ptA" placeholder="a" value="3">
+        <span>x +</span>
+        <input type="number" id="ptB" placeholder="b" value="-2">
+        <select id="ptTanda">
+          <option value="<">&lt;</option>
+          <option value=">">&gt;</option>
+          <option value="<=">≤</option>
+          <option value=">=">≥</option>
+        </select>
+        <input type="number" id="ptC" placeholder="c" value="7">
+        <button class="calc-btn" onclick="hitungPtLSV()">Selesaikan</button>
       </div>
-      <div class="calc-result" id="bbResult">Hasil akan tampil di sini.</div>
+      <div class="calc-result" id="ptResult">Hasil akan tampil di sini.</div>
     </div>
   </section>
 
   <section id="matG" class="mat-section">
     <span class="sec-label">Bagian G</span>
-    <h2>Pajak</h2>
-    <p>Pajak adalah pungutan wajib yang dikenakan pemerintah atas transaksi jual beli, penghasilan, atau kepemilikan barang. Salah satu pajak yang sering dijumpai adalah Pajak Pertambahan Nilai (PPN).</p>
+    <h2>Grafik Penyelesaian PtLSV</h2>
+    <p>Himpunan penyelesaian PtLSV dapat digambarkan pada garis bilangan agar lebih mudah dipahami secara visual.</p>
 
     <div class="callout def">
-      <span class="co-title">Definisi</span>
-      PPN adalah pajak yang dikenakan atas setiap pertambahan nilai barang/jasa, dan pada akhirnya dibayar oleh konsumen. Rumus: \(\text{Harga Termasuk Pajak} = \text{Harga Barang} + (\text{Persen Pajak} \times \text{Harga Barang})\).
+      <span class="co-title">Aturan Menggambar</span>
+      Gunakan <b>bulatan penuh (●)</b> jika tandanya \(\leq\) atau \(\geq\) (batas termasuk dalam penyelesaian).<br>
+      Gunakan <b>bulatan kosong (○)</b> jika tandanya \(<\) atau \(>\) (batas tidak termasuk dalam penyelesaian).<br>
+      Arah arsir/panah menunjukkan daerah nilai yang menjadi penyelesaian.
+    </div>
+
+    <div class="numberline">
+      <svg viewBox="0 0 400 90" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="45" x2="380" y2="45" stroke="#5b5137" stroke-width="2"/>
+        <polygon points="380,45 368,39 368,51" fill="#5b5137"/>
+        <line x1="200" y1="35" x2="380" y2="35" stroke="#c1584f" stroke-width="4"/>
+        <circle cx="200" cy="45" r="7" fill="#fbf6ea" stroke="#c1584f" stroke-width="3"/>
+        <text x="200" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#2b2416">2</text>
+        <text x="200" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#9a3c34">x &gt; 2</text>
+      </svg>
+      <p style="margin-top:8px; font-size:13.5px; color:var(--text-mid);">Contoh grafik penyelesaian \(x>2\): bulatan kosong di titik 2, arsir ke arah kanan.</p>
     </div>
 
     <div class="example-box">
       <span class="ex-title">Contoh Soal</span>
-      <p>Harga sebuah barang sebelum pajak adalah Rp400.000. Jika dikenakan PPN 11%, berapa total harga yang harus dibayar?</p>
+      <p>Gambarkan grafik penyelesaian dari \(x \leq 4\) pada garis bilangan.</p>
       <ol>
-        <li><span class="step-label">Langkah 1:</span> Hitung besar pajak: \(11\% \times 400.000 = 44.000\).</li>
-        <li><span class="step-label">Langkah 2:</span> Tambahkan ke harga awal: \(400.000 + 44.000 = 444.000\).</li>
-        <li><span class="step-label">Langkah 3:</span> Jadi total harga yang harus dibayar adalah Rp444.000.</li>
+        <li><span class="step-label">Langkah 1:</span> Karena tandanya \(\leq\), gunakan bulatan <b>penuh</b> di titik 4.</li>
+        <li><span class="step-label">Langkah 2:</span> Karena nilai \(x\) harus kurang dari atau sama dengan 4, arsir garis ke arah <b>kiri</b> dari titik 4.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="matH" class="mat-section">
+    <span class="sec-label">Bagian H</span>
+    <h2>Masalah Kontekstual Terkait PtLSV</h2>
+    <p>Sama seperti PLSV, PtLSV juga digunakan untuk menyelesaikan masalah sehari-hari, terutama yang melibatkan syarat "paling banyak", "paling sedikit", "maksimum", atau "minimum".</p>
+
+    <div class="example-box">
+      <span class="ex-title">Contoh Soal</span>
+      <p>Sebuah lift memiliki kapasitas maksimum 8 orang. Saat ini sudah ada 3 orang di dalamnya. Paling banyak berapa orang lagi yang boleh masuk?</p>
+      <ol>
+        <li><span class="step-label">Langkah 1:</span> Misalkan banyak orang tambahan \(=x\). Syarat: total orang tidak boleh melebihi kapasitas, sehingga \(3+x \leq 8\).</li>
+        <li><span class="step-label">Langkah 2:</span> Selesaikan: \(x \leq 8-3 \Rightarrow x \leq 5\).</li>
+        <li><span class="step-label">Langkah 3:</span> Jadi paling banyak 5 orang lagi yang boleh masuk.</li>
       </ol>
     </div>
 
-    <div class="callout warn">
-      <span class="co-title">Perhatikan</span>
-      Selain PPN, terdapat juga pajak penghasilan (PPh) yang dikenakan atas gaji atau pendapatan seseorang — namun perhitungan PPh biasanya dipelajari lebih lanjut di jenjang yang lebih tinggi.
-    </div>
-
-    <div class="calc-box">
-      <h4>🧮 Kalkulator Pajak (PPN)</h4>
-      <div class="calc-row">
-        <span>Harga Barang:</span>
-        <input type="number" id="pjHarga" placeholder="Rp" value="400000">
-        <span>Pajak (%):</span>
-        <input type="number" id="pjPersen" placeholder="%" value="11">
-        <button class="calc-btn" onclick="hitungPajak()">Hitung</button>
-      </div>
-      <div class="calc-result" id="pjResult">Hasil akan tampil di sini.</div>
+    <div class="callout note">
+      <span class="co-title">Kata Kunci Penting</span>
+      "Paling banyak" atau "tidak lebih dari" → gunakan tanda \(\leq\). "Paling sedikit" atau "tidak kurang dari" → gunakan tanda \(\geq\).
     </div>
   </section>
 
   <section id="latihan" class="latihan-section">
     <div class="latihan-header">
       <span class="sec-label">Latihan</span>
-      <h2>Latihan Soal Aritmetika Sosial</h2>
+      <h2>Latihan Soal PLSV dan PtLSV</h2>
       <p>25 soal dengan 5 tipe berbeda. Pilih tipe soal di bawah, jawab, dan lihat penjelasannya secara langsung. Setelah selesai, klik "Lihat Analisis" untuk melihat hasil keseluruhan.</p>
     </div>
 
@@ -685,7 +667,7 @@ footer b{color:var(--gold-soft);}
   </section>
 
   <footer>
-    Ebook Interaktif Matematika Kelas 7 — Aritmetika Sosial<br>
+    Ebook Interaktif Matematika Kelas 7 — PLSV dan PtLSV<br>
     Dibuat oleh <b>Suminto</b> bersama <b>Claude</b><br>
     Satu file HTML, dapat dibuka langsung di peramban tanpa koneksi internet (kecuali font &amp; rumus matematika).
   </footer>
@@ -707,7 +689,7 @@ document.querySelectorAll('.nav-link, .nav-sub a').forEach(function(a){
 });
 
 /* ============ SCROLLSPY + PROGRESS BAR ============ */
-const sectionIds = ['hero','matA','matB','matC','matD','matE','matF','matG','latihan'];
+const sectionIds = ['hero','matA','matB','matC','matD','matE','matF','matG','matH','latihan'];
 function updateScrollSpy(){
   let current = sectionIds[0];
   sectionIds.forEach(function(id){
@@ -730,101 +712,85 @@ function updateScrollSpy(){
 window.addEventListener('scroll', updateScrollSpy);
 window.addEventListener('resize', updateScrollSpy);
 
-/* ============ KALKULATOR: Untung / Rugi ============ */
-function hitungUntungRugi(){
-  const beli = parseFloat(document.getElementById('urBeli').value) || 0;
-  const jual = parseFloat(document.getElementById('urJual').value) || 0;
-  const out = document.getElementById('urResult');
-  if(beli === 0){ out.innerHTML = '⚠️ Harga beli tidak boleh nol.'; return; }
-  const selisih = jual - beli;
-  const persen = (Math.abs(selisih) / beli) * 100;
-  if(selisih > 0){
-    out.innerHTML = `Untung = ${selisih.toLocaleString('id-ID')} → <b>Untung ${persen.toFixed(2)}%</b>`;
-  } else if(selisih < 0){
-    out.innerHTML = `Rugi = ${Math.abs(selisih).toLocaleString('id-ID')} → <b>Rugi ${persen.toFixed(2)}%</b>`;
+/* ============ KALKULATOR: Uji Kalimat Terbuka ============ */
+function ujiKalimatTerbuka(){
+  const a = parseFloat(document.getElementById('ktA').value) || 0;
+  const b = parseFloat(document.getElementById('ktB').value) || 0;
+  const c = parseFloat(document.getElementById('ktC').value) || 0;
+  const x = parseFloat(document.getElementById('ktX').value) || 0;
+  const out = document.getElementById('ktResult');
+  const kiri = a * x + b;
+  if(kiri === c){
+    out.innerHTML = `Untuk x=${x}: ${a}(${x})+${b} = ${kiri} = ${c} → <b>BENAR ✅</b> (x=${x} adalah penyelesaian)`;
   } else {
-    out.innerHTML = `Tidak untung, tidak rugi (impas).`;
+    out.innerHTML = `Untuk x=${x}: ${a}(${x})+${b} = ${kiri} ≠ ${c} → <b>SALAH ❌</b> (x=${x} bukan penyelesaian)`;
   }
 }
 
-/* ============ KALKULATOR: Diskon ============ */
-function hitungDiskon(){
-  const harga = parseFloat(document.getElementById('dsHarga').value) || 0;
-  const persen = parseFloat(document.getElementById('dsPersen').value) || 0;
-  const out = document.getElementById('dsResult');
-  const besarDiskon = (persen / 100) * harga;
-  const hargaAkhir = harga - besarDiskon;
-  out.innerHTML = `Diskon ${persen}% dari Rp${harga.toLocaleString('id-ID')} = Rp${besarDiskon.toLocaleString('id-ID')} → Harga akhir = <b>Rp${hargaAkhir.toLocaleString('id-ID')}</b>`;
+/* ============ KALKULATOR: Penyelesaian PLSV ============ */
+function hitungPLSV(){
+  const a = parseFloat(document.getElementById('plsvA').value) || 0;
+  const b = parseFloat(document.getElementById('plsvB').value) || 0;
+  const c = parseFloat(document.getElementById('plsvC').value) || 0;
+  const out = document.getElementById('plsvResult');
+  if(a === 0){ out.innerHTML = '⚠️ Nilai a tidak boleh nol (bukan PLSV).'; return; }
+  const x = (c - b) / a;
+  out.innerHTML = `${a}x + ${b} = ${c} → ${a}x = ${c - b} → <b>x = ${x}</b>`;
 }
 
-/* ============ KALKULATOR: Bruto, Tara, Neto ============ */
-function hitungBrutoTaraNeto(){
-  const bruto = parseFloat(document.getElementById('btBruto').value) || 0;
-  const tara = parseFloat(document.getElementById('btTara').value) || 0;
-  const out = document.getElementById('btResult');
-  if(bruto === 0){ out.innerHTML = '⚠️ Bruto tidak boleh nol.'; return; }
-  const neto = bruto - tara;
-  const persenTara = (tara / bruto) * 100;
-  out.innerHTML = `Neto = ${bruto} − ${tara} = <b>${neto} kg</b> (persentase tara = ${persenTara.toFixed(2)}%)`;
-}
-
-/* ============ KALKULATOR: Bunga Bank ============ */
-function hitungBungaBank(){
-  const modal = parseFloat(document.getElementById('bbModal').value) || 0;
-  const persen = parseFloat(document.getElementById('bbPersen').value) || 0;
-  const bulan = parseFloat(document.getElementById('bbBulan').value) || 0;
-  const out = document.getElementById('bbResult');
-  const bunga = modal * (persen / 100) * (bulan / 12);
-  const total = modal + bunga;
-  out.innerHTML = `Bunga = Rp${bunga.toLocaleString('id-ID', {maximumFractionDigits:2})} → Total tabungan = <b>Rp${total.toLocaleString('id-ID', {maximumFractionDigits:2})}</b>`;
-}
-
-/* ============ KALKULATOR: Pajak ============ */
-function hitungPajak(){
-  const harga = parseFloat(document.getElementById('pjHarga').value) || 0;
-  const persen = parseFloat(document.getElementById('pjPersen').value) || 0;
-  const out = document.getElementById('pjResult');
-  const pajak = (persen / 100) * harga;
-  const total = harga + pajak;
-  out.innerHTML = `Pajak ${persen}% dari Rp${harga.toLocaleString('id-ID')} = Rp${pajak.toLocaleString('id-ID')} → Total dibayar = <b>Rp${total.toLocaleString('id-ID')}</b>`;
+/* ============ KALKULATOR: Penyelesaian PtLSV ============ */
+function hitungPtLSV(){
+  const a = parseFloat(document.getElementById('ptA').value) || 0;
+  const b = parseFloat(document.getElementById('ptB').value) || 0;
+  const c = parseFloat(document.getElementById('ptC').value) || 0;
+  let tanda = document.getElementById('ptTanda').value;
+  const out = document.getElementById('ptResult');
+  if(a === 0){ out.innerHTML = '⚠️ Nilai a tidak boleh nol (bukan PtLSV).'; return; }
+  const hasil = (c - b) / a;
+  let tandaAkhir = tanda;
+  const tandaBalik = { '<':'>', '>':'<', '<=':'>=', '>=':'<=' };
+  if(a < 0){ tandaAkhir = tandaBalik[tanda]; }
+  const tandaSimbol = { '<':'<', '>':'>', '<=':'≤', '>=':'≥' };
+  const catatanBalik = a < 0 ? ' (tanda dibalik karena dibagi bilangan negatif)' : '';
+  out.innerHTML = `${a}x + ${b} ${tandaSimbol[tanda]} ${c} → ${a}x ${tandaSimbol[tanda]} ${c-b} → <b>x ${tandaSimbol[tandaAkhir]} ${hasil}</b>${catatanBalik}`;
 }
 
 /* ============ BANK SOAL ============ */
 const allQuestions = {
   pg: [
-    { id:'pg1', type:'pg', level:'mudah', num:1, text:'Bentuk persen dari pecahan \\(\\dfrac{3}{8}\\) adalah...', options:['37,5%','3,8%','35%','38%'], answer:0, explanation:'\\(\\dfrac{3}{8} \\times 100\\% = 37{,}5\\%\\).' },
-    { id:'pg2', type:'pg', level:'sedang', num:2, text:'Seorang pedagang membeli sepatu seharga Rp200.000 dan menjualnya seharga Rp240.000. Persentase keuntungannya adalah...', options:['20%','16,7%','25%','40%'], answer:0, explanation:'Untung \\(= 240.000-200.000=40.000\\). Persentase \\(= \\dfrac{40.000}{200.000}\\times100\\%=20\\%\\).' },
-    { id:'pg3', type:'pg', level:'sedang', num:3, text:'Harga baju Rp180.000 didiskon 25%. Harga setelah diskon adalah...', options:['Rp135.000','Rp155.000','Rp145.000','Rp160.000'], answer:0, explanation:'Diskon \\(=25\\%\\times180.000=45.000\\). Harga akhir \\(=180.000-45.000=135.000\\).' },
-    { id:'pg4', type:'pg', level:'sedang', num:4, text:'Sebuah karung beras memiliki bruto 52 kg dan tara 2 kg. Berat neto beras tersebut adalah...', options:['50 kg','54 kg','48 kg','52 kg'], answer:0, explanation:'Neto \\(=\\) Bruto \\(-\\) Tara \\(=52-2=50\\) kg.' },
-    { id:'pg5', type:'pg', level:'sukar', num:5, text:'Modal Rp2.000.000 disimpan dengan bunga tunggal 6% per tahun. Bunga setelah 8 bulan adalah...', options:['Rp80.000','Rp120.000','Rp96.000','Rp60.000'], answer:0, explanation:'Bunga \\(= 2.000.000 \\times \\dfrac{6}{100} \\times \\dfrac{8}{12} = 80.000\\).' }
+    { id:'pg1', type:'pg', level:'mudah', num:1, text:'Manakah yang termasuk kalimat terbuka?', options:['x+5=10','3+5=8','10-4=6','7>2'], answer:0, explanation:'Kalimat terbuka harus memuat variabel. Hanya \\(x+5=10\\) yang memuat variabel \\(x\\); tiga pilihan lain adalah pernyataan (kalimat tertutup).' },
+    { id:'pg2', type:'pg', level:'sedang', num:2, text:'Bentuk umum Persamaan Linear Satu Variabel adalah...', options:['ax+b=c, a≠0','ax²+bx+c=0','ax+by=c','ax+b<c'], answer:0, explanation:'PLSV memiliki bentuk umum \\(ax+b=c\\), dengan \\(a \\neq 0\\), hanya satu variabel berpangkat satu.' },
+    { id:'pg3', type:'pg', level:'sedang', num:3, text:'Penyelesaian dari persamaan \\(2x+3=11\\) adalah...', options:['4','5','3','8'], answer:0, explanation:'\\(2x=11-3=8\\), sehingga \\(x=4\\).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4, text:'Umur Andi 5 tahun lebih tua dari umur Budi. Jika jumlah umur mereka 25 tahun, umur Budi adalah...', options:['10','15','12','8'], answer:0, explanation:'Misalkan umur Budi \\(=x\\), maka \\(x+(x+5)=25 \\Rightarrow 2x=20 \\Rightarrow x=10\\).' },
+    { id:'pg5', type:'pg', level:'sedang', num:5, text:'Bentuk umum Pertidaksamaan Linear Satu Variabel adalah...', options:['ax+b<c, a≠0','ax+b=c','ax²+bx+c<0','ax+by<c'], answer:0, explanation:'PtLSV berbentuk \\(ax+b<c\\) (atau \\(>,\\leq,\\geq\\)), dengan \\(a \\neq 0\\), hanya satu variabel berpangkat satu.' }
   ],
   is: [
-    { id:'is1', type:'is', level:'mudah', num:1, text:'Ubahlah pecahan \\(\\dfrac{7}{20}\\) menjadi bentuk persen.', answer:'35%', altAnswers:['35','35 persen'], explanation:'\\(\\dfrac{7}{20} \\times 100\\% = 35\\%\\).' },
-    { id:'is2', type:'is', level:'sedang', num:2, text:'Seorang pedagang membeli buah seharga Rp50.000 dan menjualnya seharga Rp42.000. Berapa persen kerugiannya?', answer:'16%', altAnswers:['16','16 persen'], explanation:'Rugi \\(=50.000-42.000=8.000\\). Persentase \\(=\\dfrac{8.000}{50.000}\\times100\\%=16\\%\\).' },
-    { id:'is3', type:'is', level:'sedang', num:3, text:'Sebuah tas berharga Rp300.000 mendapat diskon 15%. Berapa harga tas setelah diskon?', answer:'Rp255.000', altAnswers:['255000','255.000','rp255000','rp255.000'], explanation:'Diskon \\(=15\\%\\times300.000=45.000\\). Harga akhir \\(=300.000-45.000=255.000\\).' },
-    { id:'is4', type:'is', level:'sedang', num:4, text:'Sekarung pupuk memiliki neto 48 kg dan tara 2 kg. Berapa berat bruto pupuk tersebut?', answer:'50 kg', altAnswers:['50','50kg'], explanation:'Bruto \\(=\\) Neto \\(+\\) Tara \\(=48+2=50\\) kg.' },
-    { id:'is5', type:'is', level:'sukar', num:5, text:'Harga sebuah barang sebelum pajak adalah Rp400.000. Jika dikenakan PPN 11%, berapa total harga yang harus dibayar?', answer:'Rp444.000', altAnswers:['444000','444.000','rp444000','rp444.000'], explanation:'Pajak \\(=11\\%\\times400.000=44.000\\). Total \\(=400.000+44.000=444.000\\).' }
+    { id:'is1', type:'is', level:'mudah', num:1, text:'Sebutkan variabel pada persamaan \\(3x-7=8\\).', answer:'x', altAnswers:['x variabel'], explanation:'Variabel adalah lambang yang mewakili bilangan belum diketahui, yaitu \\(x\\).' },
+    { id:'is2', type:'is', level:'sedang', num:2, text:'Selesaikan persamaan \\(4x-5=11\\). Tentukan nilai x.', answer:'4', altAnswers:['x=4','x = 4'], explanation:'\\(4x=11+5=16\\), sehingga \\(x=4\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3, text:'Tuliskan simbol matematika untuk "lebih dari atau sama dengan".', answer:'≥', altAnswers:['>=','lebih dari sama dengan'], explanation:'Simbol untuk "lebih dari atau sama dengan" adalah \\(\\geq\\).' },
+    { id:'is4', type:'is', level:'sedang', num:4, text:'Pada grafik penyelesaian pertidaksamaan \\(x \\geq 3\\) di garis bilangan, jenis bulatan yang digunakan pada titik 3 adalah...', answer:'bulatan penuh', altAnswers:['penuh','bulat penuh','tertutup'], explanation:'Karena tandanya \\(\\geq\\) (termasuk batas), digunakan bulatan penuh pada titik 3.' },
+    { id:'is5', type:'is', level:'sukar', num:5, text:'Sebuah lift berkapasitas maksimum 8 orang. Saat ini sudah ada 3 orang di dalamnya. Paling banyak berapa orang lagi yang boleh masuk?', answer:'5', altAnswers:['5 orang'], explanation:'\\(3+x \\leq 8 \\Rightarrow x \\leq 5\\), sehingga paling banyak 5 orang lagi.' }
   ],
   pk: [
-    { id:'pk1', type:'pk', level:'sedang', num:1, text:'Pilih istilah yang berkaitan langsung dengan uang dalam perdagangan:', options:['Harga pembelian','Harga penjualan','Bruto','Modal'], answers:[0,1,3], explanation:'Harga pembelian, harga penjualan, dan modal adalah istilah uang dalam perdagangan. Bruto adalah istilah berat kemasan, bukan istilah uang.' },
-    { id:'pk2', type:'pk', level:'sedang', num:2, text:'Pilih pernyataan yang benar tentang untung dan rugi:', options:['Untung terjadi jika harga jual lebih besar dari harga beli','Rugi terjadi jika harga jual lebih kecil dari harga beli','Persentase untung dihitung dari harga jual','Persentase untung dihitung dari harga beli'], answers:[0,1,3], explanation:'Persentase untung/rugi selalu dihitung berdasarkan harga beli, bukan harga jual — sehingga pernyataan 3 salah.' },
-    { id:'pk3', type:'pk', level:'sedang', num:3, text:'Toko memberikan diskon 20% untuk barang seharga Rp100.000. Pilih pernyataan yang benar:', options:['Besar diskon Rp20.000','Harga setelah diskon Rp80.000','Harga setelah diskon Rp120.000','Besar diskon Rp80.000'], answers:[0,1], explanation:'Diskon \\(=20\\%\\times100.000=20.000\\). Harga akhir \\(=100.000-20.000=80.000\\). Pilihan 3 dan 4 salah.' },
-    { id:'pk4', type:'pk', level:'sedang', num:4, text:'Pilih pernyataan yang benar mengenai bruto, tara, dan neto:', options:['Bruto = Neto + Tara','Neto = Bruto − Tara','Tara adalah berat bersih barang','Neto adalah berat bersih barang tanpa kemasan'], answers:[0,1,3], explanation:'Tara adalah berat kemasan, bukan berat bersih — sehingga pernyataan 3 salah. Tiga pernyataan lainnya benar.' },
-    { id:'pk5', type:'pk', level:'sukar', num:5, text:'Modal Rp1.000.000 dengan bunga tunggal 5% per tahun. Pilih pernyataan yang benar:', options:['Bunga 1 tahun = Rp50.000','Bunga 6 bulan = Rp25.000','Total setelah 1 tahun = Rp1.050.000','Bunga tidak dipengaruhi oleh lama menabung'], answers:[0,1,2], explanation:'Bunga bergantung pada lama menabung, sehingga pernyataan 4 salah. Tiga pernyataan lainnya benar berdasarkan rumus bunga tunggal.' }
+    { id:'pk1', type:'pk', level:'sedang', num:1, text:'Pilih contoh kalimat terbuka berikut:', options:['x−2=5','y+3>7','2×5=10','z≤8'], answers:[0,1,3], explanation:'Kalimat terbuka harus memuat variabel. \\(2\\times5=10\\) tidak memuat variabel, sehingga termasuk pernyataan, bukan kalimat terbuka.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2, text:'Pilih langkah yang benar dalam menyelesaikan persamaan \\(3x+4=19\\):', options:['Kurangi kedua ruas dengan 4, menjadi 3x=15','Bagi kedua ruas dengan 3, menjadi x=5','Tambahkan 4 ke kedua ruas, menjadi 3x=23','x=5 adalah penyelesaian yang benar'], answers:[0,1,3], explanation:'Langkah yang benar adalah mengurangi (bukan menambahkan) 4 dari kedua ruas, sehingga pernyataan ke-3 salah.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3, text:'Pilih simbol ketaksamaan yang benar dengan artinya:', options:['< artinya kurang dari','> artinya lebih dari','≤ artinya sama dengan','≥ artinya lebih dari atau sama dengan'], answers:[0,1,3], explanation:'\\(\\leq\\) artinya "kurang dari atau sama dengan", bukan "sama dengan" saja, sehingga pernyataan ke-3 salah.' },
+    { id:'pk4', type:'pk', level:'sedang', num:4, text:'Pilih pernyataan yang benar mengenai PtLSV:', options:['Solusinya berupa himpunan nilai, bukan satu nilai','Jika dikali bilangan negatif, tanda ketaksamaan berbalik arah','Solusinya selalu berupa satu bilangan','Tanda yang digunakan bisa <,>,≤, atau ≥'], answers:[0,1,3], explanation:'Solusi PtLSV berupa himpunan nilai, bukan satu bilangan tunggal, sehingga pernyataan ke-3 salah.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5, text:'Diberikan penyelesaian pertidaksamaan \\(x>2\\). Pilih pernyataan yang benar mengenai grafiknya pada garis bilangan:', options:['Menggunakan bulatan kosong di titik 2','Daerah penyelesaian di sebelah kanan titik 2','Titik 2 termasuk dalam penyelesaian','Arsir/panah mengarah ke kanan'], answers:[0,1,3], explanation:'Karena tanda \\(>\\) tidak termasuk batas, titik 2 TIDAK termasuk dalam penyelesaian, sehingga pernyataan ke-3 salah.' }
   ],
   bs: [
-    { id:'bs1', type:'bs', level:'mudah', num:1, text:'Pecahan \\(\\dfrac{1}{4}\\) sama dengan \\(25\\%\\).', answer:true, explanation:'✅ Benar. \\(\\dfrac{1}{4} \\times 100\\% = 25\\%\\).' },
-    { id:'bs2', type:'bs', level:'sedang', num:2, text:'Jika harga jual lebih rendah dari harga beli, pedagang mengalami keuntungan.', answer:false, explanation:'❌ Salah. Jika harga jual lebih rendah dari harga beli, pedagang mengalami kerugian, bukan keuntungan.' },
-    { id:'bs3', type:'bs', level:'sedang', num:3, text:'Diskon ganda 10% dan 10% sama saja dengan diskon tunggal 20%.', answer:false, explanation:'❌ Salah. Diskon kedua dihitung dari harga setelah diskon pertama, sehingga hasil akhirnya sedikit kurang dari diskon tunggal 20%.' },
-    { id:'bs4', type:'bs', level:'sedang', num:4, text:'Tara adalah selisih antara bruto dan neto.', answer:true, explanation:'✅ Benar. Karena \\(\\text{Bruto} = \\text{Neto} + \\text{Tara}\\), maka \\(\\text{Tara} = \\text{Bruto} - \\text{Neto}\\).' },
-    { id:'bs5', type:'bs', level:'sukar', num:5, text:'Pajak Pertambahan Nilai (PPN) selalu ditanggung oleh penjual, bukan pembeli.', answer:false, explanation:'❌ Salah. PPN pada akhirnya dibebankan kepada pembeli/konsumen sebagai tambahan dari harga barang.' }
+    { id:'bs1', type:'bs', level:'mudah', num:1, text:'Kalimat "5+3=8" termasuk kalimat terbuka.', answer:false, explanation:'❌ Salah. Kalimat tersebut tidak memuat variabel dan sudah pasti bernilai benar, sehingga termasuk kalimat tertutup (pernyataan).' },
+    { id:'bs2', type:'bs', level:'sedang', num:2, text:'Penyelesaian dari persamaan \\(x+7=12\\) adalah \\(x=5\\).', answer:true, explanation:'✅ Benar. \\(x=12-7=5\\).' },
+    { id:'bs3', type:'bs', level:'sedang', num:3, text:'Simbol \\(\\neq\\) berarti "tidak sama dengan".', answer:true, explanation:'✅ Benar. Simbol \\(\\neq\\) digunakan untuk menyatakan dua nilai yang tidak sama.' },
+    { id:'bs4', type:'bs', level:'sedang', num:4, text:'Jika kedua ruas pertidaksamaan dikalikan dengan bilangan positif, tanda ketaksamaan tidak berubah arah.', answer:true, explanation:'✅ Benar. Tanda ketaksamaan hanya berbalik arah jika dikalikan/dibagi bilangan negatif.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5, text:'Pada grafik penyelesaian \\(x \\leq 4\\), digunakan bulatan kosong pada titik 4.', answer:false, explanation:'❌ Salah. Karena tandanya \\(\\leq\\) (termasuk batas), seharusnya digunakan bulatan penuh, bukan bulatan kosong.' }
   ],
   jd: [
-    { id:'jd1', type:'jd', level:'mudah', num:1, left:'Bentuk persen dari 1/2', answer:'50%', options:['50%','25%','75%','20%'], explanation:'\\(\\dfrac{1}{2} \\times 100\\% = 50\\%\\).' },
-    { id:'jd2', type:'jd', level:'sedang', num:2, left:'Rumus persentase untung', answer:'Untung ÷ Harga Beli × 100%', options:['Untung ÷ Harga Beli × 100%','Untung ÷ Harga Jual × 100%','Harga Jual − Harga Beli','Harga Beli − Harga Jual'], explanation:'Persentase untung dihitung dengan membagi besar untung terhadap harga beli, dikali 100%.' },
-    { id:'jd3', type:'jd', level:'sedang', num:3, left:'Bruto 60 kg, Tara 5 kg', answer:'Neto 55 kg', options:['Neto 55 kg','Neto 65 kg','Neto 50 kg','Neto 60 kg'], explanation:'Neto \\(=\\) Bruto \\(-\\) Tara \\(=60-5=55\\) kg.' },
-    { id:'jd4', type:'jd', level:'sukar', num:4, left:'Modal Rp500.000, bunga 4% per tahun, 1 tahun', answer:'Bunga Rp20.000', options:['Bunga Rp20.000','Bunga Rp40.000','Bunga Rp2.000','Bunga Rp200.000'], explanation:'Bunga \\(=500.000\\times\\dfrac{4}{100}\\times\\dfrac{12}{12}=20.000\\).' },
-    { id:'jd5', type:'jd', level:'sedang', num:5, left:'Rumus harga setelah diskon', answer:'Harga Awal − Diskon', options:['Harga Awal − Diskon','Harga Awal + Diskon','Harga Awal × Diskon','Diskon − Harga Awal'], explanation:'Harga setelah diskon diperoleh dengan mengurangkan besar diskon dari harga awal.' }
+    { id:'jd1', type:'jd', level:'mudah', num:1, left:'3x−7=8, nilai x adalah', answer:'5', options:['5','1','-5','15'], explanation:'\\(3x=8+7=15\\), sehingga \\(x=5\\).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2, left:"Simbol 'kurang dari'", answer:'<', options:['<','>','≤','≥'], explanation:'Simbol \\(<\\) digunakan untuk menyatakan "kurang dari".' },
+    { id:'jd3', type:'jd', level:'sedang', num:3, left:'Penyelesaian dari 2x+6=16', answer:'5', options:['5','11','8','10'], explanation:'\\(2x=16-6=10\\), sehingga \\(x=5\\).' },
+    { id:'jd4', type:'jd', level:'sukar', num:4, left:'Bentuk umum PtLSV', answer:'ax+b<c, a≠0', options:['ax+b<c, a≠0','ax+b=c, a≠0','ax²+b<c','ax+by<c'], explanation:'PtLSV berbentuk \\(ax+b<c\\) (atau tanda ketaksamaan lain), dengan \\(a \\neq 0\\).' },
+    { id:'jd5', type:'jd', level:'sedang', num:5, left:'Grafik x≥2, jenis bulatan di titik 2', answer:'Bulatan penuh', options:['Bulatan penuh','Bulatan kosong','Tanpa bulatan','Bulatan setengah'], explanation:'Karena tandanya \\(\\geq\\) (termasuk batas), digunakan bulatan penuh.' }
   ]
 };
 const typeLabels = { pg:'Pilihan Ganda Biasa', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
@@ -985,10 +951,10 @@ function renderIS(q){
 function submitIS(qid){
   const q = allQuestions.is.find(function(x){ return x.id === qid; });
   const inputEl = document.getElementById('input-' + qid);
-  const raw = inputEl.value.trim().toLowerCase();
-  const mainAns = (q.answer || '').toLowerCase();
-  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase(); });
-  const correct = raw === mainAns || alts.includes(raw) || alts.some(function(a){ return raw.includes(a) || a.includes(raw); }) || raw.includes(mainAns) || mainAns.includes(raw);
+  const raw = inputEl.value.trim().toLowerCase().replace(/\s+/g, '');
+  const mainAns = (q.answer || '').toLowerCase().replace(/\s+/g, '');
+  const alts = (q.altAnswers || []).map(function(a){ return a.toLowerCase().replace(/\s+/g, ''); });
+  const correct = raw === mainAns || alts.includes(raw);
   state.answers[qid] = { chosen: inputEl.value.trim(), correct: !!correct };
   refreshCard(q, !!correct);
 }
