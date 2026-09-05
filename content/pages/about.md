@@ -16,10 +16,10 @@ isi: >+
   Konten situs ini terus diperbarui secara bertahap.
 
 
-  Saran dan Kritik yang membangun bisa kirim melalui WA di **+6281931231247**
+  Saran dan Kritik yang membangun bisa kirim melalui email ***pasuminto@gmail.com***
 
 
-  Yang mau donasi boleh kirim ke Dana di no yang sama. Terima Kasih.
+  Yang mau donasi boleh kirim ke Dana di No **+6281931231247**. Terima Kasih.
 
 creditLine: Dibangun oleh Suminto with Claude.
 ---
