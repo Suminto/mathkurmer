@@ -20,7 +20,7 @@ bab:
       Al-Khwarizmi adalah ahli matematika dan ahli astronomi yang termasyur yang
       tinggal di Baghdad (Irak) pada permulaan abad ke-9.
     ebookUrl: /ebooks/B1 Ebook-Interaktif-Bentuk-Aljabar.html
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif PLSV-PtLSV
     judul: PLSV dan PtLSV
     ringkasan: >-
       Persamaan Linear Satu Variabel adalah kalimat matematika yang hanya
@@ -28,6 +28,7 @@ bab:
 
 
       Pertidaksamaan linear dengan satu variabel adalah kalimat matematika yang menggunakan tanda pertidaksamaan dan peubahnya berpangkat satu.
+    ebookUrl: /ebooks/B2 Ebook-Interaktif-PLSV-PtLSV.html
   - ebookLabel: Buka Ebook Interaktif Pola Bilangan
     judul: Pola Bilangan
     ringkasan: Pola Bilangan
@@ -36,7 +37,7 @@ bab:
     judul: Relasi dan Fungsi
     ringkasan: Relasi dan Fungsi
     ebookUrl: /ebooks/B4 Ebook-Interaktif-Relasi-dan-Fungsi.html
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Bidang Cartesius
     judul: Bidang Cartesius
     ringkasan: >-
       Matematika mempunyai cara praktis untuk menentukan letak suatu benda.
@@ -46,6 +47,7 @@ bab:
 
 
       Hasil kerjanya sangat berpengaruh dalam perkembangan geometri analitik, kalkulus, dan kartografi. Ide dasar sistem ini dikembangkan pada tahun 1637 dalam dua tulisan karya Descartes. Pada bagian kedua dari tulisannya Discourse on Method, beliau memperkenalkan ide baru untuk menggambarkan posisi titik atau obyek pada sebuah permukaan, dengan menggunakan dua sumbu yang tegak lurus antara satu dengan yang lain. 
+    ebookUrl: /ebooks/B5 Ebook-Interaktif-Bidang-Cartesius.html
   - ebookLabel: Buka Ebook Interaktif Persamaan Garis Lurus
     judul: Persamaan Garis Lurus
     ringkasan: Persamaan Garis Lurus
@@ -62,7 +64,8 @@ bab:
     judul: Persamaan Kuadrat
     ringkasan: Persamaan Kuadrat
     ebookUrl: /ebooks/B9 Ebook_Persamaan_Kuadrat.html
-  - ebookLabel: Buka Ebook Interaktif
+  - ebookLabel: Buka Ebook Interaktif Fungsi Kuadrat
     judul: Fungsi Kuadrat
     ringkasan: Fungsi Kuadrat
+    ebookUrl: /ebooks/B10 Ebook-Interaktif-Fungsi-Kuadrat.html
 ---
