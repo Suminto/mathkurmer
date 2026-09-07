@@ -12,7 +12,20 @@ bab:
     judul: Lingkaran
     ringkasan: Lingkaran
     ebookUrl: /ebooks/C1 Ebook-Interaktif-Lingkaran.html
-  - ebookLabel: Buka Ebook Interaktif
-    judul: Bangun Ruang
-    ringkasan: Bangun Ruang
+  - ebookLabel: Buka Ebook Interaktif BRSD
+    judul: Bangun Ruang Sisi Datar
+    ringkasan: Bangun Ruang Sisi Datar
+    ebookUrl: /ebooks/C2 Ebook-Bangun-Ruang-Sisi-Datar.html
+  - ebookLabel: Buka Ebook Interaktif Lingkaran2
+    ebookUrl: /ebooks/C3 Ebook-Interaktif-Lingkaran2.html
+    judul: Lingkaran2
+    ringkasan: Sudut Pusat dan Sudut Keliling
+  - ebookLabel: Buka Ebook Interaktif BRSL
+    ebookUrl: /ebooks/C4 Ebook-Interaktif-Bangun-Ruang-Sisi-Lengkung.html
+    judul: Bangun Ruang Sisi Lengkung
+    ringkasan: BRSL
+  - ebookLabel: Buka Ebook Interaktif Lingkaran3
+    judul: Lingkaran 3
+    ringkasan: Sudut Antara Dua Tali Busur
+    ebookUrl: /ebooks/C3 Ebook-Interaktif-Lingkaran3.html
 ---
