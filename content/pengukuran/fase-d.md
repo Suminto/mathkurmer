@@ -15,7 +15,7 @@ bab:
   - ebookLabel: Buka Ebook Interaktif BRSD
     judul: Bangun Ruang Sisi Datar
     ringkasan: Bangun Ruang Sisi Datar
-    ebookUrl: /ebooks/C2 Ebook-Bangun-Ruang-Sisi-Datar.html
+    ebookUrl: /ebooks/C2 Ebook-Interaktif-Bangun-Ruang-Sisi-Datar.html
   - ebookLabel: Buka Ebook Interaktif Lingkaran2
     ebookUrl: /ebooks/C3 Ebook-Interaktif-Lingkaran2.html
     judul: Lingkaran2
