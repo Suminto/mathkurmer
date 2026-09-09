@@ -27,5 +27,5 @@ bab:
   - ebookLabel: Buka Ebook Interaktif Lingkaran3
     judul: Lingkaran 3
     ringkasan: Sudut Antara Dua Tali Busur
-    ebookUrl: /ebooks/C3 Ebook-Interaktif-Lingkaran3.html
+    ebookUrl: /ebooks/C5 Ebook-Interaktif-Lingkaran3.html
 ---
