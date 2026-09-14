@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudut dan Garis Sejajar - Matematika Kelas 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Source Serif 4',serif;background:var(--paper);color:var(--text-dark);}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--text-dark);}
+.mono{font-family:'JetBrains Mono',monospace;}
+a{text-decoration:none;color:inherit;}
+
+/* Layout */
+.app{display:flex;min-height:100vh;}
+.sidebar{
+  width:300px;flex-shrink:0;background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 100%);
+  color:var(--cream);position:sticky;top:0;height:100vh;overflow-y:auto;padding:24px 18px;
+  border-right:3px solid var(--gold);
+}
+.sidebar-header{margin-bottom:18px;}
+.sidebar-header .label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold-soft);text-transform:uppercase;}
+.sidebar-header h1{font-size:22px;color:var(--cream);margin:8px 0 4px;line-height:1.25;}
+.sidebar-header .sub{font-size:12.5px;color:var(--cream-dim);}
+.progress-wrap{height:6px;background:var(--ink3);border-radius:6px;margin:16px 0 20px;overflow:hidden;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));transition:width .15s ease;}
+.nav-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin:18px 0 8px;}
+.nav-link{display:block;padding:8px 10px;border-radius:8px;font-size:14px;color:var(--cream-dim);margin-bottom:2px;border-left:3px solid transparent;transition:.15s;}
+.nav-link:hover{background:var(--ink3);color:var(--cream);}
+.nav-link.active{background:var(--ink3);color:var(--gold-soft);border-left:3px solid var(--gold);font-weight:600;}
+.nav-sub{margin-left:8px;border-left:1px dashed var(--ink-border);padding-left:8px;}
+.nav-sub a{display:block;padding:6px 8px;font-size:12.5px;color:var(--cream-dim);border-radius:6px;}
+.nav-sub a:hover, .nav-sub a.active{background:var(--ink3);color:var(--gold-soft);}
+
+.menu-toggle{
+  display:none;position:fixed;top:14px;left:14px;z-index:60;background:var(--ink);color:var(--gold-soft);
+  border:2px solid var(--gold);border-radius:10px;width:42px;height:42px;font-size:18px;cursor:pointer;
+}
+.overlay{display:none;position:fixed;inset:0;background:rgba(10,12,24,.55);z-index:40;}
+.overlay.show{display:block;}
+
+.content{flex:1;padding:0;max-width:960px;}
+.hero{
+  padding:70px 56px 56px;background:linear-gradient(160deg,var(--ink) 0%,var(--ink2) 55%,var(--ink3) 100%);
+  position:relative;overflow:hidden;
+}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(224,169,77,.18),transparent 70%);}
+.hero .eyebrow{font-family:'JetBrains Mono',monospace;letter-spacing:3px;color:var(--gold);font-size:12px;text-transform:uppercase;}
+.hero h1{font-size:44px;margin:10px 0 14px;line-height:1.15;color:#ffd873;}
+.hero p{font-size:17px;color:var(--cream-dim);max-width:640px;line-height:1.6;}
+.chip-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
+.chip{background:var(--ink3);border:1px solid var(--ink-border);border-radius:999px;padding:7px 16px;font-size:13px;color:var(--gold-soft);font-family:'JetBrains Mono',monospace;}
+
+section.chapter{padding:48px 56px;border-bottom:1px solid var(--paper-line);}
+section.chapter h2{font-size:30px;margin-bottom:6px;}
+section.chapter h2 .num{color:var(--gold-soft);-webkit-text-stroke:1px var(--text-dark);}
+section.chapter h3{font-size:20px;margin-top:32px;padding-top:20px;border-top:1px solid var(--paper-line);color:var(--text-mid);}
+section.chapter h3:first-of-type{border-top:none;padding-top:0;}
+section.chapter p{line-height:1.75;font-size:16px;color:var(--text-dark);}
+section.chapter ul, section.chapter ol{line-height:1.8;font-size:16px;}
+figure.diagram{margin:20px 0;text-align:center;}
+figure.diagram svg{max-width:100%;height:auto;background:#fff;border:1px solid var(--paper-line);border-radius:10px;padding:10px;}
+figure.diagram figcaption{font-size:13px;color:var(--text-mid);margin-top:6px;font-style:italic;}
+
+.callout{border-radius:12px;padding:16px 20px;margin:18px 0;border-left:5px solid;font-size:15.5px;line-height:1.6;}
+.callout.def{background:var(--def);border-color:var(--def-b);}
+.callout.note{background:var(--note);border-color:var(--note-b);}
+.callout.warn{background:var(--warn);border-color:var(--warn-b);}
+.callout .tag{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:6px;font-weight:700;}
+.callout.def .tag{color:var(--def-b);}
+.callout.note .tag{color:var(--note-b);}
+.callout.warn .tag{color:var(--warn-b);}
+
+.example-box{background:#fff;border:1px solid var(--paper-line);border-radius:12px;padding:18px 22px;margin:18px 0;box-shadow:0 2px 6px rgba(43,36,22,.05);}
+.example-box .ex-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold-soft);-webkit-text-stroke:.4px var(--ink);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;}
+.example-box .ex-tag::before{content:"✦ ";}
+.example-box ol{margin:8px 0 0;}
+
+table.tabel{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;}
+table.tabel th, table.tabel td{border:1px solid var(--paper-line);padding:8px 12px;text-align:left;}
+table.tabel th{background:var(--ink2);color:var(--cream);font-family:'JetBrains Mono',monospace;font-size:12.5px;text-transform:uppercase;}
+table.tabel tr:nth-child(even){background:var(--paper2);}
+
+.calc-box{background:linear-gradient(160deg,var(--ink) 0%,var(--ink2) 100%);color:var(--cream);border-radius:14px;padding:22px 24px;margin:24px 0;border:1px solid var(--ink-border);}
+.calc-box h4{color:var(--gold-soft);margin:0 0 12px;font-size:16px;}
+.calc-box .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+.calc-box label{font-size:13px;color:var(--cream-dim);}
+.calc-box input, .calc-box select{padding:8px 10px;border-radius:8px;border:1px solid var(--ink-border);background:var(--ink3);color:var(--cream);font-family:'JetBrains Mono',monospace;width:110px;}
+.calc-box button{background:var(--gold);color:var(--ink);border:none;padding:9px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;}
+.calc-box button:hover{background:var(--gold-soft);}
+.calc-result{margin-top:12px;background:var(--ink3);border-radius:10px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:15px;min-height:20px;}
+
+/* Animasi konstruksi (jangka & penggaris) */
+.anim-figure{background:#fff;border:1px solid var(--paper-line);border-radius:12px;padding:16px;margin:18px 0;text-align:center;}
+.anim-figure svg{max-width:100%;height:auto;}
+.anim-replay-btn{margin-top:10px;background:var(--ink);color:var(--gold-soft);border:none;padding:8px 18px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;}
+.anim-replay-btn:hover{background:var(--ink2);}
+.draw-anim{animation:drawPath 1s ease-out forwards;}
+@keyframes drawPath{to{stroke-dashoffset:0;}}
+.fade-anim{opacity:0;animation:fadeInPt .4s ease-out forwards;}
+@keyframes fadeInPt{to{opacity:1;}}
+
+/* Latihan */
+#latihan{padding-top:48px;}
+.type-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 28px;}
+.type-tab{padding:9px 16px;border-radius:999px;border:1px solid var(--paper-line);background:var(--paper2);font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;color:var(--text-mid);}
+.type-tab.active{background:var(--ink);color:var(--gold-soft);border-color:var(--ink);}
+.score-strip{display:flex;gap:16px;flex-wrap:wrap;background:var(--paper2);border:1px solid var(--paper-line);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-family:'JetBrains Mono',monospace;font-size:13px;}
+.score-strip .item b{display:block;font-size:18px;color:var(--ink);}
+.qcard{background:#fff;border:1px solid var(--paper-line);border-radius:14px;padding:22px 24px;margin-bottom:20px;}
+.qcard .qnum{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--note-b);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.qcard .qtext{font-size:16.5px;margin-bottom:14px;line-height:1.6;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--paper-line);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:.15s;}
+.opt:hover{background:var(--paper2);}
+.opt.selected{border-color:var(--gold-soft);background:var(--note);}
+.opt.correct{background:var(--correct);border-color:var(--correct-b);}
+.opt.wrong{background:var(--wrong);border-color:var(--wrong-b);}
+.opt input{margin-top:3px;}
+.is-input{padding:10px 14px;border:1px solid var(--paper-line);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:15px;width:160px;margin-right:10px;}
+.btn{background:var(--ink);color:var(--gold-soft);border:none;padding:10px 20px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-weight:700;cursor:pointer;}
+.btn:hover{background:var(--ink2);}
+.btn.secondary{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+.feedback{margin-top:12px;padding:12px 16px;border-radius:10px;font-size:14.5px;line-height:1.55;display:none;}
+.feedback.show{display:block;}
+.feedback.right{background:var(--correct);border:1px solid var(--correct-b);}
+.feedback.wrong{background:var(--wrong);border:1px solid var(--wrong-b);}
+.bs-row{display:flex;gap:10px;margin-top:6px;}
+.bs-btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--paper-line);background:var(--paper2);cursor:pointer;font-weight:600;text-align:center;}
+.bs-btn.selected-true{background:var(--correct);border-color:var(--correct-b);}
+.bs-btn.selected-false{background:var(--wrong);border-color:var(--wrong-b);}
+.jd-row{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.jd-left{flex:1;background:var(--paper2);padding:10px 14px;border-radius:8px;border:1px solid var(--paper-line);}
+.jd-row select{flex:1;padding:10px;border-radius:8px;border:1px solid var(--paper-line);font-family:'JetBrains Mono',monospace;}
+.analysis-panel{background:var(--ink);color:var(--cream);border-radius:14px;padding:24px;margin-top:30px;}
+.analysis-panel h3{color:var(--gold-soft);margin-top:0;}
+.analysis-panel .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-family:'JetBrains Mono',monospace;font-size:13px;}
+.analysis-bar-bg{flex:1;height:10px;background:var(--ink3);border-radius:6px;overflow:hidden;}
+.analysis-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));}
+
+footer{padding:36px 56px;text-align:center;color:var(--text-mid);font-size:13.5px;border-top:2px solid var(--paper-line);background:var(--paper2);}
+footer .credit{font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:6px;}
+
+@media (max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);z-index:50;width:280px;transition:transform .2s ease;}
+  .sidebar.open{transform:translateX(0);}
+  .menu-toggle{display:block;}
+  .content{max-width:100%;}
+  .hero, section.chapter{padding:70px 20px 40px;}
+  section.chapter{padding-top:40px;}
+  footer{padding:30px 20px;}
+}
+</style>
+</head>
+<body>
+<button class="menu-toggle" id="menuToggle">&#9776;</button>
+<div class="overlay" id="overlay"></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="label">Matematika &middot; Kelas 7</div>
+      <h1>Sudut dan Garis Sejajar</h1>
+      <div class="sub">Ebook Interaktif Kurikulum Merdeka</div>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <nav>
+      <div class="nav-label">Materi</div>
+      <a href="#a" class="nav-link" data-section="a">A. Pengertian &amp; Nama Sudut</a>
+      <a href="#b" class="nav-link" data-section="b">B. Jenis-jenis Sudut</a>
+      <a href="#c" class="nav-link" data-section="c">C. Satuan Sudut</a>
+      <a href="#d" class="nav-link" data-section="d">D. Hubungan Antar Sudut</a>
+      <a href="#e" class="nav-link" data-section="e">E. Menggambar Sudut</a>
+      <a href="#f" class="nav-link" data-section="f">F. Mengukur Besar Sudut</a>
+      <a href="#g" class="nav-link" data-section="g">G. Dasar-dasar Melukis</a>
+      <a href="#h" class="nav-link" data-section="h">H. Kedudukan Dua Garis</a>
+      <a href="#i" class="nav-link" data-section="i">I. Garis-garis Sejajar</a>
+      <div class="nav-label">Latihan</div>
+      <a href="#latihan" class="nav-link" data-section="latihan">Latihan Soal</a>
+      <div class="nav-sub">
+        <a href="#latihan" data-jump="pg">1. Pilihan Ganda</a>
+        <a href="#latihan" data-jump="is">2. Isian Singkat</a>
+        <a href="#latihan" data-jump="pk">3. PG Kompleks</a>
+        <a href="#latihan" data-jump="bs">4. Benar/Salah</a>
+        <a href="#latihan" data-jump="jd">5. Menjodohkan</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <section class="hero" id="hero">
+      <div class="eyebrow">Modul Digital &middot; Bab Sudut dan Garis Sejajar</div>
+      <h1>Sudut dan Garis Sejajar</h1>
+      <p>Materi lengkap tentang sudut &mdash; pengertian, jenis, satuan, hubungan antarsudut, cara melukis &mdash; hingga kedudukan dua garis dan sifat-sifat garis sejajar beserta sudut-sudut istimewa yang terbentuk ketika dua garis sejajar dipotong oleh garis lain.</p>
+      <div class="chip-row">
+        <span class="chip">A. Pengertian &amp; Nama Sudut</span>
+        <span class="chip">B. Jenis Sudut</span>
+        <span class="chip">C. Satuan Sudut</span>
+        <span class="chip">D. Hubungan Antar Sudut</span>
+        <span class="chip">E. Menggambar Sudut</span>
+        <span class="chip">F. Mengukur Sudut</span>
+        <span class="chip">G. Dasar Melukis</span>
+        <span class="chip">H. Kedudukan Dua Garis</span>
+        <span class="chip">I. Garis Sejajar</span>
+        <span class="chip">25 Soal Latihan &middot; 5 Tipe</span>
+      </div>
+    </section>
+
+    <!-- A. PENGERTIAN & NAMA SUDUT -->
+    <section class="chapter" id="a">
+      <h2><span class="num">A.</span> Pengertian dan Nama Sudut</h2>
+      <p>Dalam Matematika, <strong>sudut terbentuk dari dua sinar yang titik pangkalnya berimpit</strong>. Kedua sinar itu disebut <em>kaki sudut</em>, dan titik pangkal yang berimpit disebut <em>titik sudut</em>.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="160" x2="230" y2="40" stroke="#2b2416" stroke-width="2.5"/>
+          <line x1="60" y1="160" x2="260" y2="150" stroke="#2b2416" stroke-width="2.5"/>
+          <polygon points="215.7,44.0 221.4,52.2 230,40" fill="#2b2416"/>
+          <polygon points="245.8,145.7 246.3,155.7 260,150" fill="#2b2416"/>
+          <path d="M 114.93 157.25 A 55 55 0 0 0 104.93 128.28" fill="none" stroke="#d99a45" stroke-width="2"/>
+          <circle cx="60" cy="160" r="3.5" fill="#c1584f"/>
+          <text x="228" y="35" font-family="serif" font-size="16">C</text>
+          <text x="262" y="155" font-family="serif" font-size="16">A</text>
+          <text x="42" y="168" font-family="serif" font-size="16">B</text>
+          <text x="118" y="145" font-family="serif" font-size="13" fill="#d99a45">sudut</text>
+        </svg>
+        <figcaption>Sudut dibentuk oleh sinar BA dan sinar BC dengan titik pangkal B.</figcaption>
+      </figure>
+      <div class="callout def">
+        <span class="tag">Definisi</span>
+        Istilah pada sebuah sudut: <strong>kaki sudut</strong> (dua sinar pembentuk sudut), <strong>titik sudut</strong> (titik pangkal kedua sinar), dan <strong>besar sudut</strong> (ukuran daerah sudut, dinyatakan dalam derajat). Simbol (notasi) untuk sudut adalah \(\angle\).
+      </div>
+      <h3>Cara Memberi Nama Sudut</h3>
+      <p>Sudut dapat diberi nama dengan dua cara:</p>
+      <ol>
+        <li><strong>Satu huruf</strong>, diambil dari nama titik sudutnya. Contoh: sudut B ditulis \(\angle B\).</li>
+        <li><strong>Tiga huruf</strong>, dengan titik sudut diletakkan di tengah-tengah dua huruf lainnya. Contoh: sudut ABC ditulis \(\angle ABC\), atau sudut CBA ditulis \(\angle CBA\).</li>
+      </ol>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Pada gambar di atas, kaki sudutnya adalah \(\overrightarrow{BA}\) dan \(\overrightarrow{BC}\), titik sudutnya adalah B, nama sudut dengan satu huruf adalah \(\angle B\), dan nama sudut dengan tiga huruf adalah \(\angle ABC\) atau \(\angle CBA\).</p>
+      </div>
+    </section>
+
+    <!-- B. JENIS-JENIS SUDUT -->
+    <section class="chapter" id="b">
+      <h2><span class="num">B.</span> Jenis-jenis Sudut</h2>
+      <p>Berdasarkan besarnya, sudut dibedakan menjadi enam jenis berikut.</p>
+      <table class="tabel">
+        <tr><th>Jenis Sudut</th><th>Besar Sudut</th></tr>
+        <tr><td>Sudut lancip</td><td>antara \(0^{\circ}\) dan \(90^{\circ}\)</td></tr>
+        <tr><td>Sudut siku-siku</td><td>tepat \(90^{\circ}\)</td></tr>
+        <tr><td>Sudut tumpul</td><td>antara \(90^{\circ}\) dan \(180^{\circ}\)</td></tr>
+        <tr><td>Sudut lurus</td><td>tepat \(180^{\circ}\)</td></tr>
+        <tr><td>Sudut refleks</td><td>antara \(180^{\circ}\) dan \(360^{\circ}\)</td></tr>
+        <tr><td>Sudut satu putaran penuh</td><td>tepat \(360^{\circ}\)</td></tr>
+      </table>
+      <figure class="diagram">
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="20" y1="100" x2="130" y2="100" stroke="#2b2416" stroke-width="2.5"/>
+              <line x1="20" y1="100" x2="82" y2="25" stroke="#2b2416" stroke-width="2.5"/>
+              <path d="M 55 100 A 35 35 0 0 1 47 71" fill="none" stroke="#d99a45" stroke-width="2"/>
+              <circle cx="20" cy="100" r="3" fill="#c1584f"/>
+            </svg>
+            <div style="font-size:13px;margin-top:4px;"><strong>Lancip</strong><br>\(0^{\circ} \!-\! 90^{\circ}\)</div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="20" y1="100" x2="130" y2="100" stroke="#2b2416" stroke-width="2.5"/>
+              <line x1="20" y1="100" x2="20" y2="20" stroke="#2b2416" stroke-width="2.5"/>
+              <rect x="20" y="88" width="12" height="12" fill="none" stroke="#d99a45" stroke-width="2"/>
+              <circle cx="20" cy="100" r="3" fill="#c1584f"/>
+            </svg>
+            <div style="font-size:13px;margin-top:4px;"><strong>Siku-siku</strong><br>\(90^{\circ}\)</div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="60" y1="100" x2="135" y2="100" stroke="#2b2416" stroke-width="2.5"/>
+              <line x1="60" y1="100" x2="9" y2="39" stroke="#2b2416" stroke-width="2.5"/>
+              <path d="M 95 100 A 35 35 0 0 1 33 60" fill="none" stroke="#d99a45" stroke-width="2"/>
+              <circle cx="60" cy="100" r="3" fill="#c1584f"/>
+            </svg>
+            <div style="font-size:13px;margin-top:4px;"><strong>Tumpul</strong><br>\(90^{\circ} \!-\! 180^{\circ}\)</div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="10" y1="60" x2="130" y2="60" stroke="#2b2416" stroke-width="2.5"/>
+              <path d="M 40 60 A 30 30 0 0 1 100 60" fill="none" stroke="#d99a45" stroke-width="2"/>
+              <circle cx="70" cy="60" r="3" fill="#c1584f"/>
+            </svg>
+            <div style="font-size:13px;margin-top:4px;"><strong>Lurus</strong><br>\(180^{\circ}\)</div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="70" y1="70" x2="70" y2="10" stroke="#2b2416" stroke-width="2.5"/>
+              <line x1="70" y1="70" x2="139" y2="110" stroke="#2b2416" stroke-width="2.5"/>
+              <path d="M 70 40 A 30 30 0 1 0 96 85" fill="none" stroke="#d99a45" stroke-width="2" stroke-dasharray="4 3"/>
+              <circle cx="70" cy="70" r="3" fill="#c1584f"/>
+            </svg>
+            <div style="font-size:13px;margin-top:4px;"><strong>Refleks</strong><br>\(180^{\circ} \!-\! 360^{\circ}\)</div>
+          </div>
+        </div>
+        <figcaption>Contoh gambar untuk lima jenis sudut (garis emas menandai daerah sudut yang dimaksud).</figcaption>
+      </figure>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Nyatakan \(\dfrac{5}{6}\) putaran dalam derajat.</p>
+        <p>\[\frac{5}{6}\text{ putaran} = \frac{5}{6}\times 360^{\circ} = 300^{\circ}\]</p>
+        <p>Karena \(300^{\circ}\) berada di antara \(180^{\circ}\) dan \(360^{\circ}\), maka sudut ini adalah <strong>sudut refleks</strong>.</p>
+      </div>
+      <div class="calc-box">
+        <h4>Kalkulator &middot; Jenis Sudut</h4>
+        <div class="row">
+          <label>Besar sudut (derajat)</label>
+          <input type="number" id="jenisInput" value="120">
+          <button onclick="hitungJenisSudut()">Cek Jenis</button>
+        </div>
+        <div class="calc-result" id="jenisResult">Masukkan besar sudut, lalu klik "Cek Jenis".</div>
+      </div>
+    </section>
+
+    <!-- C. SATUAN SUDUT -->
+    <section class="chapter" id="c">
+      <h2><span class="num">C.</span> Satuan Sudut (Derajat, Menit, Detik, dan Radian)</h2>
+      <h3>1. Tingkatan Satuan Sudut</h3>
+      <p>Untuk menyatakan besar suatu sudut secara lebih teliti, digunakan satuan derajat \((^{\circ})\), menit \((')\), dan detik \(('')\).</p>
+      <div class="callout def">
+        <span class="tag">Definisi</span>
+        \(1^{\circ} = 60'\) (60 menit) &nbsp;&nbsp; \(1' = 60''\) (60 detik) &nbsp;&nbsp; \(1^{\circ} = 3600''\)
+      </div>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <ol>
+          <li>\(7^{\circ} = 7 \times 60' = 420'\)</li>
+          <li>\(87'' = 60'' + 27'' = 1' \, 27''\)</li>
+          <li>\(23^{\circ}75' = 23^{\circ} + 60' + 15' = 23^{\circ} + 1^{\circ} + 15' = 24^{\circ}15'\)</li>
+          <li>\(7,12^{\circ} = 7^{\circ} + 0,12 \times 60' = 7^{\circ} + 7,2' = 7^{\circ}7'0,2\times60'' = 7^{\circ}7'12''\)</li>
+        </ol>
+      </div>
+      <h3>2. Sudut dalam Radian</h3>
+      <p>Selain derajat, sudut juga dapat dinyatakan dalam satuan <strong>radian</strong>. Satu putaran penuh \((360^{\circ})\) sama dengan \(2\pi\) radian, sehingga:</p>
+      <div class="callout def">
+        <span class="tag">Definisi</span>
+        \[180^{\circ} = \pi \text{ radian} \quad\Rightarrow\quad 1 \text{ radian} = \frac{180^{\circ}}{\pi} \approx 57,3^{\circ}, \qquad 1^{\circ} = \frac{\pi}{180} \text{ radian}\]
+      </div>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Ubahlah \(90^{\circ}\) ke dalam radian.</p>
+        <p>\[90^{\circ} = 90 \times \frac{\pi}{180} = \frac{\pi}{2} \text{ radian} \approx 1,57 \text{ radian}\]</p>
+      </div>
+      <div class="calc-box">
+        <h4>Kalkulator &middot; Konversi Satuan Sudut</h4>
+        <div class="row">
+          <label>Besar sudut (derajat, boleh desimal)</label>
+          <input type="number" id="konversiInput" value="45">
+          <button onclick="hitungKonversi()">Konversi</button>
+        </div>
+        <div class="calc-result" id="konversiResult">Masukkan besar sudut dalam derajat.</div>
+      </div>
+      <h3>3. Penjumlahan dan Pengurangan Sudut</h3>
+      <p>Untuk menjumlahkan atau mengurangkan sudut, satuan derajat, menit, dan detik masing-masing diletakkan dalam satu lajur. Jika perlu, ubah satuan derajat ke tingkat satuan di bawahnya (atau sebaliknya).</p>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>\(123^{\circ}45'32'' - 67^{\circ}27'56''\)</p>
+        <p>Karena \(32''\) lebih kecil dari \(56''\), pinjam \(1' = 60''\) dari bagian menit:</p>
+        <p>\(123^{\circ}45'32'' \rightarrow 123^{\circ}44'92''\)</p>
+        <p>\(123^{\circ}44'92'' - 67^{\circ}27'56'' = 56^{\circ}17'36''\)</p>
+      </div>
+      <h3>4. Besar Sudut yang Dilalui Jarum Jam</h3>
+      <p>Jarum panjang (menit) menempuh 1 putaran \((360^{\circ})\) dalam 60 menit, sehingga setiap 1 menit sama dengan \(6^{\circ}\). Jarum pendek (jam) menempuh 1 putaran dalam 12 jam, sehingga setiap 1 jam sama dengan \(30^{\circ}\) dan setiap 1 menit sama dengan \(0,5^{\circ}\).</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="clockFace" cx="50%" cy="42%" r="70%">
+              <stop offset="0%" stop-color="#fffdf7"/>
+              <stop offset="100%" stop-color="#f4ecd8"/>
+            </radialGradient>
+          </defs>
+          <circle cx="100" cy="100" r="96" fill="#1c2340"/>
+          <circle cx="100" cy="100" r="92" fill="url(#clockFace)" stroke="#2b2416" stroke-width="1.5"/>
+          <circle cx="100" cy="100" r="78" fill="none" stroke="#c9c2ab" stroke-width="0.6"/>
+          <line x1="100.0" y1="22.0" x2="100.0" y2="8.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="108.9" y1="15.5" x2="109.6" y2="8.5" stroke="#2b2416" stroke-width="1"/>
+          <line x1="117.7" y1="16.9" x2="119.1" y2="10.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="126.3" y1="19.2" x2="128.4" y2="12.5" stroke="#2b2416" stroke-width="1"/>
+          <line x1="134.6" y1="22.3" x2="137.4" y2="16.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="139.0" y1="32.5" x2="146.0" y2="20.3" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="150.0" y1="31.2" x2="154.1" y2="25.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="156.9" y1="36.8" x2="161.6" y2="31.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="163.2" y1="43.1" x2="168.4" y2="38.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="168.8" y1="50.0" x2="174.4" y2="45.9" stroke="#2b2416" stroke-width="1"/>
+          <line x1="167.5" y1="61.0" x2="179.7" y2="54.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="177.7" y1="65.4" x2="184.0" y2="62.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="180.8" y1="73.7" x2="187.5" y2="71.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="183.1" y1="82.3" x2="190.0" y2="80.9" stroke="#2b2416" stroke-width="1"/>
+          <line x1="184.5" y1="91.1" x2="191.5" y2="90.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="178.0" y1="100.0" x2="192.0" y2="100.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="184.5" y1="108.9" x2="191.5" y2="109.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="183.1" y1="117.7" x2="190.0" y2="119.1" stroke="#2b2416" stroke-width="1"/>
+          <line x1="180.8" y1="126.3" x2="187.5" y2="128.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="177.7" y1="134.6" x2="184.0" y2="137.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="167.5" y1="139.0" x2="179.7" y2="146.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="168.8" y1="150.0" x2="174.4" y2="154.1" stroke="#2b2416" stroke-width="1"/>
+          <line x1="163.2" y1="156.9" x2="168.4" y2="161.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="156.9" y1="163.2" x2="161.6" y2="168.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="150.0" y1="168.8" x2="154.1" y2="174.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="139.0" y1="167.5" x2="146.0" y2="179.7" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="134.6" y1="177.7" x2="137.4" y2="184.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="126.3" y1="180.8" x2="128.4" y2="187.5" stroke="#2b2416" stroke-width="1"/>
+          <line x1="117.7" y1="183.1" x2="119.1" y2="190.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="108.9" y1="184.5" x2="109.6" y2="191.5" stroke="#2b2416" stroke-width="1"/>
+          <line x1="100.0" y1="178.0" x2="100.0" y2="192.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="91.1" y1="184.5" x2="90.4" y2="191.5" stroke="#2b2416" stroke-width="1"/>
+          <line x1="82.3" y1="183.1" x2="80.9" y2="190.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="73.7" y1="180.8" x2="71.6" y2="187.5" stroke="#2b2416" stroke-width="1"/>
+          <line x1="65.4" y1="177.7" x2="62.6" y2="184.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="61.0" y1="167.5" x2="54.0" y2="179.7" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="50.0" y1="168.8" x2="45.9" y2="174.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="43.1" y1="163.2" x2="38.4" y2="168.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="36.8" y1="156.9" x2="31.6" y2="161.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="31.2" y1="150.0" x2="25.6" y2="154.1" stroke="#2b2416" stroke-width="1"/>
+          <line x1="32.5" y1="139.0" x2="20.3" y2="146.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="22.3" y1="134.6" x2="16.0" y2="137.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="19.2" y1="126.3" x2="12.5" y2="128.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="16.9" y1="117.7" x2="10.0" y2="119.1" stroke="#2b2416" stroke-width="1"/>
+          <line x1="15.5" y1="108.9" x2="8.5" y2="109.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="22.0" y1="100.0" x2="8.0" y2="100.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="15.5" y1="91.1" x2="8.5" y2="90.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="16.9" y1="82.3" x2="10.0" y2="80.9" stroke="#2b2416" stroke-width="1"/>
+          <line x1="19.2" y1="73.7" x2="12.5" y2="71.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="22.3" y1="65.4" x2="16.0" y2="62.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="32.5" y1="61.0" x2="20.3" y2="54.0" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="31.2" y1="50.0" x2="25.6" y2="45.9" stroke="#2b2416" stroke-width="1"/>
+          <line x1="36.8" y1="43.1" x2="31.6" y2="38.4" stroke="#2b2416" stroke-width="1"/>
+          <line x1="43.1" y1="36.8" x2="38.4" y2="31.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="50.0" y1="31.2" x2="45.9" y2="25.6" stroke="#2b2416" stroke-width="1"/>
+          <line x1="61.0" y1="32.5" x2="54.0" y2="20.3" stroke="#2b2416" stroke-width="2.2"/>
+          <line x1="65.4" y1="22.3" x2="62.6" y2="16.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="73.7" y1="19.2" x2="71.6" y2="12.5" stroke="#2b2416" stroke-width="1"/>
+          <line x1="82.3" y1="16.9" x2="80.9" y2="10.0" stroke="#2b2416" stroke-width="1"/>
+          <line x1="91.1" y1="15.5" x2="90.4" y2="8.5" stroke="#2b2416" stroke-width="1"/>
+          <text x="132.5" y="48.7" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">1</text>
+          <text x="156.3" y="72.5" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">2</text>
+          <text x="165.0" y="105.0" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">3</text>
+          <text x="156.3" y="137.5" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">4</text>
+          <text x="132.5" y="161.3" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">5</text>
+          <text x="100.0" y="170.0" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">6</text>
+          <text x="67.5" y="161.3" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">7</text>
+          <text x="43.7" y="137.5" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">8</text>
+          <text x="35.0" y="105.0" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">9</text>
+          <text x="43.7" y="72.5" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">10</text>
+          <text x="67.5" y="48.7" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">11</text>
+          <text x="100.0" y="40.0" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2b2416">12</text>
+          <path d="M 97.73 125.90 A 26 26 0 0 0 122.52 87.0" fill="none" stroke="#d99a45" stroke-width="2.5"/>
+          <line x1="100" y1="100" x2="95.82" y2="147.82" stroke="#c1584f" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="100" y1="100" x2="162.35" y2="64.0" stroke="#141a2e" stroke-width="2.8" stroke-linecap="round"/>
+          <circle cx="100" cy="100" r="5" fill="#e0a94d" stroke="#141a2e" stroke-width="1.2"/>
+        </svg>
+        <figcaption>Pukul 06.10 &mdash; jarum pendek (merah, jam) menunjuk sedikit melewati angka 6; jarum panjang (hitam, menit) menunjuk angka 2. Sudut yang terbentuk (busur emas, diukur dari jarum jam ke jarum menit) besarnya \(125^{\circ}\).</figcaption>
+      </figure>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Besar sudut terkecil antara kedua jarum jam pada pukul 03.00:</p>
+        <p>\[\text{Sudut} = 3 \times 30^{\circ} = 90^{\circ}\]</p>
+        <p>Pada pukul 06.10, sudut yang terbentuk oleh jarum panjang dan pendek:</p>
+        <p>\[\left(6\frac{10}{60}\times30^{\circ}\right) - 2\times30^{\circ} = 125^{\circ}\]</p>
+      </div>
+      <div class="calc-box">
+        <h4>Kalkulator &middot; Sudut Terkecil pada Jam Analog</h4>
+        <div class="row">
+          <label>Jam</label><input type="number" id="jamInput" value="6" min="0" max="12">
+          <label>Menit</label><input type="number" id="menitInput" value="10" min="0" max="59">
+          <button onclick="hitungSudutJam()">Hitung</button>
+        </div>
+        <div class="calc-result" id="jamResult">Masukkan jam dan menit, lalu klik "Hitung".</div>
+      </div>
+      <h3>5. Besar Sudut Antara Dua Arah Mata Angin</h3>
+      <p>Mata angin memiliki 16 arah dengan interval sudut yang sama. Karena satu putaran penuh \(360^{\circ}\) dibagi menjadi 16 arah, besar sudut antar dua arah mata angin yang berdekatan adalah:</p>
+      <p>\[\frac{360^{\circ}}{16} = 22,5^{\circ}\]</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="130" cy="130" r="85" fill="#fff" stroke="#2b2416" stroke-width="2"/>
+          <g stroke="#c9c2ab" stroke-width="1">
+            <line x1="130" y1="130" x2="130" y2="45"/>
+            <line x1="130" y1="130" x2="162.53" y2="51.47"/>
+            <line x1="130" y1="130" x2="190.1" y2="69.9"/>
+            <line x1="130" y1="130" x2="208.53" y2="97.47"/>
+            <line x1="130" y1="130" x2="215" y2="130"/>
+            <line x1="130" y1="130" x2="208.53" y2="162.53"/>
+            <line x1="130" y1="130" x2="190.1" y2="190.1"/>
+            <line x1="130" y1="130" x2="162.53" y2="208.53"/>
+            <line x1="130" y1="130" x2="130" y2="215"/>
+            <line x1="130" y1="130" x2="97.47" y2="208.53"/>
+            <line x1="130" y1="130" x2="69.9" y2="190.1"/>
+            <line x1="130" y1="130" x2="51.47" y2="162.53"/>
+            <line x1="130" y1="130" x2="45" y2="130"/>
+            <line x1="130" y1="130" x2="51.47" y2="97.47"/>
+            <line x1="130" y1="130" x2="69.9" y2="69.9"/>
+            <line x1="130" y1="130" x2="97.47" y2="51.47"/>
+          </g>
+          <text x="130" y="24" font-family="serif" font-weight="700" font-size="17" text-anchor="middle">U</text>
+          <text x="169" y="32" font-family="serif" font-size="11" text-anchor="middle">U.TL</text>
+          <text x="204" y="55" font-family="serif" font-size="12" text-anchor="middle">TL</text>
+          <text x="226" y="88" font-family="serif" font-size="11" text-anchor="middle">T.TL</text>
+          <text x="238" y="134" font-family="serif" font-weight="700" font-size="17" text-anchor="middle">T</text>
+          <text x="226" y="176" font-family="serif" font-size="11" text-anchor="middle">T.TG</text>
+          <text x="204" y="209" font-family="serif" font-size="12" text-anchor="middle">TG</text>
+          <text x="169" y="232" font-family="serif" font-size="11" text-anchor="middle">S.TG</text>
+          <text x="130" y="245" font-family="serif" font-weight="700" font-size="17" text-anchor="middle">S</text>
+          <text x="91" y="232" font-family="serif" font-size="11" text-anchor="middle">S.BD</text>
+          <text x="56" y="209" font-family="serif" font-size="12" text-anchor="middle">BD</text>
+          <text x="34" y="176" font-family="serif" font-size="11" text-anchor="middle">B.BD</text>
+          <text x="18" y="134" font-family="serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+          <text x="34" y="88" font-family="serif" font-size="11" text-anchor="middle">B.BL</text>
+          <text x="56" y="55" font-family="serif" font-size="12" text-anchor="middle">BL</text>
+          <text x="91" y="32" font-family="serif" font-size="11" text-anchor="middle">U.BL</text>
+          <circle cx="130" cy="130" r="3.5" fill="#c1584f"/>
+        </svg>
+        <figcaption>Mata angin dengan 16 arah. Sudut antara dua arah yang berdekatan (misalnya U dan U.TL) besarnya \(22,5^{\circ}\).</figcaption>
+      </figure>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Sudut terkecil antara arah Timur (T) dan Barat Daya (BD) adalah \(6 \times 22,5^{\circ} = 135^{\circ}\), karena keduanya berjarak 6 langkah pada lingkaran mata angin 16 arah.</p>
+      </div>
+    </section>
+
+    <!-- D. HUBUNGAN ANTAR SUDUT -->
+    <section class="chapter" id="d">
+      <h2><span class="num">D.</span> Hubungan Antar Sudut</h2>
+      <h3>1. Sudut yang Saling Berpelurus (Bersuplemen)</h3>
+      <div class="callout def">
+        <span class="tag">Definisi</span>
+        Jumlah dua sudut yang saling berpelurus adalah \(180^{\circ}\). Jika \(\angle ABC\) dan \(\angle CBD\) berpelurus, maka \(\angle ABC + \angle CBD = 180^{\circ}\).
+      </div>
+      <figure class="diagram">
+        <svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+          <line x1="15" y1="100" x2="205" y2="100" stroke="#2b2416" stroke-width="2.5"/>
+          <line x1="100" y1="100" x2="140.1" y2="42.7" stroke="#2b2416" stroke-width="2.5"/>
+          <polygon points="200,96 210,100 200,104" fill="#2b2416"/>
+          <polygon points="20,104 10,100 20,96" fill="#2b2416"/>
+          <polygon points="129.0,50.8 136.3,55.9 140.1,42.7" fill="#2b2416"/>
+          <path d="M 132.0 100.0 A 32 32 0 0 0 118.35 73.78" fill="none" stroke="#d99a45" stroke-width="2"/>
+          <path d="M 68.0 100.0 A 32 32 0 0 1 118.35 73.78" fill="none" stroke="#7fae6b" stroke-width="2"/>
+          <circle cx="100" cy="100" r="3.5" fill="#c1584f"/>
+          <text x="203" y="118" font-family="serif" font-size="15">A</text>
+          <text x="4" y="118" font-family="serif" font-size="15">D</text>
+          <text x="140" y="34" font-family="serif" font-size="15">C</text>
+          <text x="93" y="120" font-family="serif" font-size="15">B</text>
+          <text x="139.0" y="79.7" font-family="JetBrains Mono, monospace" font-size="13" fill="#d99a45">x&deg;</text>
+          <text x="79.7" y="61.0" font-family="JetBrains Mono, monospace" font-size="13" fill="#7fae6b">y&deg;</text>
+        </svg>
+        <figcaption>\(D, B, A\) segaris lurus. \(\angle ABC\) (busur emas, \(x^{\circ}\)) dan \(\angle DBC\) (busur hijau, \(y^{\circ}\)) saling berpelurus: \(x^{\circ}+y^{\circ}=180^{\circ}\).</figcaption>
+      </figure>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Pelurus dari \(93^{\circ}20'\) adalah \(180^{\circ} - 93^{\circ}20' = 179^{\circ}60' - 93^{\circ}20' = 86^{\circ}40'\).</p>
+        <p>Jika besar suatu sudut 5 kali pelurusnya, misalkan sudut \(= x\), maka:</p>
+        <p>\[x = 5(180^{\circ}-x) \;\Rightarrow\; 6x = 900^{\circ} \;\Rightarrow\; x = 150^{\circ}\]</p>
+      </div>
+      <h3>2. Sudut yang Saling Berpenyiku (Berkomplemen)</h3>
+      <div class="callout def">
+        <span class="tag">Definisi</span>
+        Jumlah dua sudut yang saling berpenyiku adalah \(90^{\circ}\). Jika \(\angle ABC\) dan \(\angle CBD\) berpenyiku, maka \(\angle ABC + \angle CBD = 90^{\circ}\).
+      </div>
+      <figure class="diagram">
+        <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="140" x2="175" y2="140" stroke="#2b2416" stroke-width="2.5"/>
+          <line x1="60" y1="140" x2="60" y2="25" stroke="#2b2416" stroke-width="2.5"/>
+          <line x1="60" y1="140" x2="133.7" y2="88.4" stroke="#2b2416" stroke-width="2.5"/>
+          <polygon points="167,136 178,140 167,144" fill="#2b2416"/>
+          <polygon points="56,33 60,22 64,33" fill="#2b2416"/>
+          <polygon points="120.5,92.2 125.6,99.5 133.7,88.4" fill="#2b2416"/>
+          <rect x="60" y="128" width="12" height="12" fill="none" stroke="#2b2416" stroke-width="1.5"/>
+          <path d="M 108.0 140.0 A 48 48 0 0 0 99.32 112.47" fill="none" stroke="#d99a45" stroke-width="2"/>
+          <path d="M 99.32 112.47 A 48 48 0 0 0 60.0 92.0" fill="none" stroke="#7fae6b" stroke-width="2"/>
+          <circle cx="60" cy="140" r="3.5" fill="#c1584f"/>
+          <text x="178" y="145" font-family="serif" font-size="15">A</text>
+          <text x="47" y="20" font-family="serif" font-size="15">D</text>
+          <text x="138" y="90" font-family="serif" font-size="15">C</text>
+          <text x="45" y="155" font-family="serif" font-size="15">B</text>
+          <text x="98" y="128" font-family="JetBrains Mono, monospace" font-size="13" fill="#d99a45">x&deg;</text>
+          <text x="66" y="110" font-family="JetBrains Mono, monospace" font-size="13" fill="#7fae6b">y&deg;</text>
+        </svg>
+        <figcaption>\(\angle ABD = 90^{\circ}\) (ditandai kotak siku-siku). \(\angle ABC\) (busur emas, \(x^{\circ}\)) dan \(\angle CBD\) (busur hijau, \(y^{\circ}\)) saling berpenyiku: \(x^{\circ}+y^{\circ}=90^{\circ}\).</figcaption>
+      </figure>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Penyiku dari \(65^{\circ}43'\) adalah \(90^{\circ} - 65^{\circ}43' = 89^{\circ}60' - 65^{\circ}43' = 24^{\circ}17'\).</p>
+      </div>
+      <div class="calc-box">
+        <h4>Kalkulator &middot; Pelurus dan Penyiku</h4>
+        <div class="row">
+          <label>Besar sudut (derajat, 0-180)</label>
+          <input type="number" id="pelpenInput" value="65">
+          <button onclick="hitungPelPen()">Hitung</button>
+        </div>
+        <div class="calc-result" id="pelpenResult">Masukkan besar sudut lalu klik "Hitung".</div>
+      </div>
+      <h3>3. Sudut yang Saling Bertolak Belakang</h3>
+      <div class="callout def">
+        <span class="tag">Definisi</span>
+        Dua sudut yang saling bertolak belakang besarnya <strong>sama</strong>. Jika \(\angle AED\) bertolak belakang dengan \(\angle BEC\), maka \(\angle AED = \angle BEC\).
+      </div>
+      <figure class="diagram">
+        <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+          <line x1="40" y1="30" x2="260" y2="150" stroke="#2b2416" stroke-width="2"/>
+          <line x1="40" y1="150" x2="260" y2="30" stroke="#2b2416" stroke-width="2"/>
+          <text x="20" y="28" font-family="serif" font-size="15">C</text>
+          <text x="264" y="28" font-family="serif" font-size="15">B</text>
+          <text x="18" y="160" font-family="serif" font-size="15">A</text>
+          <text x="264" y="160" font-family="serif" font-size="15">D</text>
+          <text x="140" y="95" font-family="serif" font-size="14">E</text>
+        </svg>
+        <figcaption>\(\angle AEC = \angle BED\) dan \(\angle AED = \angle BEC\) (sudut bertolak belakang).</figcaption>
+      </figure>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Jika \(\angle AED = 85^{\circ}\), maka \(\angle BEC = 85^{\circ}\) (bertolak belakang), dan \(\angle AEC = 180^{\circ}-85^{\circ}=95^{\circ}\) (berpelurus dengan \(\angle AED\)).</p>
+      </div>
+    </section>
+
+    <!-- E. MENGGAMBAR SUDUT -->
+    <section class="chapter" id="e">
+      <h2><span class="num">E.</span> Menggambar Sudut</h2>
+      <p>Untuk menggambar dan mengukur sudut digunakan <strong>busur derajat</strong>, yaitu alat untuk mengukur besar sudut dengan satuan derajat.</p>
+      <div class="callout note">
+        <span class="tag">Langkah-langkah</span>
+        <ol>
+          <li>Buatlah salah satu kaki sudutnya, misalnya \(QP\).</li>
+          <li>Letakkan busur derajat pada garis \(QP\) sehingga titik pusat busur berimpit dengan titik \(Q\), dan garis yang melalui titik tengah busur berimpit dengan garis \(QP\).</li>
+          <li>Perhatikan letak angka \(0\) pada garis \(QP\) &mdash; di bagian dalam atau luar busur. Gunakan deretan angka yang sama (dalam atau luar) untuk membaca besar sudut yang diinginkan.</li>
+          <li>Tandai titik pada busur sesuai besar sudut, lalu hubungkan titik tersebut dengan titik pusat busur untuk membentuk kaki sudut kedua.</li>
+        </ol>
+      </div>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Untuk menggambar \(\angle PQR = 130^{\circ}\): buat sinar \(QP\), letakkan busur derajat dengan pusat di \(Q\), lalu tandai angka \(130\) pada deretan yang berimpit dengan angka \(0\) di garis \(QP\). Hubungkan titik itu dengan \(Q\) untuk membentuk sinar \(QR\).</p>
+      </div>
+    </section>
+
+    <!-- F. MENGUKUR BESAR SUDUT -->
+    <section class="chapter" id="f">
+      <h2><span class="num">F.</span> Mengukur Besar Sudut</h2>
+      <p>Untuk mengukur besar sudut dari sebuah gambar, misalnya \(\angle DEF\):</p>
+      <div class="callout note">
+        <span class="tag">Langkah-langkah</span>
+        <ol>
+          <li>Impitkan titik pusat busur derajat dengan titik sudut \(E\), sehingga kaki sudut \(ED\) berimpit dengan garis yang melalui titik nol dan titik pusat busur.</li>
+          <li>Perhatikan letak angka nol pada garis \(ED\) &mdash; di bagian dalam atau luar busur.</li>
+          <li>Baca angka pada kaki sudut \(EF\) menggunakan deretan angka yang sama (dalam atau luar) dengan langkah sebelumnya. Angka itulah besar \(\angle DEF\).</li>
+        </ol>
+      </div>
+      <div class="callout warn">
+        <span class="tag">Perhatian</span>
+        Kesalahan paling umum adalah membaca deretan angka dalam dan luar secara tertukar. Selalu pastikan titik nol yang digunakan sesuai dengan deretan angka yang dibaca pada kaki sudut kedua.
+      </div>
+    </section>
+
+    <!-- G. DASAR MELUKIS -->
+    <section class="chapter" id="g">
+      <h2><span class="num">G.</span> Dasar-dasar Melukis</h2>
+      <h3>1. Memindahkan Sudut</h3>
+      <p>Memindahkan sudut artinya membuat sudut lain yang sama besarnya dengan sudut yang diketahui, menggunakan jangka dan penggaris (tanpa busur derajat).</p>
+      <div class="callout note">
+        <span class="tag">Langkah-langkah (memindahkan \(\angle BAC\) menjadi \(\angle LKM\))</span>
+        <ol>
+          <li>Buatlah garis \(KL\) sebagai salah satu kaki sudut baru.</li>
+          <li>Pada \(\angle BAC\), lukis busur lingkaran berpusat di \(A\) yang memotong kedua kaki sudut di titik \(D\) dan \(E\).</li>
+          <li>Dengan jari-jari \(AD\), lukis busur berpusat di \(K\) memotong \(KL\) di titik \(S\).</li>
+          <li>Dengan jari-jari \(DE\), lukis busur berpusat di \(S\) sehingga memotong busur dari langkah 3 di titik \(T\).</li>
+          <li>Tarik garis dari \(K\) melalui \(T\), yaitu garis \(KM\). Maka \(\angle LKM = \angle BAC\).</li>
+        </ol>
+      </div>
+      <div class="anim-figure" id="anim-pindah">
+        <svg viewBox="0 0 340 190" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="150" x2="145" y2="150" stroke="#2b2416" stroke-width="2"/>
+          <polygon points="132.0,145.5 132.0,154.5 145,150" fill="#2b2416"/>
+          <line x1="60" y1="150" x2="103.5" y2="64" stroke="#2b2416" stroke-width="2"/>
+          <polygon points="93.6,73.6 101.6,77.6 103.5,64" fill="#2b2416"/>
+          <line x1="220" y1="150" x2="315" y2="150" stroke="#2b2416" stroke-width="2"/>
+          <polygon points="302.0,145.5 302.0,154.5 315,150" fill="#2b2416"/>
+          <circle cx="60" cy="150" r="3" fill="#141a2e"/>
+          <circle cx="220" cy="150" r="3" fill="#141a2e"/>
+          <text x="50" y="165" font-family="serif" font-size="14">A</text>
+          <text x="148" y="163" font-family="serif" font-size="14">B</text>
+          <text x="102" y="55" font-family="serif" font-size="14">C</text>
+          <text x="210" y="165" font-family="serif" font-size="14">K</text>
+          <text x="318" y="163" font-family="serif" font-size="14">L</text>
+
+          <path class="draw-anim" style="stroke-dasharray:58;stroke-dashoffset:58;animation-delay:0.3s" d="M 110.0 150.0 A 50 50 0 0 0 80.31 104.31" fill="none" stroke="#d99a45" stroke-width="2"/>
+          <circle class="fade-anim" style="animation-delay:1.3s" cx="110.0" cy="150.0" r="3" fill="#c1584f"/>
+          <circle class="fade-anim" style="animation-delay:1.3s" cx="80.31" cy="104.31" r="3" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:1.4s" x="115" y="148" font-family="serif" font-size="13">D</text>
+          <text class="fade-anim" style="animation-delay:1.4s" x="66" y="104" font-family="serif" font-size="13">E</text>
+
+          <path class="draw-anim" style="stroke-dasharray:58;stroke-dashoffset:58;animation-delay:1.8s" d="M 270.0 150.0 A 50 50 0 0 0 240.31 104.31" fill="none" stroke="#7fae6b" stroke-width="2"/>
+          <circle class="fade-anim" style="animation-delay:1.9s" cx="270.0" cy="150.0" r="3" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:2.0s" x="275" y="148" font-family="serif" font-size="13">S</text>
+
+          <path class="draw-anim" style="stroke-dasharray:31;stroke-dashoffset:31;animation-delay:3.0s" d="M 220.61 126.99 A 54.49 54.49 0 0 1 240.31 104.31" fill="none" stroke="#5a86ad" stroke-width="2"/>
+          <circle class="fade-anim" style="animation-delay:3.8s" cx="240.31" cy="104.31" r="3.5" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:3.9s" x="245" y="100" font-family="serif" font-size="13">T</text>
+
+          <line class="draw-anim" style="stroke-dasharray:90;stroke-dashoffset:90;animation-delay:4.4s" x1="220" y1="150" x2="256.55" y2="67.76" stroke="#2b2416" stroke-width="2"/>
+          <polygon class="fade-anim" style="animation-delay:5.3s" points="247.2,77.8 255.4,81.5 256.55,67.76" fill="#2b2416"/>
+          <text class="fade-anim" style="animation-delay:5.4s" x="260" y="60" font-family="serif" font-size="14">M</text>
+
+          <path class="draw-anim" style="stroke-dasharray:29;stroke-dashoffset:29;animation-delay:5.5s" d="M 245.0 150.0 A 25 25 0 0 0 230.15 127.15" fill="none" stroke="#e0a94d" stroke-width="2.2"/>
+          <text class="fade-anim" style="animation-delay:6.1s" x="325" y="115" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="end" fill="#5b5137">&#8736;LKM = &#8736;BAC</text>
+        </svg>
+        <button class="anim-replay-btn" onclick="replayAnim('anim-pindah')">&#8635; Putar Ulang Animasi</button>
+      </div>
+      <h3>2. Membagi Sudut Menjadi Dua Sama Besar</h3>
+      <div class="callout note">
+        <span class="tag">Langkah-langkah (membagi \(\angle PQR\))</span>
+        <ol>
+          <li>Buat busur berpusat di \(Q\) memotong sinar \(QP\) di titik \(A\) dan sinar \(QR\) di titik \(B\).</li>
+          <li>Dengan jari-jari yang sama, buat busur berpusat di \(A\) dan di \(B\) sehingga berpotongan di titik \(C\).</li>
+          <li>Hubungkan \(Q\) dan \(C\). Garis \(QC\) membagi \(\angle PQR\) menjadi \(\angle PQC\) dan \(\angle RQC\) yang sama besar.</li>
+        </ol>
+      </div>
+      <div class="anim-figure" id="anim-bagi">
+        <svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+          <line x1="150" y1="150" x2="255" y2="150" stroke="#2b2416" stroke-width="2"/>
+          <polygon points="242.0,145.5 242.0,154.5 255,150" fill="#2b2416"/>
+          <line x1="150" y1="150" x2="213.5" y2="63" stroke="#2b2416" stroke-width="2"/>
+          <polygon points="202.2,70.8 209.5,76.2 213.5,63" fill="#2b2416"/>
+          <circle cx="150" cy="150" r="3" fill="#141a2e"/>
+          <text x="138" y="165" font-family="serif" font-size="14">Q</text>
+          <text x="258" y="163" font-family="serif" font-size="14">P</text>
+          <text x="212" y="55" font-family="serif" font-size="14">R</text>
+
+          <path class="draw-anim" style="stroke-dasharray:55;stroke-dashoffset:55;animation-delay:0.3s" d="M 210.0 150.0 A 60 60 0 0 0 186.84 102.64" fill="none" stroke="#d99a45" stroke-width="2"/>
+          <circle class="fade-anim" style="animation-delay:1.3s" cx="210.0" cy="150.0" r="3" fill="#c1584f"/>
+          <circle class="fade-anim" style="animation-delay:1.3s" cx="186.84" cy="102.64" r="3" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:1.4s" x="215" y="148" font-family="serif" font-size="13">A</text>
+          <text class="fade-anim" style="animation-delay:1.4s" x="172" y="102" font-family="serif" font-size="13">B</text>
+
+          <path class="draw-anim" style="stroke-dasharray:33;stroke-dashoffset:33;animation-delay:1.9s" d="M 261.45 130.56 A 55 55 0 0 0 241.78 105.11" fill="none" stroke="#7fae6b" stroke-width="2"/>
+          <path class="draw-anim" style="stroke-dasharray:33;stroke-dashoffset:33;animation-delay:2.7s" d="M 233.77 73.96 A 55 55 0 0 1 241.78 105.11" fill="none" stroke="#5a86ad" stroke-width="2"/>
+          <circle class="fade-anim" style="animation-delay:3.5s" cx="241.78" cy="105.11" r="3.5" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:3.6s" x="248" y="102" font-family="serif" font-size="14">C</text>
+
+          <line class="draw-anim" style="stroke-dasharray:138;stroke-dashoffset:138;animation-delay:4.1s" x1="150" y1="150" x2="273.9" y2="89.4" stroke="#2b2416" stroke-width="2"/>
+          <polygon class="fade-anim" style="animation-delay:5.3s" points="260.2,91.1 264.2,99.2 273.9,89.4" fill="#2b2416"/>
+
+          <path class="draw-anim" style="stroke-dasharray:19;stroke-dashoffset:19;animation-delay:5.5s" d="M 190.0 150.0 A 40 40 0 0 0 185.93 132.43" fill="none" stroke="#e0a94d" stroke-width="2"/>
+          <path class="draw-anim" style="stroke-dasharray:19;stroke-dashoffset:19;animation-delay:5.5s" d="M 185.93 132.43 A 40 40 0 0 0 174.56 118.43" fill="none" stroke="#e0a94d" stroke-width="2"/>
+          <text class="fade-anim" style="animation-delay:6.3s" x="285" y="115" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="end" fill="#5b5137">&#8736;PQC = &#8736;RQC</text>
+        </svg>
+        <button class="anim-replay-btn" onclick="replayAnim('anim-bagi')">&#8635; Putar Ulang Animasi</button>
+      </div>
+      <h3>3. Melukis Sudut-sudut Istimewa</h3>
+      <p>Dengan jangka dan penggaris, beberapa sudut istimewa dapat dilukis tanpa busur derajat:</p>
+      <table class="tabel">
+        <tr><th>Sudut</th><th>Cara Melukis</th></tr>
+        <tr><td>\(90^{\circ}\)</td><td>Buat ruas garis \(AB\), buat busur berpusat \(B\) berjari-jari \(BA\) memotong perpanjangan \(AB\) di \(B'\), lalu buat busur dari \(A\) dan \(B'\) berpotongan di \(C\); \(\angle ABC = 90^{\circ}\).</td></tr>
+        <tr><td>\(60^{\circ}\)</td><td>Buat ruas garis \(AB\), buat busur berpusat \(A\) dan \(B\) dengan jari-jari \(AB\), berpotongan di \(C\); \(\angle BAC = 60^{\circ}\).</td></tr>
+        <tr><td>\(45^{\circ}\)</td><td>Lukis sudut \(90^{\circ}\), lalu bagi dua sama besar: \(45^{\circ} = \tfrac{1}{2}\times 90^{\circ}\).</td></tr>
+        <tr><td>\(30^{\circ}\)</td><td>Lukis sudut \(60^{\circ}\), lalu bagi dua sama besar: \(30^{\circ} = \tfrac{1}{2}\times 60^{\circ}\).</td></tr>
+        <tr><td>\(150^{\circ}\)</td><td>Lukis sudut \(90^{\circ}\), lalu tambahkan sudut \(60^{\circ}\) pada salah satu kakinya: \(150^{\circ} = 90^{\circ}+60^{\circ}\).</td></tr>
+        <tr><td>\(75^{\circ}\)</td><td>Jumlahkan setengah sudut \(90^{\circ}\) dan setengah sudut \(60^{\circ}\): \(75^{\circ} = 45^{\circ}+30^{\circ}\).</td></tr>
+      </table>
+      <div class="anim-figure" id="anim-90">
+        <svg viewBox="0 0 320 190" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="150" x2="160" y2="150" stroke="#2b2416" stroke-width="2.5"/>
+          <circle cx="60" cy="150" r="3" fill="#141a2e"/>
+          <circle cx="160" cy="150" r="3" fill="#141a2e"/>
+          <text x="50" y="165" font-family="serif" font-size="14">A</text>
+          <text x="164" y="165" font-family="serif" font-size="14">B</text>
+
+          <path class="draw-anim" style="stroke-dasharray:315;stroke-dashoffset:315;animation-delay:0.5s" d="M 60.0 150.0 A 100 100 0 0 1 260.0 150.0" fill="none" stroke="#d99a45" stroke-width="1.6"/>
+          <circle class="fade-anim" style="animation-delay:2.0s" cx="260.0" cy="150.0" r="3" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:2.1s" x="264" y="165" font-family="serif" font-size="14">B'</text>
+
+          <path class="draw-anim" style="stroke-dasharray:91;stroke-dashoffset:91;animation-delay:2.6s" d="M 190.0 150.0 A 130 130 0 0 0 160.0 66.93" fill="none" stroke="#7fae6b" stroke-width="1.6"/>
+          <path class="draw-anim" style="stroke-dasharray:91;stroke-dashoffset:91;animation-delay:3.6s" d="M 130.0 150.0 A 130 130 0 0 1 160.0 66.93" fill="none" stroke="#5a86ad" stroke-width="1.6"/>
+          <circle class="fade-anim" style="animation-delay:4.6s" cx="160.0" cy="66.93" r="3.5" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:4.7s" x="164" y="62" font-family="serif" font-size="14">C</text>
+
+          <line class="draw-anim" style="stroke-dasharray:83;stroke-dashoffset:83;animation-delay:5.1s" x1="160" y1="150" x2="160" y2="66.93" stroke="#2b2416" stroke-width="2.5"/>
+          <rect class="fade-anim" style="animation-delay:6.0s" x="160" y="138" width="12" height="12" fill="none" stroke="#2b2416" stroke-width="1.5"/>
+          <text class="fade-anim" style="animation-delay:6.2s" x="235" y="115" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="end" fill="#5b5137">&#8736;ABC = 90&deg;</text>
+        </svg>
+        <button class="anim-replay-btn" onclick="replayAnim('anim-90')">&#8635; Putar Ulang Animasi</button>
+      </div>
+      <div class="anim-figure" id="anim-60">
+        <svg viewBox="0 0 240 190" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="150" x2="180" y2="150" stroke="#2b2416" stroke-width="2.5"/>
+          <circle cx="60" cy="150" r="3" fill="#141a2e"/>
+          <circle cx="180" cy="150" r="3" fill="#141a2e"/>
+          <text x="50" y="165" font-family="serif" font-size="14">A</text>
+          <text x="184" y="165" font-family="serif" font-size="14">B</text>
+
+          <path class="draw-anim" style="stroke-dasharray:126;stroke-dashoffset:126;animation-delay:0.5s" d="M 180.0 150.0 A 120 120 0 0 0 120.0 46.08" fill="none" stroke="#d99a45" stroke-width="1.6"/>
+          <path class="draw-anim" style="stroke-dasharray:126;stroke-dashoffset:126;animation-delay:1.7s" d="M 60.0 150.0 A 120 120 0 0 1 120.0 46.08" fill="none" stroke="#7fae6b" stroke-width="1.6"/>
+          <circle class="fade-anim" style="animation-delay:2.9s" cx="120.0" cy="46.08" r="3.5" fill="#c1584f"/>
+          <text class="fade-anim" style="animation-delay:3.0s" x="124" y="42" font-family="serif" font-size="14">C</text>
+
+          <line class="draw-anim" style="stroke-dasharray:120;stroke-dashoffset:120;animation-delay:3.4s" x1="60" y1="150" x2="120.0" y2="46.08" stroke="#2b2416" stroke-width="2.5"/>
+          <path class="fade-anim" style="animation-delay:4.5s" d="M 100.0 150.0 A 40 40 0 0 0 80.0 115.36" fill="none" stroke="#e0a94d" stroke-width="2"/>
+          <text class="fade-anim" style="animation-delay:4.9s" x="200" y="115" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="end" fill="#5b5137">&#8736;BAC = 60&deg;</text>
+        </svg>
+        <button class="anim-replay-btn" onclick="replayAnim('anim-60')">&#8635; Putar Ulang Animasi</button>
+      </div>
+    </section>
+
+    <!-- H. KEDUDUKAN DUA GARIS -->
+    <section class="chapter" id="h">
+      <h2><span class="num">H.</span> Kedudukan Dua Garis</h2>
+      <figure class="diagram">
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="15" y1="35" x2="120" y2="35" stroke="#2b2416" stroke-width="2"/>
+              <polygon points="120,35 111,31 111,39" fill="#2b2416"/>
+              <line x1="15" y1="70" x2="120" y2="70" stroke="#2b2416" stroke-width="2"/>
+              <polygon points="120,70 111,66 111,74" fill="#2b2416"/>
+              <polygon points="60,32 66,35 60,38" fill="none" stroke="#d99a45" stroke-width="1.5"/>
+              <polygon points="60,67 66,70 60,73" fill="none" stroke="#d99a45" stroke-width="1.5"/>
+              <text x="126" y="39" font-family="serif" font-size="13">m</text>
+              <text x="126" y="74" font-family="serif" font-size="13">n</text>
+            </svg>
+            <div style="font-size:12.5px;margin-top:4px;"><strong>Sejajar</strong></div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="15" y1="20" x2="115" y2="80" stroke="#2b2416" stroke-width="2"/>
+              <line x1="15" y1="80" x2="115" y2="20" stroke="#2b2416" stroke-width="2"/>
+              <circle cx="65" cy="50" r="3" fill="#c1584f"/>
+              <text x="112" y="16" font-family="serif" font-size="13">m</text>
+              <text x="112" y="96" font-family="serif" font-size="13">n</text>
+            </svg>
+            <div style="font-size:12.5px;margin-top:4px;"><strong>Berpotongan</strong></div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="15" y1="50" x2="125" y2="50" stroke="#2b2416" stroke-width="2"/>
+              <circle cx="35" cy="50" r="3" fill="#c1584f"/>
+              <circle cx="70" cy="50" r="3" fill="#c1584f"/>
+              <circle cx="105" cy="50" r="3" fill="#c1584f"/>
+              <text x="31" y="42" font-family="serif" font-size="13">A</text>
+              <text x="66" y="42" font-family="serif" font-size="13">B</text>
+              <text x="101" y="42" font-family="serif" font-size="13">C</text>
+            </svg>
+            <div style="font-size:12.5px;margin-top:4px;"><strong>Berimpit</strong></div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="70" y1="10" x2="70" y2="80" stroke="#2b2416" stroke-width="2"/>
+              <polygon points="70,10 66,18 74,18" fill="#2b2416"/>
+              <circle cx="70" cy="10" r="3" fill="#c1584f"/>
+              <line x1="45" y1="85" x2="95" y2="85" stroke="#7d7050" stroke-width="3"/>
+              <line x1="45" y1="85" x2="35" y2="93" stroke="#7d7050" stroke-width="1.5"/>
+              <line x1="60" y1="85" x2="50" y2="93" stroke="#7d7050" stroke-width="1.5"/>
+              <line x1="75" y1="85" x2="65" y2="93" stroke="#7d7050" stroke-width="1.5"/>
+              <line x1="90" y1="85" x2="80" y2="93" stroke="#7d7050" stroke-width="1.5"/>
+            </svg>
+            <div style="font-size:12.5px;margin-top:4px;"><strong>Vertikal</strong><br>(spt. tali bandul)</div>
+          </div>
+          <div style="text-align:center;width:150px;">
+            <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border:1px solid #e3d7b8;border-radius:10px;padding:6px;">
+              <line x1="15" y1="50" x2="125" y2="50" stroke="#2b2416" stroke-width="2"/>
+              <polygon points="125,50 116,46 116,54" fill="#2b2416"/>
+              <path d="M 15 68 Q 27 62 40 68 T 65 68 T 90 68 T 115 68" fill="none" stroke="#5a86ad" stroke-width="1.6"/>
+              <path d="M 15 78 Q 27 72 40 78 T 65 78 T 90 78 T 115 78" fill="none" stroke="#5a86ad" stroke-width="1.6"/>
+            </svg>
+            <div style="font-size:12.5px;margin-top:4px;"><strong>Horisontal</strong><br>(spt. permukaan air)</div>
+          </div>
+        </div>
+        <figcaption>Lima kedudukan garis pada satu bidang datar: sejajar, berpotongan, berimpit, vertikal, dan horisontal.</figcaption>
+      </figure>
+      <figure class="diagram">
+        <svg viewBox="0 0 260 190" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,140 150,140 190,100 80,100" fill="#f4ecd8" stroke="#2b2416" stroke-width="1.5" opacity="0.5"/>
+          <line x1="40" y1="140" x2="150" y2="140" stroke="#2b2416" stroke-width="2"/>
+          <line x1="150" y1="140" x2="190" y2="100" stroke="#2b2416" stroke-width="2"/>
+          <line x1="40" y1="140" x2="80" y2="100" stroke="#2b2416" stroke-width="2"/>
+          <line x1="80" y1="100" x2="190" y2="100" stroke="#2b2416" stroke-width="2"/>
+          <line x1="40" y1="140" x2="40" y2="55" stroke="#2b2416" stroke-width="2"/>
+          <line x1="150" y1="140" x2="150" y2="55" stroke="#2b2416" stroke-width="2"/>
+          <line x1="190" y1="100" x2="190" y2="15" stroke="#2b2416" stroke-width="2"/>
+          <line x1="80" y1="100" x2="80" y2="15" stroke="#2b2416" stroke-width="2"/>
+          <line x1="40" y1="55" x2="150" y2="55" stroke="#2b2416" stroke-width="2"/>
+          <line x1="150" y1="55" x2="190" y2="15" stroke="#2b2416" stroke-width="2"/>
+          <line x1="40" y1="55" x2="80" y2="15" stroke="#2b2416" stroke-width="2" stroke-dasharray="4 3"/>
+          <line x1="80" y1="15" x2="190" y2="15" stroke="#2b2416" stroke-width="2"/>
+          <line x1="40" y1="140" x2="150" y2="140" stroke="#c1584f" stroke-width="3.5"/>
+          <line x1="190" y1="100" x2="190" y2="15" stroke="#7fae6b" stroke-width="3.5"/>
+          <text x="30" y="152" font-family="serif" font-size="14">P</text>
+          <text x="152" y="152" font-family="serif" font-size="14">Q</text>
+          <text x="194" y="104" font-family="serif" font-size="14">R</text>
+          <text x="72" y="98" font-family="serif" font-size="14">S</text>
+          <text x="30" y="50" font-family="serif" font-size="14">T</text>
+          <text x="152" y="50" font-family="serif" font-size="14">U</text>
+          <text x="194" y="12" font-family="serif" font-size="14">V</text>
+          <text x="68" y="12" font-family="serif" font-size="14">W</text>
+        </svg>
+        <figcaption>Pada balok \(PQRS.TUVW\), rusuk \(PQ\) (merah) dan rusuk \(RV\) (hijau) tidak sebidang dan tidak sejajar &mdash; keduanya <strong>bersilangan</strong>.</figcaption>
+      </figure>
+      <table class="tabel">
+        <tr><th>Kedudukan</th><th>Penjelasan</th></tr>
+        <tr><td>Garis sejajar</td><td>Dua garis pada satu bidang datar, jaraknya selalu tetap, dan jika diperpanjang tidak pernah berpotongan. Contoh: rel kereta api.</td></tr>
+        <tr><td>Garis berpotongan</td><td>Dua garis pada satu bidang yang saling berpotongan di satu titik.</td></tr>
+        <tr><td>Garis berimpit</td><td>Beberapa garis yang terletak pada satu garis lurus, sehingga hanya terlihat sebagai satu garis.</td></tr>
+        <tr><td>Garis vertikal</td><td>Garis yang arahnya tegak, contoh: arah benang bandul, tiang bendera.</td></tr>
+        <tr><td>Garis horisontal</td><td>Garis yang arahnya mendatar, contoh: permukaan air yang tenang.</td></tr>
+        <tr><td>Garis bersilangan</td><td>Dua garis yang tidak terletak pada satu bidang dan tidak sejajar (misalnya dua rusuk balok yang tidak sebidang).</td></tr>
+      </table>
+      <div class="callout note">
+        <span class="tag">Catatan</span>
+        Jika sebuah garis vertikal dan sebuah garis horisontal saling bertemu, keduanya membentuk sudut siku-siku \((90^{\circ})\).
+      </div>
+    </section>
+
+    <!-- I. GARIS-GARIS SEJAJAR -->
+    <section class="chapter" id="i">
+      <h2><span class="num">I.</span> Garis-garis Sejajar</h2>
+      <h3>1. Sifat-sifat Garis Sejajar</h3>
+      <div class="callout def">
+        <span class="tag">Aksioma 1</span>
+        Melalui dua buah titik yang berbeda dapat dibuat <strong>tepat satu</strong> garis lurus.
+      </div>
+      <div class="callout def">
+        <span class="tag">Aksioma 2</span>
+        Melalui sebuah titik di luar suatu garis hanya dapat dibuat <strong>tepat satu</strong> garis yang sejajar dengan garis tersebut.
+      </div>
+      <div class="callout def">
+        <span class="tag">Teorema 1</span>
+        Jika sebuah garis memotong salah satu dari dua garis yang sejajar, maka garis itu juga akan memotong garis yang kedua.
+      </div>
+      <div class="callout def">
+        <span class="tag">Teorema 2</span>
+        Jika sebuah garis sejajar dengan dua garis lainnya, maka kedua garis itu sejajar satu sama lain.
+      </div>
+
+      <h3>2. Sudut-sudut yang Terjadi Jika Dua Garis Sejajar Dipotong Garis Lain</h3>
+      <p>Ketika sebuah garis (garis \(m\)) memotong dua garis sejajar \(k\) dan \(l\), terbentuk 8 buah sudut yang diberi nama sesuai posisinya.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="70" x2="300" y2="70" stroke="#2b2416" stroke-width="2"/>
+          <line x1="20" y1="160" x2="300" y2="160" stroke="#2b2416" stroke-width="2"/>
+          <line x1="90" y1="20" x2="230" y2="210" stroke="#c1584f" stroke-width="2"/>
+          <text x="305" y="74" font-family="serif" font-size="14">k</text>
+          <text x="305" y="164" font-family="serif" font-size="14">l</text>
+          <text x="72" y="12" font-family="serif" font-size="14" fill="#c1584f">m</text>
+          <text x="100.1" y="56.5" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">1</text>
+          <text x="140.4" y="43.2" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">2</text>
+          <text x="113.3" y="96.8" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">4</text>
+          <text x="153.6" y="83.5" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">3</text>
+          <text x="166.4" y="146.5" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">5</text>
+          <text x="206.7" y="133.2" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">6</text>
+          <text x="179.6" y="186.8" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">8</text>
+          <text x="219.9" y="173.5" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">7</text>
+          <circle cx="126.8" cy="70" r="2.5" fill="#c1584f"/>
+          <circle cx="193.2" cy="160" r="2.5" fill="#c1584f"/>
+        </svg>
+        <figcaption>Garis \(m\) memotong dua garis sejajar \(k\) dan \(l\), membentuk sudut 1 s.d. 8.</figcaption>
+      </figure>
+      <table class="tabel">
+        <tr><th>Nama Sudut</th><th>Pasangan</th><th>Ciri Posisi</th></tr>
+        <tr><td>Sudut-sudut sehadap</td><td>1&amp;5, 2&amp;6, 3&amp;7, 4&amp;8</td><td>menghadap arah yang sama, membentuk pola huruf &ldquo;F&rdquo;</td></tr>
+        <tr><td>Sudut dalam berseberangan</td><td>3&amp;5, 4&amp;6</td><td>di dalam garis k-l, berseberangan; pola huruf &ldquo;Z&rdquo; / &ldquo;N&rdquo;</td></tr>
+        <tr><td>Sudut luar berseberangan</td><td>1&amp;7, 2&amp;8</td><td>di luar garis k-l, berseberangan</td></tr>
+        <tr><td>Sudut dalam sepihak</td><td>3&amp;6, 4&amp;5</td><td>di dalam garis k-l, sepihak; pola huruf &ldquo;U&rdquo;</td></tr>
+        <tr><td>Sudut luar sepihak</td><td>1&amp;8, 2&amp;7</td><td>di luar garis k-l, sepihak</td></tr>
+      </table>
+
+      <h3>3. Hubungan Sudut-sudut pada Dua Garis Sejajar</h3>
+      <div class="callout def">
+        <span class="tag">Teorema 3</span>
+        Jika dua garis sejajar dipotong garis lain, maka sudut-sudut yang <strong>sehadap sama besar</strong>.
+      </div>
+      <div class="callout def">
+        <span class="tag">Teorema 4</span>
+        Sudut-sudut <strong>dalam berseberangan sama besar</strong>.
+      </div>
+      <div class="callout def">
+        <span class="tag">Teorema 5</span>
+        Sudut-sudut <strong>luar berseberangan sama besar</strong>.
+      </div>
+      <div class="callout def">
+        <span class="tag">Teorema 6</span>
+        Jumlah sudut-sudut <strong>dalam sepihak</strong> maupun <strong>luar sepihak</strong> adalah \(180^{\circ}\).
+      </div>
+      <div class="example-box">
+        <span class="ex-tag">Contoh</span>
+        <p>Diketahui \(AC \parallel BD\), \(\angle A_1 = 95^{\circ}\), dan \(\angle D_2 = 110^{\circ}\).</p>
+        <ol>
+          <li>\(\angle B_1 = \angle A_1 = 95^{\circ}\) (sehadap)</li>
+          <li>\(\angle B_3 = 180^{\circ} - 95^{\circ} = 85^{\circ}\) (berpelurus dengan \(\angle B_1\))</li>
+          <li>\(\angle C_4 = \angle D_2 = 110^{\circ}\) (bertolak belakang dengan sudut sehadapnya)</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- LATIHAN -->
+    <section class="chapter" id="latihan">
+      <h2>Latihan Soal</h2>
+      <p>Uji pemahamanmu tentang sudut dan garis sejajar melalui 5 tipe soal berikut. Setiap soal dilengkapi pembahasan.</p>
+      <div class="type-tabs">
+        <div class="type-tab active" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda</div>
+        <div class="type-tab" data-type="is" onclick="showType('is')">2. Isian Singkat</div>
+        <div class="type-tab" data-type="pk" onclick="showType('pk')">3. PG Kompleks</div>
+        <div class="type-tab" data-type="bs" onclick="showType('bs')">4. Benar/Salah</div>
+        <div class="type-tab" data-type="jd" onclick="showType('jd')">5. Menjodohkan</div>
+      </div>
+      <div class="score-strip" id="scoreStrip"></div>
+      <div id="quizArea"></div>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn" onclick="showAnalysis()">Lihat Analisis Akhir</button>
+        <button class="btn secondary" onclick="resetAll()">Ulangi Semua Jawaban</button>
+      </div>
+      <div id="analysisPanel"></div>
+    </section>
+
+    <footer>
+      <div>Ebook Interaktif Matematika Kelas 7 &middot; Bab Sudut dan Garis Sejajar</div>
+      <div class="credit">Suminto with Claude</div>
+    </footer>
+  </main>
+</div>
+
+<script>
+/* ============ NAV / SCROLLSPY / MOBILE ============ */
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', function(){
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', function(){
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+document.querySelectorAll('.nav-sub a').forEach(function(a){
+  a.addEventListener('click', function(e){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    var type = a.getAttribute('data-jump');
+    setTimeout(function(){ showType(type); }, 300);
+  });
+});
+document.querySelectorAll('.nav-link').forEach(function(a){
+  a.addEventListener('click', function(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  });
+});
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+function onScroll(){
+  var scrollY = window.scrollY || window.pageYOffset;
+  var doc = document.documentElement;
+  var maxScroll = doc.scrollHeight - doc.clientHeight;
+  var pct = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  var currentId = '';
+  sections.forEach(function(sec){
+    var rect = sec.getBoundingClientRect();
+    if(rect.top <= 140){ currentId = sec.id; }
+  });
+  navLinks.forEach(function(a){
+    a.classList.toggle('active', a.getAttribute('data-section') === currentId);
+  });
+}
+window.addEventListener('scroll', onScroll);
+window.addEventListener('load', onScroll);
+
+/* ============ KALKULATOR: JENIS SUDUT ============ */
+function replayAnim(id){
+  var c = document.getElementById(id);
+  if(!c) return;
+  var els = c.querySelectorAll('.draw-anim, .fade-anim');
+  var savedClasses = [];
+  els.forEach(function(el){ savedClasses.push(el.getAttribute('class')); });
+  els.forEach(function(el){ el.setAttribute('class',''); });
+  void c.offsetWidth;
+  els.forEach(function(el,i){ el.setAttribute('class', savedClasses[i]); });
+}
+function hitungJenisSudut(){
+  var v = parseFloat(document.getElementById('jenisInput').value) || 0;
+  var jenis = '';
+  if(v <= 0 || v > 360){ jenis = 'Tidak valid (0 - 360 derajat)'; }
+  else if(v < 90){ jenis = 'Sudut Lancip'; }
+  else if(v === 90){ jenis = 'Sudut Siku-siku'; }
+  else if(v < 180){ jenis = 'Sudut Tumpul'; }
+  else if(v === 180){ jenis = 'Sudut Lurus'; }
+  else if(v < 360){ jenis = 'Sudut Refleks'; }
+  else { jenis = 'Sudut Satu Putaran Penuh'; }
+  document.getElementById('jenisResult').innerHTML = v + '&deg; termasuk <strong>' + jenis + '</strong>.';
+}
+
+/* ============ KALKULATOR: KONVERSI SATUAN ============ */
+function hitungKonversi(){
+  var v = parseFloat(document.getElementById('konversiInput').value) || 0;
+  var derajatBulat = Math.floor(v);
+  var sisaMenit = (v - derajatBulat) * 60;
+  var menitBulat = Math.floor(sisaMenit);
+  var detik = Math.round((sisaMenit - menitBulat) * 60);
+  var radian = (v * Math.PI / 180);
+  document.getElementById('konversiResult').innerHTML =
+    v + '&deg; = ' + derajatBulat + '&deg; ' + menitBulat + '\' ' + detik + '&Prime;' +
+    '<br>' + v + '&deg; = ' + radian.toFixed(4) + ' radian (&asymp; ' + (radian).toFixed(2) + ' rad)';
+}
+
+/* ============ KALKULATOR: PELURUS & PENYIKU ============ */
+function hitungPelPen(){
+  var v = parseFloat(document.getElementById('pelpenInput').value) || 0;
+  var pelurus = (v >= 0 && v <= 180) ? (180 - v) : null;
+  var penyiku = (v >= 0 && v <= 90) ? (90 - v) : null;
+  var html = 'Sudut = ' + v + '&deg;<br>';
+  html += (pelurus !== null) ? ('Pelurus = 180&deg; - ' + v + '&deg; = ' + pelurus + '&deg;<br>') : 'Pelurus tidak berlaku (sudut harus 0-180&deg;)<br>';
+  html += (penyiku !== null) ? ('Penyiku = 90&deg; - ' + v + '&deg; = ' + penyiku + '&deg;') : 'Penyiku tidak berlaku (sudut harus 0-90&deg;)';
+  document.getElementById('pelpenResult').innerHTML = html;
+}
+
+/* ============ KALKULATOR: SUDUT JAM ============ */
+function hitungSudutJam(){
+  var jam = parseInt(document.getElementById('jamInput').value) || 0;
+  var menit = parseInt(document.getElementById('menitInput').value) || 0;
+  if(jam === 12){ jam = 0; }
+  var sudutMenit = menit * 6;
+  var sudutJam = (jam * 30) + (menit * 0.5);
+  var selisih = Math.abs(sudutJam - sudutMenit);
+  var sudutTerkecil = Math.min(selisih, 360 - selisih);
+  document.getElementById('jamResult').innerHTML =
+    'Sudut jarum menit dari angka 12 = ' + sudutMenit.toFixed(1) + '&deg;<br>' +
+    'Sudut jarum jam dari angka 12 = ' + sudutJam.toFixed(1) + '&deg;<br>' +
+    'Sudut terkecil antara kedua jarum = <strong>' + sudutTerkecil.toFixed(1) + '&deg;</strong>';
+}
+
+/* ============ BANK SOAL LATIHAN ============ */
+const quizData = {
+  pg: [
+    { num:1, text:'Sudut yang besarnya antara \\(90^{\\circ}\\) dan \\(180^{\\circ}\\) disebut sudut ....', options:['Lancip','Siku-siku','Tumpul','Refleks'], answer:2, explanation:'Sudut yang besarnya di antara \\(90^{\\circ}\\) dan \\(180^{\\circ}\\) disebut sudut tumpul.' },
+    { num:2, text:'Besar sudut terkecil antara jarum jam dan jarum menit pada pukul 03.00 adalah ....', options:['\\(60^{\\circ}\\)','\\(90^{\\circ}\\)','\\(120^{\\circ}\\)','\\(150^{\\circ}\\)'], answer:1, explanation:'Pada pukul 03.00, jarum jam menunjuk angka 3 dan jarum menit menunjuk angka 12. Sudutnya \\(= 3 \\times 30^{\\circ} = 90^{\\circ}\\).' },
+    { num:3, text:'Dua garis yang terletak pada satu bidang datar, berjarak tetap, dan tidak pernah berpotongan disebut garis ....', options:['Berpotongan','Berimpit','Sejajar','Bersilangan'], answer:2, explanation:'Definisi garis sejajar adalah dua garis sebidang yang jaraknya selalu tetap dan tidak pernah berpotongan.' },
+    { num:4, text:'Jika dua garis sejajar dipotong oleh garis lain, maka sudut-sudut yang sehadap ....', options:['Berjumlah \\(90^{\\circ}\\)','Berjumlah \\(180^{\\circ}\\)','Sama besar','Saling berpenyiku'], answer:2, explanation:'Menurut Teorema 3, sudut-sudut sehadap pada dua garis sejajar yang dipotong garis lain selalu sama besar.' },
+    { num:5, text:'Pelurus dari sudut \\(65^{\\circ}\\) adalah ....', options:['\\(25^{\\circ}\\)','\\(35^{\\circ}\\)','\\(115^{\\circ}\\)','\\(125^{\\circ}\\)'], answer:2, explanation:'Pelurus \\(= 180^{\\circ} - 65^{\\circ} = 115^{\\circ}\\).' }
+  ],
+  is: [
+    { num:1, text:'\\(1^{\\circ}\\) sama dengan .... menit.', answer:'60', explanation:'Berdasarkan tingkatan satuan sudut, \\(1^{\\circ} = 60\'\\).' },
+    { num:2, text:'Penyiku dari sudut \\(37^{\\circ}\\) adalah ....\\(^{\\circ}\\)', answer:'53', explanation:'Penyiku \\(= 90^{\\circ} - 37^{\\circ} = 53^{\\circ}\\).' },
+    { num:3, text:'Besar sudut lurus adalah ....\\(^{\\circ}\\)', answer:'180', explanation:'Sudut lurus besarnya tepat \\(180^{\\circ}\\).' },
+    { num:4, text:'Jika dua garis sejajar dipotong garis lain, jumlah besar sudut dalam sepihak adalah ....\\(^{\\circ}\\)', answer:'180', explanation:'Jumlah sudut-sudut dalam sepihak pada dua garis sejajar selalu \\(180^{\\circ}\\).' },
+    { num:5, text:'Satu putaran penuh sama dengan ....\\(^{\\circ}\\)', answer:'360', explanation:'Satu putaran penuh besarnya \\(360^{\\circ}\\).' }
+  ],
+  pk: [
+    { num:1, text:'Manakah pernyataan berikut yang BENAR tentang sudut siku-siku? (pilih semua yang benar)', options:['Besarnya \\(90^{\\circ}\\)','Merupakan sudut lancip','Penyikunya \\(0^{\\circ}\\)','Pelurusnya \\(90^{\\circ}\\)','Termasuk sudut refleks'], answers:[0,2,3], explanation:'Sudut siku-siku besarnya \\(90^{\\circ}\\); penyikunya \\(90^{\\circ}-90^{\\circ}=0^{\\circ}\\); pelurusnya \\(180^{\\circ}-90^{\\circ}=90^{\\circ}\\). Sudut siku-siku bukan sudut lancip maupun refleks.' },
+    { num:2, text:'Jika dua garis sejajar dipotong garis lain, sudut-sudut manakah yang selalu SAMA BESAR? (pilih semua yang benar)', options:['Sudut sehadap','Sudut dalam berseberangan','Sudut dalam sepihak','Sudut luar berseberangan','Sudut luar sepihak'], answers:[0,1,3], explanation:'Sudut sehadap, dalam berseberangan, dan luar berseberangan selalu sama besar. Sudut dalam sepihak dan luar sepihak berjumlah \\(180^{\\circ}\\), bukan sama besar.' },
+    { num:3, text:'Manakah yang termasuk kedudukan dua garis? (pilih semua yang benar)', options:['Sejajar','Berpotongan','Berimpit','Berpelurus'], answers:[0,1,2], explanation:'Sejajar, berpotongan, dan berimpit adalah istilah kedudukan dua garis. "Berpelurus" adalah istilah hubungan antarsudut, bukan kedudukan garis.' },
+    { num:4, text:'Manakah yang termasuk satuan sudut? (pilih semua yang benar)', options:['Derajat','Menit','Detik','Meter','Radian'], answers:[0,1,2,4], explanation:'Derajat, menit, detik, dan radian adalah satuan sudut. Meter adalah satuan panjang, bukan satuan sudut.' },
+    { num:5, text:'Manakah sudut berikut yang termasuk SUDUT REFLEKS (lebih dari \\(180^{\\circ}\\) dan kurang dari \\(360^{\\circ}\\))? (pilih semua yang benar)', options:['\\(200^{\\circ}\\)','\\(90^{\\circ}\\)','\\(270^{\\circ}\\)','\\(45^{\\circ}\\)','\\(359^{\\circ}\\)'], answers:[0,2,4], explanation:'Sudut refleks berada di antara \\(180^{\\circ}\\) dan \\(360^{\\circ}\\), yaitu \\(200^{\\circ}\\), \\(270^{\\circ}\\), dan \\(359^{\\circ}\\). \\(90^{\\circ}\\) adalah siku-siku dan \\(45^{\\circ}\\) adalah lancip.' }
+  ],
+  bs: [
+    { num:1, text:'Sudut refleks besarnya lebih dari \\(180^{\\circ}\\) dan kurang dari \\(360^{\\circ}\\).', answer:true, explanation:'Benar. Sesuai definisi, sudut refleks berada di rentang \\(180^{\\circ}\\) sampai \\(360^{\\circ}\\).' },
+    { num:2, text:'Dua sudut yang saling berpenyiku jumlahnya \\(180^{\\circ}\\).', answer:false, explanation:'Salah. Dua sudut yang saling berpenyiku (berkomplemen) jumlahnya \\(90^{\\circ}\\), bukan \\(180^{\\circ}\\) (itu adalah berpelurus/bersuplemen).' },
+    { num:3, text:'Sudut-sudut yang bertolak belakang selalu sama besar.', answer:true, explanation:'Benar. Dua sudut yang bertolak belakang, misalnya \\(\\angle AED\\) dan \\(\\angle BEC\\), selalu sama besar.' },
+    { num:4, text:'Melalui satu titik di luar sebuah garis dapat dibuat lebih dari satu garis yang sejajar dengan garis tersebut.', answer:false, explanation:'Salah. Menurut Aksioma 2, melalui satu titik di luar garis hanya dapat dibuat tepat satu garis yang sejajar dengan garis itu.' },
+    { num:5, text:'\\(1\\) radian sama dengan kira-kira \\(57,3^{\\circ}\\).', answer:true, explanation:'Benar. Karena \\(180^{\\circ} = \\pi\\) radian, maka \\(1\\) radian \\(= \\dfrac{180^{\\circ}}{\\pi} \\approx 57,3^{\\circ}\\).' }
+  ],
+  jd: {
+    left: ['Sudut Lancip', 'Sudut Tumpul', 'Sudut Refleks', 'Sudut Siku-siku', 'Sudut Lurus'],
+    right: ['Besarnya \\(90^{\\circ}\\)', 'Antara \\(0^{\\circ}\\) dan \\(90^{\\circ}\\)', 'Antara \\(180^{\\circ}\\) dan \\(360^{\\circ}\\)', 'Besarnya \\(180^{\\circ}\\)', 'Antara \\(90^{\\circ}\\) dan \\(180^{\\circ}\\)'],
+    answer: [1, 4, 2, 0, 3],
+    explanation: [
+      'Sudut lancip besarnya antara \\(0^{\\circ}\\) dan \\(90^{\\circ}\\).',
+      'Sudut tumpul besarnya antara \\(90^{\\circ}\\) dan \\(180^{\\circ}\\).',
+      'Sudut refleks besarnya antara \\(180^{\\circ}\\) dan \\(360^{\\circ}\\).',
+      'Sudut siku-siku besarnya tepat \\(90^{\\circ}\\).',
+      'Sudut lurus besarnya tepat \\(180^{\\circ}\\).'
+    ]
+  }
+};
+
+const userAnswers = { pg:{}, is:{}, pk:{}, bs:{}, jd:{} };
+let currentType = 'pg';
+
+function showType(type){
+  currentType = type;
+  document.querySelectorAll('.type-tab').forEach(function(t){
+    t.classList.toggle('active', t.getAttribute('data-type') === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  document.getElementById('latihan').scrollIntoView({behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  var area = document.getElementById('quizArea');
+  var html = '';
+  if(type === 'pg'){
+    quizData.pg.forEach(function(q){
+      var selected = userAnswers.pg[q.num];
+      html += '<div class="qcard"><div class="qnum">Soal ' + q.num + ' &middot; Pilihan Ganda</div><div class="qtext">' + q.text + '</div>';
+      q.options.forEach(function(opt, i){
+        var cls = 'opt';
+        if(selected !== undefined){
+          if(i === q.answer){ cls += ' correct'; }
+          else if(i === selected && selected !== q.answer){ cls += ' wrong'; }
+        }
+        html += '<div class="' + cls + '" onclick="answerPG(' + q.num + ',' + i + ')">' +
+          '<input type="radio" name="pg' + q.num + '" ' + (selected === i ? 'checked' : '') + ' readonly> ' +
+          '<span>' + opt + '</span></div>';
+      });
+      html += '<div class="feedback ' + (selected !== undefined ? 'show ' + (selected === q.answer ? 'right' : 'wrong') : '') + '" id="fb-pg-' + q.num + '">' +
+        (selected !== undefined ? (selected === q.answer ? '<strong>Benar!</strong> ' : '<strong>Belum tepat.</strong> ') + q.explanation : '') + '</div>';
+      html += '</div>';
+    });
+  } else if(type === 'is'){
+    quizData.is.forEach(function(q){
+      var val = userAnswers.is[q.num];
+      html += '<div class="qcard"><div class="qnum">Soal ' + q.num + ' &middot; Isian Singkat</div><div class="qtext">' + q.text + '</div>';
+      html += '<input type="text" class="is-input" id="is-input-' + q.num + '" placeholder="Jawaban" value="' + (val ? val.value : '') + '">';
+      html += '<button class="btn" onclick="submitIS(' + q.num + ')">Cek Jawaban</button>';
+      var showFb = val !== undefined;
+      html += '<div class="feedback ' + (showFb ? 'show ' + (val.correct ? 'right' : 'wrong') : '') + '" id="fb-is-' + q.num + '">' +
+        (showFb ? (val.correct ? '<strong>Benar!</strong> ' : '<strong>Belum tepat.</strong> Jawaban yang benar: ' + q.answer + '. ') + q.explanation : '') + '</div>';
+      html += '</div>';
+    });
+  } else if(type === 'pk'){
+    quizData.pk.forEach(function(q){
+      var selected = userAnswers.pk[q.num] || [];
+      var checked = userAnswers.pk[q.num + '_checked'];
+      html += '<div class="qcard"><div class="qnum">Soal ' + q.num + ' &middot; PG Kompleks (jawaban bisa lebih dari satu)</div><div class="qtext">' + q.text + '</div>';
+      q.options.forEach(function(opt, i){
+        var isSel = selected.indexOf(i) !== -1;
+        var cls = 'opt';
+        if(checked){
+          var isCorrectOpt = q.answers.indexOf(i) !== -1;
+          if(isCorrectOpt){ cls += ' correct'; }
+          else if(isSel){ cls += ' wrong'; }
+        } else if(isSel){ cls += ' selected'; }
+        html += '<div class="' + cls + '" onclick="togglePK(' + q.num + ',' + i + ')">' +
+          '<input type="checkbox" ' + (isSel ? 'checked' : '') + ' readonly> <span>' + opt + '</span></div>';
+      });
+      html += '<button class="btn" onclick="submitPK(' + q.num + ')">Cek Jawaban</button>';
+      html += '<div class="feedback ' + (checked ? 'show right' : '') + '" id="fb-pk-' + q.num + '">' +
+        (checked ? '<strong>Pembahasan:</strong> ' + q.explanation : '') + '</div>';
+      html += '</div>';
+    });
+  } else if(type === 'bs'){
+    quizData.bs.forEach(function(q){
+      var val = userAnswers.bs[q.num];
+      html += '<div class="qcard"><div class="qnum">Soal ' + q.num + ' &middot; Benar/Salah</div><div class="qtext">' + q.text + '</div>';
+      html += '<div class="bs-row">';
+      html += '<div class="bs-btn ' + (val === true ? 'selected-true' : '') + '" onclick="answerBS(' + q.num + ',true)">BENAR</div>';
+      html += '<div class="bs-btn ' + (val === false ? 'selected-false' : '') + '" onclick="answerBS(' + q.num + ',false)">SALAH</div>';
+      html += '</div>';
+      var showFb = val !== undefined;
+      html += '<div class="feedback ' + (showFb ? 'show ' + (val === q.answer ? 'right' : 'wrong') : '') + '" id="fb-bs-' + q.num + '">' +
+        (showFb ? (val === q.answer ? '<strong>Benar!</strong> ' : '<strong>Belum tepat.</strong> ') + q.explanation : '') + '</div>';
+      html += '</div>';
+    });
+  } else if(type === 'jd'){
+    html += '<div class="qcard"><div class="qnum">Menjodohkan &middot; Pasangkan jenis sudut dengan besarannya</div>';
+    var checked = userAnswers.jd.checked;
+    quizData.jd.left.forEach(function(leftItem, i){
+      var selVal = userAnswers.jd[i];
+      html += '<div class="jd-row">';
+      html += '<div class="jd-left">' + (i+1) + '. ' + leftItem + '</div>';
+      html += '<select onchange="answerJD(' + i + ',this.value)" ' + (checked ? 'disabled' : '') + '>';
+      html += '<option value="">-- pilih --</option>';
+      quizData.jd.right.forEach(function(r, j){
+        html += '<option value="' + j + '" ' + (selVal === j ? 'selected' : '') + '>' + r.replace(/\\\(|\\\)/g,'') + '</option>';
+      });
+      html += '</select>';
+      if(checked){
+        var correct = quizData.jd.answer[i] === selVal;
+        html += '<span style="margin-left:8px;font-family:JetBrains Mono, monospace;">' + (correct ? '&#10003;' : '&#10007;') + '</span>';
+      }
+      html += '</div>';
+    });
+    html += '<button class="btn" onclick="submitJD()">Cek Semua Jawaban</button>';
+    if(checked){
+      html += '<div class="feedback show right"><strong>Pembahasan:</strong><br>' + quizData.jd.explanation.join('<br>') + '</div>';
+    }
+    html += '</div>';
+  }
+  area.innerHTML = html;
+  typesetMath();
+}
+
+function answerPG(num, idx){
+  if(userAnswers.pg[num] !== undefined) return;
+  userAnswers.pg[num] = idx;
+  renderQuestions('pg');
+  updateScoreStrip();
+}
+function submitIS(num){
+  var input = document.getElementById('is-input-' + num);
+  var val = input.value.trim();
+  var q = quizData.is.filter(function(x){ return x.num === num; })[0];
+  var correct = val.toLowerCase() === q.answer.toLowerCase();
+  userAnswers.is[num] = { value: val, correct: correct };
+  renderQuestions('is');
+  updateScoreStrip();
+}
+function togglePK(num, idx){
+  if(userAnswers.pk[num + '_checked']) return;
+  if(!userAnswers.pk[num]) userAnswers.pk[num] = [];
+  var arr = userAnswers.pk[num];
+  var pos = arr.indexOf(idx);
+  if(pos === -1){ arr.push(idx); } else { arr.splice(pos, 1); }
+  renderQuestions('pk');
+}
+function submitPK(num){
+  userAnswers.pk[num + '_checked'] = true;
+  renderQuestions('pk');
+  updateScoreStrip();
+}
+function answerBS(num, val){
+  if(userAnswers.bs[num] !== undefined) return;
+  userAnswers.bs[num] = val;
+  renderQuestions('bs');
+  updateScoreStrip();
+}
+function answerJD(idx, val){
+  if(userAnswers.jd.checked) return;
+  userAnswers.jd[idx] = val === '' ? undefined : parseInt(val);
+}
+function submitJD(){
+  userAnswers.jd.checked = true;
+  renderQuestions('jd');
+  updateScoreStrip();
+}
+
+function scoreFor(type){
+  var correct = 0, total = 0, answered = 0;
+  if(type === 'pg'){
+    total = quizData.pg.length;
+    quizData.pg.forEach(function(q){
+      if(userAnswers.pg[q.num] !== undefined){ answered++; if(userAnswers.pg[q.num] === q.answer) correct++; }
+    });
+  } else if(type === 'is'){
+    total = quizData.is.length;
+    quizData.is.forEach(function(q){
+      var v = userAnswers.is[q.num];
+      if(v !== undefined){ answered++; if(v.correct) correct++; }
+    });
+  } else if(type === 'pk'){
+    total = quizData.pk.length;
+    quizData.pk.forEach(function(q){
+      if(userAnswers.pk[q.num + '_checked']){
+        answered++;
+        var sel = (userAnswers.pk[q.num] || []).slice().sort();
+        var ans = q.answers.slice().sort();
+        if(JSON.stringify(sel) === JSON.stringify(ans)) correct++;
+      }
+    });
+  } else if(type === 'bs'){
+    total = quizData.bs.length;
+    quizData.bs.forEach(function(q){
+      if(userAnswers.bs[q.num] !== undefined){ answered++; if(userAnswers.bs[q.num] === q.answer) correct++; }
+    });
+  } else if(type === 'jd'){
+    total = quizData.jd.left.length;
+    if(userAnswers.jd.checked){
+      answered = total;
+      quizData.jd.left.forEach(function(l, i){
+        if(userAnswers.jd[i] === quizData.jd.answer[i]) correct++;
+      });
+    }
+  }
+  return { correct: correct, total: total, answered: answered };
+}
+
+function updateScoreStrip(){
+  var types = [ ['pg','PG'], ['is','Isian'], ['pk','PG Kompleks'], ['bs','Benar/Salah'], ['jd','Menjodohkan'] ];
+  var html = '';
+  types.forEach(function(t){
+    var s = scoreFor(t[0]);
+    html += '<div class="item"><span>' + t[1] + '</span><b>' + s.correct + '/' + s.total + '</b></div>';
+  });
+  document.getElementById('scoreStrip').innerHTML = html;
+}
+
+function showAnalysis(){
+  var types = [ ['pg','Pilihan Ganda'], ['is','Isian Singkat'], ['pk','PG Kompleks'], ['bs','Benar/Salah'], ['jd','Menjodohkan'] ];
+  var totalCorrect = 0, totalAll = 0;
+  var rows = '';
+  types.forEach(function(t){
+    var s = scoreFor(t[0]);
+    totalCorrect += s.correct; totalAll += s.total;
+    var pct = s.total > 0 ? (s.correct / s.total) * 100 : 0;
+    rows += '<div class="bar-row"><span style="width:120px;">' + t[1] + '</span>' +
+      '<div class="analysis-bar-bg"><div class="analysis-bar-fill" style="width:' + pct + '%"></div></div>' +
+      '<span>' + s.correct + '/' + s.total + '</span></div>';
+  });
+  var overallPct = totalAll > 0 ? Math.round((totalCorrect / totalAll) * 100) : 0;
+  var panel = document.getElementById('analysisPanel');
+  panel.innerHTML = '<div class="analysis-panel"><h3>Analisis Hasil Latihan</h3>' +
+    '<p>Skor keseluruhan: <strong>' + totalCorrect + ' dari ' + totalAll + '</strong> (' + overallPct + '%)</p>' +
+    rows + '</div>';
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function resetAll(){
+  userAnswers.pg = {}; userAnswers.is = {}; userAnswers.pk = {}; userAnswers.bs = {}; userAnswers.jd = {};
+  document.getElementById('analysisPanel').innerHTML = '';
+  renderQuestions(currentType);
+  updateScoreStrip();
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  typesetMath();
+});
+</script>
+</body>
+</html>
