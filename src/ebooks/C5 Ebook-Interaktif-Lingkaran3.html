@@ -176,6 +176,15 @@ nav{padding:14px 12px 30px; flex:1;}
 .viz-row{display:flex; flex-wrap:wrap; gap:18px; justify-content:center;}
 .viz-row > div{flex:1; min-width:140px;}
 
+.anim-mode-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:16px;}
+.anim-controls{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; align-items:center; margin-top:16px;}
+.anim-controls .calc-btn:disabled{opacity:.4; cursor:not-allowed; transform:none;}
+.anim-step-label{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-mid); padding:8px 14px; background:var(--paper); border-radius:8px; border:1px solid var(--paper-line);}
+.anim-play-btn{background:var(--def-b);}
+.anim-play-btn:hover{background:#6a9a57;}
+.step-elem{animation:fadeInStep .6s ease;}
+@keyframes fadeInStep{from{opacity:0;} to{opacity:1;}}
+
 .calc-box{
   margin:24px 0; background:var(--ink); color:var(--cream); border-radius:14px; padding:22px 26px;
   box-shadow:0 10px 30px rgba(20,26,46,.25);
@@ -664,6 +673,23 @@ footer b{color:var(--gold-soft);}
     <h2>Melukis Garis Singgung Persekutuan Dua Lingkaran</h2>
     <p>Garis singgung persekutuan dapat dilukis menggunakan jangka dan penggaris, dengan memanfaatkan sifat sudut siku-siku pada diameter (Teorema Thales).</p>
 
+    <div class="bangun-viz">
+      <div class="anim-mode-row">
+        <button class="qbtn active" id="animModeLuarBtn" onclick="setAnimMode('luar')">Persekutuan Luar</button>
+        <button class="qbtn" id="animModeDalamBtn" onclick="setAnimMode('dalam')">Persekutuan Dalam</button>
+      </div>
+      <svg id="tangentAnimSvg" viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="explanation show" id="animStepCaption" style="text-align:left;">Memuat animasi...</div>
+      <div class="anim-controls">
+        <button class="calc-btn" id="animPrevBtn" onclick="animPrevStep()">◀ Sebelumnya</button>
+        <span class="anim-step-label" id="animStepLabel">Langkah 1/6</span>
+        <button class="calc-btn" id="animNextBtn" onclick="animNextStep()">Selanjutnya ▶</button>
+        <button class="calc-btn anim-play-btn" id="animPlayBtn" onclick="animTogglePlay()">▶ Putar Otomatis</button>
+        <button class="reset-btn" onclick="animResetStep()">🔄 Ulangi</button>
+      </div>
+      <p style="margin-top:10px; font-size:13px; color:var(--text-mid);">Animasi ini menunjukkan konstruksi nyata (bukan hanya hasil akhir) — klik "Selanjutnya" atau "Putar Otomatis" untuk melihat prosesnya langkah demi langkah.</p>
+    </div>
+
     <h3>Langkah Melukis Garis Singgung Persekutuan Luar</h3>
     <ol>
       <li>Lukis lingkaran pertama berpusat di \(A\) berjari-jari \(r_1\) dan lingkaran kedua berpusat di \(B\) berjari-jari \(r_2\) (\(r_1>r_2\)).</li>
@@ -942,6 +968,110 @@ function hitungLingkaranSegitiga(){
   const rLuar = (a*b*c)/(4*L);
   const rSinggungA = L/(s-a);
   out.innerHTML = `s = ${s} · Luas (Heron) = <b>${L.toFixed(2)}</b><br>Jari-jari lingkaran dalam r = L/s = <b>${rDalam.toFixed(2)}</b><br>Jari-jari lingkaran luar R = abc/4L = <b>${rLuar.toFixed(2)}</b><br>Jari-jari lingkaran singgung (sisi a) rₐ = L/(s−a) = <b>${rSinggungA.toFixed(2)}</b>`;
+}
+
+/* ============ ANIMASI: Konstruksi Garis Singgung Persekutuan ============ */
+/* Koordinat berikut sudah diverifikasi numerik (jarak titik-ke-garis = jari-jari masing-masing lingkaran) */
+const tangentData = {
+  A:{x:70,y:120}, r1:35,
+  B:{x:230,y:120}, r2:20,
+  M:{x:150,y:120}, Rt:80,
+  luar:{ Rr:15, C:{x:71.41,y:105.07}, T1:{x:73.28,y:85.15}, T2:{x:231.88,y:100.09} },
+  dalam:{ Rr:55, C:{x:88.91,y:68.35}, T1:{x:82.03,y:87.13}, T2:{x:223.12,y:138.78} }
+};
+const tangentCaptions = {
+  luar:[
+    'Langkah 1: Lukis lingkaran pertama (pusat A, jari-jari r₁) dan lingkaran kedua (pusat B, jari-jari r₂), dengan r₁ &gt; r₂.',
+    'Langkah 2: Hubungkan A dan B, lalu lukis lingkaran bantu (lingkaran Thales) berpusat di titik tengah AB dengan jari-jari setengah AB.',
+    'Langkah 3: Lukis lingkaran tambahan berpusat di A dengan jari-jari (r₁−r₂); perpotongannya dengan lingkaran bantu menghasilkan titik C.',
+    'Langkah 4: Tarik garis AC, perpanjang hingga memotong lingkaran pertama di titik T₁ — inilah titik singgung pada lingkaran A.',
+    'Langkah 5: Tarik jari-jari BT₂ yang sejajar dan <b>searah</b> dengan AT₁, untuk menentukan titik singgung T₂ pada lingkaran B.',
+    'Langkah 6: Hubungkan T₁ dan T₂ — garis inilah garis singgung persekutuan luar yang dicari!'
+  ],
+  dalam:[
+    'Langkah 1: Lukis lingkaran pertama (pusat A, jari-jari r₁) dan lingkaran kedua (pusat B, jari-jari r₂).',
+    'Langkah 2: Hubungkan A dan B, lalu lukis lingkaran bantu (lingkaran Thales) berpusat di titik tengah AB dengan jari-jari setengah AB.',
+    'Langkah 3: Lukis lingkaran tambahan berpusat di A dengan jari-jari (r₁+r₂); perpotongannya dengan lingkaran bantu menghasilkan titik C.',
+    'Langkah 4: Tarik garis AC, perpanjang hingga memotong lingkaran pertama di titik T₁ — inilah titik singgung pada lingkaran A.',
+    'Langkah 5: Tarik jari-jari BT₂ yang sejajar namun <b>berlawanan arah</b> dengan AT₁, untuk menentukan titik singgung T₂ pada lingkaran B.',
+    'Langkah 6: Hubungkan T₁ dan T₂ — garis inilah garis singgung persekutuan dalam yang dicari!'
+  ]
+};
+const animState = { mode:'luar', step:0 };
+let animTimer = null;
+
+function renderTangentAnim(){
+  const d = tangentData;
+  const md = d[animState.mode];
+  const s0 = `<circle cx="${d.A.x}" cy="${d.A.y}" r="${d.r1}" fill="none" stroke="#5b5137" stroke-width="2"/>
+    <circle cx="${d.B.x}" cy="${d.B.y}" r="${d.r2}" fill="none" stroke="#5b5137" stroke-width="2"/>
+    <circle cx="${d.A.x}" cy="${d.A.y}" r="3" fill="#2b2416"/><circle cx="${d.B.x}" cy="${d.B.y}" r="3" fill="#2b2416"/>
+    <text x="${d.A.x-6}" y="${d.A.y-40}" font-family="JetBrains Mono, monospace" font-size="12" fill="#2b2416">A</text>
+    <text x="${d.B.x+2}" y="${d.B.y-25}" font-family="JetBrains Mono, monospace" font-size="12" fill="#2b2416">B</text>`;
+  const s1 = `<line x1="${d.A.x}" y1="${d.A.y}" x2="${d.B.x}" y2="${d.B.y}" stroke="#5b5137" stroke-width="1" stroke-dasharray="3,3"/>
+    <circle cx="${d.M.x}" cy="${d.M.y}" r="${d.Rt}" fill="none" stroke="#a06a1e" stroke-width="1.2" stroke-dasharray="4,3"/>`;
+  const s2 = `<circle cx="${d.A.x}" cy="${d.A.y}" r="${md.Rr}" fill="none" stroke="#9a3c34" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <circle cx="${md.C.x}" cy="${md.C.y}" r="3" fill="#c1584f"/>
+    <text x="${md.C.x+6}" y="${md.C.y-4}" font-family="JetBrains Mono, monospace" font-size="11" fill="#9a3c34">C</text>`;
+  const s3 = `<line x1="${d.A.x}" y1="${d.A.y}" x2="${md.T1.x}" y2="${md.T1.y}" stroke="#c1584f" stroke-width="2"/>
+    <circle cx="${md.T1.x}" cy="${md.T1.y}" r="3.5" fill="#c1584f"/>
+    <text x="${md.T1.x-22}" y="${md.T1.y-6}" font-family="JetBrains Mono, monospace" font-size="11" fill="#9a3c34">T1</text>`;
+  const s4 = `<line x1="${d.B.x}" y1="${d.B.y}" x2="${md.T2.x}" y2="${md.T2.y}" stroke="#3f6b32" stroke-width="2"/>
+    <circle cx="${md.T2.x}" cy="${md.T2.y}" r="3.5" fill="#3f6b32"/>
+    <text x="${md.T2.x+6}" y="${md.T2.y-6}" font-family="JetBrains Mono, monospace" font-size="11" fill="#3f6b32">T2</text>`;
+  const s5 = `<line x1="${md.T1.x}" y1="${md.T1.y}" x2="${md.T2.x}" y2="${md.T2.y}" stroke="#e0a94d" stroke-width="4"/>`;
+  const steps = [s0,s1,s2,s3,s4,s5];
+  let base = '', current = '';
+  for(let i=0;i<=animState.step;i++){
+    if(i < animState.step){ base += steps[i]; }
+    else { current = `<g class="step-elem">${steps[i]}</g>`; }
+  }
+  const svgEl = document.getElementById('tangentAnimSvg');
+  if(svgEl) svgEl.innerHTML = base + current;
+}
+
+function updateAnimStepUI(){
+  document.getElementById('animStepLabel').textContent = `Langkah ${animState.step+1}/6`;
+  document.getElementById('animStepCaption').innerHTML = tangentCaptions[animState.mode][animState.step];
+  document.getElementById('animPrevBtn').disabled = animState.step === 0;
+  document.getElementById('animNextBtn').disabled = animState.step === 5;
+}
+
+function stopAnimAutoPlay(){
+  if(animTimer){ clearInterval(animTimer); animTimer = null; document.getElementById('animPlayBtn').textContent = '▶ Putar Otomatis'; }
+}
+
+function setAnimMode(mode){
+  stopAnimAutoPlay();
+  animState.mode = mode;
+  animState.step = 0;
+  document.getElementById('animModeLuarBtn').classList.toggle('active', mode === 'luar');
+  document.getElementById('animModeDalamBtn').classList.toggle('active', mode === 'dalam');
+  renderTangentAnim();
+  updateAnimStepUI();
+}
+function animNextStep(){
+  stopAnimAutoPlay();
+  if(animState.step < 5){ animState.step++; renderTangentAnim(); updateAnimStepUI(); }
+}
+function animPrevStep(){
+  stopAnimAutoPlay();
+  if(animState.step > 0){ animState.step--; renderTangentAnim(); updateAnimStepUI(); }
+}
+function animResetStep(){
+  stopAnimAutoPlay();
+  animState.step = 0;
+  renderTangentAnim();
+  updateAnimStepUI();
+}
+function animTogglePlay(){
+  if(animTimer){ stopAnimAutoPlay(); return; }
+  document.getElementById('animPlayBtn').textContent = '⏸ Jeda';
+  animTimer = setInterval(function(){
+    animState.step = (animState.step < 5) ? animState.step + 1 : 0;
+    renderTangentAnim();
+    updateAnimStepUI();
+  }, 1400);
 }
 
 /* ============ BANK SOAL ============ */
@@ -1253,6 +1383,8 @@ document.addEventListener('DOMContentLoaded', function(){
   renderQuestions('pg');
   updateScoreStrip();
   updateScrollSpy();
+  renderTangentAnim();
+  updateAnimStepUI();
   typesetMath();
 });
 </script>
