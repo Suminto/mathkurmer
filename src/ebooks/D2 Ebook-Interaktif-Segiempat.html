@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segiempat — Matematika Kelas 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a; --gold-title:#ffd873;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; font-family:'Source Serif 4', serif; background:var(--paper); color:var(--text-dark);}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark); margin:0 0 .5em;}
+.mono{font-family:'JetBrains Mono', monospace;}
+a{color:inherit;}
+
+.layout{display:flex; min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  width:290px; flex-shrink:0; background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto; padding:22px 18px;
+  border-right:1px solid var(--ink-border); z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink-border); border-radius:4px;}
+.side-label{font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.14em; color:var(--gold-soft); text-transform:uppercase;}
+.side-title{font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:800; color:var(--gold-title); margin:.25em 0 1.1em; line-height:1.2;}
+.progress-wrap{background:var(--ink3); border-radius:8px; height:8px; overflow:hidden; margin-bottom:1.4em; border:1px solid var(--ink-border);}
+#progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .3s ease;}
+.nav-heading{font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cream-dim); margin:1.3em 0 .5em; padding-left:4px;}
+.nav-link{display:block; padding:8px 10px; border-radius:8px; color:var(--cream); text-decoration:none; font-size:.92rem; margin-bottom:2px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-link:hover{background:var(--ink3);}
+.nav-link.active{background:var(--ink3); border-left:3px solid var(--gold); color:var(--gold-soft); font-weight:600;}
+.nav-sub{display:block; padding:6px 10px 6px 22px; border-radius:8px; color:var(--cream-dim); text-decoration:none; font-size:.84rem; margin-bottom:1px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-sub:hover{background:var(--ink3); color:var(--cream);}
+.nav-sub.active{background:var(--ink3); border-left:3px solid var(--gold-soft); color:var(--gold-soft);}
+#menu-toggle{display:none;}
+
+/* CONTENT */
+#content{flex:1; min-width:0;}
+.hero{
+  background:linear-gradient(135deg, var(--ink) 0%, var(--ink3) 100%); color:var(--cream);
+  padding:70px 60px 60px; position:relative; overflow:hidden;
+}
+.hero::after{content:"⬦"; position:absolute; right:40px; top:20px; font-size:180px; color:rgba(224,169,77,.08);}
+.hero .side-label{color:var(--gold-soft);}
+.hero h1{color:var(--gold-title); font-size:2.6rem; margin:.2em 0 .3em; max-width:680px;}
+.hero p{max-width:600px; color:var(--cream-dim); font-size:1.05rem; line-height:1.6;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:1.4em;}
+.chip{background:rgba(224,169,77,.14); border:1px solid var(--gold); color:var(--gold-soft); padding:6px 14px; border-radius:20px; font-size:.82rem; font-family:'JetBrains Mono',monospace;}
+
+section.materi{padding:50px 60px; border-bottom:1px solid var(--paper-line);}
+section.materi .kicker{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;}
+section.materi h2{font-size:2rem; margin-top:.2em;}
+section.materi h3{font-size:1.3rem; color:var(--text-dark); margin-top:1.6em; border-bottom:2px solid var(--paper-line); padding-bottom:.3em;}
+section.materi p, section.materi li{color:var(--text-mid); line-height:1.75; font-size:1.02rem;}
+section.materi ul, section.materi ol{padding-left:1.4em;}
+
+.callout{border-radius:10px; padding:16px 20px; margin:1.2em 0; border-left:5px solid; line-height:1.7;}
+.callout.def{background:var(--def); border-color:var(--def-b);}
+.callout.note{background:var(--note); border-color:var(--note-b);}
+.callout.warn{background:var(--warn); border-color:var(--warn-b);}
+.callout .lbl{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:.4em;}
+
+.example-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px; padding:20px 24px; margin:1.2em 0;}
+.example-box .lbl{font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em; display:block;}
+.example-box .step{margin:.4em 0; padding-left:1em; border-left:3px solid var(--paper-line);}
+
+.formula-box{background:var(--ink); color:var(--cream); border-radius:12px; padding:20px 26px; margin:1.2em 0; text-align:center; font-size:1.15rem;}
+.formula-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold-soft); font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5em;}
+
+.figure-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:14px; padding:18px 20px 14px; margin:1.2em 0; text-align:center;}
+.figure-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em;}
+.figure-box svg{max-width:100%; height:auto;}
+.figure-box .caption{margin-top:.6em; font-size:.9rem; color:var(--text-mid); font-style:italic;}
+.figure-svg-shape{fill:rgba(224,169,77,.16); stroke:var(--ink); stroke-width:2.4;}
+.figure-svg-diag{stroke:#c1584f; stroke-width:1.6; stroke-dasharray:5,4;}
+.figure-svg-label{font-family:'JetBrains Mono', monospace; font-size:15px; fill:var(--text-dark); font-weight:700;}
+.figure-svg-point{fill:var(--ink);}
+.figure-svg-height{stroke:#3a6ea5; stroke-width:1.6; stroke-dasharray:3,3;}
+.figure-svg-right{fill:none; stroke:var(--ink); stroke-width:1.6;}
+.figure-triple{display:flex; gap:16px; flex-wrap:wrap; justify-content:center;}
+.figure-item{flex:1; min-width:170px; max-width:220px; background:var(--paper); border:1px solid var(--paper-line); border-radius:10px; padding:10px 12px 14px;}
+.figure-item svg{width:100%; height:auto;}
+.figure-item-title{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.82rem; color:var(--text-dark); margin-top:.4em;}
+.figure-item-desc{font-size:.84rem; color:var(--text-mid); margin-top:.2em; line-height:1.5;}
+@media (max-width:900px){
+  .figure-triple{flex-direction:column; align-items:center;}
+  .figure-item{max-width:280px; width:100%;}
+}
+
+.calc-box{background:var(--ink2); color:var(--cream); border-radius:14px; padding:22px 26px; margin:1.6em 0; border:1px solid var(--ink-border);}
+.calc-box h4{color:var(--gold-title); margin-bottom:.7em;}
+.calc-row{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin-bottom:12px;}
+.calc-field{display:flex; flex-direction:column; gap:4px;}
+.calc-field label{font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--cream-dim);}
+.calc-field input{background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); padding:8px 10px; border-radius:8px; width:130px; font-family:'JetBrains Mono',monospace;}
+.calc-box button{background:var(--gold); color:var(--ink); border:none; padding:9px 20px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.calc-box button:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:10px; padding:12px 16px; background:var(--ink3); border-radius:8px; font-family:'JetBrains Mono',monospace; min-height:1.2em;}
+
+/* LATIHAN */
+#latihan{padding:50px 60px 90px;}
+.type-tabs{display:flex; flex-wrap:wrap; gap:10px; margin:1.4em 0 1.8em;}
+.type-tab{background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid); padding:9px 18px; border-radius:24px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:.82rem; transition:.15s ease;}
+.type-tab:hover{border-color:var(--gold);}
+.type-tab.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:1.6em;}
+.score-chip{background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:8px 14px; font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text-mid);}
+
+.question-card{background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px; margin-bottom:20px; box-shadow:0 2px 10px rgba(43,36,22,.05); animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
+.question-card.correct{border-color:var(--correct-b); background:var(--correct);}
+.question-card.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:.8em;}
+.q-num{width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:.85rem; flex-shrink:0;}
+.level-badge{font-family:'JetBrains Mono',monospace; font-size:.68rem; text-transform:uppercase; padding:3px 10px; border-radius:12px; letter-spacing:.05em;}
+.level-mudah{background:#dff0da; color:#2e6b2e;}
+.level-sedang{background:#fdf0df; color:#95651c;}
+.level-sukar{background:#fbe1df; color:#9a3a32;}
+.q-text{font-size:1.04rem; color:var(--text-dark); margin-bottom:1em; line-height:1.6;}
+
+.opt-btn{display:block; width:100%; text-align:left; background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:11px 16px; margin-bottom:8px; cursor:pointer; font-family:'Source Serif 4',serif; font-size:.98rem; color:var(--text-dark); transition:.15s ease;}
+.opt-btn:hover{border-color:var(--gold); transform:translateX(3px);}
+.opt-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn.reveal-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn:disabled{cursor:default;}
+
+.bs-row{display:flex; gap:12px;}
+.bs-btn{flex:1; padding:12px; border-radius:10px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.bs-btn:hover{border-color:var(--gold);}
+.bs-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.bs-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.bs-btn:disabled{cursor:default;}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{flex:1; min-width:180px; padding:11px 14px; border-radius:10px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif; font-size:1rem;}
+.is-row button{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 20px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600;}
+.is-row button:hover{background:var(--ink3);}
+
+.pk-confirm{background:var(--ink); color:var(--gold-soft); border:none; padding:10px 22px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600; margin-top:6px;}
+.pk-confirm:hover{background:var(--ink3);}
+.opt-btn.pk-on{background:var(--gold-soft); border-color:var(--gold);}
+
+.jd-row{display:flex; align-items:center; gap:14px; margin-bottom:6px;}
+.jd-left{flex:1; background:var(--paper2); padding:10px 14px; border-radius:8px; font-weight:600;}
+.jd-row select{flex:1; padding:10px 12px; border-radius:8px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif;}
+.jd-row select.correct{border-color:var(--correct-b); background:var(--correct);}
+.jd-row select.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+
+.explanation{margin-top:14px; padding:14px 18px; background:var(--note); border-left:4px solid var(--note-b); border-radius:8px; font-size:.94rem; line-height:1.65; display:none;}
+.explanation.show{display:block;}
+
+.analysis-panel{display:none; background:var(--ink); color:var(--cream); border-radius:16px; padding:30px 34px; margin-top:20px;}
+.analysis-panel.show{display:block;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:1.2em 0;}
+.stat-box{background:var(--ink3); border-radius:10px; padding:16px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:1.6rem; color:var(--gold-title); font-weight:700;}
+.stat-box .lbl{font-size:.75rem; color:var(--cream-dim); text-transform:uppercase; letter-spacing:.06em; font-family:'JetBrains Mono',monospace;}
+.bar-row{display:flex; align-items:center; gap:10px; margin:8px 0;}
+.bar-row .name{width:150px; font-family:'JetBrains Mono',monospace; font-size:.82rem;}
+.bar-track{flex:1; background:var(--ink3); border-radius:6px; height:14px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1); width:0%;}
+.grade-box{text-align:center; margin:1.4em 0; padding:20px; border-radius:14px; background:linear-gradient(135deg, var(--ink3), var(--ink2)); border:2px solid var(--gold);}
+.grade-box .grade{font-family:'Playfair Display',serif; font-size:3rem; color:var(--gold-title); font-weight:800;}
+#reset-btn{background:var(--gold); color:var(--ink); border:none; padding:11px 26px; border-radius:10px; cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:10px;}
+#reset-btn:hover{background:var(--gold-soft);}
+
+footer{background:var(--ink); color:var(--cream-dim); padding:34px 60px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:.85rem;}
+footer .credit{color:var(--gold-soft);}
+
+#mobile-toggle{display:none; position:fixed; top:14px; left:14px; z-index:100; background:var(--ink); color:var(--gold); border:none; width:44px; height:44px; border-radius:10px; font-size:1.2rem; cursor:pointer;}
+#overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40;}
+
+@media (max-width:900px){
+  #sidebar{position:fixed; left:0; top:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; width:270px;}
+  #sidebar.open{transform:translateX(0);}
+  #mobile-toggle{display:block;}
+  #overlay.show{display:block;}
+  .hero{padding:80px 22px 40px;}
+  section.materi{padding:34px 20px;}
+  #latihan{padding:34px 20px 60px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:26px 20px;}
+}
+</style>
+</head>
+<body>
+<button id="mobile-toggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+  <nav id="sidebar">
+    <div class="side-label">Matematika · Kelas 7</div>
+    <div class="side-title">Bangun Segiempat</div>
+    <div class="progress-wrap"><div id="progress-bar"></div></div>
+
+    <div class="nav-heading">Materi</div>
+    <a class="nav-link" data-target="materi-a" href="#materi-a">A. Persegi Panjang</a>
+    <a class="nav-link" data-target="materi-b" href="#materi-b">B. Persegi</a>
+    <a class="nav-link" data-target="materi-c" href="#materi-c">C. Jajargenjang</a>
+    <a class="nav-link" data-target="materi-d" href="#materi-d">D. Belah Ketupat</a>
+    <a class="nav-link" data-target="materi-e" href="#materi-e">E. Layang-layang</a>
+    <a class="nav-link" data-target="materi-f" href="#materi-f">F. Trapesium</a>
+
+    <div class="nav-heading">Latihan</div>
+    <a class="nav-link" data-target="latihan" href="#latihan">Latihan Soal</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('bs')">4. Benar/Salah</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+
+  <div id="content">
+    <header class="hero">
+      <div class="side-label">Modul Pembelajaran Digital</div>
+      <h1>Bangun Segiempat</h1>
+      <p>Menjelajahi sifat, keliling, dan luas persegi panjang, persegi, jajargenjang, belah ketupat, layang-layang, dan trapesium — lengkap dengan kalkulator interaktif dan 25 soal latihan.</p>
+      <div class="chip-row">
+        <span class="chip">A. Persegi Panjang</span>
+        <span class="chip">B. Persegi</span>
+        <span class="chip">C. Jajargenjang</span>
+        <span class="chip">D. Belah Ketupat</span>
+        <span class="chip">E. Layang-layang</span>
+        <span class="chip">F. Trapesium</span>
+      </div>
+    </header>
+
+    <!-- ===================== A. PERSEGI PANJANG ===================== -->
+    <section class="materi" id="materi-a">
+      <div class="kicker">Bagian A</div>
+      <h2>Persegi Panjang</h2>
+
+      <h3>1. Pengertian</h3>
+      <p>Persegi panjang adalah segiempat yang dapat menempati bingkainya dengan tepat empat cara, dan tiap-tiap sudutnya dapat menempati sudut yang lain secara tepat.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar A.1 — Persegi Panjang ABCD</span>
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="60,50 260,50 260,170 60,170" class="figure-svg-shape"/>
+          <line x1="60" y1="50" x2="260" y2="170" class="figure-svg-diag"/>
+          <line x1="260" y1="50" x2="60" y2="170" class="figure-svg-diag"/>
+          <rect x="60" y="50" width="12" height="12" class="figure-svg-right"/>
+          <circle cx="160" cy="110" r="3" class="figure-svg-point"/>
+          <text x="40" y="46" class="figure-svg-label">D</text>
+          <text x="266" y="46" class="figure-svg-label">C</text>
+          <text x="266" y="184" class="figure-svg-label">B</text>
+          <text x="40" y="184" class="figure-svg-label">A</text>
+          <text x="167" y="102" class="figure-svg-label" font-size="13">O</text>
+        </svg>
+        <div class="caption">Sisi berhadapan sejajar &amp; sama panjang, semua sudut siku-siku, diagonal AC = BD berpotongan di O.</div>
+      </div>
+
+      <h3>2. Sifat-sifat Persegi Panjang</h3>
+      <div class="callout def">
+        <span class="lbl">Definisi &amp; Sifat</span>
+        <ul>
+          <li>Sisi-sisi yang berhadapan sama panjang dan sejajar: \(AB = CD\), \(AB \parallel CD\), \(AD = BC\), \(AD \parallel BC\).</li>
+          <li>Setiap sudutnya sama besar dan merupakan sudut siku-siku: \(\angle BAD = \angle ABC = \angle BCD = \angle ADC = 90^\circ\).</li>
+          <li>Diagonal-diagonalnya sama panjang: \(AC = BD\).</li>
+          <li>Diagonal-diagonalnya berpotongan dan saling membagi dua sama panjang: \(OA = OB = OC = OD\).</li>
+        </ul>
+      </div>
+
+      <h3>3. Keliling dan Luas</h3>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( K = 2p + 2l = 2(p+l) \qquad L = p \times l \)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Sebuah persegi panjang memiliki panjang 15 cm dan lebar 9 cm. Tentukan keliling dan luasnya!</p>
+        <div class="step">Keliling: \(K = 2(p+l) = 2(15+9) = 2 \times 24 = 48\) cm</div>
+        <div class="step">Luas: \(L = p \times l = 15 \times 9 = 135\) cm\(^2\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Persegi Panjang</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Panjang (p) cm</label><input type="number" id="pp-p" placeholder="mis. 15"></div>
+          <div class="calc-field"><label>Lebar (l) cm</label><input type="number" id="pp-l" placeholder="mis. 9"></div>
+          <button onclick="hitungPP()">Hitung</button>
+        </div>
+        <div class="calc-result" id="pp-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== B. PERSEGI ===================== -->
+    <section class="materi" id="materi-b">
+      <div class="kicker">Bagian B</div>
+      <h2>Persegi</h2>
+
+      <h3>1. Pengertian</h3>
+      <p>Persegi adalah segiempat yang dapat menempati bingkainya dengan tepat delapan cara, dan tiap-tiap sudutnya dapat menempati sudut yang lain secara tepat.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar B.1 — Persegi ABCD</span>
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="100,40 220,40 220,160 100,160" class="figure-svg-shape"/>
+          <line x1="100" y1="40" x2="220" y2="160" class="figure-svg-diag"/>
+          <line x1="220" y1="40" x2="100" y2="160" class="figure-svg-diag"/>
+          <rect x="100" y="40" width="12" height="12" class="figure-svg-right"/>
+          <circle cx="160" cy="100" r="3" class="figure-svg-point"/>
+          <text x="80" y="36" class="figure-svg-label">D</text>
+          <text x="226" y="36" class="figure-svg-label">C</text>
+          <text x="226" y="174" class="figure-svg-label">B</text>
+          <text x="80" y="174" class="figure-svg-label">A</text>
+          <text x="167" y="92" class="figure-svg-label" font-size="13">O</text>
+        </svg>
+        <div class="caption">Semua sisi sama panjang, diagonal AC = BD saling tegak lurus dan membagi sudut menjadi 45°.</div>
+      </div>
+
+      <h3>2. Sifat-sifat Persegi</h3>
+      <div class="callout def">
+        <span class="lbl">Definisi &amp; Sifat</span>
+        <ul>
+          <li>Semua sisinya sama panjang: \(AB = BC = CD = AD\).</li>
+          <li>Diagonal-diagonalnya sama panjang dan saling membagi dua sama panjang: \(AC = BD\), \(OA = OB = OC = OD\).</li>
+          <li>Diagonal-diagonalnya berpotongan membentuk sudut siku-siku: \(\angle AOB = \angle BOC = \angle COD = \angle AOD = 90^\circ\).</li>
+          <li>Setiap sudutnya sama besar dan siku-siku: \(\angle BAD = \angle ABC = \angle BCD = \angle ADC = 90^\circ\).</li>
+          <li>Diagonalnya membagi dua sudut sama besar (merupakan garis bagi), masing-masing \(45^\circ\).</li>
+        </ul>
+      </div>
+
+      <h3>3. Keliling dan Luas</h3>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( K = 4s \qquad L = s \times s = s^2 \)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Sebuah persegi memiliki panjang sisi 12 cm. Tentukan keliling dan luasnya!</p>
+        <div class="step">Keliling: \(K = 4s = 4 \times 12 = 48\) cm</div>
+        <div class="step">Luas: \(L = s^2 = 12^2 = 144\) cm\(^2\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Persegi</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi (s) cm</label><input type="number" id="pg2-s" placeholder="mis. 12"></div>
+          <button onclick="hitungPersegi()">Hitung</button>
+        </div>
+        <div class="calc-result" id="pg2-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== C. JAJARGENJANG ===================== -->
+    <section class="materi" id="materi-c">
+      <div class="kicker">Bagian C</div>
+      <h2>Jajargenjang</h2>
+
+      <h3>1. Pengertian</h3>
+      <p>Jajargenjang dibentuk dari gabungan sebuah segitiga dan bayangannya setelah diputar setengah putaran pada titik tengah salah satu sisi segitiga.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar C.1 — Jajargenjang ABCD</span>
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="95,45 255,45 225,165 65,165" class="figure-svg-shape"/>
+          <line x1="95" y1="45" x2="225" y2="165" class="figure-svg-diag"/>
+          <line x1="255" y1="45" x2="65" y2="165" class="figure-svg-diag"/>
+          <circle cx="160" cy="105" r="3" class="figure-svg-point"/>
+          <text x="75" y="40" class="figure-svg-label">D</text>
+          <text x="261" y="40" class="figure-svg-label">C</text>
+          <text x="231" y="180" class="figure-svg-label">B</text>
+          <text x="45" y="180" class="figure-svg-label">A</text>
+          <text x="167" y="97" class="figure-svg-label" font-size="13">O</text>
+        </svg>
+        <div class="caption">Sisi berhadapan sejajar &amp; sama panjang, sudut berhadapan sama besar, diagonal saling membagi dua sama panjang di O.</div>
+      </div>
+
+      <h3>2. Sifat-sifat Jajargenjang</h3>
+      <div class="callout def">
+        <span class="lbl">Definisi &amp; Sifat</span>
+        <ul>
+          <li>Sisi-sisi yang berhadapan sama panjang dan sejajar: \(AB = CD\), \(AB \parallel CD\), \(AD = BC\), \(AD \parallel BC\).</li>
+          <li>Sudut-sudut yang berhadapan sama besar: \(\angle BAD = \angle BCD\), \(\angle ABC = \angle ADC\).</li>
+          <li>Jumlah sudut-sudut yang berdekatan adalah \(180^\circ\): \(\angle BAD + \angle ABC = 180^\circ\).</li>
+          <li>Diagonal-diagonalnya saling membagi dua sama panjang: \(OA = OC\), \(OB = OD\).</li>
+        </ul>
+      </div>
+
+      <h3>3. Luas Jajargenjang</h3>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( L = \text{alas} \times \text{tinggi} \)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>PQRS adalah jajargenjang dengan \(PQ = 20\) cm sebagai alas dan tinggi \(ST = 12\) cm. Tentukan luas PQRS!</p>
+        <div class="step">Luas: \(L = \text{alas} \times \text{tinggi} = 20 \times 12 = 240\) cm\(^2\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Luas Jajargenjang</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Alas cm</label><input type="number" id="jj-a" placeholder="mis. 20"></div>
+          <div class="calc-field"><label>Tinggi cm</label><input type="number" id="jj-t" placeholder="mis. 12"></div>
+          <button onclick="hitungJajargenjang()">Hitung</button>
+        </div>
+        <div class="calc-result" id="jj-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== D. BELAH KETUPAT ===================== -->
+    <section class="materi" id="materi-d">
+      <div class="kicker">Bagian D</div>
+      <h2>Belah Ketupat</h2>
+
+      <h3>1. Pengertian</h3>
+      <p>Belah ketupat dibentuk dari gabungan segitiga sama kaki dan bayangannya oleh pencerminan terhadap alas segitiga itu.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar D.1 — Belah Ketupat ABCD</span>
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="160,30 250,110 160,190 70,110" class="figure-svg-shape"/>
+          <line x1="160" y1="30" x2="160" y2="190" class="figure-svg-diag"/>
+          <line x1="70" y1="110" x2="250" y2="110" class="figure-svg-diag"/>
+          <circle cx="160" cy="110" r="3" class="figure-svg-point"/>
+          <text x="152" y="22" class="figure-svg-label">D</text>
+          <text x="256" y="114" class="figure-svg-label">C</text>
+          <text x="152" y="208" class="figure-svg-label">B</text>
+          <text x="42" y="114" class="figure-svg-label">A</text>
+          <text x="167" y="102" class="figure-svg-label" font-size="13">O</text>
+        </svg>
+        <div class="caption">Semua sisi sama panjang, diagonal AC ⊥ BD saling tegak lurus dan membagi dua sama panjang di O.</div>
+      </div>
+
+      <h3>2. Sifat-sifat Belah Ketupat</h3>
+      <div class="callout def">
+        <span class="lbl">Definisi &amp; Sifat</span>
+        <ul>
+          <li>Semua sisinya sama panjang: \(AB = BC = CD = AD\).</li>
+          <li>Diagonal-diagonalnya merupakan sumbu simetri.</li>
+          <li>Sudut yang berhadapan sama besar dan dibagi dua sama besar oleh diagonalnya.</li>
+          <li>Diagonal-diagonalnya saling membagi dua sama panjang dan saling tegak lurus: \(OA=OC\), \(OB=OD\), \(AC \perp BD\), \(\angle AOB = \angle BOC = \angle COD = \angle AOD = 90^\circ\).</li>
+        </ul>
+      </div>
+
+      <h3>3. Luas Belah Ketupat</h3>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( L = \text{alas} \times \text{tinggi} \qquad \text{atau} \qquad L = \dfrac{1}{2} \times d_1 \times d_2 \)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Sebuah belah ketupat memiliki diagonal \(d_1 = 18\) cm dan \(d_2 = 12\) cm. Tentukan luasnya!</p>
+        <div class="step">Luas: \(L = \dfrac{1}{2} \times d_1 \times d_2 = \dfrac{1}{2} \times 18 \times 12 = 108\) cm\(^2\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Luas Belah Ketupat</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Diagonal 1 cm</label><input type="number" id="bk-d1" placeholder="mis. 18"></div>
+          <div class="calc-field"><label>Diagonal 2 cm</label><input type="number" id="bk-d2" placeholder="mis. 12"></div>
+          <button onclick="hitungBelahKetupat()">Hitung</button>
+        </div>
+        <div class="calc-result" id="bk-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== E. LAYANG-LAYANG ===================== -->
+    <section class="materi" id="materi-e">
+      <div class="kicker">Bagian E</div>
+      <h2>Layang-layang</h2>
+
+      <h3>1. Pengertian</h3>
+      <p>Layang-layang dibentuk dari gabungan dua segitiga sama kaki yang alasnya sama panjang dan saling berimpit.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar E.1 — Layang-layang ABCD</span>
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="160,20 225,95 160,200 95,95" class="figure-svg-shape"/>
+          <line x1="160" y1="20" x2="160" y2="200" class="figure-svg-diag"/>
+          <line x1="95" y1="95" x2="225" y2="95" class="figure-svg-diag"/>
+          <circle cx="160" cy="95" r="3" class="figure-svg-point"/>
+          <text x="152" y="14" class="figure-svg-label">A</text>
+          <text x="231" y="99" class="figure-svg-label">B</text>
+          <text x="152" y="218" class="figure-svg-label">C</text>
+          <text x="67" y="99" class="figure-svg-label">D</text>
+          <text x="167" y="87" class="figure-svg-label" font-size="13">O</text>
+        </svg>
+        <div class="caption">Sepasang-sepasang sisi sama panjang (AB=AD, CB=CD); diagonal AC sumbu simetri, tegak lurus BD di O.</div>
+      </div>
+
+      <h3>2. Sifat-sifat Layang-layang</h3>
+      <div class="callout def">
+        <span class="lbl">Definisi &amp; Sifat</span>
+        <ul>
+          <li>Sisinya sepasang-sepasang sama panjang: \(AB = AD\), \(BC = CD\).</li>
+          <li>Sepasang sudut yang berhadapan sama besar: \(\angle ABC = \angle ADC\).</li>
+          <li>Salah satu diagonalnya merupakan sumbu simetri.</li>
+          <li>Salah satu diagonalnya membagi dua sama panjang diagonal lain dan tegak lurus dengannya: \(OB = OD\), \(AC \perp BD\).</li>
+        </ul>
+      </div>
+
+      <h3>3. Luas Layang-layang</h3>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( L = \dfrac{1}{2} \times d_1 \times d_2 \)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Sebuah layang-layang memiliki diagonal \(d_1 = 24\) cm dan \(d_2 = 20\) cm. Tentukan luasnya!</p>
+        <div class="step">Luas: \(L = \dfrac{1}{2} \times 24 \times 20 = 240\) cm\(^2\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Luas Layang-layang</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Diagonal 1 cm</label><input type="number" id="ll-d1" placeholder="mis. 24"></div>
+          <div class="calc-field"><label>Diagonal 2 cm</label><input type="number" id="ll-d2" placeholder="mis. 20"></div>
+          <button onclick="hitungLayangan()">Hitung</button>
+        </div>
+        <div class="calc-result" id="ll-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== F. TRAPESIUM ===================== -->
+    <section class="materi" id="materi-f">
+      <div class="kicker">Bagian F</div>
+      <h2>Trapesium</h2>
+
+      <h3>1. Pengertian</h3>
+      <p>Trapesium adalah segiempat yang memiliki tepat sepasang sisi berhadapan yang sejajar.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar F.1 — Trapesium ABCD</span>
+        <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="120,40 220,40 270,150 50,150" class="figure-svg-shape"/>
+          <line x1="120" y1="40" x2="120" y2="150" class="figure-svg-height"/>
+          <rect x="120" y="138" width="12" height="12" class="figure-svg-right"/>
+          <text x="100" y="34" class="figure-svg-label">D</text>
+          <text x="226" y="34" class="figure-svg-label">C</text>
+          <text x="276" y="164" class="figure-svg-label">B</text>
+          <text x="35" y="164" class="figure-svg-label">A</text>
+          <text x="126" y="98" class="figure-svg-label" font-size="12">t</text>
+        </svg>
+        <div class="caption">DC // AB — sepasang sisi sejajar; garis putus-putus menunjukkan tinggi (t) trapesium.</div>
+      </div>
+
+      <h3>2. Sifat-sifat Trapesium</h3>
+      <div class="callout def">
+        <span class="lbl">Definisi &amp; Sifat</span>
+        <p>Jumlah sudut yang berdekatan di antara dua sisi sejajar adalah \(180^\circ\): \(\angle A + \angle D = 180^\circ\), \(\angle B + \angle C = 180^\circ\).</p>
+      </div>
+
+      <h3>3. Jenis-jenis Trapesium</h3>
+      <ul>
+        <li><strong>Trapesium sembarang</strong> — keempat sisinya tidak sama panjang, hanya sepasang sisi sejajar.</li>
+        <li><strong>Trapesium sama kaki</strong> — panjang sisi tegaknya sama, sudut alasnya sama besar.</li>
+        <li><strong>Trapesium siku-siku</strong> — salah satu sudut alasnya \(90^\circ\).</li>
+      </ul>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar F.2 — Tiga Jenis Trapesium</span>
+        <div class="figure-triple">
+          <div class="figure-item">
+            <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="90,30 190,45 170,140 40,150" class="figure-svg-shape"/>
+              <text x="78" y="24" class="figure-svg-label">D</text>
+              <text x="196" y="42" class="figure-svg-label">C</text>
+              <text x="176" y="158" class="figure-svg-label">B</text>
+              <text x="25" y="158" class="figure-svg-label">A</text>
+            </svg>
+            <div class="figure-item-title">Trapesium Sembarang</div>
+            <div class="figure-item-desc">Hanya DC // AB; keempat sisi berbeda panjang.</div>
+          </div>
+          <div class="figure-item">
+            <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="75,30 145,30 185,150 35,150" class="figure-svg-shape"/>
+              <text x="63" y="24" class="figure-svg-label">D</text>
+              <text x="151" y="24" class="figure-svg-label">C</text>
+              <text x="191" y="164" class="figure-svg-label">B</text>
+              <text x="20" y="164" class="figure-svg-label">A</text>
+            </svg>
+            <div class="figure-item-title">Trapesium Sama Kaki</div>
+            <div class="figure-item-desc">DC // AB; sisi tegak AD = BC, sudut alas A = B.</div>
+          </div>
+          <div class="figure-item">
+            <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="45,30 145,30 185,150 45,150" class="figure-svg-shape"/>
+              <rect x="45" y="30" width="12" height="12" class="figure-svg-right"/>
+              <text x="33" y="24" class="figure-svg-label">D</text>
+              <text x="151" y="24" class="figure-svg-label">C</text>
+              <text x="191" y="164" class="figure-svg-label">B</text>
+              <text x="30" y="164" class="figure-svg-label">A</text>
+            </svg>
+            <div class="figure-item-title">Trapesium Siku-siku</div>
+            <div class="figure-item-desc">DC // AB; sudut A = D = 90°.</div>
+          </div>
+        </div>
+        <div class="caption">Perhatikan sisi tegak (AD dan BC) pada tiap bangun — itulah pembeda utama ketiga jenis trapesium.</div>
+      </div>
+
+      <h3>4. Luas Trapesium</h3>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( L = \dfrac{1}{2} \times (a+b) \times t \)
+        <br><span style="font-size:.85rem; color:var(--cream-dim);">(a, b = panjang sisi sejajar; t = tinggi)</span>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Sebuah trapesium memiliki sisi sejajar 10 cm dan 20 cm, dengan tinggi 8 cm. Tentukan luasnya!</p>
+        <div class="step">Luas: \(L = \dfrac{1}{2} \times (10+20) \times 8 = \dfrac{1}{2} \times 30 \times 8 = 120\) cm\(^2\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Luas Trapesium</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi sejajar a (cm)</label><input type="number" id="tr-a" placeholder="mis. 10"></div>
+          <div class="calc-field"><label>Sisi sejajar b (cm)</label><input type="number" id="tr-b" placeholder="mis. 20"></div>
+          <div class="calc-field"><label>Tinggi (cm)</label><input type="number" id="tr-t" placeholder="mis. 8"></div>
+          <button onclick="hitungTrapesium()">Hitung</button>
+        </div>
+        <div class="calc-result" id="tr-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== LATIHAN ===================== -->
+    <section id="latihan">
+      <div class="kicker">Latihan</div>
+      <h2>Uji Pemahamanmu</h2>
+      <p style="color:var(--text-mid);">25 soal — 5 tipe soal berbeda. Jawab semua soal, lalu lihat analisis hasilmu di akhir.</p>
+
+      <div class="type-tabs">
+        <button class="type-tab active" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda</button>
+        <button class="type-tab" data-type="is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="type-tab" data-type="pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="type-tab" data-type="bs" onclick="showType('bs')">4. Benar/Salah</button>
+        <button class="type-tab" data-type="jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="score-strip"></div>
+
+      <div id="quiz-area"></div>
+
+      <div style="text-align:center; margin-top:24px;">
+        <button id="analysis-btn" onclick="showAnalysis()" style="background:var(--ink); color:var(--gold-soft); border:none; padding:13px 30px; border-radius:12px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.95rem;">📊 Lihat Analisis Akhir</button>
+      </div>
+
+      <div class="analysis-panel" id="analysis-panel">
+        <h2 style="color:var(--gold-title);">Analisis Hasil Latihan</h2>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num" id="stat-total">0</div><div class="lbl">Total Soal</div></div>
+          <div class="stat-box"><div class="num" id="stat-benar">0</div><div class="lbl">Benar</div></div>
+          <div class="stat-box"><div class="num" id="stat-salah">0</div><div class="lbl">Salah</div></div>
+          <div class="stat-box"><div class="num" id="stat-nilai">0%</div><div class="lbl">Nilai</div></div>
+        </div>
+        <div id="bar-chart"></div>
+        <div class="grade-box">
+          <div class="grade" id="grade-letter">-</div>
+          <div id="grade-msg" style="color:var(--cream-dim); margin-top:.4em;"></div>
+        </div>
+        <div style="text-align:center;"><button id="reset-btn" onclick="resetAll()">🔄 Ulangi Latihan</button></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Ebook Interaktif — Bangun Segiempat · Matematika Kelas 7 · Kurikulum Merdeka</div>
+      <div class="credit">Suminto with Claude.</div>
+    </footer>
+  </div>
+</div>
+
+<script>
+/* ===================== KALKULATOR MATERI ===================== */
+function hitungPP(){
+  var p = parseFloat(document.getElementById('pp-p').value) || 0;
+  var l = parseFloat(document.getElementById('pp-l').value) || 0;
+  var k = 2*(p+l);
+  var luas = p*l;
+  document.getElementById('pp-hasil').innerHTML = 'Keliling = ' + k + ' cm &nbsp;|&nbsp; Luas = ' + luas + ' cm²';
+}
+function hitungPersegi(){
+  var s = parseFloat(document.getElementById('pg2-s').value) || 0;
+  var k = 4*s;
+  var luas = s*s;
+  document.getElementById('pg2-hasil').innerHTML = 'Keliling = ' + k + ' cm &nbsp;|&nbsp; Luas = ' + luas + ' cm²';
+}
+function hitungJajargenjang(){
+  var a = parseFloat(document.getElementById('jj-a').value) || 0;
+  var t = parseFloat(document.getElementById('jj-t').value) || 0;
+  var luas = a*t;
+  document.getElementById('jj-hasil').innerHTML = 'Luas = ' + luas + ' cm²';
+}
+function hitungBelahKetupat(){
+  var d1 = parseFloat(document.getElementById('bk-d1').value) || 0;
+  var d2 = parseFloat(document.getElementById('bk-d2').value) || 0;
+  var luas = 0.5*d1*d2;
+  document.getElementById('bk-hasil').innerHTML = 'Luas = ' + luas + ' cm²';
+}
+function hitungLayangan(){
+  var d1 = parseFloat(document.getElementById('ll-d1').value) || 0;
+  var d2 = parseFloat(document.getElementById('ll-d2').value) || 0;
+  var luas = 0.5*d1*d2;
+  document.getElementById('ll-hasil').innerHTML = 'Luas = ' + luas + ' cm²';
+}
+function hitungTrapesium(){
+  var a = parseFloat(document.getElementById('tr-a').value) || 0;
+  var b = parseFloat(document.getElementById('tr-b').value) || 0;
+  var t = parseFloat(document.getElementById('tr-t').value) || 0;
+  var luas = 0.5*(a+b)*t;
+  document.getElementById('tr-hasil').innerHTML = 'Luas = ' + luas + ' cm²';
+}
+
+/* ===================== SIDEBAR MOBILE ===================== */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('#sidebar .nav-link, #sidebar .nav-sub').forEach(function(el){
+  el.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ===================== SCROLLSPY + PROGRESS BAR ===================== */
+var sections = ['materi-a','materi-b','materi-c','materi-d','materi-e','materi-f','latihan'];
+function updateScrollspy(){
+  var scrollPos = window.scrollY + 140;
+  var activeId = sections[0];
+  sections.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top + window.scrollY <= scrollPos){
+      activeId = id;
+    }
+  });
+  document.querySelectorAll('#sidebar .nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === activeId);
+  });
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+window.addEventListener('scroll', updateScrollspy);
+window.addEventListener('resize', updateScrollspy);
+
+/* ===================== BANK SOAL ===================== */
+var allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Sebuah persegi panjang memiliki panjang 18 cm dan lebar 10 cm. Kelilingnya adalah ...',
+      options:['A. 28 cm','B. 56 cm','C. 90 cm','D. 180 cm'], answer:1,
+      explanation:'✅ \\(K = 2(p+l) = 2(18+10) = 2 \\times 28 = 56\\) cm.' },
+    { id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Luas sebuah persegi dengan panjang sisi 14 cm adalah ...',
+      options:['A. 56 cm²','B. 98 cm²','C. 196 cm²','D. 28 cm²'], answer:2,
+      explanation:'✅ \\(L = s^2 = 14^2 = 196\\) cm².' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Sebuah jajargenjang memiliki alas 16 cm dan tinggi 9 cm. Luasnya adalah ...',
+      options:['A. 25 cm²','B. 72 cm²','C. 144 cm²','D. 288 cm²'], answer:2,
+      explanation:'✅ \\(L = \\text{alas} \\times \\text{tinggi} = 16 \\times 9 = 144\\) cm².' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Sebuah belah ketupat memiliki diagonal 20 cm dan 15 cm. Luasnya adalah ...',
+      options:['A. 75 cm²','B. 150 cm²','C. 300 cm²','D. 35 cm²'], answer:1,
+      explanation:'✅ \\(L = \\dfrac{1}{2} \\times d_1 \\times d_2 = \\dfrac{1}{2} \\times 20 \\times 15 = 150\\) cm².' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Sebuah trapesium memiliki sisi sejajar 12 cm dan 18 cm, serta tinggi 7 cm. Luas trapesium tersebut adalah ...',
+      options:['A. 63 cm²','B. 105 cm²','C. 126 cm²','D. 210 cm²'], answer:1,
+      explanation:'✅ \\(L = \\dfrac{1}{2} \\times (12+18) \\times 7 = \\dfrac{1}{2} \\times 30 \\times 7 = 105\\) cm².' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Keliling persegi panjang dengan panjang 22 cm dan lebar 13 cm adalah ... cm.',
+      answer:'70', altAnswers:['70 cm'],
+      explanation:'✅ \\(K = 2(22+13) = 2 \\times 35 = 70\\) cm.' },
+    { id:'is2', type:'is', level:'mudah', num:2,
+      text:'Sebuah persegi memiliki luas 225 cm². Panjang sisi persegi tersebut adalah ... cm.',
+      answer:'15', altAnswers:['15 cm'],
+      explanation:'✅ \\(s = \\sqrt{225} = 15\\) cm.' },
+    { id:'is3', type:'is', level:'sedang', num:3,
+      text:'Sebuah jajargenjang memiliki luas 180 cm² dan alas 15 cm. Tinggi jajargenjang tersebut adalah ... cm.',
+      answer:'12', altAnswers:['12 cm'],
+      explanation:'✅ \\(t = L \\div \\text{alas} = 180 \\div 15 = 12\\) cm.' },
+    { id:'is4', type:'is', level:'sedang', num:4,
+      text:'Sebuah belah ketupat memiliki luas 96 cm² dan panjang salah satu diagonalnya 12 cm. Panjang diagonal lainnya adalah ... cm.',
+      answer:'16', altAnswers:['16 cm'],
+      explanation:'✅ \\(d_2 = (2 \\times L) \\div d_1 = (2 \\times 96) \\div 12 = 192 \\div 12 = 16\\) cm.' },
+    { id:'is5', type:'is', level:'sukar', num:5,
+      text:'Sebuah layang-layang memiliki diagonal 25 cm dan 14 cm. Luas layang-layang tersebut adalah ... cm².',
+      answer:'175', altAnswers:['175 cm2','175 cm²'],
+      explanation:'✅ \\(L = \\dfrac{1}{2} \\times 25 \\times 14 = 175\\) cm².' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'mudah', num:1,
+      text:'Pilih pernyataan yang BENAR mengenai sifat-sifat persegi panjang! (Jawaban bisa lebih dari satu)',
+      options:['A. Sisi-sisi yang berhadapan sama panjang dan sejajar','B. Semua sisinya sama panjang','C. Diagonal-diagonalnya sama panjang','D. Setiap sudutnya siku-siku'],
+      answers:[0,2,3],
+      explanation:'✅ Persegi panjang memiliki sisi berhadapan sama panjang & sejajar, diagonal sama panjang, dan sudut siku-siku. Pernyataan B salah karena hanya sisi berhadapan yang sama panjang, bukan semua sisi.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Pilih pernyataan yang BENAR mengenai sifat-sifat persegi! (Jawaban bisa lebih dari satu)',
+      options:['A. Semua sisinya sama panjang','B. Diagonal-diagonalnya berpotongan tegak lurus','C. Diagonalnya tidak sama panjang','D. Diagonalnya membagi sudut menjadi dua bagian sama besar (45°)'],
+      answers:[0,1,3],
+      explanation:'✅ Persegi memiliki semua sisi sama panjang, diagonal berpotongan tegak lurus, dan diagonal membagi sudut menjadi 45°. Pernyataan C salah, diagonal persegi justru sama panjang.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Pilih pernyataan yang BENAR mengenai sifat-sifat jajargenjang! (Jawaban bisa lebih dari satu)',
+      options:['A. Sisi-sisi yang berhadapan sama panjang dan sejajar','B. Semua sudutnya siku-siku','C. Sudut-sudut yang berhadapan sama besar','D. Diagonal-diagonalnya saling membagi dua sama panjang'],
+      answers:[0,2,3],
+      explanation:'✅ Jajargenjang tidak harus memiliki sudut siku-siku (itu sifat persegi/persegi panjang), sehingga B salah. Pilihan A, C, D adalah sifat jajargenjang yang benar.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4,
+      text:'Pilih pernyataan yang BENAR mengenai sifat-sifat belah ketupat! (Jawaban bisa lebih dari satu)',
+      options:['A. Semua sisinya sama panjang','B. Diagonal-diagonalnya sama panjang','C. Diagonal-diagonalnya saling tegak lurus','D. Sudut yang berhadapan sama besar'],
+      answers:[0,2,3],
+      explanation:'✅ Belah ketupat memiliki semua sisi sama panjang, diagonal tegak lurus, dan sudut berhadapan sama besar. Diagonalnya TIDAK harus sama panjang (berbeda dengan persegi), sehingga B salah.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5,
+      text:'Pilih pernyataan yang BENAR mengenai sifat-sifat layang-layang dan trapesium! (Jawaban bisa lebih dari satu)',
+      options:['A. Layang-layang memiliki sepasang-sepasang sisi yang sama panjang','B. Salah satu diagonal layang-layang merupakan sumbu simetri','C. Trapesium memiliki dua pasang sisi sejajar','D. Trapesium memiliki tepat sepasang sisi sejajar'],
+      answers:[0,1,3],
+      explanation:'✅ Layang-layang memiliki sepasang-sepasang sisi sama panjang dan salah satu diagonal sebagai sumbu simetri. Trapesium hanya memiliki TEPAT SEPASANG sisi sejajar (bukan dua pasang), sehingga C salah dan D benar.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Pada persegi panjang, diagonal-diagonalnya saling membagi dua sama panjang.',
+      answer:true,
+      explanation:'✅ BENAR. Pada persegi panjang berlaku \\(OA = OB = OC = OD\\).' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Semua sudut pada persegi besarnya 90°.',
+      answer:true,
+      explanation:'✅ BENAR. Persegi memiliki empat sudut siku-siku, masing-masing 90°.' },
+    { id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Diagonal-diagonal jajargenjang selalu sama panjang.',
+      answer:false,
+      explanation:'❌ SALAH. Diagonal jajargenjang saling membagi dua sama panjang, tetapi tidak selalu sama panjang satu sama lain (kecuali jajargenjang tersebut berupa persegi panjang).' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Pada belah ketupat, diagonal-diagonalnya saling berpotongan tegak lurus.',
+      answer:true,
+      explanation:'✅ BENAR. \\(AC \\perp BD\\) pada belah ketupat, membentuk sudut 90° di titik potong.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Trapesium sama kaki memiliki dua pasang sisi yang sejajar.',
+      answer:false,
+      explanation:'❌ SALAH. Trapesium (termasuk trapesium sama kaki) hanya memiliki TEPAT SEPASANG sisi sejajar, bukan dua pasang.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'Rumus luas persegi panjang', right:'p × l', answer:'p × l',
+      options:['p × l','s × s','alas × tinggi','½ × d₁ × d₂'],
+      explanation:'✅ Luas persegi panjang = panjang × lebar = p × l.' },
+    { id:'jd2', type:'jd', level:'mudah', num:2,
+      left:'Rumus luas persegi', right:'s × s', answer:'s × s',
+      options:['s × s','p × l','alas × tinggi','½ × (a+b) × t'],
+      explanation:'✅ Luas persegi = sisi × sisi = s × s = s².' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Rumus luas jajargenjang', right:'alas × tinggi', answer:'alas × tinggi',
+      options:['alas × tinggi','½ × d₁ × d₂','s × s','½ × (a+b) × t'],
+      explanation:'✅ Luas jajargenjang = alas × tinggi.' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'Rumus luas belah ketupat / layang-layang', right:'½ × d₁ × d₂', answer:'½ × d₁ × d₂',
+      options:['½ × d₁ × d₂','p × l','alas × tinggi','½ × (a+b) × t'],
+      explanation:'✅ Luas belah ketupat dan layang-layang = setengah kali hasil kali kedua diagonal.' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'Rumus luas trapesium', right:'½ × (a+b) × t', answer:'½ × (a+b) × t',
+      options:['½ × (a+b) × t','s × s','p × l','½ × d₁ × d₂'],
+      explanation:'✅ Luas trapesium = ½ × jumlah sisi sejajar × tinggi.' }
+  ]
+};
+var typeLabels = { pg:'Pilihan Ganda', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+var typeOrder = ['pg','is','pk','bs','jd'];
+
+var state = { answers:{}, currentType:'pg', matchSelections:{} };
+var pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.type-tab').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-type') === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  var container = document.getElementById('quiz-area');
+  var qs = allQuestions[type];
+  var html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  qs.forEach(function(q){
+    if(state.answers[q.id]){
+      refreshCard(q);
+    }
+  });
+  typesetMath();
+}
+
+function renderCard(q){
+  var levelClass = 'level-' + q.level;
+  var body = '';
+  if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+
+  return '<div class="question-card" id="card-' + q.id + '">' +
+    '<div class="q-head"><div class="q-num">' + q.num + '</div>' +
+    '<span class="level-badge ' + levelClass + '">' + q.level + '</span></div>' +
+    '<div class="q-text">' + q.text + '</div>' +
+    body +
+    '<div class="explanation" id="exp-' + q.id + '">' + q.explanation + '</div>' +
+    '</div>';
+}
+
+function renderPG(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="answerPG(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  return html;
+}
+function answerPG(qid, idx){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderIS(q){
+  return '<div class="is-row">' +
+    '<input type="text" id="input-' + q.id + '" placeholder="Ketik jawabanmu..." onkeydown="if(event.key===\'Enter\'){submitIS(\'' + q.id + '\')}">' +
+    '<button onclick="submitIS(\'' + q.id + '\')">Kirim Jawaban</button>' +
+    '</div>';
+}
+function submitIS(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var input = document.getElementById('input-' + qid);
+  var val = (input.value || '').trim().toLowerCase();
+  if(val === ''){ return; }
+  var candidates = [q.answer].concat(q.altAnswers || []).map(function(a){ return a.toString().trim().toLowerCase(); });
+  var correct = candidates.indexOf(val) !== -1;
+  state.answers[qid] = { chosen: input.value, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderPK(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="togglePK(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  html += '<button class="pk-confirm" id="confirm-' + q.id + '" onclick="submitPK(\'' + q.id + '\')">Konfirmasi Jawaban</button>';
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  var arr = pkTemp[qid];
+  var pos = arr.indexOf(idx);
+  var btn = document.getElementById('opt-' + qid + '-' + idx);
+  if(pos === -1){ arr.push(idx); btn.classList.add('pk-on'); }
+  else { arr.splice(pos,1); btn.classList.remove('pk-on'); }
+}
+function submitPK(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var chosen = (pkTemp[qid] || []).slice().sort();
+  var correctArr = q.answers.slice().sort();
+  var correct = chosen.length === correctArr.length && chosen.every(function(v,i){ return v === correctArr[i]; });
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderBS(q){
+  return '<div class="bs-row">' +
+    '<button class="bs-btn" id="opt-' + q.id + '-true" onclick="answerBS(\'' + q.id + '\',true)">✅ BENAR</button>' +
+    '<button class="bs-btn" id="opt-' + q.id + '-false" onclick="answerBS(\'' + q.id + '\',false)">❌ SALAH</button>' +
+    '</div>';
+}
+function answerBS(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderJD(q){
+  var opts = q.options.slice();
+  var optHtml = '<option value="">-- pilih --</option>';
+  opts.forEach(function(o){ optHtml += '<option value="' + o + '">' + o + '</option>'; });
+  return '<div class="jd-row"><div class="jd-left">' + q.left + '</div>' +
+    '<select id="sel-' + q.id + '" onchange="answerJD(\'' + q.id + '\', this.value)">' + optHtml + '</select></div>';
+}
+function answerJD(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  if(val === '') return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function findQuestion(qid){
+  for(var t in allQuestions){
+    var found = allQuestions[t].find(function(q){ return q.id === qid; });
+    if(found) return found;
+  }
+  return null;
+}
+
+function refreshCard(q){
+  var card = document.getElementById('card-' + q.id);
+  var ans = state.answers[q.id];
+  if(!card || !ans) return;
+  card.classList.add(ans.correct ? 'correct' : 'wrong');
+
+  if(q.type === 'pg'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      if(idx === ans.chosen){ btn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong'); }
+      if(idx === q.answer && !ans.correct){ btn.classList.add('reveal-correct'); }
+    });
+  } else if(q.type === 'is'){
+    var input = document.getElementById('input-' + q.id);
+    if(input) input.disabled = true;
+  } else if(q.type === 'pk'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      var wasChosen = ans.chosen.indexOf(idx) !== -1;
+      var isCorrectOpt = q.answers.indexOf(idx) !== -1;
+      if(wasChosen && isCorrectOpt) btn.classList.add('selected-correct');
+      else if(wasChosen && !isCorrectOpt) btn.classList.add('selected-wrong');
+      else if(!wasChosen && isCorrectOpt) btn.classList.add('reveal-correct');
+    });
+    var confirmBtn = document.getElementById('confirm-' + q.id);
+    if(confirmBtn) confirmBtn.disabled = true;
+  } else if(q.type === 'bs'){
+    var trueBtn = document.getElementById('opt-' + q.id + '-true');
+    var falseBtn = document.getElementById('opt-' + q.id + '-false');
+    trueBtn.disabled = true; falseBtn.disabled = true;
+    var chosenBtn = ans.chosen ? trueBtn : falseBtn;
+    chosenBtn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong');
+    if(!ans.correct){
+      var correctBtn = q.answer ? trueBtn : falseBtn;
+      correctBtn.classList.add('selected-correct');
+    }
+  } else if(q.type === 'jd'){
+    var sel = document.getElementById('sel-' + q.id);
+    if(sel){ sel.disabled = true; sel.classList.add(ans.correct ? 'correct' : 'wrong'); }
+  }
+
+  var exp = document.getElementById('exp-' + q.id);
+  if(exp){ exp.classList.add('show'); typesetMath(); }
+}
+
+function updateScoreStrip(){
+  var strip = document.getElementById('score-strip');
+  var html = '';
+  typeOrder.forEach(function(t, i){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    html += '<div class="score-chip">' + (i+1) + '. ' + typeLabels[t] + ': ' + correct + '/' + qs.length + '</div>';
+  });
+  document.getElementById('score-strip').innerHTML = html;
+}
+
+function showAnalysis(){
+  var totalQ = 0, totalCorrect = 0;
+  var perType = {};
+  typeOrder.forEach(function(t){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    perType[t] = { total: qs.length, correct: correct };
+    totalQ += qs.length;
+    totalCorrect += correct;
+  });
+  var totalWrong = totalQ - totalCorrect;
+  var pct = totalQ > 0 ? Math.round((totalCorrect/totalQ)*100) : 0;
+
+  document.getElementById('stat-total').textContent = totalQ;
+  document.getElementById('stat-benar').textContent = totalCorrect;
+  document.getElementById('stat-salah').textContent = totalWrong;
+  document.getElementById('stat-nilai').textContent = pct + '%';
+
+  var barHtml = '';
+  typeOrder.forEach(function(t){
+    var p = perType[t];
+    var barPct = p.total > 0 ? (p.correct/p.total)*100 : 0;
+    barHtml += '<div class="bar-row"><div class="name">' + typeLabels[t] + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div>' +
+      '<div class="mono" style="width:50px; text-align:right;">' + p.correct + '/' + p.total + '</div></div>';
+  });
+  document.getElementById('bar-chart').innerHTML = barHtml;
+
+  var grade, msg;
+  if(pct >= 90){ grade='A'; msg='🏆 Luar Biasa!'; }
+  else if(pct >= 75){ grade='B'; msg='⭐ Bagus!'; }
+  else if(pct >= 60){ grade='C'; msg='👍 Cukup Baik'; }
+  else if(pct >= 40){ grade='D'; msg='💪 Jangan Menyerah'; }
+  else { grade='E'; msg='📚 Semangat Belajar'; }
+  document.getElementById('grade-letter').textContent = grade;
+  document.getElementById('grade-msg').textContent = msg;
+
+  document.getElementById('analysis-panel').classList.add('show');
+  setTimeout(function(){
+    document.querySelectorAll('.bar-fill').forEach(function(el){ el.style.width = el.style.width; });
+  }, 50);
+  document.getElementById('analysis-panel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysis-panel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+/* ===================== INIT ===================== */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollspy();
+  typesetMath();
+});
+</script>
+</body>
+</html>
