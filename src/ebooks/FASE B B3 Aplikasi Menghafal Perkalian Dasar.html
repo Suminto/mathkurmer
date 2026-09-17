@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aplikasi Belajar Perkalian Dasar</title>
+  <!-- Google Fonts untuk font yang cerah dan ceria -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background: linear-gradient(135deg, #a8edf clouds, #e0c3fc 0%, #8ec5fc 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 550px;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 4px solid #4facfe;
+    }
+
+    h1, h2 {
+      font-family: 'Fredoka One', cursive;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    /* Screen Styles */
+    .screen {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Layar 1: Pilih Angka */
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn-num {
+      background: #4facfe;
+      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      border: none;
+      border-radius: 16px;
+      padding: 20px 0;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #0082c8, 0 10px 15px rgba(0,0,0,0.1);
+      transition: all 0.1s ease;
+    }
+
+    .btn-num:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #0082c8, 0 12px 18px rgba(0,0,0,0.15);
+    }
+
+    .btn-num:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #0082c8, 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Layar 2: Soal & Pilihan */
+    .header-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-weight: 700;
+      color: #555;
+      font-size: 1.1rem;
+    }
+
+    .badge-soal {
+      background-color: #ff9a9e;
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-family: 'Fredoka One', cursive;
+    }
+
+    .question-card {
+      background: #4facfe;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 3.5rem;
+      padding: 25px 10px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 -5px 0 rgba(0,0,0,0.1), 0 8px 20px rgba(79, 172, 254, 0.4);
+      letter-spacing: 2px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .btn-opt {
+      background-color: #f0f4f8;
+      color: #333;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      border: 3px solid #d9e2ec;
+      border-radius: 16px;
+      padding: 15px 0;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #bccadc;
+      transition: all 0.1s ease;
+    }
+
+    .btn-opt:hover {
+      background-color: #e4eaf1;
+    }
+
+    .btn-opt:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #bccadc;
+    }
+
+    .comment-box {
+      min-height: 60px;
+      background-color: #e3f2fd;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 10px;
+      border: 2px dashed #90caf9;
+      color: #1976d2;
+      transition: all 0.3s;
+    }
+
+    .comment-box.correct {
+      background-color: #e8f5e9;
+      border-color: #81c784;
+      color: #2e7d32;
+    }
+
+    .comment-box.wrong {
+      background-color: #ffebee;
+      border-color: #e57373;
+      color: #c62828;
+    }
+
+    .next-btn {
+      margin-top: 15px;
+      background-color: #ff9800;
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #e65100;
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .next-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #e65100;
+    }
+
+    /* Layar 3: Hasil & Nilai */
+    .score-title {
+      font-size: 1.8rem;
+      color: #444;
+    }
+
+    .score-card {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+      color: #d81b60;
+      font-family: 'Fredoka One', cursive;
+      font-size: 5rem;
+      padding: 30px 10px;
+      border-radius: 24px;
+      margin: 20px 0;
+      box-shadow: 0 10px 25px rgba(255, 154, 158, 0.4);
+      border: 4px solid #fff;
+    }
+
+    .score-comment {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #444;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .btn-restart {
+      background: #4caf50;
+      background: linear-gradient(135deg, #81c784 0%, #388e3c 100%);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 35px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #1b5e20, 0 10px 20px rgba(0,0,0,0.15);
+      transition: all 0.1s ease;
+      width: 100%;
+    }
+
+    .btn-restart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #1b5e20, 0 12px 22px rgba(0,0,0,0.2);
+    }
+
+    .btn-restart:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- LAYAR 1: PILIH PERKALIAN -->
+    <div id="layar1" class="screen active">
+      <h1>Menghadapi Perkalian Dasar</h1>
+      <p class="subtitle">Pilih Salah Satu Tombol Di Bawah</p>
+      
+      <div class="number-grid">
+        <button class="btn-num" onclick="mulaiKuis(2)">2</button>
+        <button class="btn-num" onclick="mulaiKuis(3)">3</button>
+        <button class="btn-num" onclick="mulaiKuis(4)">4</button>
+        <button class="btn-num" onclick="mulaiKuis(5)">5</button>
+        <button class="btn-num" onclick="mulaiKuis(6)">6</button>
+        <button class="btn-num" onclick="mulaiKuis(7)">7</button>
+        <button class="btn-num" onclick="mulaiKuis(8)">8</button>
+        <button class="btn-num" onclick="mulaiKuis(9)">9</button>
+      </div>
+    </div>
+
+    <!-- LAYAR 2: SOAL DAN JAWABAN -->
+    <div id="layar2" class="screen">
+      <div class="header-info">
+        <span id="label-perkalian">Perkalian 6</span>
+        <span class="badge-soal" id="label-soal-no">SOAL NO 1</span>
+      </div>
+
+      <div class="question-card" id="box-soal">
+        7 × 8 =
+      </div>
+
+      <div class="options-grid" id="box-pilihan">
+        <!-- 4 Tombol Pilihan Jawaban akan digenerate oleh JS -->
+      </div>
+
+      <div class="comment-box" id="box-komentar">
+        Pilih salah satu jawaban di atas!
+      </div>
+
+      <button class="next-btn" id="btn-lanjut" onclick="soalBerikutnya()">Lanjutkan ➔</button>
+    </div>
+
+    <!-- LAYAR 3: NILAI AKHIR -->
+    <div id="layar3" class="screen">
+      <h2 class="score-title">NILAI KAMU</h2>
+      
+      <div class="score-card" id="box-nilai">
+        100
+      </div>
+
+      <div class="score-comment" id="komentar-nilai">
+        Luar biasa! Kamu sangat pintar! 🌟
+      </div>
+
+      <button class="btn-restart" onclick="kembaliKeLayar1()">
+        Tekan Untuk Mengulang 🔄
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // State Aplikasi
+    let angkaTerpilih = 0;
+    let daftarSoal = [];
+    let indeksSoal = 0;
+    let skor = 0;
+    let sudahMenjawab = false;
+
+    // Daftar Komentar Ramah Anak
+    const komentarBenar = [
+      "Hebat sekali! Jawabanmu Benar! 🎉",
+      "Pintar! Lanjutkan semangatmu! ⭐",
+      "Luar Biasa! Jawabanmu Tepat! 🚀",
+      "Keren! Kamu makin jago perkalian! 💪",
+      "Mantap! 100 untuk keberanianmu! 🔥"
+    ];
+
+    const komentarSalah = [
+      "Ups, kurang tepat! Tetap semangat ya! 😊",
+      "Belum tepat, ayo coba lebih teliti lagi! 💪",
+      "Jangan menyerah, belajar lagi pasti bisa! ⭐",
+      "Hampir benar! Tetap fokus ya! 🎯"
+    ];
+
+    // Fungsi Mengacak Array (Fisher-Yates Shuffle)
+    function acakArray(array) {
+      let currentIndex = array.length, randomIndex;
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+      }
+      return array;
+    }
+
+    // Pindah Tampilkan Layar
+    function tampilkanLayar(idLayar) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(idLayar).classList.add('active');
+    }
+
+    // Layar 1 -> Layar 2
+    function mulaiKuis(angka) {
+      angkaTerpilih = angka;
+      skor = 0;
+      indeksSoal = 0;
+      
+      // Buat daftar pengali 1 s/d 10 lalu diacak secara random
+      let pengali = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      daftarSoal = acakArray(pengali);
+
+      document.getElementById('label-perkalian').innerText = `Perkalian ${angkaTerpilih}`;
+      tampilkanLayar('layar2');
+      tampilkanSoal();
+    }
+
+    // Menampilkan Soal di Layar 2
+    function tampilkanSoal() {
+      sudahMenjawab = false;
+      let pengaliSaatIni = daftarSoal[indeksSoal];
+      let jawabanBenar = pengaliSaatIni * angkaTerpilih;
+
+      // Update Header & Teks Soal
+      document.getElementById('label-soal-no').innerText = `SOAL NO ${indeksSoal + 1}`;
+      document.getElementById('box-soal').innerText = `${pengaliSaatIni} × ${angkaTerpilih} =`;
+
+      // Reset Box Komentar & Tombol Lanjut
+      let boxKomentar = document.getElementById('box-komentar');
+      boxKomentar.className = "comment-box";
+      boxKomentar.innerText = "Pilih salah satu jawaban di atas!";
+      
+      let btnLanjut = document.getElementById('btn-lanjut');
+      btnLanjut.style.display = "none";
+      btnLanjut.innerText = "Lanjutkan ➔";
+
+      // Membuat 3 Pilihan Pengecoh (Pilihan Salah)
+      let pilihan = [jawabanBenar];
+      while (pilihan.length < 4) {
+        let acakOffset = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+        let opsiSalah = jawabanBenar + acakOffset;
+        
+        if (opsiSalah > 0 && !pilihan.includes(opsiSalah)) {
+          pilihan.push(opsiSalah);
+        }
+      }
+
+      // Acak urutan pilihan jawaban
+      pilihan = acakArray(pilihan);
+
+      // Render Tombol Pilihan Jawaban
+      let boxPilihan = document.getElementById('box-pilihan');
+      boxPilihan.innerHTML = "";
+      pilihan.forEach(angkaPilihan => {
+        let btn = document.createElement('button');
+        btn.className = "btn-opt";
+        btn.innerText = angkaPilihan;
+        btn.onclick = () => cekJawaban(angkaPilihan, jawabanBenar, btn);
+        boxPilihan.appendChild(btn);
+      });
+    }
+
+    // Cek Jawaban Siswa
+    function cekJawaban(pilihanSiswa, jawabanBenar, tombolTerpilih) {
+      if (sudahMenjawab) return; // Mencegah klik ganda
+      sudahMenjawab = true;
+
+      let boxKomentar = document.getElementById('box-komentar');
+      let semuaTombol = document.querySelectorAll('.btn-opt');
+
+      // Nonaktifkan semua tombol pilihan
+      semuaTombol.forEach(b => b.style.cursor = "default");
+
+      if (pilihanSiswa === jawabanBenar) {
+        skor += 10; // Setiap soal bernilai 10 poin
+        tombolTerpilih.style.backgroundColor = "#a5d6a7";
+        tombolTerpilih.style.borderColor = "#66bb6a";
+        
+        boxKomentar.className = "comment-box correct";
+        let acakPesan = komentarBenar[Math.floor(Math.random() * komentarBenar.length)];
+        boxKomentar.innerText = acakPesan;
+      } else {
+        tombolTerpilih.style.backgroundColor = "#ef9a9a";
+        tombolTerpilih.style.borderColor = "#ef5350";
+        
+        // Tunjukkan tombol yang benar
+        semuaTombol.forEach(b => {
+          if (parseInt(b.innerText) === jawabanBenar) {
+            b.style.backgroundColor = "#a5d6a7";
+            b.style.borderColor = "#66bb6a";
+          }
+        });
+
+        boxKomentar.className = "comment-box wrong";
+        let acakPesan = komentarSalah[Math.floor(Math.random() * komentarSalah.length)];
+        boxKomentar.innerText = acakPesan;
+      }
+
+      // Tampilkan tombol Lanjutkan
+      document.getElementById('btn-lanjut').style.display = "inline-block";
+    }
+
+    // Pindah ke Soal Berikutnya / Layar 3
+    function soalBerikutnya() {
+      indeksSoal++;
+      if (indeksSoal < 10) {
+        tampilkanSoal();
+      } else {
+        tampilkanHasilLayar3();
+      }
+    }
+
+    // Menampilkan Layar 3 (Nilai Akhir)
+    function tampilkanHasilLayar3() {
+      tampilkanLayar('layar3');
+      document.getElementById('box-nilai').innerText = skor;
+
+      let pesanApresiasi = "";
+      if (skor === 100) {
+        pesanApresiasi = "Hebat Sekali! Nilai Sempurna! Kamu Sangat Pintar! 🌟🏆";
+      } else if (skor >= 70) {
+        pesanApresiasi = "Bagus Sekali! Hasil yang sangat baik, tingkatkan lagi! 👍✨";
+      } else if (skor >= 50) {
+        pesanApresiasi = "Cukup Bagus! Ayo terus berlatih agar makin pintar! 💪😊";
+      } else {
+        pesanApresiasi = "Jangan berkecil hati! Cobalah belajar lagi dan ulangi kuisnya! 📘🎈";
+      }
+
+      document.getElementById('komentar-nilai').innerText = pesanApresiasi;
+    }
+
+    // Kembali ke Layar 1 (Reset)
+    function kembaliKeLayar1() {
+      tampilkanLayar('layar1');
+    }
+  </script>
+</body>
+</html>
