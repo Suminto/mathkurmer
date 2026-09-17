@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segitiga — Matematika Kelas 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a; --gold-title:#ffd873;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; font-family:'Source Serif 4', serif; background:var(--paper); color:var(--text-dark);}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark); margin:0 0 .5em;}
+.mono{font-family:'JetBrains Mono', monospace;}
+a{color:inherit;}
+
+.layout{display:flex; min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  width:290px; flex-shrink:0; background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto; padding:22px 18px;
+  border-right:1px solid var(--ink-border); z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink-border); border-radius:4px;}
+.side-label{font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.14em; color:var(--gold-soft); text-transform:uppercase;}
+.side-title{font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:800; color:var(--gold-title); margin:.25em 0 1.1em; line-height:1.2;}
+.progress-wrap{background:var(--ink3); border-radius:8px; height:8px; overflow:hidden; margin-bottom:1.4em; border:1px solid var(--ink-border);}
+#progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .3s ease;}
+.nav-heading{font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cream-dim); margin:1.3em 0 .5em; padding-left:4px;}
+.nav-link{display:block; padding:8px 10px; border-radius:8px; color:var(--cream); text-decoration:none; font-size:.92rem; margin-bottom:2px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-link:hover{background:var(--ink3);}
+.nav-link.active{background:var(--ink3); border-left:3px solid var(--gold); color:var(--gold-soft); font-weight:600;}
+.nav-sub{display:block; padding:6px 10px 6px 22px; border-radius:8px; color:var(--cream-dim); text-decoration:none; font-size:.84rem; margin-bottom:1px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-sub:hover{background:var(--ink3); color:var(--cream);}
+.nav-sub2{display:block; padding:5px 10px 5px 34px; border-radius:8px; color:var(--cream-dim); text-decoration:none; font-size:.78rem; margin-bottom:1px; transition:.18s ease;}
+.nav-sub2:hover{background:var(--ink3); color:var(--cream);}
+
+/* CONTENT */
+#content{flex:1; min-width:0;}
+.hero{
+  background:linear-gradient(135deg, var(--ink) 0%, var(--ink3) 100%); color:var(--cream);
+  padding:70px 60px 60px; position:relative; overflow:hidden;
+}
+.hero::after{content:"△"; position:absolute; right:40px; top:20px; font-size:180px; color:rgba(224,169,77,.08);}
+.hero .side-label{color:var(--gold-soft);}
+.hero h1{color:var(--gold-title); font-size:2.6rem; margin:.2em 0 .3em; max-width:680px;}
+.hero p{max-width:600px; color:var(--cream-dim); font-size:1.05rem; line-height:1.6;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:1.4em;}
+.chip{background:rgba(224,169,77,.14); border:1px solid var(--gold); color:var(--gold-soft); padding:6px 14px; border-radius:20px; font-size:.82rem; font-family:'JetBrains Mono',monospace;}
+
+section.materi{padding:50px 60px; border-bottom:1px solid var(--paper-line);}
+section.materi .kicker{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;}
+section.materi h2{font-size:2rem; margin-top:.2em;}
+section.materi h3{font-size:1.3rem; color:var(--text-dark); margin-top:1.6em; border-bottom:2px solid var(--paper-line); padding-bottom:.3em;}
+section.materi h4{font-size:1.08rem; color:var(--text-dark); margin-top:1.2em;}
+section.materi p, section.materi li{color:var(--text-mid); line-height:1.75; font-size:1.02rem;}
+section.materi ul, section.materi ol{padding-left:1.4em;}
+
+.callout{border-radius:10px; padding:16px 20px; margin:1.2em 0; border-left:5px solid; line-height:1.7;}
+.callout.def{background:var(--def); border-color:var(--def-b);}
+.callout.note{background:var(--note); border-color:var(--note-b);}
+.callout.warn{background:var(--warn); border-color:var(--warn-b);}
+.callout .lbl{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:.4em;}
+
+.example-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px; padding:20px 24px; margin:1.2em 0;}
+.example-box .lbl{font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em; display:block;}
+.example-box .step{margin:.4em 0; padding-left:1em; border-left:3px solid var(--paper-line);}
+
+.formula-box{background:var(--ink); color:var(--cream); border-radius:12px; padding:20px 26px; margin:1.2em 0; text-align:center; font-size:1.15rem;}
+.formula-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold-soft); font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5em;}
+
+.figure-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:14px; padding:18px 20px 14px; margin:1.2em 0; text-align:center;}
+.figure-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em;}
+.figure-box svg{max-width:100%; height:auto;}
+.figure-box .caption{margin-top:.6em; font-size:.9rem; color:var(--text-mid); font-style:italic;}
+.fsvg-shape{fill:rgba(224,169,77,.16); stroke:var(--ink); stroke-width:2.2;}
+.fsvg-diag{stroke:#c1584f; stroke-width:1.6; stroke-dasharray:5,4;}
+.fsvg-label{font-family:'JetBrains Mono', monospace; font-size:14px; fill:var(--text-dark); font-weight:700;}
+.fsvg-point{fill:var(--ink);}
+.fsvg-height{stroke:#3a6ea5; stroke-width:1.6; stroke-dasharray:3,3;}
+.fsvg-right{fill:none; stroke:var(--ink); stroke-width:1.6;}
+.fsvg-angle{fill:none; stroke:#c1584f; stroke-width:1.6;}
+
+.figure-triple{display:flex; gap:16px; flex-wrap:wrap; justify-content:center;}
+.figure-item{flex:1; min-width:170px; max-width:220px; background:var(--paper); border:1px solid var(--paper-line); border-radius:10px; padding:10px 12px 14px;}
+.figure-item svg{width:100%; height:auto;}
+.figure-item-title{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.82rem; color:var(--text-dark); margin-top:.4em;}
+.figure-item-desc{font-size:.84rem; color:var(--text-mid); margin-top:.2em; line-height:1.5;}
+
+/* JENIS SEGITIGA TABLE */
+.jenis-table{width:100%; border-collapse:collapse; margin:1.2em 0; background:var(--paper); border-radius:10px; overflow:hidden; border:1px solid var(--paper-line);}
+.jenis-table th, .jenis-table td{border:1px solid var(--paper-line); text-align:center; padding:10px 8px; vertical-align:middle;}
+.jenis-table th{background:var(--ink); color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:.78rem; text-transform:uppercase; letter-spacing:.05em;}
+.jenis-table td.rowlabel{background:var(--paper2); font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.82rem; color:var(--text-dark);}
+.jenis-table td svg{width:90px; height:70px;}
+.jenis-table td.none{color:var(--cream-dim); font-size:1.4rem; color:#c9c2ab;}
+.mini-tri{fill:rgba(224,169,77,.2); stroke:var(--ink); stroke-width:2.5;}
+
+/* CONSTRUCTION ANIMATION */
+.construct-box{background:var(--ink2); border:1px solid var(--ink-border); border-radius:16px; padding:20px 22px 18px; margin:1.4em 0; color:var(--cream);}
+.construct-box h4{color:var(--gold-title); margin-top:0; margin-bottom:.6em; font-size:1.05rem;}
+.construct-svg-wrap{background:var(--paper); border-radius:10px; padding:8px;}
+.construct-svg-wrap svg{width:100%; height:auto; display:block;}
+.cstep{opacity:0; transition:opacity .6s ease;}
+.cstep.show{opacity:1;}
+.constr-base{stroke:var(--ink); stroke-width:2.4; fill:none;}
+.constr-tri{stroke:var(--ink); stroke-width:2.4; fill:rgba(224,169,77,.12);}
+.constr-arc{stroke:#c1584f; stroke-width:1.8; fill:none; stroke-dasharray:5,4;}
+.constr-result{stroke:#2f6fb5; stroke-width:3; fill:none;}
+.constr-point{fill:var(--ink);}
+.constr-label{font-family:'JetBrains Mono',monospace; font-size:14px; fill:var(--text-dark); font-weight:700;}
+.constr-right{fill:none; stroke:var(--ink); stroke-width:1.6;}
+.construct-controls{display:flex; gap:8px; align-items:center; justify-content:center; margin-top:12px; flex-wrap:wrap;}
+.construct-controls button{background:var(--gold); color:var(--ink); border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:.8rem; font-weight:700; transition:.15s ease;}
+.construct-controls button:hover{background:var(--gold-soft);}
+.construct-controls button:disabled{opacity:.35; cursor:default; background:var(--ink3); color:var(--cream-dim);}
+.construct-counter{font-family:'JetBrains Mono',monospace; font-size:.76rem; color:var(--gold-soft); min-width:90px; text-align:center;}
+.construct-caption{margin-top:12px; text-align:center; font-size:.92rem; color:var(--cream-dim); min-height:2.6em; line-height:1.5; padding:0 6px;}
+
+.calc-box{background:var(--ink2); color:var(--cream); border-radius:14px; padding:22px 26px; margin:1.6em 0; border:1px solid var(--ink-border);}
+.calc-box h4{color:var(--gold-title); margin-bottom:.7em;}
+.calc-row{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin-bottom:12px;}
+.calc-field{display:flex; flex-direction:column; gap:4px;}
+.calc-field label{font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--cream-dim);}
+.calc-field input{background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); padding:8px 10px; border-radius:8px; width:130px; font-family:'JetBrains Mono',monospace;}
+.calc-box button{background:var(--gold); color:var(--ink); border:none; padding:9px 20px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.calc-box button:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:10px; padding:12px 16px; background:var(--ink3); border-radius:8px; font-family:'JetBrains Mono',monospace; min-height:1.2em;}
+
+/* LATIHAN */
+#latihan{padding:50px 60px 90px;}
+.type-tabs{display:flex; flex-wrap:wrap; gap:10px; margin:1.4em 0 1.8em;}
+.type-tab{background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid); padding:9px 18px; border-radius:24px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:.82rem; transition:.15s ease;}
+.type-tab:hover{border-color:var(--gold);}
+.type-tab.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:1.6em;}
+.score-chip{background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:8px 14px; font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text-mid);}
+
+.question-card{background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px; margin-bottom:20px; box-shadow:0 2px 10px rgba(43,36,22,.05); animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
+.question-card.correct{border-color:var(--correct-b); background:var(--correct);}
+.question-card.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:.8em;}
+.q-num{width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:.85rem; flex-shrink:0;}
+.level-badge{font-family:'JetBrains Mono',monospace; font-size:.68rem; text-transform:uppercase; padding:3px 10px; border-radius:12px; letter-spacing:.05em;}
+.level-mudah{background:#dff0da; color:#2e6b2e;}
+.level-sedang{background:#fdf0df; color:#95651c;}
+.level-sukar{background:#fbe1df; color:#9a3a32;}
+.q-text{font-size:1.04rem; color:var(--text-dark); margin-bottom:1em; line-height:1.6;}
+
+.opt-btn{display:block; width:100%; text-align:left; background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:11px 16px; margin-bottom:8px; cursor:pointer; font-family:'Source Serif 4',serif; font-size:.98rem; color:var(--text-dark); transition:.15s ease;}
+.opt-btn:hover{border-color:var(--gold); transform:translateX(3px);}
+.opt-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn.reveal-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn:disabled{cursor:default;}
+
+.bs-row{display:flex; gap:12px;}
+.bs-btn{flex:1; padding:12px; border-radius:10px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.bs-btn:hover{border-color:var(--gold);}
+.bs-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.bs-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.bs-btn:disabled{cursor:default;}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{flex:1; min-width:180px; padding:11px 14px; border-radius:10px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif; font-size:1rem;}
+.is-row button{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 20px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600;}
+.is-row button:hover{background:var(--ink3);}
+
+.pk-confirm{background:var(--ink); color:var(--gold-soft); border:none; padding:10px 22px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600; margin-top:6px;}
+.pk-confirm:hover{background:var(--ink3);}
+.opt-btn.pk-on{background:var(--gold-soft); border-color:var(--gold);}
+
+.jd-row{display:flex; align-items:center; gap:14px; margin-bottom:6px;}
+.jd-left{flex:1; background:var(--paper2); padding:10px 14px; border-radius:8px; font-weight:600;}
+.jd-row select{flex:1; padding:10px 12px; border-radius:8px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif;}
+.jd-row select.correct{border-color:var(--correct-b); background:var(--correct);}
+.jd-row select.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+
+.explanation{margin-top:14px; padding:14px 18px; background:var(--note); border-left:4px solid var(--note-b); border-radius:8px; font-size:.94rem; line-height:1.65; display:none;}
+.explanation.show{display:block;}
+
+.analysis-panel{display:none; background:var(--ink); color:var(--cream); border-radius:16px; padding:30px 34px; margin-top:20px;}
+.analysis-panel.show{display:block;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:1.2em 0;}
+.stat-box{background:var(--ink3); border-radius:10px; padding:16px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:1.6rem; color:var(--gold-title); font-weight:700;}
+.stat-box .lbl{font-size:.75rem; color:var(--cream-dim); text-transform:uppercase; letter-spacing:.06em; font-family:'JetBrains Mono',monospace;}
+.bar-row{display:flex; align-items:center; gap:10px; margin:8px 0;}
+.bar-row .name{width:150px; font-family:'JetBrains Mono',monospace; font-size:.82rem;}
+.bar-track{flex:1; background:var(--ink3); border-radius:6px; height:14px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1); width:0%;}
+.grade-box{text-align:center; margin:1.4em 0; padding:20px; border-radius:14px; background:linear-gradient(135deg, var(--ink3), var(--ink2)); border:2px solid var(--gold);}
+.grade-box .grade{font-family:'Playfair Display',serif; font-size:3rem; color:var(--gold-title); font-weight:800;}
+#reset-btn{background:var(--gold); color:var(--ink); border:none; padding:11px 26px; border-radius:10px; cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:10px;}
+#reset-btn:hover{background:var(--gold-soft);}
+
+footer{background:var(--ink); color:var(--cream-dim); padding:34px 60px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:.85rem;}
+footer .credit{color:var(--gold-soft);}
+
+#mobile-toggle{display:none; position:fixed; top:14px; left:14px; z-index:100; background:var(--ink); color:var(--gold); border:none; width:44px; height:44px; border-radius:10px; font-size:1.2rem; cursor:pointer;}
+#overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40;}
+
+@media (max-width:900px){
+  #sidebar{position:fixed; left:0; top:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; width:270px;}
+  #sidebar.open{transform:translateX(0);}
+  #mobile-toggle{display:block;}
+  #overlay.show{display:block;}
+  .hero{padding:80px 22px 40px;}
+  section.materi{padding:34px 20px;}
+  #latihan{padding:34px 20px 60px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:26px 20px;}
+  .figure-triple{flex-direction:column; align-items:center;}
+  .figure-item{max-width:280px; width:100%;}
+  .jenis-table{font-size:.8rem;}
+  .jenis-table td svg{width:60px; height:48px;}
+}
+</style>
+</head>
+<body>
+<button id="mobile-toggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+  <nav id="sidebar">
+    <div class="side-label">Matematika · Kelas 7</div>
+    <div class="side-title">Segitiga</div>
+    <div class="progress-wrap"><div id="progress-bar"></div></div>
+
+    <div class="nav-heading">Materi</div>
+    <a class="nav-link" data-target="materi-a" href="#materi-a">A. Segitiga &amp; Jenisnya</a>
+    <a class="nav-link" data-target="materi-b" href="#materi-b">B. Besar Sudut Segitiga</a>
+    <a class="nav-link" data-target="materi-c" href="#materi-c">C. Keliling &amp; Luas</a>
+    <a class="nav-link" data-target="materi-d" href="#materi-d">D. Garis-garis Segitiga</a>
+    <a class="nav-sub2" href="#d1">— Dasar-dasar Melukis</a>
+    <a class="nav-sub2" href="#d2">— Garis Istimewa</a>
+
+    <div class="nav-heading">Latihan</div>
+    <a class="nav-link" data-target="latihan" href="#latihan">Latihan Soal</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('bs')">4. Benar/Salah</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+
+  <div id="content">
+    <header class="hero">
+      <div class="side-label">Modul Pembelajaran Digital</div>
+      <h1>Segitiga</h1>
+      <p>Menjelajahi sisi, sudut, jenis-jenis, keliling, luas, hingga garis-garis istimewa segitiga — lengkap dengan animasi langkah-demi-langkah melukis dan 25 soal latihan interaktif.</p>
+      <div class="chip-row">
+        <span class="chip">A. Segitiga &amp; Jenisnya</span>
+        <span class="chip">B. Besar Sudut</span>
+        <span class="chip">C. Keliling &amp; Luas</span>
+        <span class="chip">D. Garis-garis Istimewa</span>
+      </div>
+    </header>
+
+    <!-- ===================== A. SEGITIGA DAN JENIS-JENISNYA ===================== -->
+    <section class="materi" id="materi-a">
+      <div class="kicker">Bagian A</div>
+      <h2>Segitiga dan Jenis-jenisnya</h2>
+
+      <h3>1. Sisi dan Sudut Segitiga</h3>
+      <p>Segitiga adalah bangun datar yang memiliki 3 buah sisi dan 3 buah sudut.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar A.1 — Segitiga ABC</span>
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="150,30 260,180 40,180" class="fsvg-shape"/>
+          <text x="145" y="22" class="fsvg-label">C</text>
+          <text x="20" y="198" class="fsvg-label">A</text>
+          <text x="266" y="198" class="fsvg-label">B</text>
+        </svg>
+        <div class="caption">Segitiga ABC memiliki 3 sisi (AB, BC, CA) dan 3 sudut (∠A, ∠B, ∠C).</div>
+      </div>
+
+      <h3>2. Alas dan Tinggi Segitiga</h3>
+      <div class="callout def">
+        <span class="lbl">Definisi</span>
+        <p><strong>Alas</strong> segitiga merupakan sisi dari segitiga tersebut.<br>
+        <strong>Tinggi</strong> harus tegak lurus dengan alas yang sekawan dan melalui titik sudut yang berhadapan dengan alas.</p>
+      </div>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar A.2 — Alas dan Tinggi</span>
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="150,30 260,180 40,180" class="fsvg-shape"/>
+          <line x1="150" y1="30" x2="150" y2="180" class="fsvg-height"/>
+          <rect x="140" y="168" width="12" height="12" class="fsvg-right"/>
+          <text x="145" y="22" class="fsvg-label">C</text>
+          <text x="20" y="198" class="fsvg-label">A</text>
+          <text x="266" y="198" class="fsvg-label">B</text>
+          <text x="156" y="105" class="fsvg-label" font-size="12">t</text>
+        </svg>
+        <div class="caption">Garis putus-putus dari C tegak lurus ke alas AB adalah tinggi (t) segitiga.</div>
+      </div>
+
+      <h3>3. Jenis-jenis Segitiga</h3>
+      <p>Jenis-jenis segitiga dapat ditinjau berdasarkan: (a) panjang sisi-sisinya, dan (b) besar sudut-sudutnya.</p>
+
+      <table class="jenis-table">
+        <tr><th>Segitiga</th><th>Sembarang</th><th>Sama Kaki</th><th>Sama Sisi</th></tr>
+        <tr>
+          <td class="rowlabel">Lancip</td>
+          <td><svg viewBox="0 0 100 80"><polygon points="10,70 90,60 50,10" class="mini-tri"/></svg></td>
+          <td><svg viewBox="0 0 100 80"><polygon points="20,70 80,70 50,10" class="mini-tri"/></svg></td>
+          <td><svg viewBox="0 0 100 80"><polygon points="20,70 80,70 50,18" class="mini-tri"/></svg></td>
+        </tr>
+        <tr>
+          <td class="rowlabel">Siku-siku</td>
+          <td><svg viewBox="0 0 100 80"><polygon points="10,70 90,70 10,15" class="mini-tri"/></svg></td>
+          <td><svg viewBox="0 0 100 80"><polygon points="15,70 75,70 15,10" class="mini-tri"/></svg></td>
+          <td class="none">–</td>
+        </tr>
+        <tr>
+          <td class="rowlabel">Tumpul</td>
+          <td><svg viewBox="0 0 100 80"><polygon points="10,70 90,70 70,25" class="mini-tri"/></svg></td>
+          <td><svg viewBox="0 0 100 80"><polygon points="10,70 90,70 50,55" class="mini-tri"/></svg></td>
+          <td class="none">–</td>
+        </tr>
+      </table>
+
+      <h4>a. Ditinjau dari Panjang Sisi</h4>
+      <ul>
+        <li><strong>Segitiga Sembarang</strong> — ketiga sisinya tidak sama panjang.</li>
+        <li><strong>Segitiga Sama Kaki</strong> — memiliki dua buah sisi yang sama panjang.</li>
+        <li><strong>Segitiga Sama Sisi</strong> — ketiga sisinya sama panjang.</li>
+      </ul>
+
+      <h4>b. Ditinjau dari Besar Sudut</h4>
+      <ul>
+        <li><strong>Segitiga Lancip</strong> — ketiga sudutnya merupakan sudut lancip (&lt; 90°).</li>
+        <li><strong>Segitiga Siku-siku</strong> — salah satu sudutnya siku-siku (90°).</li>
+        <li><strong>Segitiga Tumpul</strong> — salah satu sudutnya tumpul (&gt; 90°).</li>
+      </ul>
+
+      <h3>4. Sifat-sifat Segitiga</h3>
+      <div class="callout def">
+        <span class="lbl">Sifat-sifat</span>
+        <ul>
+          <li>Jumlah sudut-sudut dalam segitiga besarnya \(180^\circ\).</li>
+          <li>Besar sudut luar suatu segitiga sama dengan jumlah dua sudut dalam yang tidak bersebelahan dengannya.</li>
+          <li>Jumlah sudut-sudut luar setiap segitiga besarnya \(360^\circ\).</li>
+          <li>Jumlah panjang 2 buah sisi segitiga selalu lebih panjang dari sisi ketiganya.</li>
+          <li>Selisih panjang 2 buah sisi segitiga selalu lebih pendek dari sisi ketiganya.</li>
+          <li>Sudut terbesar terletak di depan sisi terpanjang; sudut terkecil di depan sisi terpendek.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== B. BESAR SUDUT-SUDUT SEGITIGA ===================== -->
+    <section class="materi" id="materi-b">
+      <div class="kicker">Bagian B</div>
+      <h2>Besar Sudut-sudut Segitiga</h2>
+
+      <h3>1. Jumlah Sudut-sudut Segitiga</h3>
+      <div class="formula-box">
+        <span class="lbl">Sifat Utama</span>
+        \( \angle A + \angle B + \angle C = 180^\circ \)
+      </div>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar B.1 — Sudut Luar Segitiga</span>
+        <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="150,30 240,170 60,170" class="fsvg-shape"/>
+          <line x1="240" y1="170" x2="300" y2="170" class="fsvg-diag"/>
+          <path d="M 220 170 A 20 20 0 0 1 235 155" class="fsvg-angle"/>
+          <text x="145" y="22" class="fsvg-label">C</text>
+          <text x="42" y="188" class="fsvg-label">A</text>
+          <text x="246" y="188" class="fsvg-label">B</text>
+          <text x="248" y="152" class="fsvg-label" font-size="12">luar</text>
+        </svg>
+        <div class="caption">Sudut luar di B sama dengan jumlah dua sudut dalam yang tidak bersebelahan (∠A + ∠C).</div>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Dua sudut sebuah segitiga adalah \(54^\circ\) dan \(72^\circ\). Tentukan besar sudut ketiga dan jenis segitiganya!</p>
+        <div class="step">Sudut ketiga: \(180^\circ - 54^\circ - 72^\circ = 54^\circ\)</div>
+        <div class="step">Karena ketiga sudut (\(54^\circ, 72^\circ, 54^\circ\)) kurang dari \(90^\circ\), segitiga ini adalah <strong>segitiga lancip sama kaki</strong> (dua sudut sama besar → dua sisi sama panjang).</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Sudut Ketiga Segitiga</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sudut 1 (°)</label><input type="number" id="sd-a" placeholder="mis. 54"></div>
+          <div class="calc-field"><label>Sudut 2 (°)</label><input type="number" id="sd-b" placeholder="mis. 72"></div>
+          <button onclick="hitungSudutKetiga()">Hitung</button>
+        </div>
+        <div class="calc-result" id="sd-hasil">Hasil akan tampil di sini.</div>
+      </div>
+
+      <h3>2. Hubungan Panjang Sisi dan Besar Sudut</h3>
+      <div class="callout note">
+        <span class="lbl">Ketidaksamaan Sisi Segitiga</span>
+        <p>Untuk setiap segitiga selalu berlaku bahwa <strong>jumlah dua sisinya</strong> selalu <strong>lebih panjang</strong> daripada <strong>sisi ketiga</strong>.</p>
+      </div>
+      <div class="callout def">
+        <span class="lbl">Hubungan Sudut &amp; Sisi</span>
+        <ul>
+          <li>Sudut terbesar menghadap sisi terpanjang.</li>
+          <li>Sudut terkecil menghadap sisi terpendek.</li>
+          <li>Sudut yang sedang menghadap sisi yang sedang.</li>
+        </ul>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Dalam segitiga PQR diketahui PQ = 27 cm, QR = 20 cm, PR = 23 cm. Sebutkan sudut terbesar dan terkecil!</p>
+        <div class="step">Sisi terpanjang adalah PQ (27 cm), maka sudut di depannya (∠R) adalah <strong>sudut terbesar</strong>.</div>
+        <div class="step">Sisi terpendek adalah QR (20 cm), maka sudut di depannya (∠P) adalah <strong>sudut terkecil</strong>.</div>
+      </div>
+    </section>
+
+    <!-- ===================== C. KELILING DAN LUAS SEGITIGA ===================== -->
+    <section class="materi" id="materi-c">
+      <div class="kicker">Bagian C</div>
+      <h2>Keliling dan Luas Daerah Segitiga</h2>
+
+      <h3>1. Keliling Segitiga</h3>
+      <div class="figure-box">
+        <span class="lbl">Gambar C.1 — Keliling Segitiga</span>
+        <svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="130,20 220,150 40,150" class="fsvg-shape"/>
+          <text x="62" y="90" class="fsvg-label" font-size="12">c</text>
+          <text x="185" y="90" class="fsvg-label" font-size="12">b</text>
+          <text x="125" y="168" class="fsvg-label" font-size="12">a</text>
+        </svg>
+        <div class="caption">Keliling segitiga = jumlah panjang ketiga sisinya.</div>
+      </div>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( K = a + b + c \)
+      </div>
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Hitunglah keliling segitiga yang panjang sisinya 20 cm, 18 cm, dan 25 cm!</p>
+        <div class="step">Keliling: \(K = 20 + 18 + 25 = 63\) cm</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Keliling Segitiga</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi a (cm)</label><input type="number" id="kt-a" placeholder="mis. 20"></div>
+          <div class="calc-field"><label>Sisi b (cm)</label><input type="number" id="kt-b" placeholder="mis. 18"></div>
+          <div class="calc-field"><label>Sisi c (cm)</label><input type="number" id="kt-c" placeholder="mis. 25"></div>
+          <button onclick="hitungKelilingSegitiga()">Hitung</button>
+        </div>
+        <div class="calc-result" id="kt-hasil">Hasil akan tampil di sini.</div>
+      </div>
+
+      <h3>2. Luas Daerah Segitiga</h3>
+      <div class="formula-box">
+        <span class="lbl">Rumus</span>
+        \( L = \dfrac{1}{2} \times \text{alas} \times \text{tinggi} \)
+      </div>
+      <p>Alas segitiga merupakan sisi dari segitiga tersebut. Tinggi harus tegak lurus dengan alas yang sekawan dan melalui titik sudut yang berhadapan dengan alas.</p>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Hitunglah luas segitiga dengan panjang alas 16 cm dan tinggi 18 cm.</p>
+        <div class="step">Luas: \(L = \dfrac{1}{2} \times 16 \times 18 = \dfrac{1}{2} \times 288 = 144\) cm\(^2\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Luas Segitiga</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Alas (cm)</label><input type="number" id="lt-a" placeholder="mis. 16"></div>
+          <div class="calc-field"><label>Tinggi (cm)</label><input type="number" id="lt-t" placeholder="mis. 18"></div>
+          <button onclick="hitungLuasSegitiga()">Hitung</button>
+        </div>
+        <div class="calc-result" id="lt-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== D. GARIS-GARIS PADA SEGITIGA ===================== -->
+    <section class="materi" id="materi-d">
+      <div class="kicker">Bagian D</div>
+      <h2>Garis-garis pada Segitiga</h2>
+      <p>Bagian ini menjelaskan konstruksi (melukis) garis-garis penting pada segitiga menggunakan jangka dan penggaris. Gunakan tombol <strong>Langkah ▶</strong> pada tiap animasi untuk melihat proses melukis tahap demi tahap.</p>
+
+      <h3 id="d1">1. Dasar-dasar Melukis</h3>
+
+      <h4>a. Melukis Garis Tegak Lurus (dari titik di luar garis)</h4>
+      <p>Langkah-langkah membuat garis tegak lurus dari titik P ke garis k:</p>
+      <div class="construct-box">
+        <h4>📐 Animasi: Garis Tegak Lurus dari Titik P</h4>
+        <div class="construct-svg-wrap">
+          <svg viewBox="0 0 340 260" xmlns="http://www.w3.org/2000/svg">
+            <g class="cstep" data-step="0" id="c1-step0">
+              <line x1="40" y1="200" x2="300" y2="200" class="constr-base"/>
+              <text x="308" y="204" class="constr-label">k</text>
+              <circle cx="170" cy="60" r="3" class="constr-point"/>
+              <text x="176" y="56" class="constr-label">P</text>
+            </g>
+            <g class="cstep" data-step="1" id="c1-step1">
+              <path d="M 111 200 Q 170 258 229 200" class="constr-arc"/>
+              <circle cx="111" cy="200" r="2.5" class="constr-point"/>
+              <circle cx="229" cy="200" r="2.5" class="constr-point"/>
+              <text x="98" y="216" class="constr-label">A</text>
+              <text x="232" y="216" class="constr-label">B</text>
+            </g>
+            <g class="cstep" data-step="2" id="c1-step2">
+              <path d="M 140 250 Q 170 235 200 210" class="constr-arc"/>
+              <path d="M 200 250 Q 170 235 140 210" class="constr-arc"/>
+              <circle cx="170" cy="234" r="2.5" class="constr-point"/>
+              <text x="176" y="240" class="constr-label">C</text>
+            </g>
+            <g class="cstep" data-step="3" id="c1-step3">
+              <line x1="170" y1="60" x2="170" y2="234" class="constr-result"/>
+              <rect x="162" y="192" width="14" height="14" class="constr-right"/>
+            </g>
+          </svg>
+        </div>
+        <div class="construct-controls">
+          <button id="c1-prev" onclick="stepConstruct('c1',-1)">◀ Sebelumnya</button>
+          <span class="construct-counter" id="c1-counter">Langkah 1 / 4</span>
+          <button id="c1-next" onclick="stepConstruct('c1',1)">Berikutnya ▶</button>
+          <button onclick="resetConstruct('c1')">🔄 Ulangi</button>
+        </div>
+        <div class="construct-caption" id="c1-caption"></div>
+      </div>
+
+      <h4>b. Melukis Garis Bagi Suatu Sudut</h4>
+      <p>Garis bagi sudut adalah garis yang membagi suatu sudut menjadi dua sudut sama besar.</p>
+      <div class="construct-box">
+        <h4>📐 Animasi: Garis Bagi Sudut CAB</h4>
+        <div class="construct-svg-wrap">
+          <svg viewBox="0 0 340 240" xmlns="http://www.w3.org/2000/svg">
+            <g class="cstep" data-step="0" id="c2-step0">
+              <line x1="50" y1="200" x2="280" y2="200" class="constr-base"/>
+              <line x1="50" y1="200" x2="200" y2="40" class="constr-base"/>
+              <text x="30" y="216" class="constr-label">A</text>
+              <text x="286" y="204" class="constr-label">B</text>
+              <text x="196" y="32" class="constr-label">C</text>
+            </g>
+            <g class="cstep" data-step="1" id="c2-step1">
+              <path d="M 115 200 Q 118 171 94 153" class="constr-arc"/>
+              <circle cx="115" cy="200" r="2.5" class="constr-point"/>
+              <circle cx="94" cy="153" r="2.5" class="constr-point"/>
+              <text x="107" y="216" class="constr-label" font-size="12">B'</text>
+              <text x="98" y="145" class="constr-label" font-size="12">C'</text>
+            </g>
+            <g class="cstep" data-step="2" id="c2-step2">
+              <path d="M 120 190 Q 155 150 175 135" class="constr-arc"/>
+              <path d="M 180 190 Q 150 150 125 135" class="constr-arc"/>
+              <circle cx="151" cy="156" r="2.5" class="constr-point"/>
+              <text x="156" y="152" class="constr-label" font-size="12">D</text>
+            </g>
+            <g class="cstep" data-step="3" id="c2-step3">
+              <line x1="50" y1="200" x2="261" y2="109" class="constr-result"/>
+              <path d="M 80 200 A 30 30 0 0 1 78 188" class="fsvg-angle"/>
+              <path d="M 78 188 A 30 30 0 0 1 71 178" class="fsvg-angle"/>
+            </g>
+          </svg>
+        </div>
+        <div class="construct-controls">
+          <button id="c2-prev" onclick="stepConstruct('c2',-1)">◀ Sebelumnya</button>
+          <span class="construct-counter" id="c2-counter">Langkah 1 / 4</span>
+          <button id="c2-next" onclick="stepConstruct('c2',1)">Berikutnya ▶</button>
+          <button onclick="resetConstruct('c2')">🔄 Ulangi</button>
+        </div>
+        <div class="construct-caption" id="c2-caption"></div>
+      </div>
+
+      <h4>c. Melukis Garis Sumbu (Sumbu Ruas Garis)</h4>
+      <p>Sumbu ruas garis adalah garis yang membagi suatu ruas garis menjadi dua bagian sama panjang dan tegak lurus ruas garis tersebut.</p>
+      <div class="construct-box">
+        <h4>📐 Animasi: Sumbu Ruas Garis AB</h4>
+        <div class="construct-svg-wrap">
+          <svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+            <g class="cstep" data-step="0" id="c3-step0">
+              <line x1="60" y1="120" x2="240" y2="120" class="constr-base"/>
+              <circle cx="60" cy="120" r="3" class="constr-point"/>
+              <circle cx="240" cy="120" r="3" class="constr-point"/>
+              <text x="46" y="140" class="constr-label">A</text>
+              <text x="246" y="140" class="constr-label">B</text>
+            </g>
+            <g class="cstep" data-step="1" id="c3-step1">
+              <path d="M 60 120 A 130 130 0 0 1 150 30" class="constr-arc"/>
+              <path d="M 150 30 A 130 130 0 0 1 240 120" class="constr-arc"/>
+              <path d="M 60 120 A 130 130 0 0 0 150 210" class="constr-arc"/>
+              <path d="M 150 210 A 130 130 0 0 0 240 120" class="constr-arc"/>
+              <circle cx="150" cy="30" r="2.5" class="constr-point"/>
+              <circle cx="150" cy="210" r="2.5" class="constr-point"/>
+              <text x="156" y="26" class="constr-label">C</text>
+              <text x="156" y="222" class="constr-label">D</text>
+            </g>
+            <g class="cstep" data-step="2" id="c3-step2">
+              <line x1="150" y1="30" x2="150" y2="210" class="constr-result"/>
+              <rect x="142" y="112" width="14" height="14" class="constr-right"/>
+            </g>
+          </svg>
+        </div>
+        <div class="construct-controls">
+          <button id="c3-prev" onclick="stepConstruct('c3',-1)">◀ Sebelumnya</button>
+          <span class="construct-counter" id="c3-counter">Langkah 1 / 3</span>
+          <button id="c3-next" onclick="stepConstruct('c3',1)">Berikutnya ▶</button>
+          <button onclick="resetConstruct('c3')">🔄 Ulangi</button>
+        </div>
+        <div class="construct-caption" id="c3-caption"></div>
+      </div>
+
+      <h3 id="d2">2. Garis Istimewa Segitiga</h3>
+      <p>Keempat garis berikut dilukis pada segitiga ABC yang sama, agar mudah dibandingkan.</p>
+
+      <h4>a. Garis Tinggi</h4>
+      <div class="callout def"><span class="lbl">Definisi</span><p>Garis tinggi suatu segitiga adalah garis yang ditarik dari titik sudut suatu segitiga dan tegak lurus terhadap sisi di hadapannya.</p></div>
+      <div class="construct-box">
+        <h4>📐 Animasi: Garis Tinggi dari Titik B</h4>
+        <div class="construct-svg-wrap">
+          <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+            <g class="cstep" data-step="0" id="c4-step0">
+              <polygon points="60,220 340,220 180,40" class="constr-tri"/>
+              <text x="42" y="238" class="constr-label">A</text>
+              <text x="346" y="238" class="constr-label">B</text>
+              <text x="174" y="30" class="constr-label">C</text>
+            </g>
+            <g class="cstep" data-step="1" id="c4-step1">
+              <path d="M 124 124 Q 134 82 168 57" class="constr-arc"/>
+              <circle cx="124" cy="124" r="2.5" class="constr-point"/>
+              <circle cx="168" cy="57" r="2.5" class="constr-point"/>
+            </g>
+            <g class="cstep" data-step="2" id="c4-step2">
+              <path d="M 75 95 Q 100 52 125 45" class="constr-arc"/>
+              <path d="M 65 85 Q 90 54.5 155 50" class="constr-arc"/>
+              <circle cx="100" cy="61" r="2.5" class="constr-point"/>
+              <text x="72" y="55" class="constr-label">H</text>
+            </g>
+            <g class="cstep" data-step="3" id="c4-step3">
+              <line x1="340" y1="220" x2="100" y2="61" class="constr-result"/>
+              <rect x="140" y="98" width="13" height="13" class="constr-right" transform="rotate(-56 146 91)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="construct-controls">
+          <button id="c4-prev" onclick="stepConstruct('c4',-1)">◀ Sebelumnya</button>
+          <span class="construct-counter" id="c4-counter">Langkah 1 / 4</span>
+          <button id="c4-next" onclick="stepConstruct('c4',1)">Berikutnya ▶</button>
+          <button onclick="resetConstruct('c4')">🔄 Ulangi</button>
+        </div>
+        <div class="construct-caption" id="c4-caption"></div>
+      </div>
+
+      <h4>b. Garis Bagi</h4>
+      <div class="callout def"><span class="lbl">Definisi</span><p>Garis bagi suatu segitiga adalah garis yang ditarik dari titik sudut segitiga dan membagi sudut itu menjadi dua bagian yang sama besar.</p></div>
+      <div class="construct-box">
+        <h4>📐 Animasi: Garis Bagi dari Titik A</h4>
+        <div class="construct-svg-wrap">
+          <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+            <g class="cstep" data-step="0" id="c5-step0">
+              <polygon points="60,220 340,220 180,40" class="constr-tri"/>
+              <text x="42" y="238" class="constr-label">A</text>
+              <text x="346" y="238" class="constr-label">B</text>
+              <text x="174" y="30" class="constr-label">C</text>
+            </g>
+            <g class="cstep" data-step="1" id="c5-step1">
+              <path d="M 150 220 Q 148 173 110 145" class="constr-arc"/>
+              <circle cx="150" cy="220" r="2.5" class="constr-point"/>
+              <circle cx="110" cy="145" r="2.5" class="constr-point"/>
+            </g>
+            <g class="cstep" data-step="2" id="c5-step2">
+              <path d="M 140 195 Q 162 158.5 200 140" class="constr-arc"/>
+              <path d="M 195 190 Q 162 166 145 130" class="constr-arc"/>
+              <circle cx="166" cy="163" r="2.5" class="constr-point"/>
+            </g>
+            <g class="cstep" data-step="3" id="c5-step3">
+              <line x1="60" y1="220" x2="250" y2="118" class="constr-result"/>
+              <text x="255" y="115" class="constr-label">D</text>
+              <path d="M 100 220 A 40 40 0 0 1 108 190" class="fsvg-angle"/>
+              <path d="M 108 190 A 40 40 0 0 1 130 178" class="fsvg-angle"/>
+            </g>
+          </svg>
+        </div>
+        <div class="construct-controls">
+          <button id="c5-prev" onclick="stepConstruct('c5',-1)">◀ Sebelumnya</button>
+          <span class="construct-counter" id="c5-counter">Langkah 1 / 4</span>
+          <button id="c5-next" onclick="stepConstruct('c5',1)">Berikutnya ▶</button>
+          <button onclick="resetConstruct('c5')">🔄 Ulangi</button>
+        </div>
+        <div class="construct-caption" id="c5-caption"></div>
+      </div>
+
+      <h4>c. Garis Sumbu</h4>
+      <div class="callout def"><span class="lbl">Definisi</span><p>Garis sumbu suatu segitiga adalah garis yang ditarik dari pertengahan sisi segitiga dan tegak lurus dengan sisi itu.</p></div>
+      <div class="construct-box">
+        <h4>📐 Animasi: Garis Sumbu Sisi AB</h4>
+        <div class="construct-svg-wrap">
+          <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+            <g class="cstep" data-step="0" id="c6-step0">
+              <polygon points="60,220 340,220 180,40" class="constr-tri"/>
+              <text x="42" y="238" class="constr-label">A</text>
+              <text x="346" y="238" class="constr-label">B</text>
+              <text x="174" y="30" class="constr-label">C</text>
+            </g>
+            <g class="cstep" data-step="1" id="c6-step1">
+              <path d="M 165 130 Q 200 90 235 60" class="constr-arc"/>
+              <circle cx="60" cy="220" r="2.5" class="constr-point"/>
+            </g>
+            <g class="cstep" data-step="2" id="c6-step2">
+              <path d="M 235 130 Q 200 90 165 60" class="constr-arc"/>
+              <circle cx="340" cy="220" r="2.5" class="constr-point"/>
+              <circle cx="200" cy="90" r="2.5" class="constr-point"/>
+            </g>
+            <g class="cstep" data-step="3" id="c6-step3">
+              <line x1="200" y1="60" x2="200" y2="220" class="constr-result"/>
+              <rect x="192" y="208" width="14" height="12" class="constr-right"/>
+            </g>
+          </svg>
+        </div>
+        <div class="construct-controls">
+          <button id="c6-prev" onclick="stepConstruct('c6',-1)">◀ Sebelumnya</button>
+          <span class="construct-counter" id="c6-counter">Langkah 1 / 4</span>
+          <button id="c6-next" onclick="stepConstruct('c6',1)">Berikutnya ▶</button>
+          <button onclick="resetConstruct('c6')">🔄 Ulangi</button>
+        </div>
+        <div class="construct-caption" id="c6-caption"></div>
+      </div>
+
+      <h4>d. Garis Berat</h4>
+      <div class="callout def"><span class="lbl">Definisi</span><p>Garis berat suatu segitiga adalah garis yang ditarik dari titik sudut suatu segitiga ke pertengahan sisi di hadapannya.</p></div>
+      <div class="construct-box">
+        <h4>📐 Animasi: Garis Berat dari Titik A</h4>
+        <div class="construct-svg-wrap">
+          <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+            <g class="cstep" data-step="0" id="c7-step0">
+              <polygon points="60,220 340,220 180,40" class="constr-tri"/>
+              <text x="42" y="238" class="constr-label">A</text>
+              <text x="346" y="238" class="constr-label">B</text>
+              <text x="174" y="30" class="constr-label">C</text>
+            </g>
+            <g class="cstep" data-step="1" id="c7-step1">
+              <path d="M 339 60 Q 208 70 181 200" class="constr-arc"/>
+              <circle cx="339" cy="60" r="2.5" class="constr-point"/>
+              <circle cx="181" cy="200" r="2.5" class="constr-point"/>
+            </g>
+            <g class="cstep" data-step="2" id="c7-step2">
+              <path d="M 339 60 Q 312 190 181 200" class="constr-arc"/>
+              <line x1="339" y1="60" x2="181" y2="200" class="fsvg-diag"/>
+              <circle cx="260" cy="130" r="3" class="constr-point"/>
+              <text x="266" y="126" class="constr-label">M</text>
+            </g>
+            <g class="cstep" data-step="3" id="c7-step3">
+              <line x1="60" y1="220" x2="260" y2="130" class="constr-result"/>
+            </g>
+          </svg>
+        </div>
+        <div class="construct-controls">
+          <button id="c7-prev" onclick="stepConstruct('c7',-1)">◀ Sebelumnya</button>
+          <span class="construct-counter" id="c7-counter">Langkah 1 / 4</span>
+          <button id="c7-next" onclick="stepConstruct('c7',1)">Berikutnya ▶</button>
+          <button onclick="resetConstruct('c7')">🔄 Ulangi</button>
+        </div>
+        <div class="construct-caption" id="c7-caption"></div>
+      </div>
+    </section>
+
+    <!-- ===================== LATIHAN ===================== -->
+    <section id="latihan">
+      <div class="kicker">Latihan</div>
+      <h2>Uji Pemahamanmu</h2>
+      <p style="color:var(--text-mid);">25 soal — 5 tipe soal berbeda. Jawab semua soal, lalu lihat analisis hasilmu di akhir.</p>
+
+      <div class="type-tabs">
+        <button class="type-tab active" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda</button>
+        <button class="type-tab" data-type="is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="type-tab" data-type="pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="type-tab" data-type="bs" onclick="showType('bs')">4. Benar/Salah</button>
+        <button class="type-tab" data-type="jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="score-strip"></div>
+
+      <div id="quiz-area"></div>
+
+      <div style="text-align:center; margin-top:24px;">
+        <button id="analysis-btn" onclick="showAnalysis()" style="background:var(--ink); color:var(--gold-soft); border:none; padding:13px 30px; border-radius:12px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.95rem;">📊 Lihat Analisis Akhir</button>
+      </div>
+
+      <div class="analysis-panel" id="analysis-panel">
+        <h2 style="color:var(--gold-title);">Analisis Hasil Latihan</h2>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num" id="stat-total">0</div><div class="lbl">Total Soal</div></div>
+          <div class="stat-box"><div class="num" id="stat-benar">0</div><div class="lbl">Benar</div></div>
+          <div class="stat-box"><div class="num" id="stat-salah">0</div><div class="lbl">Salah</div></div>
+          <div class="stat-box"><div class="num" id="stat-nilai">0%</div><div class="lbl">Nilai</div></div>
+        </div>
+        <div id="bar-chart"></div>
+        <div class="grade-box">
+          <div class="grade" id="grade-letter">-</div>
+          <div id="grade-msg" style="color:var(--cream-dim); margin-top:.4em;"></div>
+        </div>
+        <div style="text-align:center;"><button id="reset-btn" onclick="resetAll()">🔄 Ulangi Latihan</button></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Ebook Interaktif — Segitiga · Matematika Kelas 7 · Kurikulum Merdeka</div>
+      <div class="credit">Suminto with Claude.</div>
+    </footer>
+  </div>
+</div>
+
+<script>
+/* ===================== KALKULATOR MATERI ===================== */
+function hitungSudutKetiga(){
+  var a = parseFloat(document.getElementById('sd-a').value) || 0;
+  var b = parseFloat(document.getElementById('sd-b').value) || 0;
+  var c = 180 - a - b;
+  var out = document.getElementById('sd-hasil');
+  if(c <= 0){
+    out.innerHTML = 'Sudut tidak valid (jumlah dua sudut harus kurang dari 180°).';
+    return;
+  }
+  var jenis = '';
+  if(a===90 || b===90 || c===90) jenis = 'Segitiga Siku-siku';
+  else if(a>90 || b>90 || c>90) jenis = 'Segitiga Tumpul';
+  else jenis = 'Segitiga Lancip';
+  out.innerHTML = 'Sudut ketiga = ' + c + '° &nbsp;|&nbsp; Jenis: ' + jenis;
+}
+function hitungKelilingSegitiga(){
+  var a = parseFloat(document.getElementById('kt-a').value) || 0;
+  var b = parseFloat(document.getElementById('kt-b').value) || 0;
+  var c = parseFloat(document.getElementById('kt-c').value) || 0;
+  var k = a+b+c;
+  document.getElementById('kt-hasil').innerHTML = 'Keliling = ' + k + ' cm';
+}
+function hitungLuasSegitiga(){
+  var a = parseFloat(document.getElementById('lt-a').value) || 0;
+  var t = parseFloat(document.getElementById('lt-t').value) || 0;
+  var l = 0.5*a*t;
+  document.getElementById('lt-hasil').innerHTML = 'Luas = ' + l + ' cm²';
+}
+
+/* ===================== ANIMASI KONSTRUKSI ===================== */
+var constructCaptions = {
+  c1: [
+    'Diketahui garis k dan titik P di luar garis.',
+    'Lukis busur lingkaran dengan pusat di titik P sehingga memotong garis k di titik A dan B.',
+    'Dengan titik A dan B sebagai pusat dan jari-jari tetap sama, buatlah busur lingkaran yang saling berpotongan di titik C.',
+    'Hubungkan P ke C — maka PC tegak lurus dengan garis k.'
+  ],
+  c2: [
+    'Diketahui sudut CAB (dua sinar dari titik A).',
+    "Lukislah busur lingkaran di titik A sehingga memotong kedua kaki sudut di titik B' dan C'.",
+    'Dari kedua titik potong, lukislah busur lingkaran berjari-jari sama sehingga berpotongan di satu titik D.',
+    'Hubungkan A ke D — garis AD adalah garis bagi sudut CAB (membagi dua sama besar).'
+  ],
+  c3: [
+    'Diketahui ruas garis AB.',
+    'Dengan A dan B sebagai pusat dan jari-jari lebih dari setengah AB, lukislah dua busur lingkaran yang saling berpotongan di titik C dan D.',
+    'Hubungkan titik C dan D — garis CD adalah sumbu ruas garis AB (tegak lurus dan membagi AB sama panjang).'
+  ],
+  c4: [
+    'Diketahui segitiga ABC.',
+    'Lukislah busur lingkaran pada titik B sehingga memotong sisi AC di dua titik.',
+    'Dari kedua titik potong, lukislah busur lingkaran dengan jari-jari yang sama sehingga kedua busur bertemu di satu titik H.',
+    'Hubungkan titik B ke titik H — garis BH adalah garis tinggi (tegak lurus AC).'
+  ],
+  c5: [
+    'Diketahui segitiga ABC.',
+    'Lukislah busur lingkaran di titik A sehingga memotong sisi AB dan AC.',
+    'Dari titik potong pada AB dan AC, lukislah busur lingkaran berjari-jari sama hingga bertemu di satu titik.',
+    'Hubungkan titik A ke titik pertemuan busur hingga memotong BC di titik D — garis AD membagi sudut A menjadi dua sama besar.'
+  ],
+  c6: [
+    'Diketahui segitiga ABC.',
+    'Lukislah busur di titik A dengan jari-jari lebih dari setengah AB.',
+    'Dengan jari-jari yang sama, lukislah busur lingkaran di titik B sehingga kedua busur berpotongan di dua titik.',
+    'Hubungkan kedua titik potong busur — garis tersebut adalah garis sumbu sisi AB (tegak lurus AB di titik tengahnya).'
+  ],
+  c7: [
+    'Diketahui segitiga ABC.',
+    'Lukislah busur lingkaran di titik B dengan jari-jari lebih dari setengah BC.',
+    'Dengan jari-jari yang sama, lukislah busur lingkaran di titik C sehingga kedua busur berpotongan, menentukan titik tengah M pada BC.',
+    'Hubungkan titik A ke titik tengah M pada BC — garis AM adalah garis berat dari titik A.'
+  ]
+};
+var constructState = {};
+function initConstruct(id){
+  constructState[id] = { idx: 0, total: constructCaptions[id].length };
+  updateConstruct(id);
+}
+function stepConstruct(id, delta){
+  var st = constructState[id];
+  if(!st) return;
+  st.idx = Math.max(0, Math.min(st.total - 1, st.idx + delta));
+  updateConstruct(id);
+}
+function resetConstruct(id){
+  var st = constructState[id];
+  if(!st) return;
+  st.idx = 0;
+  updateConstruct(id);
+}
+function updateConstruct(id){
+  var st = constructState[id];
+  for(var i=0; i<st.total; i++){
+    var g = document.getElementById(id + '-step' + i);
+    if(g){ g.classList.toggle('show', i <= st.idx); }
+  }
+  var counterEl = document.getElementById(id + '-counter');
+  if(counterEl) counterEl.textContent = 'Langkah ' + (st.idx+1) + ' / ' + st.total;
+  var capEl = document.getElementById(id + '-caption');
+  if(capEl) capEl.textContent = constructCaptions[id][st.idx];
+  var prevBtn = document.getElementById(id + '-prev');
+  var nextBtn = document.getElementById(id + '-next');
+  if(prevBtn) prevBtn.disabled = st.idx === 0;
+  if(nextBtn) nextBtn.disabled = st.idx === st.total - 1;
+}
+
+/* ===================== SIDEBAR MOBILE ===================== */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('#sidebar .nav-link, #sidebar .nav-sub, #sidebar .nav-sub2').forEach(function(el){
+  el.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ===================== SCROLLSPY + PROGRESS BAR ===================== */
+var sections = ['materi-a','materi-b','materi-c','materi-d','latihan'];
+function updateScrollspy(){
+  var scrollPos = window.scrollY + 140;
+  var activeId = sections[0];
+  sections.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top + window.scrollY <= scrollPos){
+      activeId = id;
+    }
+  });
+  document.querySelectorAll('#sidebar .nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === activeId);
+  });
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+window.addEventListener('scroll', updateScrollspy);
+window.addEventListener('resize', updateScrollspy);
+
+/* ===================== BANK SOAL ===================== */
+var allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Sebuah segitiga memiliki sudut 50° dan 60°. Sudut ketiganya adalah ...',
+      options:['A. 60°','B. 70°','C. 80°','D. 90°'], answer:1,
+      explanation:'✅ Sudut ketiga \\(= 180^\\circ - 50^\\circ - 60^\\circ = 70^\\circ\\).' },
+    { id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Segitiga yang ketiga sisinya sama panjang disebut ...',
+      options:['A. Segitiga sembarang','B. Segitiga sama kaki','C. Segitiga sama sisi','D. Segitiga siku-siku'], answer:2,
+      explanation:'✅ Segitiga sama sisi adalah segitiga yang ketiga sisinya sama panjang (dan ketiga sudutnya 60°).' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Keliling segitiga dengan panjang sisi 12 cm, 15 cm, dan 20 cm adalah ...',
+      options:['A. 35 cm','B. 40 cm','C. 47 cm','D. 60 cm'], answer:2,
+      explanation:'✅ \\(K = a+b+c = 12+15+20 = 47\\) cm.' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Luas segitiga dengan alas 24 cm dan tinggi 10 cm adalah ...',
+      options:['A. 60 cm²','B. 120 cm²','C. 140 cm²','D. 240 cm²'], answer:1,
+      explanation:'✅ \\(L = \\dfrac{1}{2} \\times 24 \\times 10 = 120\\) cm².' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Garis yang ditarik dari titik sudut segitiga ke pertengahan sisi di hadapannya disebut ...',
+      options:['A. Garis tinggi','B. Garis bagi','C. Garis sumbu','D. Garis berat'], answer:3,
+      explanation:'✅ Garis berat menghubungkan titik sudut dengan titik tengah sisi di hadapannya.' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Dua sudut sebuah segitiga adalah 40° dan 65°. Sudut ketiganya adalah ... °.',
+      answer:'75', altAnswers:['75°'],
+      explanation:'✅ \\(180^\\circ - 40^\\circ - 65^\\circ = 75^\\circ\\).' },
+    { id:'is2', type:'is', level:'mudah', num:2,
+      text:'Segitiga PQR sama kaki (PQ = PR) dengan PQ = 18 cm dan QR = 14 cm. Kelilingnya adalah ... cm.',
+      answer:'50', altAnswers:['50 cm'],
+      explanation:'✅ \\(K = PQ+PR+QR = 18+18+14 = 50\\) cm.' },
+    { id:'is3', type:'is', level:'sedang', num:3,
+      text:'Sebuah segitiga memiliki alas 22 cm dan tinggi 12 cm. Luasnya adalah ... cm².',
+      answer:'132', altAnswers:['132 cm2','132 cm²'],
+      explanation:'✅ \\(L = \\dfrac{1}{2} \\times 22 \\times 12 = 132\\) cm².' },
+    { id:'is4', type:'is', level:'sedang', num:4,
+      text:'Luas sebuah segitiga adalah 108 cm² dengan alas 18 cm. Tingginya adalah ... cm.',
+      answer:'12', altAnswers:['12 cm'],
+      explanation:'✅ \\(t = (2 \\times L) \\div \\text{alas} = (2 \\times 108) \\div 18 = 12\\) cm.' },
+    { id:'is5', type:'is', level:'sukar', num:5,
+      text:'Segitiga ABC sama kaki (AB = BC), kelilingnya 46 cm dan panjang AB = 14 cm. Panjang sisi AC adalah ... cm.',
+      answer:'18', altAnswers:['18 cm'],
+      explanation:'✅ \\(AC = K - AB - BC = 46 - 14 - 14 = 18\\) cm.' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'mudah', num:1,
+      text:'Pilih pernyataan yang BENAR mengenai sifat-sifat segitiga! (Jawaban bisa lebih dari satu)',
+      options:['A. Jumlah sudut dalam segitiga adalah 180°','B. Jumlah dua sisi selalu lebih panjang dari sisi ketiga','C. Jumlah sudut luar segitiga adalah 180°','D. Sudut terbesar menghadap sisi terpanjang'],
+      answers:[0,1,3],
+      explanation:'✅ Jumlah sudut dalam = 180°, jumlah dua sisi > sisi ketiga, dan sudut terbesar menghadap sisi terpanjang — semua benar. Pernyataan C salah, jumlah sudut luar segitiga adalah 360°, bukan 180°.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Pilih pernyataan yang BENAR mengenai segitiga sama kaki dan sama sisi! (Jawaban bisa lebih dari satu)',
+      options:['A. Segitiga sama sisi memiliki tiga sudut yang sama besar (60°)','B. Segitiga sama kaki memiliki dua sisi yang sama panjang','C. Segitiga sama sisi tidak mungkin lancip','D. Segitiga sama kaki bisa berupa segitiga siku-siku'],
+      answers:[0,1,3],
+      explanation:'✅ Segitiga sama sisi selalu lancip (semua sudutnya 60°), sehingga pernyataan C salah. Sisanya (A, B, D) benar — segitiga sama kaki-siku terjadi bila sudut puncaknya 90°.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Pilih pasangan nama garis istimewa dan definisinya yang BENAR! (Jawaban bisa lebih dari satu)',
+      options:['A. Garis tinggi tegak lurus terhadap sisi di hadapannya','B. Garis bagi membagi sisi menjadi dua sama panjang','C. Garis sumbu tegak lurus melalui titik tengah suatu sisi','D. Garis berat menghubungkan titik sudut ke titik tengah sisi di hadapannya'],
+      answers:[0,2,3],
+      explanation:'✅ Garis tinggi, garis sumbu, dan garis berat dijelaskan dengan tepat. Pernyataan B salah — garis bagi membagi SUDUT menjadi dua sama besar, bukan membagi sisi.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4,
+      text:'Segitiga XYZ memiliki panjang sisi 7 cm, 9 cm, dan 15 cm. Pilih pernyataan yang BENAR! (Jawaban bisa lebih dari satu)',
+      options:['A. Ketiga panjang ini TIDAK dapat membentuk segitiga','B. Jumlah 7 + 9 = 16 lebih besar dari 15','C. Ketiga panjang ini dapat membentuk segitiga','D. Segitiga ini termasuk segitiga sama sisi'],
+      answers:[1,2],
+      explanation:'✅ Karena \\(7+9=16 > 15\\), ketiga sisi tersebut memenuhi ketidaksamaan segitiga sehingga DAPAT membentuk segitiga (bukan segitiga sama sisi karena panjang sisinya berbeda-beda).' },
+    { id:'pk5', type:'pk', level:'sukar', num:5,
+      text:'Pilih pernyataan yang BENAR mengenai jenis segitiga ditinjau dari sudutnya! (Jawaban bisa lebih dari satu)',
+      options:['A. Segitiga lancip memiliki ketiga sudut kurang dari 90°','B. Segitiga tumpul memiliki lebih dari satu sudut tumpul','C. Segitiga siku-siku memiliki tepat satu sudut 90°','D. Segitiga tumpul memiliki salah satu sudutnya lebih dari 90°'],
+      answers:[0,2,3],
+      explanation:'✅ Segitiga lancip: semua sudut < 90°; siku-siku: tepat satu sudut 90°; tumpul: salah satu sudut > 90°. Pernyataan B salah — sebuah segitiga hanya mungkin memiliki SATU sudut tumpul, karena jumlah seluruh sudutnya hanya 180°.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Jumlah sudut-sudut dalam suatu segitiga selalu 180°.',
+      answer:true,
+      explanation:'✅ BENAR. Ini adalah sifat utama segitiga: \\(\\angle A + \\angle B + \\angle C = 180^\\circ\\).' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Segitiga sama sisi memiliki tiga sudut yang masing-masing besarnya 60°.',
+      answer:true,
+      explanation:'✅ BENAR. Karena ketiga sisi sama panjang, ketiga sudutnya juga sama besar, yaitu \\(180^\\circ \\div 3 = 60^\\circ\\).' },
+    { id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Jumlah dua sisi sebuah segitiga boleh lebih pendek daripada sisi ketiga.',
+      answer:false,
+      explanation:'❌ SALAH. Jumlah dua sisi segitiga SELALU lebih panjang daripada sisi ketiga — ini disebut ketidaksamaan segitiga.' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Garis bagi suatu segitiga membagi sudut menjadi dua bagian yang sama besar.',
+      answer:true,
+      explanation:'✅ BENAR. Itulah definisi garis bagi pada segitiga.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Garis tinggi suatu segitiga selalu berada di dalam segitiga, untuk semua jenis segitiga.',
+      answer:false,
+      explanation:'❌ SALAH. Pada segitiga tumpul, garis tinggi dari titik sudut tertentu bisa jatuh di LUAR segitiga (pada perpanjangan sisi alasnya).' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'Garis Tinggi', right:'Tegak lurus dari titik sudut ke sisi di hadapannya', answer:'Tegak lurus dari titik sudut ke sisi di hadapannya',
+      options:['Tegak lurus dari titik sudut ke sisi di hadapannya','Membagi sudut menjadi dua sama besar','Tegak lurus melalui titik tengah suatu sisi','Dari titik sudut ke titik tengah sisi di hadapannya','Segitiga yang salah satu sudutnya siku-siku'],
+      explanation:'✅ Garis tinggi ditarik dari titik sudut dan tegak lurus terhadap sisi di hadapannya.' },
+    { id:'jd2', type:'jd', level:'mudah', num:2,
+      left:'Garis Bagi', right:'Membagi sudut menjadi dua sama besar', answer:'Membagi sudut menjadi dua sama besar',
+      options:['Tegak lurus dari titik sudut ke sisi di hadapannya','Membagi sudut menjadi dua sama besar','Tegak lurus melalui titik tengah suatu sisi','Dari titik sudut ke titik tengah sisi di hadapannya','Segitiga yang salah satu sudutnya siku-siku'],
+      explanation:'✅ Garis bagi membagi sudut suatu segitiga menjadi dua bagian yang sama besar.' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Garis Sumbu', right:'Tegak lurus melalui titik tengah suatu sisi', answer:'Tegak lurus melalui titik tengah suatu sisi',
+      options:['Tegak lurus dari titik sudut ke sisi di hadapannya','Membagi sudut menjadi dua sama besar','Tegak lurus melalui titik tengah suatu sisi','Dari titik sudut ke titik tengah sisi di hadapannya','Segitiga yang salah satu sudutnya siku-siku'],
+      explanation:'✅ Garis sumbu ditarik dari pertengahan sisi segitiga dan tegak lurus dengan sisi itu.' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'Garis Berat', right:'Dari titik sudut ke titik tengah sisi di hadapannya', answer:'Dari titik sudut ke titik tengah sisi di hadapannya',
+      options:['Tegak lurus dari titik sudut ke sisi di hadapannya','Membagi sudut menjadi dua sama besar','Tegak lurus melalui titik tengah suatu sisi','Dari titik sudut ke titik tengah sisi di hadapannya','Segitiga yang salah satu sudutnya siku-siku'],
+      explanation:'✅ Garis berat ditarik dari titik sudut segitiga ke pertengahan sisi di hadapannya.' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'Segitiga Siku-siku', right:'Segitiga yang salah satu sudutnya siku-siku', answer:'Segitiga yang salah satu sudutnya siku-siku',
+      options:['Tegak lurus dari titik sudut ke sisi di hadapannya','Membagi sudut menjadi dua sama besar','Tegak lurus melalui titik tengah suatu sisi','Dari titik sudut ke titik tengah sisi di hadapannya','Segitiga yang salah satu sudutnya siku-siku'],
+      explanation:'✅ Segitiga siku-siku adalah segitiga yang salah satu sudutnya tepat 90°.' }
+  ]
+};
+var typeLabels = { pg:'Pilihan Ganda', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+var typeOrder = ['pg','is','pk','bs','jd'];
+
+var state = { answers:{}, currentType:'pg', matchSelections:{} };
+var pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.type-tab').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-type') === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  var container = document.getElementById('quiz-area');
+  var qs = allQuestions[type];
+  var html = '';
+  qs.forEach(function(q){
+    html += renderCard(q);
+  });
+  container.innerHTML = html;
+  qs.forEach(function(q){
+    if(state.answers[q.id]){
+      refreshCard(q);
+    }
+  });
+  typesetMath();
+}
+
+function renderCard(q){
+  var levelClass = 'level-' + q.level;
+  var body = '';
+  if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+
+  return '<div class="question-card" id="card-' + q.id + '">' +
+    '<div class="q-head"><div class="q-num">' + q.num + '</div>' +
+    '<span class="level-badge ' + levelClass + '">' + q.level + '</span></div>' +
+    '<div class="q-text">' + q.text + '</div>' +
+    body +
+    '<div class="explanation" id="exp-' + q.id + '">' + q.explanation + '</div>' +
+    '</div>';
+}
+
+function renderPG(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="answerPG(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  return html;
+}
+function answerPG(qid, idx){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderIS(q){
+  return '<div class="is-row">' +
+    '<input type="text" id="input-' + q.id + '" placeholder="Ketik jawabanmu..." onkeydown="if(event.key===\'Enter\'){submitIS(\'' + q.id + '\')}">' +
+    '<button onclick="submitIS(\'' + q.id + '\')">Kirim Jawaban</button>' +
+    '</div>';
+}
+function submitIS(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var input = document.getElementById('input-' + qid);
+  var val = (input.value || '').trim().toLowerCase();
+  if(val === ''){ return; }
+  var candidates = [q.answer].concat(q.altAnswers || []).map(function(a){ return a.toString().trim().toLowerCase(); });
+  var correct = candidates.indexOf(val) !== -1;
+  state.answers[qid] = { chosen: input.value, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderPK(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="togglePK(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  html += '<button class="pk-confirm" id="confirm-' + q.id + '" onclick="submitPK(\'' + q.id + '\')">Konfirmasi Jawaban</button>';
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  var arr = pkTemp[qid];
+  var pos = arr.indexOf(idx);
+  var btn = document.getElementById('opt-' + qid + '-' + idx);
+  if(pos === -1){ arr.push(idx); btn.classList.add('pk-on'); }
+  else { arr.splice(pos,1); btn.classList.remove('pk-on'); }
+}
+function submitPK(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var chosen = (pkTemp[qid] || []).slice().sort();
+  var correctArr = q.answers.slice().sort();
+  var correct = chosen.length === correctArr.length && chosen.every(function(v,i){ return v === correctArr[i]; });
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderBS(q){
+  return '<div class="bs-row">' +
+    '<button class="bs-btn" id="opt-' + q.id + '-true" onclick="answerBS(\'' + q.id + '\',true)">✅ BENAR</button>' +
+    '<button class="bs-btn" id="opt-' + q.id + '-false" onclick="answerBS(\'' + q.id + '\',false)">❌ SALAH</button>' +
+    '</div>';
+}
+function answerBS(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderJD(q){
+  var opts = q.options.slice();
+  var optHtml = '<option value="">-- pilih --</option>';
+  opts.forEach(function(o){ optHtml += '<option value="' + o + '">' + o + '</option>'; });
+  return '<div class="jd-row"><div class="jd-left">' + q.left + '</div>' +
+    '<select id="sel-' + q.id + '" onchange="answerJD(\'' + q.id + '\', this.value)">' + optHtml + '</select></div>';
+}
+function answerJD(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  if(val === '') return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function findQuestion(qid){
+  for(var t in allQuestions){
+    var found = allQuestions[t].find(function(q){ return q.id === qid; });
+    if(found) return found;
+  }
+  return null;
+}
+
+function refreshCard(q){
+  var card = document.getElementById('card-' + q.id);
+  var ans = state.answers[q.id];
+  if(!card || !ans) return;
+  card.classList.add(ans.correct ? 'correct' : 'wrong');
+
+  if(q.type === 'pg'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      if(idx === ans.chosen){ btn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong'); }
+      if(idx === q.answer && !ans.correct){ btn.classList.add('reveal-correct'); }
+    });
+  } else if(q.type === 'is'){
+    var input = document.getElementById('input-' + q.id);
+    if(input) input.disabled = true;
+  } else if(q.type === 'pk'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      var wasChosen = ans.chosen.indexOf(idx) !== -1;
+      var isCorrectOpt = q.answers.indexOf(idx) !== -1;
+      if(wasChosen && isCorrectOpt) btn.classList.add('selected-correct');
+      else if(wasChosen && !isCorrectOpt) btn.classList.add('selected-wrong');
+      else if(!wasChosen && isCorrectOpt) btn.classList.add('reveal-correct');
+    });
+    var confirmBtn = document.getElementById('confirm-' + q.id);
+    if(confirmBtn) confirmBtn.disabled = true;
+  } else if(q.type === 'bs'){
+    var trueBtn = document.getElementById('opt-' + q.id + '-true');
+    var falseBtn = document.getElementById('opt-' + q.id + '-false');
+    trueBtn.disabled = true; falseBtn.disabled = true;
+    var chosenBtn = ans.chosen ? trueBtn : falseBtn;
+    chosenBtn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong');
+    if(!ans.correct){
+      var correctBtn = q.answer ? trueBtn : falseBtn;
+      correctBtn.classList.add('selected-correct');
+    }
+  } else if(q.type === 'jd'){
+    var sel = document.getElementById('sel-' + q.id);
+    if(sel){ sel.disabled = true; sel.classList.add(ans.correct ? 'correct' : 'wrong'); }
+  }
+
+  var exp = document.getElementById('exp-' + q.id);
+  if(exp){ exp.classList.add('show'); typesetMath(); }
+}
+
+function updateScoreStrip(){
+  var strip = document.getElementById('score-strip');
+  var html = '';
+  typeOrder.forEach(function(t, i){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    html += '<div class="score-chip">' + (i+1) + '. ' + typeLabels[t] + ': ' + correct + '/' + qs.length + '</div>';
+  });
+  document.getElementById('score-strip').innerHTML = html;
+}
+
+function showAnalysis(){
+  var totalQ = 0, totalCorrect = 0;
+  var perType = {};
+  typeOrder.forEach(function(t){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    perType[t] = { total: qs.length, correct: correct };
+    totalQ += qs.length;
+    totalCorrect += correct;
+  });
+  var totalWrong = totalQ - totalCorrect;
+  var pct = totalQ > 0 ? Math.round((totalCorrect/totalQ)*100) : 0;
+
+  document.getElementById('stat-total').textContent = totalQ;
+  document.getElementById('stat-benar').textContent = totalCorrect;
+  document.getElementById('stat-salah').textContent = totalWrong;
+  document.getElementById('stat-nilai').textContent = pct + '%';
+
+  var barHtml = '';
+  typeOrder.forEach(function(t){
+    var p = perType[t];
+    var barPct = p.total > 0 ? (p.correct/p.total)*100 : 0;
+    barHtml += '<div class="bar-row"><div class="name">' + typeLabels[t] + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div>' +
+      '<div class="mono" style="width:50px; text-align:right;">' + p.correct + '/' + p.total + '</div></div>';
+  });
+  document.getElementById('bar-chart').innerHTML = barHtml;
+
+  var grade, msg;
+  if(pct >= 90){ grade='A'; msg='🏆 Luar Biasa!'; }
+  else if(pct >= 75){ grade='B'; msg='⭐ Bagus!'; }
+  else if(pct >= 60){ grade='C'; msg='👍 Cukup Baik'; }
+  else if(pct >= 40){ grade='D'; msg='💪 Jangan Menyerah'; }
+  else { grade='E'; msg='📚 Semangat Belajar'; }
+  document.getElementById('grade-letter').textContent = grade;
+  document.getElementById('grade-msg').textContent = msg;
+
+  document.getElementById('analysis-panel').classList.add('show');
+  setTimeout(function(){
+    document.querySelectorAll('.bar-fill').forEach(function(el){ el.style.width = el.style.width; });
+  }, 50);
+  document.getElementById('analysis-panel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysis-panel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+/* ===================== INIT ===================== */
+document.addEventListener('DOMContentLoaded', function(){
+  ['c1','c2','c3','c4','c5','c6','c7'].forEach(function(id){ initConstruct(id); });
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollspy();
+  typesetMath();
+});
+</script>
+</body>
+</html>
