@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teorema Pythagoras — Matematika Kelas 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a; --gold-title:#ffd873;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; font-family:'Source Serif 4', serif; background:var(--paper); color:var(--text-dark);}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark); margin:0 0 .5em;}
+.mono{font-family:'JetBrains Mono', monospace;}
+a{color:inherit;}
+
+.layout{display:flex; min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  width:290px; flex-shrink:0; background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto; padding:22px 18px;
+  border-right:1px solid var(--ink-border); z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink-border); border-radius:4px;}
+.side-label{font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.14em; color:var(--gold-soft); text-transform:uppercase;}
+.side-title{font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:800; color:var(--gold-title); margin:.25em 0 1.1em; line-height:1.2;}
+.progress-wrap{background:var(--ink3); border-radius:8px; height:8px; overflow:hidden; margin-bottom:1.4em; border:1px solid var(--ink-border);}
+#progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .3s ease;}
+.nav-heading{font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cream-dim); margin:1.3em 0 .5em; padding-left:4px;}
+.nav-link{display:block; padding:8px 10px; border-radius:8px; color:var(--cream); text-decoration:none; font-size:.92rem; margin-bottom:2px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-link:hover{background:var(--ink3);}
+.nav-link.active{background:var(--ink3); border-left:3px solid var(--gold); color:var(--gold-soft); font-weight:600;}
+.nav-sub{display:block; padding:6px 10px 6px 22px; border-radius:8px; color:var(--cream-dim); text-decoration:none; font-size:.84rem; margin-bottom:1px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-sub:hover{background:var(--ink3); color:var(--cream);}
+
+/* CONTENT */
+#content{flex:1; min-width:0;}
+.hero{
+  background:linear-gradient(135deg, var(--ink) 0%, var(--ink3) 100%); color:var(--cream);
+  padding:70px 60px 60px; position:relative; overflow:hidden;
+}
+.hero::after{content:"⊿"; position:absolute; right:40px; top:20px; font-size:180px; color:rgba(224,169,77,.08);}
+.hero .side-label{color:var(--gold-soft);}
+.hero h1{color:var(--gold-title); font-size:2.6rem; margin:.2em 0 .3em; max-width:680px;}
+.hero p{max-width:600px; color:var(--cream-dim); font-size:1.05rem; line-height:1.6;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:1.4em;}
+.chip{background:rgba(224,169,77,.14); border:1px solid var(--gold); color:var(--gold-soft); padding:6px 14px; border-radius:20px; font-size:.82rem; font-family:'JetBrains Mono',monospace;}
+
+section.materi{padding:50px 60px; border-bottom:1px solid var(--paper-line);}
+section.materi .kicker{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;}
+section.materi h2{font-size:2rem; margin-top:.2em;}
+section.materi h3{font-size:1.3rem; color:var(--text-dark); margin-top:1.6em; border-bottom:2px solid var(--paper-line); padding-bottom:.3em;}
+section.materi h4{font-size:1.08rem; color:var(--text-dark); margin-top:1.2em;}
+section.materi p, section.materi li{color:var(--text-mid); line-height:1.75; font-size:1.02rem;}
+section.materi ul, section.materi ol{padding-left:1.4em;}
+
+.callout{border-radius:10px; padding:16px 20px; margin:1.2em 0; border-left:5px solid; line-height:1.7;}
+.callout.def{background:var(--def); border-color:var(--def-b);}
+.callout.note{background:var(--note); border-color:var(--note-b);}
+.callout.warn{background:var(--warn); border-color:var(--warn-b);}
+.callout .lbl{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:.4em;}
+
+.example-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px; padding:20px 24px; margin:1.2em 0;}
+.example-box .lbl{font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em; display:block;}
+.example-box .step{margin:.4em 0; padding-left:1em; border-left:3px solid var(--paper-line);}
+
+.formula-box{background:var(--ink); color:var(--cream); border-radius:12px; padding:20px 26px; margin:1.2em 0; text-align:center; font-size:1.15rem;}
+.formula-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold-soft); font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5em;}
+
+.figure-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:14px; padding:18px 20px 14px; margin:1.2em 0; text-align:center;}
+.figure-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em;}
+.figure-box svg{max-width:100%; height:auto;}
+.figure-box .caption{margin-top:.6em; font-size:.9rem; color:var(--text-mid); font-style:italic;}
+.fsvg-shape{fill:rgba(224,169,77,.16); stroke:var(--ink); stroke-width:2.2;}
+.fsvg-diag{stroke:#c1584f; stroke-width:1.6; stroke-dasharray:5,4;}
+.fsvg-label{font-family:'JetBrains Mono', monospace; font-size:14px; fill:var(--text-dark); font-weight:700;}
+.fsvg-point{fill:var(--ink);}
+.fsvg-height{stroke:#3a6ea5; stroke-width:1.6; stroke-dasharray:3,3;}
+.fsvg-right{fill:none; stroke:var(--ink); stroke-width:1.6;}
+.fsvg-angle{fill:none; stroke:#c1584f; stroke-width:1.6;}
+
+.figure-triple{display:flex; gap:16px; flex-wrap:wrap; justify-content:center;}
+.figure-item{flex:1; min-width:170px; max-width:220px; background:var(--paper); border:1px solid var(--paper-line); border-radius:10px; padding:10px 12px 14px;}
+.figure-item svg{width:100%; height:auto;}
+.figure-item-title{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.82rem; color:var(--text-dark); margin-top:.4em;}
+.figure-item-desc{font-size:.84rem; color:var(--text-mid); margin-top:.2em; line-height:1.5;}
+
+table.tbl{width:100%; border-collapse:collapse; margin:1.2em 0; background:var(--paper); border-radius:10px; overflow:hidden; border:1px solid var(--paper-line);}
+table.tbl th, table.tbl td{border:1px solid var(--paper-line); text-align:center; padding:10px 8px; vertical-align:middle;}
+table.tbl th{background:var(--ink); color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:.78rem; text-transform:uppercase; letter-spacing:.05em;}
+
+.calc-box{background:var(--ink2); color:var(--cream); border-radius:14px; padding:22px 26px; margin:1.6em 0; border:1px solid var(--ink-border);}
+.calc-box h4{color:var(--gold-title); margin-bottom:.7em;}
+.calc-row{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin-bottom:12px;}
+.calc-field{display:flex; flex-direction:column; gap:4px;}
+.calc-field label{font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--cream-dim);}
+.calc-field input, .calc-field select{background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); padding:8px 10px; border-radius:8px; width:150px; font-family:'JetBrains Mono',monospace;}
+.calc-box button{background:var(--gold); color:var(--ink); border:none; padding:9px 20px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.calc-box button:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:10px; padding:12px 16px; background:var(--ink3); border-radius:8px; font-family:'JetBrains Mono',monospace; min-height:1.2em; line-height:1.6;}
+
+/* LATIHAN */
+#latihan{padding:50px 60px 90px;}
+.type-tabs{display:flex; flex-wrap:wrap; gap:10px; margin:1.4em 0 1.8em;}
+.type-tab{background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid); padding:9px 18px; border-radius:24px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:.82rem; transition:.15s ease;}
+.type-tab:hover{border-color:var(--gold);}
+.type-tab.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:1.6em;}
+.score-chip{background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:8px 14px; font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text-mid);}
+
+.question-card{background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px; margin-bottom:20px; box-shadow:0 2px 10px rgba(43,36,22,.05); animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
+.question-card.correct{border-color:var(--correct-b); background:var(--correct);}
+.question-card.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:.8em;}
+.q-num{width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:.85rem; flex-shrink:0;}
+.level-badge{font-family:'JetBrains Mono',monospace; font-size:.68rem; text-transform:uppercase; padding:3px 10px; border-radius:12px; letter-spacing:.05em;}
+.level-mudah{background:#dff0da; color:#2e6b2e;}
+.level-sedang{background:#fdf0df; color:#95651c;}
+.level-sukar{background:#fbe1df; color:#9a3a32;}
+.q-text{font-size:1.04rem; color:var(--text-dark); margin-bottom:1em; line-height:1.6;}
+
+.opt-btn{display:block; width:100%; text-align:left; background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:11px 16px; margin-bottom:8px; cursor:pointer; font-family:'Source Serif 4',serif; font-size:.98rem; color:var(--text-dark); transition:.15s ease;}
+.opt-btn:hover{border-color:var(--gold); transform:translateX(3px);}
+.opt-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn.reveal-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn:disabled{cursor:default;}
+
+.bs-row{display:flex; gap:12px;}
+.bs-btn{flex:1; padding:12px; border-radius:10px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.bs-btn:hover{border-color:var(--gold);}
+.bs-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.bs-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.bs-btn:disabled{cursor:default;}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{flex:1; min-width:180px; padding:11px 14px; border-radius:10px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif; font-size:1rem;}
+.is-row button{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 20px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600;}
+.is-row button:hover{background:var(--ink3);}
+
+.pk-confirm{background:var(--ink); color:var(--gold-soft); border:none; padding:10px 22px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600; margin-top:6px;}
+.pk-confirm:hover{background:var(--ink3);}
+.opt-btn.pk-on{background:var(--gold-soft); border-color:var(--gold);}
+
+.jd-row{display:flex; align-items:center; gap:14px; margin-bottom:6px;}
+.jd-left{flex:1; background:var(--paper2); padding:10px 14px; border-radius:8px; font-weight:600;}
+.jd-row select{flex:1; padding:10px 12px; border-radius:8px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif;}
+.jd-row select.correct{border-color:var(--correct-b); background:var(--correct);}
+.jd-row select.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+
+.explanation{margin-top:14px; padding:14px 18px; background:var(--note); border-left:4px solid var(--note-b); border-radius:8px; font-size:.94rem; line-height:1.65; display:none;}
+.explanation.show{display:block;}
+
+.analysis-panel{display:none; background:var(--ink); color:var(--cream); border-radius:16px; padding:30px 34px; margin-top:20px;}
+.analysis-panel.show{display:block;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:1.2em 0;}
+.stat-box{background:var(--ink3); border-radius:10px; padding:16px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:1.6rem; color:var(--gold-title); font-weight:700;}
+.stat-box .lbl{font-size:.75rem; color:var(--cream-dim); text-transform:uppercase; letter-spacing:.06em; font-family:'JetBrains Mono',monospace;}
+.bar-row{display:flex; align-items:center; gap:10px; margin:8px 0;}
+.bar-row .name{width:150px; font-family:'JetBrains Mono',monospace; font-size:.82rem;}
+.bar-track{flex:1; background:var(--ink3); border-radius:6px; height:14px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1); width:0%;}
+.grade-box{text-align:center; margin:1.4em 0; padding:20px; border-radius:14px; background:linear-gradient(135deg, var(--ink3), var(--ink2)); border:2px solid var(--gold);}
+.grade-box .grade{font-family:'Playfair Display',serif; font-size:3rem; color:var(--gold-title); font-weight:800;}
+#reset-btn{background:var(--gold); color:var(--ink); border:none; padding:11px 26px; border-radius:10px; cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:10px;}
+#reset-btn:hover{background:var(--gold-soft);}
+
+footer{background:var(--ink); color:var(--cream-dim); padding:34px 60px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:.85rem;}
+footer .credit{color:var(--gold-soft);}
+
+#mobile-toggle{display:none; position:fixed; top:14px; left:14px; z-index:100; background:var(--ink); color:var(--gold); border:none; width:44px; height:44px; border-radius:10px; font-size:1.2rem; cursor:pointer;}
+#overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40;}
+
+@media (max-width:900px){
+  #sidebar{position:fixed; left:0; top:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; width:270px;}
+  #sidebar.open{transform:translateX(0);}
+  #mobile-toggle{display:block;}
+  #overlay.show{display:block;}
+  .hero{padding:80px 22px 40px;}
+  section.materi{padding:34px 20px;}
+  #latihan{padding:34px 20px 60px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:26px 20px;}
+  .figure-triple{flex-direction:column; align-items:center;}
+  .figure-item{max-width:280px; width:100%;}
+  .calc-row{gap:10px;}
+}
+</style>
+</head>
+<body>
+<button id="mobile-toggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+  <nav id="sidebar">
+    <div class="side-label">Matematika · Kelas 8</div>
+    <div class="side-title">Teorema Pythagoras</div>
+    <div class="progress-wrap"><div id="progress-bar"></div></div>
+
+    <div class="nav-heading">Materi</div>
+    <a class="nav-link" data-target="materi-a" href="#materi-a">A. Kuadrat &amp; Akar Kuadrat</a>
+    <a class="nav-link" data-target="materi-b" href="#materi-b">B. Teorema Pythagoras</a>
+    <a class="nav-link" data-target="materi-c" href="#materi-c">C. Kebalikan Teorema Pythagoras</a>
+    <a class="nav-link" data-target="materi-d" href="#materi-d">D. Tripel Pythagoras</a>
+    <a class="nav-link" data-target="materi-e" href="#materi-e">E. Formula Jarak</a>
+    <a class="nav-link" data-target="materi-f" href="#materi-f">F. Segitiga Siku-siku Istimewa</a>
+
+    <div class="nav-heading">Latihan</div>
+    <a class="nav-link" data-target="latihan" href="#latihan">Latihan Soal</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('bs')">4. Benar/Salah</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+
+  <div id="content">
+    <header class="hero">
+      <div class="side-label">Modul Pembelajaran Digital</div>
+      <h1>Teorema Pythagoras</h1>
+      <p>Menjelajahi hubungan sisi-sisi pada segitiga siku-siku — mulai dari kuadrat &amp; akar kuadrat, teorema Pythagoras dan kebalikannya, tripel Pythagoras, formula jarak dua titik, hingga perbandingan sisi pada segitiga siku-siku istimewa — lengkap dengan kalkulator interaktif dan 25 soal latihan.</p>
+      <div class="chip-row">
+        <span class="chip">A. Kuadrat &amp; Akar Kuadrat</span>
+        <span class="chip">B. Teorema Pythagoras</span>
+        <span class="chip">C. Kebalikan Teorema Pythagoras</span>
+        <span class="chip">D. Tripel Pythagoras</span>
+        <span class="chip">E. Formula Jarak</span>
+        <span class="chip">F. Sudut Istimewa 30°/45°/60°</span>
+      </div>
+    </header>
+
+    <!-- ===================== A. KUADRAT DAN AKAR KUADRAT ===================== -->
+    <section class="materi" id="materi-a">
+      <div class="kicker">Bagian A</div>
+      <h2>Kuadrat dan Akar Kuadrat Suatu Bilangan</h2>
+
+      <h3>1. Kuadrat Suatu Bilangan</h3>
+      <p>Bilangan kuadrat adalah bilangan yang merupakan hasil kali dari bilangan yang sama, misalnya 4, 9, 16, 25, 36, dan seterusnya.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar A.1 — Luas Persegi sebagai Kuadrat</span>
+        <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+          <rect x="30" y="20" width="100" height="100" class="fsvg-shape"/>
+          <text x="80" y="76" text-anchor="middle" class="fsvg-label">6 × 6</text>
+          <text x="80" y="140" text-anchor="middle" class="fsvg-label" font-size="12">sisi = 6, luas = 36</text>
+          <text x="200" y="76" text-anchor="middle" font-size="22" fill="var(--gold)">→ 6² = 36</text>
+        </svg>
+        <div class="caption">Luas persegi berisi 36 satuan → panjang sisinya adalah √36 = 6.</div>
+      </div>
+
+      <div class="callout def">
+        <span class="lbl">Definisi</span>
+        <p>Jika \(a\) adalah suatu bilangan dan \(p = a \times a = a^2\), maka \(p\) disebut bilangan kuadrat. Kuadrat suatu bilangan dihitung dengan mengalikan bilangan itu dengan dirinya sendiri.</p>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Hitunglah nilai dari \(21^2\) dan \((2\sqrt{5})^2\).</p>
+        <div class="step">\(21^2 = 21 \times 21 = 441\)</div>
+        <div class="step">\((2\sqrt{5})^2 = 2^2 \times (\sqrt{5})^2 = 4 \times 5 = 20\)</div>
+      </div>
+
+      <h3>2. Akar Kuadrat Suatu Bilangan</h3>
+      <p>Akar kuadrat adalah kebalikan dari operasi kuadrat. Karena kuadrat dari 4 adalah 16, maka akar kuadrat dari 16 adalah 4, ditulis \(\sqrt{16} = 4\).</p>
+
+      <div class="callout note">
+        <span class="lbl">Sifat-sifat Akar Kuadrat</span>
+        <p>Untuk menyederhanakan akar kuadrat suatu bilangan yang bukan bilangan kuadrat sempurna, gunakan sifat-sifat berikut:</p>
+        <ul>
+          <li>(i) \(\sqrt{A \times B} = \sqrt{A} \times \sqrt{B}\)</li>
+          <li>(ii) \(\sqrt{\dfrac{A}{B}} = \dfrac{\sqrt{A}}{\sqrt{B}}\)</li>
+          <li>(iii) \(A\sqrt{B} + A\sqrt{C} = A(\sqrt{B} + \sqrt{C})\)</li>
+          <li>(iv) \(\sqrt{A} \times \sqrt{A} = A\)</li>
+        </ul>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal — Menyederhanakan Akar</span>
+        <p>Sederhanakanlah \(\sqrt{72}\).</p>
+        <div class="step">Cari faktor kuadrat sempurna terbesar dari 72, yaitu 36 (karena \(72 = 36 \times 2\))</div>
+        <div class="step">\(\sqrt{72} = \sqrt{36 \times 2} = \sqrt{36} \times \sqrt{2}\)</div>
+        <div class="step">\(= 6\sqrt{2}\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Kuadrat &amp; Akar Kuadrat</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Bilangan</label><input type="number" id="ka-num" placeholder="mis. 72"></div>
+          <button onclick="hitungKuadratAkar()">Hitung</button>
+        </div>
+        <div class="calc-result" id="ka-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== B. TEOREMA PYTHAGORAS ===================== -->
+    <section class="materi" id="materi-b">
+      <div class="kicker">Bagian B</div>
+      <h2>Teorema Pythagoras</h2>
+      <p>Pada setiap segitiga siku-siku, sisi-sisinya terdiri dari dua <strong>sisi siku-siku</strong> dan sebuah sisi miring yang disebut <strong>hipotenusa</strong> — yaitu sisi terpanjang, terletak di hadapan sudut siku-siku.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar B.1 — Segitiga Siku-siku ABC</span>
+        <svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="80,220 80,50 280,220" class="fsvg-shape"/>
+          <rect x="80" y="202" width="18" height="18" class="fsvg-right"/>
+          <text x="60" y="48" text-anchor="end" class="fsvg-label">C</text>
+          <text x="68" y="242" text-anchor="middle" class="fsvg-label">A</text>
+          <text x="292" y="242" text-anchor="middle" class="fsvg-label">B</text>
+          <text x="180" y="264" text-anchor="middle" class="fsvg-label" font-size="12">sisi siku-siku</text>
+          <text x="40" y="135" text-anchor="middle" class="fsvg-label" font-size="12" transform="rotate(-90 40 135)">sisi siku-siku</text>
+          <text x="190" y="123" text-anchor="middle" class="fsvg-label" font-size="12" fill="#a3564a" transform="rotate(-40 190 123)">hipotenusa</text>
+        </svg>
+        <div class="caption">△ABC siku-siku di A. Sisi AB dan AC adalah sisi siku-siku, sisi BC adalah hipotenusa.</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="lbl">Teorema Pythagoras</span>
+        \( BC^2 = AC^2 + AB^2 \) &nbsp;atau secara umum&nbsp; \( a^2 = b^2 + c^2 \)
+      </div>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar B.2 — Visualisasi Luas Persegi pada Setiap Sisi</span>
+        <svg viewBox="0 0 460 500" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="150,310 310,310 150,190" class="fsvg-shape"/>
+          <rect x="150" y="292" width="18" height="18" class="fsvg-right"/>
+          <polygon id="sqB" points="150,310 150,190 30,190 30,310" fill="var(--def)" stroke="var(--def-b)" stroke-width="2"/>
+          <text x="90" y="255" text-anchor="middle" class="fsvg-label" fill="var(--def-b)" font-size="15">b²</text>
+          <polygon id="sqC" points="150,310 310,310 310,470 150,470" fill="var(--note)" stroke="var(--note-b)" stroke-width="2"/>
+          <text x="230" y="395" text-anchor="middle" class="fsvg-label" fill="var(--note-b)" font-size="15">c²</text>
+          <polygon id="sqA" points="150,190 310,310 430,150 270,30" fill="var(--wrong)" stroke="var(--wrong-b)" stroke-width="2"/>
+          <text x="290" y="175" text-anchor="middle" class="fsvg-label" fill="var(--wrong-b)" font-size="15">a²</text>
+          <text x="132" y="330" text-anchor="end" class="fsvg-label">A</text>
+          <text x="322" y="330" class="fsvg-label">B</text>
+          <text x="132" y="182" text-anchor="end" class="fsvg-label">C</text>
+        </svg>
+        <div class="caption">Luas persegi pada hipotenusa (a²) sama dengan jumlah luas persegi pada dua sisi siku-siku (b² + c²).</div>
+        <button onclick="animasiPythagoras()" style="margin-top:8px;">▶ Animasikan Hubungan Luas</button>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Sebuah segitiga siku-siku memiliki sisi siku-siku 9 cm dan 12 cm. Hitunglah panjang hipotenusanya!</p>
+        <div class="step">Gunakan \(a^2 = b^2 + c^2\)</div>
+        <div class="step">\(a^2 = 9^2 + 12^2 = 81 + 144 = 225\)</div>
+        <div class="step">\(a = \sqrt{225} = 15\) cm</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Teorema Pythagoras</h4>
+        <div class="calc-row">
+          <div class="calc-field">
+            <label>Cari</label>
+            <select id="pt-cari" onchange="ubahLabelPT()">
+              <option value="hip">Hipotenusa</option>
+              <option value="sisi">Sisi Siku-siku</option>
+            </select>
+          </div>
+          <div class="calc-field"><label id="pt-lbl1">Sisi Siku-siku 1</label><input type="number" id="pt-v1" placeholder="mis. 9"></div>
+          <div class="calc-field"><label id="pt-lbl2">Sisi Siku-siku 2</label><input type="number" id="pt-v2" placeholder="mis. 12"></div>
+          <button onclick="hitungPythagoras()">Hitung</button>
+        </div>
+        <div class="calc-result" id="pt-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== C. KEBALIKAN TEOREMA PYTHAGORAS ===================== -->
+    <section class="materi" id="materi-c">
+      <div class="kicker">Bagian C</div>
+      <h2>Kebalikan Teorema Pythagoras</h2>
+
+      <div class="callout def">
+        <span class="lbl">Definisi</span>
+        <p>Jika suatu segitiga mempunyai panjang sisi \(a, b, c\) dan \(c^2 = a^2 + b^2\), maka segitiga tersebut adalah segitiga siku-siku dengan sudut siku-siku di depan sisi \(c\) (sisi terpanjang).</p>
+      </div>
+      <p>Kebalikan teorema Pythagoras dapat digunakan untuk menentukan <strong>jenis segitiga</strong> berdasarkan panjang sisi-sisinya. Misalkan \(a, b, c\) adalah sisi-sisi segitiga dengan \(c\) sebagai sisi terpanjang:</p>
+
+      <div class="figure-triple">
+        <div class="figure-item">
+          <svg viewBox="0 0 100 80"><polygon points="10,70 90,60 50,10" class="mini-tri" fill="var(--def)" stroke="var(--def-b)" stroke-width="2.5"/></svg>
+          <div class="figure-item-title">Lancip</div>
+          <div class="figure-item-desc mono">\(c^2 &lt; a^2+b^2\)</div>
+        </div>
+        <div class="figure-item">
+          <svg viewBox="0 0 100 80"><polygon points="15,70 85,70 15,15" class="mini-tri" fill="var(--note)" stroke="var(--note-b)" stroke-width="2.5"/></svg>
+          <div class="figure-item-title">Siku-siku</div>
+          <div class="figure-item-desc mono">\(c^2 = a^2+b^2\)</div>
+        </div>
+        <div class="figure-item">
+          <svg viewBox="0 0 100 80"><polygon points="10,70 90,70 70,25" class="mini-tri" fill="var(--wrong)" stroke="var(--wrong-b)" stroke-width="2.5"/></svg>
+          <div class="figure-item-title">Tumpul</div>
+          <div class="figure-item-desc mono">\(c^2 &gt; a^2+b^2\)</div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Tentukan jenis segitiga dengan sisi 10, 12, 15.</p>
+        <div class="step">Sisi terpanjang \(c = 15\), sehingga \(c^2 = 225\)</div>
+        <div class="step">\(a^2 + b^2 = 10^2 + 12^2 = 100 + 144 = 244\)</div>
+        <div class="step">Karena \(225 &lt; 244\), maka \(c^2 &lt; a^2+b^2\) → segitiga <strong>lancip</strong></div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Jenis Segitiga</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi 1</label><input type="number" id="js-a" placeholder="mis. 10"></div>
+          <div class="calc-field"><label>Sisi 2</label><input type="number" id="js-b" placeholder="mis. 12"></div>
+          <div class="calc-field"><label>Sisi 3</label><input type="number" id="js-c" placeholder="mis. 15"></div>
+          <button onclick="cekJenisSegitiga()">Cek Jenis</button>
+        </div>
+        <div class="calc-result" id="js-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== D. TRIPEL PYTHAGORAS ===================== -->
+    <section class="materi" id="materi-d">
+      <div class="kicker">Bagian D</div>
+      <h2>Tripel Pythagoras</h2>
+
+      <div class="callout def">
+        <span class="lbl">Definisi</span>
+        <p>Tiga bilangan \(a, b, c\) dengan \(a &lt; b &lt; c\) disebut <strong>tripel Pythagoras</strong> jika memenuhi hubungan \(c^2 = a^2 + b^2\). Bentuk ini dapat digunakan untuk membuktikan apakah suatu segitiga siku-siku atau tidak.</p>
+      </div>
+      <p>Beberapa tripel Pythagoras yang umum: <span class="mono">(3, 4, 5)</span>, <span class="mono">(5, 12, 13)</span>, <span class="mono">(8, 15, 17)</span>, <span class="mono">(7, 24, 25)</span>, serta kelipatannya seperti <span class="mono">(6, 8, 10)</span> dan <span class="mono">(9, 12, 15)</span>.</p>
+
+      <div class="formula-box">
+        <span class="lbl">Rumus Pembangkit Tripel Pythagoras (m &gt; n &gt; 0)</span>
+        \( a = m^2 - n^2 \qquad b = 2mn \qquad c = m^2 + n^2 \)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Diantara tigaan berikut, manakah yang merupakan tripel Pythagoras: (4, 5, 7) dan (5, 12, 13)?</p>
+        <div class="step">(4, 5, 7): \(7^2 = 49\), sedangkan \(4^2+5^2 = 16+25=41\). Karena \(49 \ne 41\) → <strong>bukan</strong> tripel Pythagoras</div>
+        <div class="step">(5, 12, 13): \(13^2 = 169\), sedangkan \(5^2+12^2=25+144=169\). Karena sama → <strong>tripel Pythagoras</strong></div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Pembangkit Tripel Pythagoras</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>m</label><input type="number" id="tp-m" placeholder="mis. 3"></div>
+          <div class="calc-field"><label>n</label><input type="number" id="tp-n" placeholder="mis. 2"></div>
+          <button onclick="generateTripel()">Bangkitkan</button>
+        </div>
+        <div class="calc-result" id="tp-hasil">Hasil akan tampil di sini.</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Cek Apakah Tripel Pythagoras</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Bilangan 1</label><input type="number" id="ct-a" placeholder="mis. 7"></div>
+          <div class="calc-field"><label>Bilangan 2</label><input type="number" id="ct-b" placeholder="mis. 24"></div>
+          <div class="calc-field"><label>Bilangan 3</label><input type="number" id="ct-c" placeholder="mis. 25"></div>
+          <button onclick="cekTripel()">Cek</button>
+        </div>
+        <div class="calc-result" id="ct-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== E. FORMULA JARAK ===================== -->
+    <section class="materi" id="materi-e">
+      <div class="kicker">Bagian E</div>
+      <h2>Formula Jarak (Jarak Dua Titik)</h2>
+      <p>Teorema Pythagoras dapat digunakan untuk menentukan jarak antara dua titik pada bidang koordinat.</p>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar E.1 — Jarak Dua Titik pada Bidang Koordinat</span>
+        <svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="220" x2="290" y2="220" stroke="var(--ink)" stroke-width="1.5"/>
+          <line x1="20" y1="220" x2="20" y2="10" stroke="var(--ink)" stroke-width="1.5"/>
+          <circle cx="70" cy="180" r="4" fill="#a3564a"/>
+          <text x="55" y="200" class="fsvg-label" font-size="12" fill="#a3564a">A(x₁,y₁)</text>
+          <circle cx="230" cy="50" r="4" fill="#a3564a"/>
+          <text x="215" y="35" class="fsvg-label" font-size="12" fill="#a3564a">B(x₂,y₂)</text>
+          <line x1="70" y1="180" x2="230" y2="50" class="fsvg-diag" stroke="#c1584f"/>
+          <line x1="70" y1="180" x2="230" y2="180" class="fsvg-height" stroke="#3a6ea5"/>
+          <line x1="230" y1="180" x2="230" y2="50" class="fsvg-height" stroke="#7fae6b"/>
+          <text x="150" y="197" class="fsvg-label" font-size="11" fill="#3a6ea5">x₂−x₁</text>
+          <text x="255" y="118" class="fsvg-label" font-size="11" fill="#7fae6b" transform="rotate(90 255 118)">y₂−y₁</text>
+        </svg>
+        <div class="caption">Segitiga siku-siku bantu dengan titik C(x₂, y₁) digunakan untuk mencari jarak AB.</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="lbl">Rumus Jarak Dua Titik</span>
+        \( AB = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2} \)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Hitunglah jarak AB, jika A(3, −4) dan B(7, −7).</p>
+        <div class="step">\(AB = \sqrt{(7-3)^2 + (-7-(-4))^2}\)</div>
+        <div class="step">\(= \sqrt{4^2 + (-3)^2} = \sqrt{16+9} = \sqrt{25}\)</div>
+        <div class="step">\(AB = 5\)</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Jarak Dua Titik</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>x₁</label><input type="number" id="jr-x1" placeholder="mis. 3"></div>
+          <div class="calc-field"><label>y₁</label><input type="number" id="jr-y1" placeholder="mis. -4"></div>
+          <div class="calc-field"><label>x₂</label><input type="number" id="jr-x2" placeholder="mis. 7"></div>
+          <div class="calc-field"><label>y₂</label><input type="number" id="jr-y2" placeholder="mis. -7"></div>
+          <button onclick="hitungJarak()">Hitung</button>
+        </div>
+        <div class="calc-result" id="jr-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== F. SEGITIGA SIKU-SIKU SUDUT ISTIMEWA ===================== -->
+    <section class="materi" id="materi-f">
+      <div class="kicker">Bagian F</div>
+      <h2>Perbandingan Sisi Segitiga Siku-siku dengan Sudut Istimewa</h2>
+      <p>Ada dua bentuk segitiga siku-siku istimewa yang perbandingan sisinya bisa langsung dihafalkan tanpa menghitung ulang teorema Pythagoras setiap kali.</p>
+
+      <h3>1. Segitiga Siku-siku 30° – 60° – 90°</h3>
+      <div class="figure-box">
+        <span class="lbl">Gambar F.1 — Segitiga 30-60-90</span>
+        <svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,150 30,30 220,150" class="fsvg-shape"/>
+          <rect x="30" y="132" width="16" height="16" class="fsvg-right"/>
+          <text x="12" y="95" class="fsvg-label" font-size="13">1</text>
+          <text x="118" y="82" class="fsvg-label" font-size="13" fill="#a3564a">2</text>
+          <text x="115" y="165" class="fsvg-label" font-size="13">√3</text>
+          <text x="52" y="69" text-anchor="middle" class="fsvg-label" font-size="12">60°</text>
+          <text x="177" y="138" text-anchor="middle" class="fsvg-label" font-size="12">30°</text>
+        </svg>
+        <div class="caption">Sisi di hadapan 90° : 60° : 30° = 2 : √3 : 1</div>
+      </div>
+      <div class="formula-box">
+        <span class="lbl">Perbandingan 30-60-90</span>
+        Hipotenusa : sisi di hadapan 60° : sisi di hadapan 30° \(= 2 : \sqrt{3} : 1\)
+      </div>
+
+      <h3>2. Segitiga Siku-siku 45° – 45° – 90°</h3>
+      <div class="figure-box">
+        <span class="lbl">Gambar F.2 — Segitiga 45-45-90</span>
+        <svg viewBox="0 0 220 170" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,150 30,30 200,150" class="fsvg-shape"/>
+          <rect x="30" y="132" width="16" height="16" class="fsvg-right"/>
+          <text x="12" y="95" class="fsvg-label" font-size="13">1</text>
+          <text x="120" y="80" class="fsvg-label" font-size="13" fill="#a3564a">√2</text>
+          <text x="110" y="165" class="fsvg-label" font-size="13">1</text>
+          <text x="48" y="66" text-anchor="middle" class="fsvg-label" font-size="12">45°</text>
+          <text x="162" y="138" text-anchor="middle" class="fsvg-label" font-size="12">45°</text>
+        </svg>
+        <div class="caption">Sisi di hadapan 90° dan sisi di hadapan 45° = √2 : 1</div>
+      </div>
+      <div class="formula-box">
+        <span class="lbl">Perbandingan 45-45-90</span>
+        Hipotenusa : sisi siku-siku : sisi siku-siku \(= \sqrt{2} : 1 : 1\)
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal</span>
+        <p>Sebuah segitiga siku-siku sama kaki (45°-45°-90°) memiliki sisi siku-siku 6 cm. Hitunglah panjang hipotenusanya.</p>
+        <div class="step">Perbandingan hipotenusa : sisi siku-siku = \(\sqrt{2} : 1\)</div>
+        <div class="step">Hipotenusa \(= 6\sqrt{2}\) cm</div>
+        <p style="margin-top:10px;">Segitiga siku-siku dengan sudut 30° dan sisi terpendek (di hadapan 30°) = 4 cm. Hitung hipotenusa.</p>
+        <div class="step">Perbandingan hipotenusa : sisi di hadapan 30° = \(2 : 1\)</div>
+        <div class="step">Hipotenusa \(= 2 \times 4 = 8\) cm</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Segitiga Siku-siku Istimewa</h4>
+        <div class="calc-row">
+          <div class="calc-field">
+            <label>Jenis</label>
+            <select id="si-jenis">
+              <option value="306090">30°-60°-90°</option>
+              <option value="454590">45°-45°-90°</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Sisi Diketahui</label>
+            <select id="si-sisi">
+              <option value="pendek">Terpendek (30° / siku-siku)</option>
+              <option value="sedang">Sedang (60°, khusus 30-60-90)</option>
+              <option value="hip">Hipotenusa</option>
+            </select>
+          </div>
+          <div class="calc-field"><label>Nilai</label><input type="number" id="si-val" placeholder="mis. 4"></div>
+          <button onclick="hitungSudutIstimewa()">Hitung</button>
+        </div>
+        <div class="calc-result" id="si-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== LATIHAN ===================== -->
+    <section id="latihan">
+      <div class="kicker">Latihan</div>
+      <h2>Uji Pemahamanmu</h2>
+      <p style="color:var(--text-mid);">25 soal — 5 tipe soal berbeda. Jawab semua soal, lalu lihat analisis hasilmu di akhir.</p>
+
+      <div class="type-tabs">
+        <button class="type-tab active" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda</button>
+        <button class="type-tab" data-type="is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="type-tab" data-type="pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="type-tab" data-type="bs" onclick="showType('bs')">4. Benar/Salah</button>
+        <button class="type-tab" data-type="jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="score-strip"></div>
+
+      <div id="quiz-area"></div>
+
+      <div style="text-align:center; margin-top:24px;">
+        <button id="analysis-btn" onclick="showAnalysis()" style="background:var(--ink); color:var(--gold-soft); border:none; padding:13px 30px; border-radius:12px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.95rem;">📊 Lihat Analisis Akhir</button>
+      </div>
+
+      <div class="analysis-panel" id="analysis-panel">
+        <h2 style="color:var(--gold-title);">Analisis Hasil Latihan</h2>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num" id="stat-total">0</div><div class="lbl">Total Soal</div></div>
+          <div class="stat-box"><div class="num" id="stat-benar">0</div><div class="lbl">Benar</div></div>
+          <div class="stat-box"><div class="num" id="stat-salah">0</div><div class="lbl">Salah</div></div>
+          <div class="stat-box"><div class="num" id="stat-nilai">0%</div><div class="lbl">Nilai</div></div>
+        </div>
+        <div id="bar-chart"></div>
+        <div class="grade-box">
+          <div class="grade" id="grade-letter">-</div>
+          <div id="grade-msg" style="color:var(--cream-dim); margin-top:.4em;"></div>
+        </div>
+        <div style="text-align:center;"><button id="reset-btn" onclick="resetAll()">🔄 Ulangi Latihan</button></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Ebook Interaktif — Teorema Pythagoras · Matematika Kelas 8 · Kurikulum Merdeka</div>
+      <div class="credit">Suminto with Claude.</div>
+    </footer>
+  </div>
+</div>
+
+<script>
+/* ===================== KALKULATOR MATERI ===================== */
+function simplifySqrt(n){
+  var outside = 1, inside = n;
+  for(var i = 2; i*i <= inside; i++){
+    while(inside % (i*i) === 0){ inside = inside / (i*i); outside = outside * i; }
+  }
+  return { outside: outside, inside: inside };
+}
+function hitungKuadratAkar(){
+  var n = parseFloat(document.getElementById('ka-num').value);
+  var out = document.getElementById('ka-hasil');
+  if(isNaN(n)){ out.innerHTML = 'Masukkan bilangan yang valid.'; return; }
+  var kuadrat = n*n;
+  var html = 'Kuadrat: ' + n + '² = ' + kuadrat + '<br>';
+  if(n >= 0){
+    if(Number.isInteger(n)){
+      var s = simplifySqrt(n);
+      if(s.inside === 1){ html += 'Akar kuadrat: √' + n + ' = ' + s.outside + ' (bilangan kuadrat sempurna)'; }
+      else if(s.outside === 1){ html += 'Akar kuadrat: √' + n + ' ≈ ' + Math.sqrt(n).toFixed(4) + ' (bukan kuadrat sempurna)'; }
+      else { html += 'Akar kuadrat: √' + n + ' = ' + s.outside + '√' + s.inside + ' ≈ ' + Math.sqrt(n).toFixed(4); }
+    } else {
+      html += 'Akar kuadrat: √' + n + ' ≈ ' + Math.sqrt(n).toFixed(4);
+    }
+  }
+  out.innerHTML = html;
+}
+
+function ubahLabelPT(){
+  var v = document.getElementById('pt-cari').value;
+  var l1 = document.getElementById('pt-lbl1'), l2 = document.getElementById('pt-lbl2');
+  if(v === 'hip'){ l1.textContent = 'Sisi Siku-siku 1'; l2.textContent = 'Sisi Siku-siku 2'; }
+  else { l1.textContent = 'Hipotenusa'; l2.textContent = 'Sisi Siku-siku Diketahui'; }
+}
+function hitungPythagoras(){
+  var cari = document.getElementById('pt-cari').value;
+  var v1 = parseFloat(document.getElementById('pt-v1').value);
+  var v2 = parseFloat(document.getElementById('pt-v2').value);
+  var out = document.getElementById('pt-hasil');
+  if(isNaN(v1) || isNaN(v2) || v1 <= 0 || v2 <= 0){ out.innerHTML = 'Masukkan dua nilai sisi yang valid (lebih dari 0).'; return; }
+  if(cari === 'hip'){
+    var hasil = Math.sqrt(v1*v1 + v2*v2);
+    out.innerHTML = 'Hipotenusa = √(' + v1 + '² + ' + v2 + '²) = √' + (v1*v1+v2*v2) + ' ≈ ' + hasil.toFixed(4);
+  } else {
+    if(v1 <= v2){ out.innerHTML = 'Hipotenusa harus lebih besar dari sisi siku-siku yang diketahui.'; return; }
+    var diff = v1*v1 - v2*v2;
+    if(diff <= 0){ out.innerHTML = 'Nilai tidak membentuk segitiga siku-siku yang valid.'; return; }
+    var hasil2 = Math.sqrt(diff);
+    out.innerHTML = 'Sisi siku-siku = √(' + v1 + '² − ' + v2 + '²) = √' + diff + ' ≈ ' + hasil2.toFixed(4);
+  }
+}
+
+function cekJenisSegitiga(){
+  var a = parseFloat(document.getElementById('js-a').value);
+  var b = parseFloat(document.getElementById('js-b').value);
+  var c = parseFloat(document.getElementById('js-c').value);
+  var out = document.getElementById('js-hasil');
+  if([a,b,c].some(isNaN) || a<=0 || b<=0 || c<=0){ out.innerHTML = 'Masukkan tiga sisi yang valid (lebih dari 0).'; return; }
+  var sisi = [a,b,c].sort(function(x,y){ return x-y; });
+  var p = sisi[0], q = sisi[1], r = sisi[2];
+  if(p+q <= r){ out.innerHTML = 'Ketiga panjang ini tidak dapat membentuk segitiga.'; return; }
+  var kiri = r*r, kanan = p*p+q*q;
+  var jenis, ket;
+  if(Math.abs(kiri-kanan) < 1e-9){ jenis='Siku-siku'; ket='c² = a² + b² (' + kiri.toFixed(2) + ' = ' + kanan.toFixed(2) + ')'; }
+  else if(kiri < kanan){ jenis='Lancip'; ket='c² &lt; a² + b² (' + kiri.toFixed(2) + ' &lt; ' + kanan.toFixed(2) + ')'; }
+  else { jenis='Tumpul'; ket='c² &gt; a² + b² (' + kiri.toFixed(2) + ' &gt; ' + kanan.toFixed(2) + ')'; }
+  out.innerHTML = 'Sisi terpanjang c = ' + r + '<br>Jenis segitiga: <strong>' + jenis + '</strong><br>' + ket;
+}
+
+function generateTripel(){
+  var m = parseInt(document.getElementById('tp-m').value);
+  var n = parseInt(document.getElementById('tp-n').value);
+  var out = document.getElementById('tp-hasil');
+  if(isNaN(m) || isNaN(n) || m<=0 || n<=0){ out.innerHTML = 'Masukkan m dan n bilangan bulat positif.'; return; }
+  if(m <= n){ out.innerHTML = 'Nilai m harus lebih besar dari n.'; return; }
+  var a = m*m-n*n, b = 2*m*n, c = m*m+n*n;
+  out.innerHTML = 'a = m² − n² = ' + a + '<br>b = 2mn = ' + b + '<br>c = m² + n² = ' + c + '<br>Tripel Pythagoras: <strong>(' + a + ', ' + b + ', ' + c + ')</strong>';
+}
+function cekTripel(){
+  var a = parseFloat(document.getElementById('ct-a').value);
+  var b = parseFloat(document.getElementById('ct-b').value);
+  var c = parseFloat(document.getElementById('ct-c').value);
+  var out = document.getElementById('ct-hasil');
+  if([a,b,c].some(isNaN) || a<=0 || b<=0 || c<=0){ out.innerHTML = 'Masukkan tiga bilangan yang valid.'; return; }
+  var sisi = [a,b,c].sort(function(x,y){ return x-y; });
+  var p=sisi[0], q=sisi[1], r=sisi[2];
+  var isTripel = Math.abs(r*r-(p*p+q*q)) < 1e-9;
+  if(isTripel){ out.innerHTML = '✔ Ya, (' + p + ', ' + q + ', ' + r + ') adalah tripel Pythagoras.<br>Karena ' + r + '² = ' + (r*r) + ' = ' + p + '² + ' + q + '² = ' + (p*p+q*q); }
+  else { out.innerHTML = '✘ Bukan tripel Pythagoras.<br>' + r + '² = ' + (r*r) + ', sedangkan ' + p + '² + ' + q + '² = ' + (p*p+q*q); }
+}
+
+function hitungJarak(){
+  var x1 = parseFloat(document.getElementById('jr-x1').value);
+  var y1 = parseFloat(document.getElementById('jr-y1').value);
+  var x2 = parseFloat(document.getElementById('jr-x2').value);
+  var y2 = parseFloat(document.getElementById('jr-y2').value);
+  var out = document.getElementById('jr-hasil');
+  if([x1,y1,x2,y2].some(isNaN)){ out.innerHTML = 'Masukkan semua koordinat dengan valid.'; return; }
+  var dx = x2-x1, dy = y2-y1;
+  var jarak = Math.sqrt(dx*dx+dy*dy);
+  var dxStr = dx < 0 ? '(' + dx + ')' : dx;
+  var dyStr = dy < 0 ? '(' + dy + ')' : dy;
+  out.innerHTML = 'AB = √(' + dxStr + '² + ' + dyStr + '²) = √' + (dx*dx+dy*dy) + '<br>AB ≈ <strong>' + jarak.toFixed(4) + '</strong> satuan';
+}
+
+function hitungSudutIstimewa(){
+  var jenis = document.getElementById('si-jenis').value;
+  var sisi = document.getElementById('si-sisi').value;
+  var val = parseFloat(document.getElementById('si-val').value);
+  var out = document.getElementById('si-hasil');
+  if(isNaN(val) || val<=0){ out.innerHTML = 'Masukkan nilai sisi yang valid (lebih dari 0).'; return; }
+  var sqrt2 = Math.sqrt(2), sqrt3 = Math.sqrt(3);
+  var html = '';
+  if(jenis === '454590'){
+    var hip, kaki;
+    if(sisi === 'hip'){ hip = val; kaki = val/sqrt2; } else { kaki = val; hip = val*sqrt2; }
+    html = 'Segitiga 45°-45°-90° (perbandingan 1 : 1 : √2)<br>Sisi siku-siku = ' + kaki.toFixed(4) + '<br>Hipotenusa = ' + hip.toFixed(4);
+  } else {
+    var pendek, sedang, hip2;
+    if(sisi === 'pendek'){ pendek = val; sedang = val*sqrt3; hip2 = val*2; }
+    else if(sisi === 'sedang'){ sedang = val; pendek = val/sqrt3; hip2 = pendek*2; }
+    else { hip2 = val; pendek = val/2; sedang = pendek*sqrt3; }
+    html = 'Segitiga 30°-60°-90° (perbandingan 1 : √3 : 2)<br>Sisi di hadapan 30° = ' + pendek.toFixed(4) + '<br>Sisi di hadapan 60° = ' + sedang.toFixed(4) + '<br>Hipotenusa = ' + hip2.toFixed(4);
+  }
+  out.innerHTML = html;
+}
+
+function animasiPythagoras(){
+  ['sqA','sqB','sqC'].forEach(function(id, i){
+    var el = document.getElementById(id);
+    if(!el) return;
+    setTimeout(function(){
+      el.style.transition = 'transform .4s ease, opacity .4s ease';
+      el.style.transformOrigin = 'center';
+      el.style.transform = 'scale(1.12)';
+      el.style.opacity = '0.75';
+      setTimeout(function(){ el.style.transform = 'scale(1)'; el.style.opacity = '1'; }, 450);
+    }, i*350);
+  });
+}
+
+/* ===================== SIDEBAR ===================== */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('#sidebar .nav-link, #sidebar .nav-sub').forEach(function(el){
+  el.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ===================== SCROLLSPY + PROGRESS BAR ===================== */
+var sections = ['materi-a','materi-b','materi-c','materi-d','materi-e','materi-f','latihan'];
+function updateScrollspy(){
+  var scrollPos = window.scrollY + 140;
+  var activeId = sections[0];
+  sections.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top + window.scrollY <= scrollPos){ activeId = id; }
+  });
+  document.querySelectorAll('#sidebar .nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === activeId);
+  });
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+window.addEventListener('scroll', updateScrollspy);
+window.addEventListener('resize', updateScrollspy);
+
+/* ===================== BANK SOAL ===================== */
+var allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Hasil dari \\(15^2\\) adalah ...',
+      options:['A. 30','B. 205','C. 225','D. 235'], answer:2,
+      explanation:'✅ \\(15^2 = 15 \\\\times 15 = 225\\).' },
+    { id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Nilai dari \\(\\sqrt{169}\\) adalah ...',
+      options:['A. 11','B. 12','C. 13','D. 14'], answer:2,
+      explanation:'✅ Karena \\(13 \\\\times 13 = 169\\), maka \\(\\\\sqrt{169} = 13\\).' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Sebuah segitiga siku-siku memiliki sisi siku-siku 9 cm dan 12 cm. Panjang hipotenusanya adalah ...',
+      options:['A. 13 cm','B. 14 cm','C. 15 cm','D. 21 cm'], answer:2,
+      explanation:'✅ \\(a^2 = 9^2+12^2 = 81+144=225\\), sehingga \\(a=\\\\sqrt{225}=15\\) cm.' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Diantara tigaan berikut, yang merupakan tripel Pythagoras adalah ...',
+      options:['A. 4, 5, 7','B. 6, 7, 9','C. 8, 15, 17','D. 5, 6, 8'], answer:2,
+      explanation:'✅ \\(17^2=289\\) dan \\(8^2+15^2=64+225=289\\), keduanya sama sehingga (8,15,17) tripel Pythagoras.' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Jarak antara titik A(1, 2) dan B(4, 6) adalah ...',
+      options:['A. 4 satuan','B. 5 satuan','C. 6 satuan','D. 7 satuan'], answer:1,
+      explanation:'✅ \\(AB=\\\\sqrt{(4-1)^2+(6-2)^2}=\\\\sqrt{9+16}=\\\\sqrt{25}=5\\).' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Hitunglah nilai dari \\(12^2\\) = ... .',
+      answer:'144', altAnswers:[],
+      explanation:'✅ \\(12^2 = 12 \\\\times 12 = 144\\).' },
+    { id:'is2', type:'is', level:'mudah', num:2,
+      text:'Nilai dari \\(\\sqrt{196}\\) = ... .',
+      answer:'14', altAnswers:[],
+      explanation:'✅ Karena \\(14 \\\\times 14 = 196\\), maka \\(\\\\sqrt{196}=14\\).' },
+    { id:'is3', type:'is', level:'sedang', num:3,
+      text:'Segitiga siku-siku memiliki sisi siku-siku 6 cm dan 8 cm. Panjang hipotenusanya adalah ... cm.',
+      answer:'10', altAnswers:['10 cm'],
+      explanation:'✅ \\(\\\\sqrt{6^2+8^2}=\\\\sqrt{36+64}=\\\\sqrt{100}=10\\) cm.' },
+    { id:'is4', type:'is', level:'sedang', num:4,
+      text:'Jarak antara titik A(0, 0) dan B(3, 4) adalah ... satuan.',
+      answer:'5', altAnswers:[],
+      explanation:'✅ \\(AB=\\\\sqrt{(3-0)^2+(4-0)^2}=\\\\sqrt{9+16}=\\\\sqrt{25}=5\\).' },
+    { id:'is5', type:'is', level:'sukar', num:5,
+      text:'Pada segitiga siku-siku dengan sudut istimewa 30°-60°-90°, jika sisi di hadapan sudut 30° = 4 cm, maka panjang hipotenusa adalah ... cm.',
+      answer:'8', altAnswers:['8 cm'],
+      explanation:'✅ Perbandingan hipotenusa : sisi di hadapan 30° = 2 : 1, sehingga hipotenusa = 2 × 4 = 8 cm.' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'mudah', num:1,
+      text:'Manakah di antara bilangan berikut yang merupakan bilangan kuadrat sempurna? (Jawaban bisa lebih dari satu)',
+      options:['A. 16','B. 20','C. 25','D. 30'], answers:[0,2],
+      explanation:'✅ 16 = 4² dan 25 = 5² adalah bilangan kuadrat sempurna, sedangkan 20 dan 30 bukan.' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Manakah tigaan berikut yang merupakan tripel Pythagoras? (Jawaban bisa lebih dari satu)',
+      options:['A. 3, 4, 5','B. 5, 12, 13','C. 4, 5, 7','D. 8, 15, 17'], answers:[0,1,3],
+      explanation:'✅ \\(3^2+4^2=25=5^2\\); \\(5^2+12^2=169=13^2\\); \\(8^2+15^2=289=17^2\\) — ketiganya tripel Pythagoras. (4,5,7) bukan karena \\(4^2+5^2=41 \\\\ne 7^2=49\\).' },
+    { id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Manakah pasangan tiga sisi berikut yang dapat membentuk segitiga siku-siku? (Jawaban bisa lebih dari satu)',
+      options:['A. 6, 8, 10','B. 5, 5, 7','C. 9, 12, 15','D. 7, 7, 10'], answers:[0,2],
+      explanation:'✅ \\(6^2+8^2=100=10^2\\) dan \\(9^2+12^2=225=15^2\\) memenuhi teorema Pythagoras, sehingga membentuk segitiga siku-siku.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4,
+      text:'Perhatikan segitiga siku-siku ABC dengan siku-siku di A. Pernyataan manakah yang BENAR? (Jawaban bisa lebih dari satu)',
+      options:['A. \\(BC^2 = AB^2+AC^2\\)','B. \\(AB^2 = BC^2-AC^2\\)','C. \\(AC^2 = AB^2+BC^2\\)','D. \\(AC^2 = BC^2-AB^2\\)'], answers:[0,1,3],
+      explanation:'✅ Karena siku-siku di A, BC adalah hipotenusa, sehingga \\(BC^2=AB^2+AC^2\\) (A benar), \\(AB^2=BC^2-AC^2\\) (B benar), dan \\(AC^2=BC^2-AB^2\\) (D benar). Pernyataan C salah karena AC bukan hipotenusa.' },
+    { id:'pk5', type:'pk', level:'sukar', num:5,
+      text:'Manakah dari tigaan sisi berikut yang membentuk segitiga lancip? (Jawaban bisa lebih dari satu)',
+      options:['A. 4, 5, 6','B. 3, 4, 5','C. 6, 7, 8','D. 5, 12, 13'], answers:[0,2],
+      explanation:'✅ Untuk (4,5,6): \\(6^2=36 &lt; 4^2+5^2=41\\) → lancip. Untuk (6,7,8): \\(8^2=64 &lt; 6^2+7^2=85\\) → lancip. (3,4,5) dan (5,12,13) adalah segitiga siku-siku, bukan lancip.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Pernyataan: \\(9^2 = 81\\).',
+      answer:true,
+      explanation:'✅ BENAR, karena \\(9 \\\\times 9 = 81\\).' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Pernyataan: Akar kuadrat dari 50 adalah bilangan bulat.',
+      answer:false,
+      explanation:'❌ SALAH. 50 bukan bilangan kuadrat sempurna, sehingga \\(\\\\sqrt{50}\\) bukan bilangan bulat (≈7,07).' },
+    { id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Pernyataan: Pada segitiga siku-siku, kuadrat hipotenusa sama dengan jumlah kuadrat dua sisi siku-sikunya.',
+      answer:true,
+      explanation:'✅ BENAR, inilah bunyi Teorema Pythagoras: \\(c^2=a^2+b^2\\).' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Pernyataan: Tigaan 3, 4, 6 merupakan tripel Pythagoras.',
+      answer:false,
+      explanation:'❌ SALAH. \\(3^2+4^2=25\\), sedangkan \\(6^2=36\\). Karena \\(25 \\\\ne 36\\), (3,4,6) bukan tripel Pythagoras.' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Pernyataan: Pada segitiga siku-siku sama kaki (45°-45°-90°), perbandingan sisinya adalah 1 : 1 : √2.',
+      answer:true,
+      explanation:'✅ BENAR. Kedua sisi siku-siku sama panjang dan hipotenusanya \\(\\\\sqrt{2}\\) kali sisi siku-siku.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'√121', right:'11', answer:'11',
+      options:['11','12','10','9'],
+      explanation:'✅ \\(11 \\\\times 11 = 121\\), sehingga \\(\\\\sqrt{121}=11\\).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2,
+      left:'Tripel Pythagoras (3, 4, c)', right:'c = 5', answer:'c = 5',
+      options:['c = 5','c = 6','c = 7','c = 25'],
+      explanation:'✅ \\(3^2+4^2=9+16=25=5^2\\), sehingga \\(c=5\\).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Jika c² = a² + b²', right:'Segitiga Siku-siku', answer:'Segitiga Siku-siku',
+      options:['Segitiga Siku-siku','Segitiga Lancip','Segitiga Tumpul','Bukan Segitiga'],
+      explanation:'✅ Kondisi \\(c^2=a^2+b^2\\) menandakan segitiga siku-siku dengan sudut siku-siku di depan sisi c.' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'Jika c² &gt; a² + b²', right:'Segitiga Tumpul', answer:'Segitiga Tumpul',
+      options:['Segitiga Tumpul','Segitiga Lancip','Segitiga Siku-siku','Segitiga Sama Kaki'],
+      explanation:'✅ Kondisi \\(c^2&gt;a^2+b^2\\) menandakan segitiga tumpul.' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'Perbandingan sisi segitiga 30°-60°-90°', right:'1 : √3 : 2', answer:'1 : √3 : 2',
+      options:['1 : √3 : 2','1 : 1 : √2','1 : 2 : 3','√2 : √3 : 1'],
+      explanation:'✅ Sisi di hadapan 30° : 60° : 90° = 1 : √3 : 2.' }
+  ]
+};
+var typeLabels = { pg:'Pilihan Ganda', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+var typeOrder = ['pg','is','pk','bs','jd'];
+
+var state = { answers:{}, currentType:'pg', matchSelections:{} };
+var pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.type-tab').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-type') === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  var container = document.getElementById('quiz-area');
+  var qs = allQuestions[type];
+  var html = '';
+  qs.forEach(function(q){ html += renderCard(q); });
+  container.innerHTML = html;
+  qs.forEach(function(q){ if(state.answers[q.id]){ refreshCard(q); } });
+  typesetMath();
+}
+
+function renderCard(q){
+  var levelClass = 'level-' + q.level;
+  var body = '';
+  if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+
+  return '<div class="question-card" id="card-' + q.id + '">' +
+    '<div class="q-head"><div class="q-num">' + q.num + '</div>' +
+    '<span class="level-badge ' + levelClass + '">' + q.level + '</span></div>' +
+    '<div class="q-text">' + (q.left ? ('Pasangkan: <strong>' + q.left + '</strong>') : q.text) + '</div>' +
+    body +
+    '<div class="explanation" id="exp-' + q.id + '">' + q.explanation + '</div>' +
+    '</div>';
+}
+
+function renderPG(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="answerPG(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  return html;
+}
+function answerPG(qid, idx){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderIS(q){
+  return '<div class="is-row">' +
+    '<input type="text" id="input-' + q.id + '" placeholder="Ketik jawabanmu..." onkeydown="if(event.key===\'Enter\'){submitIS(\'' + q.id + '\')}">' +
+    '<button onclick="submitIS(\'' + q.id + '\')">Kirim Jawaban</button>' +
+    '</div>';
+}
+function submitIS(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var input = document.getElementById('input-' + qid);
+  var val = (input.value || '').trim().toLowerCase();
+  if(val === ''){ return; }
+  var candidates = [q.answer].concat(q.altAnswers || []).map(function(a){ return a.toString().trim().toLowerCase(); });
+  var correct = candidates.indexOf(val) !== -1;
+  state.answers[qid] = { chosen: input.value, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderPK(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="togglePK(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  html += '<button class="pk-confirm" id="confirm-' + q.id + '" onclick="submitPK(\'' + q.id + '\')">Konfirmasi Jawaban</button>';
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  var arr = pkTemp[qid];
+  var pos = arr.indexOf(idx);
+  var btn = document.getElementById('opt-' + qid + '-' + idx);
+  if(pos === -1){ arr.push(idx); btn.classList.add('pk-on'); }
+  else { arr.splice(pos,1); btn.classList.remove('pk-on'); }
+}
+function submitPK(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var chosen = (pkTemp[qid] || []).slice().sort();
+  var correctArr = q.answers.slice().sort();
+  var correct = chosen.length === correctArr.length && chosen.every(function(v,i){ return v === correctArr[i]; });
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderBS(q){
+  return '<div class="bs-row">' +
+    '<button class="bs-btn" id="opt-' + q.id + '-true" onclick="answerBS(\'' + q.id + '\',true)">✅ BENAR</button>' +
+    '<button class="bs-btn" id="opt-' + q.id + '-false" onclick="answerBS(\'' + q.id + '\',false)">❌ SALAH</button>' +
+    '</div>';
+}
+function answerBS(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderJD(q){
+  var opts = q.options.slice();
+  var optHtml = '<option value="">-- pilih --</option>';
+  opts.forEach(function(o){ optHtml += '<option value="' + o + '">' + o + '</option>'; });
+  return '<div class="jd-row"><div class="jd-left">' + q.left + '</div>' +
+    '<select id="sel-' + q.id + '" onchange="answerJD(\'' + q.id + '\', this.value)">' + optHtml + '</select></div>';
+}
+function answerJD(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  if(val === '') return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function findQuestion(qid){
+  for(var t in allQuestions){
+    var found = allQuestions[t].find(function(q){ return q.id === qid; });
+    if(found) return found;
+  }
+  return null;
+}
+
+function refreshCard(q){
+  var card = document.getElementById('card-' + q.id);
+  var ans = state.answers[q.id];
+  if(!card || !ans) return;
+  card.classList.add(ans.correct ? 'correct' : 'wrong');
+
+  if(q.type === 'pg'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      if(idx === ans.chosen){ btn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong'); }
+      if(idx === q.answer && !ans.correct){ btn.classList.add('reveal-correct'); }
+    });
+  } else if(q.type === 'is'){
+    var input = document.getElementById('input-' + q.id);
+    if(input) input.disabled = true;
+  } else if(q.type === 'pk'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      var wasChosen = ans.chosen.indexOf(idx) !== -1;
+      var isCorrectOpt = q.answers.indexOf(idx) !== -1;
+      if(wasChosen && isCorrectOpt) btn.classList.add('selected-correct');
+      else if(wasChosen && !isCorrectOpt) btn.classList.add('selected-wrong');
+      else if(!wasChosen && isCorrectOpt) btn.classList.add('reveal-correct');
+    });
+    var confirmBtn = document.getElementById('confirm-' + q.id);
+    if(confirmBtn) confirmBtn.disabled = true;
+  } else if(q.type === 'bs'){
+    var trueBtn = document.getElementById('opt-' + q.id + '-true');
+    var falseBtn = document.getElementById('opt-' + q.id + '-false');
+    trueBtn.disabled = true; falseBtn.disabled = true;
+    var chosenBtn = ans.chosen ? trueBtn : falseBtn;
+    chosenBtn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong');
+    if(!ans.correct){
+      var correctBtn = q.answer ? trueBtn : falseBtn;
+      correctBtn.classList.add('selected-correct');
+    }
+  } else if(q.type === 'jd'){
+    var sel = document.getElementById('sel-' + q.id);
+    if(sel){ sel.disabled = true; sel.classList.add(ans.correct ? 'correct' : 'wrong'); }
+  }
+
+  var exp = document.getElementById('exp-' + q.id);
+  if(exp){ exp.classList.add('show'); typesetMath(); }
+}
+
+function updateScoreStrip(){
+  var html = '';
+  typeOrder.forEach(function(t, i){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    html += '<div class="score-chip">' + (i+1) + '. ' + typeLabels[t] + ': ' + correct + '/' + qs.length + '</div>';
+  });
+  document.getElementById('score-strip').innerHTML = html;
+}
+
+function showAnalysis(){
+  var totalQ = 0, totalCorrect = 0;
+  var perType = {};
+  typeOrder.forEach(function(t){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    perType[t] = { total: qs.length, correct: correct };
+    totalQ += qs.length;
+    totalCorrect += correct;
+  });
+  var totalWrong = totalQ - totalCorrect;
+  var pct = totalQ > 0 ? Math.round((totalCorrect/totalQ)*100) : 0;
+
+  document.getElementById('stat-total').textContent = totalQ;
+  document.getElementById('stat-benar').textContent = totalCorrect;
+  document.getElementById('stat-salah').textContent = totalWrong;
+  document.getElementById('stat-nilai').textContent = pct + '%';
+
+  var barHtml = '';
+  typeOrder.forEach(function(t){
+    var p = perType[t];
+    var barPct = p.total > 0 ? (p.correct/p.total)*100 : 0;
+    barHtml += '<div class="bar-row"><div class="name">' + typeLabels[t] + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div>' +
+      '<div class="mono" style="width:50px; text-align:right;">' + p.correct + '/' + p.total + '</div></div>';
+  });
+  document.getElementById('bar-chart').innerHTML = barHtml;
+
+  var grade, msg;
+  if(pct >= 90){ grade='A'; msg='🏆 Luar Biasa!'; }
+  else if(pct >= 75){ grade='B'; msg='⭐ Bagus!'; }
+  else if(pct >= 60){ grade='C'; msg='👍 Cukup Baik'; }
+  else if(pct >= 40){ grade='D'; msg='💪 Jangan Menyerah'; }
+  else { grade='E'; msg='📚 Semangat Belajar'; }
+  document.getElementById('grade-letter').textContent = grade;
+  document.getElementById('grade-msg').textContent = msg;
+
+  document.getElementById('analysis-panel').classList.add('show');
+  document.getElementById('analysis-panel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysis-panel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+/* ===================== INIT ===================== */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollspy();
+  typesetMath();
+});
+</script>
+</body>
+</html>
