@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistika 2 · Matematika Kelas 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Source Serif 4',serif;background:var(--paper);color:var(--text-dark)}
+.layout{display:flex;min-height:100vh}
+aside#sidebar{width:290px;flex:0 0 290px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:linear-gradient(180deg,var(--ink),var(--ink2));color:var(--cream);
+  padding:28px 20px;border-right:1px solid var(--ink-border)}
+.side-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.side-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin:6px 0 14px;line-height:1.25}
+.progress-wrap{height:6px;background:var(--ink3);border-radius:99px;overflow:hidden;margin-bottom:18px}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft));transition:width .15s}
+.nav-head{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.14em;margin:16px 0 6px;text-transform:uppercase}
+nav a{display:block;color:var(--cream-dim);text-decoration:none;padding:7px 10px;border-radius:8px;font-size:14.5px;border-left:3px solid transparent;margin:2px 0}
+nav a:hover{background:var(--ink3);color:var(--cream)}
+nav a.active{background:var(--ink3);color:var(--gold-soft);border-left-color:var(--gold)}
+nav a.nav-sub{margin-left:14px;font-size:13.5px;padding:5px 10px;border-left:2px solid var(--ink-border);border-radius:0 8px 8px 0}
+nav a.nav-sub.active{border-left-color:var(--gold)}
+main#content{flex:1;min-width:0;padding:0 0 60px}
+.hero{background:linear-gradient(135deg,var(--ink) 0%,var(--ink3) 100%);color:var(--cream);padding:64px 48px 48px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(224,169,77,.25),transparent 70%)}
+.hero .label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:44px;margin:10px 0 12px;line-height:1.1}
+.hero p{color:var(--cream-dim);max-width:640px;font-size:16.5px;line-height:1.7}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{border:1px solid var(--ink-border);background:rgba(255,255,255,.06);padding:6px 12px;border-radius:99px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-soft)}
+section.block{max-width:880px;margin:0 auto;padding:48px 40px 8px}
+h2.sec{font-family:'Playfair Display',serif;font-size:30px;color:var(--ink);border-bottom:3px solid var(--gold);display:inline-block;padding-bottom:6px;margin:0 0 10px}
+h3.sub{font-family:'Playfair Display',serif;font-size:22px;color:var(--ink2);margin:30px 0 8px}
+p{line-height:1.75;color:var(--text-mid);font-size:16.5px}
+.callout{border-left:4px solid;border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15.5px;color:var(--text-mid)}
+.callout.def{background:var(--def);border-color:var(--def-b)}
+.callout.note{background:var(--note);border-color:var(--note-b)}
+.callout.warn{background:var(--warn);border-color:var(--warn-b)}
+.callout b.t{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--text-dark)}
+.example-box{background:var(--paper2);border:1px dashed var(--paper-line);border-radius:12px;padding:16px 20px;margin:18px 0}
+.example-box h4{margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--note-b);text-transform:uppercase}
+ol.steps{margin:6px 0;padding-left:20px}
+ol.steps li{margin:6px 0;line-height:1.65;color:var(--text-mid)}
+table.data{border-collapse:collapse;margin:12px 0;width:100%;font-size:15px}
+table.data th,table.data td{border:1px solid var(--paper-line);padding:8px 12px;text-align:center;color:var(--text-dark)}
+table.data th{background:var(--paper2);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.06em}
+figure.chart{margin:20px 0;background:#fff;border:1px solid var(--paper-line);border-radius:14px;padding:18px;box-shadow:0 2px 10px rgba(20,26,46,.06)}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-mid);text-align:center;margin-top:8px}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.method-grid.two{grid-template-columns:repeat(2,1fr)}
+.method-card{background:#fff;border:1px solid var(--paper-line);border-radius:12px;padding:16px;text-align:center;transition:transform .25s,box-shadow .25s}
+.method-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(20,26,46,.12)}
+.method-card .emo{font-size:34px}
+.method-card h5{margin:8px 0 4px;font-family:'Playfair Display',serif;font-size:17px;color:var(--ink)}
+.method-card p{font-size:13.5px;margin:0;line-height:1.55}
+.calc-box{background:linear-gradient(160deg,var(--ink),var(--ink3));border-radius:14px;padding:18px 20px;margin:20px 0;color:var(--cream)}
+.calc-box h4{margin:0 0 10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.calc-box label{font-size:13px;color:var(--cream-dim);display:block;margin:8px 0 4px}
+.calc-box input{width:150px;padding:8px 10px;border-radius:8px;border:1px solid var(--ink-border);background:var(--ink2);color:var(--cream);font-family:'JetBrains Mono',monospace}
+.calc-box input.wide{width:100%;max-width:420px}
+.calc-box button{margin-top:12px;background:var(--gold);color:var(--ink);border:none;padding:9px 18px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-weight:700;cursor:pointer}
+.calc-box button:hover{background:var(--gold-soft)}
+.calc-result{margin-top:12px;background:rgba(255,255,255,.08);border:1px solid var(--ink-border);border-radius:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold-soft);min-height:20px;line-height:1.8}
+.type-bar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.type-btn{padding:9px 16px;border-radius:99px;border:1.5px solid var(--ink-border);background:#fff;color:var(--ink2);font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;transition:.2s}
+.type-btn:hover{border-color:var(--gold)}
+.type-btn.active{background:var(--ink);color:var(--gold-soft);border-color:var(--ink)}
+.score-strip{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.score-chip{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--paper2);border:1px solid var(--paper-line);border-radius:99px;padding:6px 12px;color:var(--text-mid)}
+.qcard{background:#fff;border:1px solid var(--paper-line);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:0 2px 8px rgba(20,26,46,.05)}
+.qmeta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--note-b);text-transform:uppercase;margin-bottom:6px}
+.qtext{font-size:16px;color:var(--text-dark);line-height:1.65;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--paper-line);border-radius:10px;padding:10px 14px;margin:6px 0;cursor:pointer;font-size:15px;color:var(--text-dark);transition:.15s;font-family:'Source Serif 4',serif}
+.opt:hover{border-color:var(--gold)}
+.opt.correct{background:var(--correct);border-color:var(--correct-b)}
+.opt.wrong{background:var(--wrong);border-color:var(--wrong-b)}
+.opt.sel{border-color:var(--gold);background:var(--note)}
+.opt:disabled{cursor:default}
+.explain{margin-top:10px;background:var(--def);border-left:4px solid var(--def-b);border-radius:8px;padding:10px 14px;font-size:14.5px;color:var(--text-mid);display:none}
+.explain.show{display:block}
+.btn-small{background:var(--ink);color:var(--cream);border:none;border-radius:8px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;margin-top:6px}
+.btn-small:hover{background:var(--ink3)}
+.is-input{padding:9px 12px;border-radius:8px;border:1.5px solid var(--paper-line);font-family:'JetBrains Mono',monospace;font-size:15px;width:160px;background:var(--paper)}
+.is-input.correct{border-color:var(--correct-b);background:var(--correct)}
+.is-input.wrong{border-color:var(--wrong-b);background:var(--wrong)}
+.jd-row{display:flex;gap:10px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.jd-left{flex:1;min-width:200px;background:var(--paper2);border:1px solid var(--paper-line);border-radius:8px;padding:8px 12px;font-size:14.5px;color:var(--text-dark)}
+.jd-row select{padding:8px;border-radius:8px;border:1.5px solid var(--paper-line);background:#fff;font-size:14px;max-width:300px;font-family:'Source Serif 4',serif}
+.jd-row select.correct{border-color:var(--correct-b);background:var(--correct)}
+.jd-row select.wrong{border-color:var(--wrong-b);background:var(--wrong)}
+.analysis{display:none;background:var(--ink);color:var(--cream);border-radius:14px;padding:20px 24px;margin-top:20px}
+.analysis.show{display:block}
+.analysis h3{font-family:'Playfair Display',serif;color:var(--gold-soft);margin:0 0 10px}
+.analysis table{width:100%;border-collapse:collapse;font-size:14px}
+.analysis td,.analysis th{padding:6px 10px;border-bottom:1px solid var(--ink-border);text-align:left}
+.analysis .msg{margin-top:12px;color:var(--gold-soft);font-size:15px}
+footer{background:var(--ink);color:var(--cream-dim);padding:28px 40px;text-align:center;font-size:13.5px;line-height:1.7}
+footer .credit{color:var(--gold-soft);font-family:'JetBrains Mono',monospace;font-size:12.5px;margin-top:6px}
+.fade{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.fade.inview{opacity:1;transform:none}
+.bar{transform:scaleY(0);transform-box:fill-box;transform-origin:bottom;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.inview .bar{transform:scaleY(1)}
+#line-path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s ease .2s}
+.inview #line-path{stroke-dashoffset:0}
+.lpt{opacity:0;transition:opacity .4s}
+.inview .lpt{opacity:1}
+.picto-ico{width:24px;height:24px;color:var(--note-b);opacity:0;transform:scale(.2);transition:opacity .4s,transform .4s}
+.inview .picto-ico{opacity:1;transform:scale(1)}
+.pie-sect{opacity:0;transform:scale(.55);transform-box:fill-box;transform-origin:center;transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.inview .pie-sect{opacity:1;transform:scale(1)}
+.pie-lbl{opacity:0;transition:opacity .5s}
+.inview .pie-lbl{opacity:1}
+.turus-ico{width:26px;height:26px;color:var(--ink3);opacity:0;transition:opacity .35s}
+.inview .turus-ico{opacity:1}
+.meanline{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.4s ease .9s}
+.inview .meanline{stroke-dashoffset:0}
+.meanlbl{opacity:0;transition:opacity .5s ease 2s}
+.inview .meanlbl{opacity:1}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.num-chip{width:40px;height:40px;border-radius:10px;background:var(--paper2);border:1.5px solid var(--paper-line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--text-dark)}
+.num-chip.med-hl{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}
+.inview .num-chip.med-hl{animation:medpulse 1.6s ease-in-out infinite}
+@keyframes medpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.boxrect{transform:scaleX(0);transform-box:fill-box;transform-origin:left;transition:transform 1s ease .5s}
+.inview .boxrect{transform:scaleX(1)}
+.whisk{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s ease}
+.inview .whisk{stroke-dashoffset:0}
+.qdot{opacity:0;transition:opacity .4s}
+.inview .qdot{opacity:1}
+#menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:60;background:var(--ink);color:var(--gold);border:none;border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer}
+#overlay{display:none;position:fixed;inset:0;background:rgba(10,12,24,.5);z-index:40}
+@media(max-width:900px){
+  #menu-toggle{display:block}
+  #sidebar{position:fixed;left:0;top:0;z-index:50;transform:translateX(-100%);transition:transform .3s}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.show{display:block}
+  .method-grid,.method-grid.two{grid-template-columns:1fr}
+  .hero{padding:84px 24px 40px}
+  .hero h1{font-size:32px}
+  section.block{padding:36px 20px 4px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="ico-fruit" viewBox="0 0 24 24">
+    <circle cx="12" cy="14" r="8" fill="currentColor"/>
+    <path d="M12 6 q1 -4 5 -4 q0 4 -5 4 z" fill="#7fae6b"/>
+    <line x1="12" y1="6" x2="12" y2="9" stroke="#5b5137" stroke-width="1.6"/>
+  </symbol>
+  <symbol id="ico-turus5" viewBox="0 0 24 24">
+    <line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="10" y1="4" x2="10" y2="20" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="15" y1="4" x2="15" y2="20" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="20" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="2" y1="18" x2="23" y2="6" stroke="currentColor" stroke-width="2.4"/>
+  </symbol>
+  <symbol id="ico-turus1" viewBox="0 0 24 24">
+    <line x1="12" y1="4" x2="12" y2="20" stroke="currentColor" stroke-width="2.4"/>
+  </symbol>
+</svg>
+<button id="menu-toggle" aria-label="Buka menu">☰</button>
+<div id="overlay"></div>
+<div class="layout">
+
+<aside id="sidebar">
+  <div class="side-label">Matematika · Kelas 8</div>
+  <div class="side-title">Statistika 2 — Ukuran Pemusatan &amp; Penyajian Data</div>
+  <div class="progress-wrap"><div id="progress-bar"></div></div>
+  <nav id="side-nav">
+    <div class="nav-head">Materi</div>
+    <a data-sec="a-data" href="#a-data">A. Data Statistika</a>
+    <a class="nav-sub" data-sec="a1-pengertian" href="#a1-pengertian">A.1 Pengertian Data</a>
+    <a class="nav-sub" data-sec="a2-pengumpulan" href="#a2-pengumpulan">A.2 Pengumpulan Data</a>
+    <a class="nav-sub" data-sec="a3-sampel" href="#a3-sampel">A.3 Sampel &amp; Populasi</a>
+    <a data-sec="b-pemusatan" href="#b-pemusatan">B. Ukuran Pemusatan</a>
+    <a class="nav-sub" data-sec="b1-mean" href="#b1-mean">B.1 Mean (Rata-rata)</a>
+    <a class="nav-sub" data-sec="b2-modus" href="#b2-modus">B.2 Modus</a>
+    <a class="nav-sub" data-sec="b3-median" href="#b3-median">B.3 Median</a>
+    <a data-sec="c-pencaran" href="#c-pencaran">C. Ukuran Pencaran</a>
+    <a class="nav-sub" data-sec="c1-jangkauan" href="#c1-jangkauan">C.1 Jangkauan</a>
+    <a class="nav-sub" data-sec="c2-kuartil" href="#c2-kuartil">C.2 Kuartil</a>
+    <a class="nav-sub" data-sec="c3-interkuartil" href="#c3-interkuartil">C.3 Jangkauan Interkuartil</a>
+    <a data-sec="d-penyajian" href="#d-penyajian">D. Penyajian Data</a>
+    <a class="nav-sub" data-sec="d1-diagram" href="#d1-diagram">D.1 Bentuk Diagram</a>
+    <a class="nav-sub" data-sec="d2-frekuensi" href="#d2-frekuensi">D.2 Daftar Frekuensi</a>
+    <div class="nav-head">Latihan</div>
+    <a data-sec="latihan" href="#latihan">Latihan Soal (25 soal)</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('bs')">4. Benar / Salah</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+</aside>
+
+<main id="content">
+  <div class="hero">
+    <div class="label">Ebook Interaktif · Modul Matematika SMP</div>
+    <h1>Statistika 2<br>Data &amp; Ukurannya</h1>
+    <p>Mengenal data kualitatif–kuantitatif, populasi–sampel, menghitung mean, modus, median, jangkauan, dan kuartil, lalu menyajikan data dalam diagram serta daftar frekuensi — lengkap dengan animasi, kalkulator, dan 25 latihan soal interaktif.</p>
+    <div class="chips">
+      <span class="chip">A · Data Statistika</span>
+      <span class="chip">B · Ukuran Pemusatan</span>
+      <span class="chip">C · Ukuran Pencaran</span>
+      <span class="chip">D · Penyajian Data</span>
+      <span class="chip">25 Soal Interaktif</span>
+    </div>
+  </div>
+
+  <section class="block fade" id="a-data">
+    <h2 class="sec">A. Data Statistika</h2>
+    <div class="callout def"><b class="t">Definisi</b>
+      <b>Statistika</b> adalah ilmu yang mempelajari cara-cara mengumpulkan, menyusun, menyajikan, dan menganalisis data, serta cara mengambil kesimpulan yang logis sehingga dapat diambil keputusan yang akurat.
+    </div>
+
+    <h3 class="sub" id="a1-pengertian">A.1 Pengertian Data</h3>
+    <p>Ada dua jenis data yang perlu kamu bedakan:</p>
+    <div class="method-grid two">
+      <div class="method-card"><div class="emo">🏷️</div><h5>Data Kualitatif</h5><p>Data yang diperoleh dari pengamatan <b>sifat</b> suatu objek. Contoh: jenis kendaraan, jenis pekerjaan.</p></div>
+      <div class="method-card"><div class="emo">🔢</div><h5>Data Kuantitatif</h5><p>Data yang diperoleh dari hasil pengukuran bersifat <b>numerik</b>. Contoh: nilai, berat badan, suhu, luas.</p></div>
+    </div>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Kelompokkan: (1) nilai ulangan, (2) jenis kendaraan, (3) suhu badan, (4) jenis pekerjaan.</p>
+      <ol class="steps">
+        <li>Nilai ulangan berupa angka hasil pengukuran → <b>kuantitatif</b>.</li>
+        <li>Jenis kendaraan berupa sifat/kategori → <b>kualitatif</b>.</li>
+        <li>Suhu badan berupa angka hasil pengukuran → <b>kuantitatif</b>.</li>
+        <li>Jenis pekerjaan berupa kategori → <b>kualitatif</b>.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub" id="a2-pengumpulan">A.2 Pengumpulan Data</h3>
+    <p>Data dapat dikumpulkan dengan tiga cara:</p>
+    <div class="method-grid">
+      <div class="method-card"><div class="emo">🧮</div><h5>Mencacah / Membilang</h5><p>Menghitung banyak objek satu per satu, misal banyak siswa di kelas.</p></div>
+      <div class="method-card"><div class="emo">📏</div><h5>Mengukur</h5><p>Menggunakan alat ukur, misal tinggi badan, berat badan, suhu.</p></div>
+      <div class="method-card"><div class="emo">✍️</div><h5>Mencatat dengan Turus</h5><p>Merekam kemunculan data dengan coretan tally (turus) berkelompok lima.</p></div>
+    </div>
+    <figure class="chart anim" id="turus-fig">
+      <div style="display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#5b5137">Nilai 7 muncul 5 kali →</span>
+        <span id="turus-demo" style="display:flex;gap:6px"></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#5b5137">Nilai 6 muncul 13 kali →</span>
+        <span id="turus-demo2" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+      </div>
+      <figcaption>Gambar 1 — Pencatatan data dengan turus: setiap kelompok lima dicoret menyilang.</figcaption>
+    </figure>
+
+    <h3 class="sub" id="a3-sampel">A.3 Sampel dan Populasi</h3>
+    <div class="callout def"><b class="t">Definisi</b>
+      <b>Populasi</b> adalah kumpulan seluruh objek yang lengkap yang akan dijadikan objek penelitian.<br>
+      <b>Sampel</b> adalah bagian dari populasi yang benar-benar diteliti atau diamati.
+    </div>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Pihak sekolah ingin mengetahui minat baca siswa SMPK 1. Setiap wali kelas membagikan 10 angket kepada 10 siswa di tiap kelas (5 perempuan dan 5 laki-laki). Tentukan populasi dan sampelnya.</p>
+      <ol class="steps">
+        <li>Objek penelitian lengkap = seluruh siswa SMPK 1 → <b>populasi</b>.</li>
+        <li>Bagian yang benar-benar diteliti = 10 siswa di tiap kelas yang menerima angket → <b>sampel</b>.</li>
+      </ol>
+    </div>
+    <div class="callout note"><b class="t">Catatan</b>
+      Kesimpulan tentang populasi ditarik dari sampel, karena itu sampel harus diambil secara wajar agar dapat mewakili populasinya.
+    </div>
+  </section>
+
+  <section class="block fade" id="b-pemusatan">
+    <h2 class="sec">B. Ukuran Pemusatan (Data Tunggal)</h2>
+
+    <h3 class="sub" id="b1-mean">B.1 Rata-rata Hitung (Mean)</h3>
+    <p>Mean data tunggal \(x_1, x_2, \dots, x_n\) adalah:</p>
+    <p style="text-align:center">\[ \bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n} = \frac{\sum x}{n} \]</p>
+    <p>Jika data disajikan dengan frekuensi \(f\):</p>
+    <p style="text-align:center">\[ \bar{x} = \frac{x_1 f_1 + x_2 f_2 + \cdots + x_n f_n}{f_1 + f_2 + \cdots + f_n} = \frac{\sum x \cdot f}{\sum f} \]</p>
+    <figure class="chart anim" id="mean-fig">
+      <svg viewBox="0 0 470 240" role="img" aria-label="Visualisasi mean">
+        <line x1="60" y1="200" x2="450" y2="200" stroke="#5b5137" stroke-width="1.5"/>
+        <rect class="bar" style="transition-delay:.05s" x="70"  y="160" width="30" height="40"  rx="3" fill="#5b8bd0"/>
+        <rect class="bar" style="transition-delay:.15s" x="120" y="40"  width="30" height="160" rx="3" fill="#5b8bd0"/>
+        <rect class="bar" style="transition-delay:.25s" x="170" y="140" width="30" height="60"  rx="3" fill="#5b8bd0"/>
+        <rect class="bar" style="transition-delay:.35s" x="220" y="60"  width="30" height="140" rx="3" fill="#5b8bd0"/>
+        <rect class="bar" style="transition-delay:.45s" x="270" y="100" width="30" height="100" rx="3" fill="#5b8bd0"/>
+        <rect class="bar" style="transition-delay:.55s" x="320" y="120" width="30" height="80"  rx="3" fill="#5b8bd0"/>
+        <rect class="bar" style="transition-delay:.65s" x="370" y="140" width="30" height="60"  rx="3" fill="#5b8bd0"/>
+        <rect class="bar" style="transition-delay:.75s" x="420" y="80"  width="30" height="120" rx="3" fill="#5b8bd0"/>
+        <line class="meanline" pathLength="1" x1="60" y1="105" x2="455" y2="105" stroke="#e0a94d" stroke-width="3" stroke-dasharray="1"/>
+        <text class="meanlbl" x="452" y="96" font-size="12" text-anchor="end" fill="#b07f2c" font-family="JetBrains Mono">mean = 4,75</text>
+        <text x="85"  y="220" font-size="11" text-anchor="middle" fill="#5b5137">2</text>
+        <text x="135" y="220" font-size="11" text-anchor="middle" fill="#5b5137">8</text>
+        <text x="185" y="220" font-size="11" text-anchor="middle" fill="#5b5137">3</text>
+        <text x="235" y="220" font-size="11" text-anchor="middle" fill="#5b5137">7</text>
+        <text x="285" y="220" font-size="11" text-anchor="middle" fill="#5b5137">5</text>
+        <text x="335" y="220" font-size="11" text-anchor="middle" fill="#5b5137">4</text>
+        <text x="385" y="220" font-size="11" text-anchor="middle" fill="#5b5137">3</text>
+        <text x="435" y="220" font-size="11" text-anchor="middle" fill="#5b5137">6</text>
+      </svg>
+      <figcaption>Gambar 2 — Garis emas menunjukkan mean: tinggi “rata” dari seluruh batang data.</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Tentukan mean dari data: 2, 8, 3, 7, 5, 4, 3, 6.</p>
+      <ol class="steps">
+        <li>Jumlahkan semua data: 2 + 8 + 3 + 7 + 5 + 4 + 3 + 6 = 38.</li>
+        <li>Banyak data: n = 8.</li>
+        <li>Mean = 38 ÷ 8 = <b>4,75</b>.</li>
+      </ol>
+    </div>
+    <div class="example-box">
+      <h4>Contoh — Mean dari Tabel Frekuensi &amp; Rata-rata Gabungan</h4>
+      <ol class="steps">
+        <li>Tabel: nilai 3–9 dengan frekuensi 2, 5, 6, 4, 3, 4, 6. Maka \(\sum x f = 6+20+30+24+21+32+54 = 187\) dan \(\sum f = 30\), sehingga mean = 187 ÷ 30 ≈ <b>6,23</b>.</li>
+        <li>Rata-rata gabungan: \(\bar{x}_{gab} = \dfrac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}\). Contoh: rata-rata 12 anak = 6,5 dan rata-rata 38 anak = 4,5 → \(\bar{x}_{gab} = \dfrac{12(6,5) + 38(4,5)}{50} = \dfrac{78 + 171}{50} = 4,98\).</li>
+      </ol>
+    </div>
+    <div class="calc-box">
+      <h4>Kalkulator Rata-rata Gabungan</h4>
+      <label for="g-n1">Banyak data kelompok 1 (n₁)</label><input id="g-n1" type="number" placeholder="mis. 12">
+      <label for="g-x1">Rata-rata kelompok 1 (x̄₁)</label><input id="g-x1" type="number" placeholder="mis. 6.5">
+      <label for="g-n2">Banyak data kelompok 2 (n₂)</label><input id="g-n2" type="number" placeholder="mis. 38">
+      <label for="g-x2">Rata-rata kelompok 2 (x̄₂)</label><input id="g-x2" type="number" placeholder="mis. 4.5">
+      <br><button onclick="hitungGab()">Hitung</button>
+      <div class="calc-result" id="res-gab">Hasil akan muncul di sini.</div>
+    </div>
+
+    <h3 class="sub" id="b2-modus">B.2 Modus</h3>
+    <div class="callout def"><b class="t">Definisi</b>
+      <b>Modus</b> adalah nilai yang paling sering muncul, atau nilai yang frekuensinya paling besar.
+    </div>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Tentukan modus data: 8, 5, 2, 8, 3, 6, 7, 5, 8, 4.</p>
+      <ol class="steps">
+        <li>Hitung kemunculan: 8 → 3 kali; 5 → 2 kali; lainnya 1 kali.</li>
+        <li>Nilai dengan frekuensi terbesar adalah 8.</li>
+        <li>Jadi modus = <b>8</b>.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub" id="b3-median">B.3 Median</h3>
+    <div class="callout def"><b class="t">Definisi</b>
+      <b>Median</b> adalah nilai tengah sesudah data diurutkan. Jika banyak data ganjil, median = nilai tepat di tengah. Jika genap, median = rata-rata dua nilai tengah.
+    </div>
+    <figure class="chart anim" id="median-fig">
+      <div class="chip-row">
+        <div class="num-chip">1</div><div class="num-chip">2</div><div class="num-chip">2</div><div class="num-chip">3</div>
+        <div class="num-chip med-hl">3</div>
+        <div class="num-chip">5</div><div class="num-chip">6</div><div class="num-chip">7</div><div class="num-chip">8</div>
+      </div>
+      <figcaption>Gambar 3 — Data terurut 1, 2, 2, 3, <b>3</b>, 5, 6, 7, 8: nilai tengah (median) = 3.</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Tentukan median dari (a) 3, 2, 1, 5, 8, 6, 7, 3, 2 dan (b) 8, 3, 4, 2, 6, 5, 8, 1, 3, 2, 7, 5.</p>
+      <ol class="steps">
+        <li>(a) Urutkan: 1, 2, 2, 3, 3, 5, 6, 7, 8 (n = 9, ganjil) → data ke-5 = <b>3</b>.</li>
+        <li>(b) Urutkan: 1, 2, 2, 3, 3, 4, 5, 5, 6, 7, 8, 8 (n = 12, genap) → median = (4 + 5) ÷ 2 = <b>4,5</b>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block fade" id="c-pencaran">
+    <h2 class="sec">C. Ukuran Pencaran (Data Tunggal)</h2>
+
+    <h3 class="sub" id="c1-jangkauan">C.1 Jangkauan Suatu Data</h3>
+    <p style="text-align:center">\[ J = x_{maks} - x_{min} \]</p>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Tentukan jangkauan data: 2, 4, 5, 6, 1, 7.</p>
+      <ol class="steps">
+        <li>Nilai tertinggi = 7; nilai terendah = 1.</li>
+        <li>J = 7 − 1 = <b>6</b>.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub" id="c2-kuartil">C.2 Kuartil (Q1, Q2, Q3)</h3>
+    <p>Kuartil membagi data terurut menjadi empat bagian sama banyak: Q1 (kuartil bawah), Q2 (kuartil tengah = median), dan Q3 (kuartil atas).</p>
+    <figure class="chart anim" id="box-fig">
+      <svg viewBox="0 0 470 190" role="img" aria-label="Box plot kuartil">
+        <line class="whisk" pathLength="1" x1="70" y1="110" x2="123" y2="110" stroke="#5b5137" stroke-width="2.5"/>
+        <line class="whisk" pathLength="1" x1="283" y1="110" x2="390" y2="110" stroke="#5b5137" stroke-width="2.5"/>
+        <line x1="70" y1="95" x2="70" y2="125" stroke="#5b5137" stroke-width="2.5"/>
+        <line x1="390" y1="95" x2="390" y2="125" stroke="#5b5137" stroke-width="2.5"/>
+        <rect class="boxrect" x="123" y="80" width="160" height="60" fill="rgba(224,169,77,.28)" stroke="#e0a94d" stroke-width="2.5" rx="6"/>
+        <line class="whisk" pathLength="1" x1="230" y1="80" x2="230" y2="140" stroke="#141a2e" stroke-width="3"/>
+        <circle class="qdot" style="transition-delay:.2s" cx="70"  cy="104" r="5" fill="#5b8bd0"/>
+        <circle class="qdot" style="transition-delay:.3s" cx="123" cy="116" r="5" fill="#5b8bd0"/>
+        <circle class="qdot" style="transition-delay:.4s" cx="177" cy="104" r="5" fill="#5b8bd0"/>
+        <circle class="qdot" style="transition-delay:.5s" cx="230" cy="116" r="5" fill="#5b8bd0"/>
+        <circle class="qdot" style="transition-delay:.6s" cx="283" cy="104" r="5" fill="#5b8bd0"/>
+        <circle class="qdot" style="transition-delay:.7s" cx="337" cy="116" r="5" fill="#5b8bd0"/>
+        <circle class="qdot" style="transition-delay:.8s" cx="390" cy="104" r="5" fill="#5b8bd0"/>
+        <text x="123" y="66" font-size="12" text-anchor="middle" fill="#b07f2c" font-family="JetBrains Mono">Q1 = 3</text>
+        <text x="230" y="66" font-size="12" text-anchor="middle" fill="#141a2e" font-family="JetBrains Mono">Q2 = 5</text>
+        <text x="283" y="66" font-size="12" text-anchor="middle" fill="#b07f2c" font-family="JetBrains Mono">Q3 = 6</text>
+        <text x="70"  y="160" font-size="11" text-anchor="middle" fill="#5b5137">min = 2</text>
+        <text x="390" y="160" font-size="11" text-anchor="middle" fill="#5b5137">maks = 8</text>
+      </svg>
+      <figcaption>Gambar 4 — Box-plot data 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 8: kotak membentang dari Q1 ke Q3.</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Tentukan Q1, Q2, Q3 dari data: 4, 2, 3, 5, 6, 7, 8, 5, 6, 4, 2.</p>
+      <ol class="steps">
+        <li>Urutkan: 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 8 (n = 11).</li>
+        <li>Q2 = data ke-6 = 5.</li>
+        <li>Q1 = median paruh bawah (2, 2, 3, 4, 4) = 3.</li>
+        <li>Q3 = median paruh atas (5, 6, 6, 7, 8) = 6.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub" id="c3-interkuartil">C.3 Jangkauan Interkuartil</h3>
+    <p style="text-align:center">\[ JIK = Q_3 - Q_1 \]</p>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Dari data pada contoh C.2, tentukan jangkauan interkuartilnya.</p>
+      <ol class="steps">
+        <li>Q3 = 6 dan Q1 = 3.</li>
+        <li>JIK = 6 − 3 = <b>3</b>.</li>
+      </ol>
+    </div>
+    <div class="callout warn"><b class="t">Peringatan</b>
+      Semua ukuran pencaran (jangkauan, kuartil, JIK) wajib dihitung <b>setelah data diurutkan</b> dari terkecil ke terbesar.
+    </div>
+    <div class="calc-box">
+      <h4>Kalkulator Statistik Lengkap (mean · median · modus · jangkauan · kuartil)</h4>
+      <label for="calc-data">Masukkan data, pisahkan dengan koma (contoh: 4, 2, 3, 5, 6, 7, 8, 5, 6, 4, 2)</label>
+      <input class="wide" id="calc-data" type="text" placeholder="mis. 4, 2, 3, 5, 6, 7, 8, 5, 6, 4, 2">
+      <br><button onclick="hitungStats()">Hitung</button>
+      <div class="calc-result" id="res-stats">Hasil akan muncul di sini.</div>
+    </div>
+  </section>
+
+  <section class="block fade" id="d-penyajian">
+    <h2 class="sec">D. Penyajian Data Statistika</h2>
+
+    <h3 class="sub" id="d1-diagram">D.1 Penyajian Data dalam Bentuk Diagram</h3>
+    <p>Empat diagram utama: <b>piktogram</b> (lambang gambar sesuai objek), <b>diagram batang</b> (kategori/waktu vs nilai), <b>diagram garis</b> (data kontinu terhadap waktu), dan <b>diagram lingkaran</b> (juring dalam persen atau derajat).</p>
+    <figure class="chart anim" id="picto-fig">
+      <div id="picto-box"></div>
+      <figcaption>Gambar 5 — Piktogram hasil panen (1 lambang buah = 1 kuintal).</figcaption>
+    </figure>
+    <figure class="chart anim" id="line-fig">
+      <svg viewBox="0 0 470 250" role="img" aria-label="Diagram garis banyak kendaraan">
+        <line x1="60" y1="220" x2="450" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <line x1="60" y1="20" x2="60" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <line x1="60" y1="130" x2="450" y2="130" stroke="#e3d7b8"/>
+        <line x1="60" y1="85" x2="450" y2="85" stroke="#e3d7b8"/>
+        <line x1="60" y1="40" x2="450" y2="40" stroke="#e3d7b8"/>
+        <text x="50" y="224" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">0</text>
+        <text x="50" y="134" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">10</text>
+        <text x="50" y="44" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">20</text>
+        <polyline id="line-path" pathLength="1" fill="none" stroke="#c1584f" stroke-width="3" stroke-linejoin="round"
+          points="70,175 130,94 190,58 250,40 310,112 370,130 430,157"/>
+        <circle class="lpt" style="transition-delay:.3s"  cx="70"  cy="175" r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:.65s" cx="130" cy="94"  r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:1s"   cx="190" cy="58"  r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:1.35s" cx="250" cy="40"  r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:1.7s" cx="310" cy="112" r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:2.05s" cx="370" cy="130" r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:2.4s" cx="430" cy="157" r="4.5" fill="#c1584f"/>
+        <text x="70"  y="240" font-size="10.5" text-anchor="middle" fill="#5b5137">06.00</text>
+        <text x="130" y="240" font-size="10.5" text-anchor="middle" fill="#5b5137">08.00</text>
+        <text x="190" y="240" font-size="10.5" text-anchor="middle" fill="#5b5137">10.00</text>
+        <text x="250" y="240" font-size="10.5" text-anchor="middle" fill="#5b5137">12.00</text>
+        <text x="310" y="240" font-size="10.5" text-anchor="middle" fill="#5b5137">14.00</text>
+        <text x="370" y="240" font-size="10.5" text-anchor="middle" fill="#5b5137">16.00</text>
+        <text x="430" y="240" font-size="10.5" text-anchor="middle" fill="#5b5137">18.00</text>
+      </svg>
+      <figcaption>Gambar 6 — Diagram garis: banyak kendaraan menurut pukul pengamatan.</figcaption>
+    </figure>
+    <figure class="chart anim" id="pie-fig">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:center">
+        <svg id="pie-svg" viewBox="0 0 260 260" width="250" height="250" role="img" aria-label="Diagram lingkaran jenis pekerjaan"></svg>
+        <div id="pie-legend" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5b5137;line-height:2"></div>
+      </div>
+      <figcaption>Gambar 7 — Diagram lingkaran jenis pekerjaan (total 45 orang).</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Data pekerjaan: Guru 8, Karyawan 12, Wiraswasta 9, Petani 11, Pedagang 5. Hitung sudut pusat juring Karyawan.</p>
+      <ol class="steps">
+        <li>Total frekuensi = 45.</li>
+        <li>Sudut = (12 ÷ 45) × 360° = <b>96°</b>.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub" id="d2-frekuensi">D.2 Penyajian Data dengan Daftar Frekuensi</h3>
+    <p><b>Daftar frekuensi data tunggal</b> memuat nilai dan banyak kemunculannya (sering dicatat dahulu dengan turus):</p>
+    <figure class="chart anim" id="freq-fig">
+      <div id="freq-tunggal"></div>
+      <figcaption>Gambar 8 — Daftar frekuensi tunggal nilai ulangan (44 data) dengan turus, serta diagram batangnya.</figcaption>
+      <svg viewBox="0 0 470 250" role="img" aria-label="Diagram batang frekuensi nilai" style="margin-top:10px">
+        <line x1="60" y1="220" x2="450" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <line x1="60" y1="20" x2="60" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <rect class="bar" style="transition-delay:.05s" x="80"  y="172" width="40" height="48"  rx="3" fill="#7fae6b"/>
+        <rect class="bar" style="transition-delay:.15s" x="130" y="160" width="40" height="60"  rx="3" fill="#7fae6b"/>
+        <rect class="bar" style="transition-delay:.25s" x="180" y="112" width="40" height="108" rx="3" fill="#7fae6b"/>
+        <rect class="bar" style="transition-delay:.35s" x="230" y="64"  width="40" height="156" rx="3" fill="#7fae6b"/>
+        <rect class="bar" style="transition-delay:.45s" x="280" y="148" width="40" height="72"  rx="3" fill="#7fae6b"/>
+        <rect class="bar" style="transition-delay:.55s" x="330" y="160" width="40" height="60"  rx="3" fill="#7fae6b"/>
+        <rect class="bar" style="transition-delay:.65s" x="380" y="196" width="40" height="24"  rx="3" fill="#7fae6b"/>
+        <text x="100" y="166" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">4</text>
+        <text x="150" y="154" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">5</text>
+        <text x="200" y="106" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">9</text>
+        <text x="250" y="58"  font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">13</text>
+        <text x="300" y="142" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">6</text>
+        <text x="350" y="154" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">5</text>
+        <text x="400" y="190" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">2</text>
+        <text x="100" y="240" font-size="11" text-anchor="middle" fill="#5b5137">3</text>
+        <text x="150" y="240" font-size="11" text-anchor="middle" fill="#5b5137">4</text>
+        <text x="200" y="240" font-size="11" text-anchor="middle" fill="#5b5137">5</text>
+        <text x="250" y="240" font-size="11" text-anchor="middle" fill="#5b5137">6</text>
+        <text x="300" y="240" font-size="11" text-anchor="middle" fill="#5b5137">7</text>
+        <text x="350" y="240" font-size="11" text-anchor="middle" fill="#5b5137">8</text>
+        <text x="400" y="240" font-size="11" text-anchor="middle" fill="#5b5137">9</text>
+      </svg>
+    </figure>
+    <p><b>Daftar frekuensi data berkelompok</b> membagi data ke dalam interval kelas yang sama panjang. Contoh dengan interval kelas 5 dimulai dari 50:</p>
+    <table class="data">
+      <tr><th>Interval</th><th>50–54</th><th>55–59</th><th>60–64</th><th>65–69</th><th>70–74</th><th>75–79</th><th>80–84</th></tr>
+      <tr><td>Frekuensi</td><td>2</td><td>7</td><td>8</td><td>14</td><td>10</td><td>6</td><td>3</td></tr>
+    </table>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Dari 50 data ulangan (72, 66, 66, 60, 55, … , 66, 76), bagaimana frekuensi interval 70–74 diperoleh?</p>
+      <ol class="steps">
+        <li>Tetapkan interval kelas 5: 50–54, 55–59, …, 80–84.</li>
+        <li>Cacah data yang berada di rentang 70–74: 72, 72, 71, 71, 73, 74, 73, 71, 73, 72.</li>
+        <li>Banyaknya = <b>10</b> → frekuensi interval 70–74 adalah 10. Jumlah semua frekuensi harus 50.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block fade" id="latihan">
+    <h2 class="sec">Latihan Soal Interaktif</h2>
+    <p>Uji pemahamanmu dengan 25 soal dalam lima tipe berikut. Setiap soal dilengkapi pembahasan edukatif setelah dijawab.</p>
+    <div class="type-bar" id="type-bar">
+      <button class="type-btn active" data-type="pg" onclick="showType('pg')">1 · Pilihan Ganda</button>
+      <button class="type-btn" data-type="is" onclick="showType('is')">2 · Isian Singkat</button>
+      <button class="type-btn" data-type="pk" onclick="showType('pk')">3 · PG Kompleks</button>
+      <button class="type-btn" data-type="bs" onclick="showType('bs')">4 · Benar/Salah</button>
+      <button class="type-btn" data-type="jd" onclick="showType('jd')">5 · Menjodohkan</button>
+    </div>
+    <div class="score-strip" id="score-strip"></div>
+    <div id="quiz-area"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-small" onclick="showAnalysis()">📊 Lihat Analisis</button>
+      <button class="btn-small" onclick="resetAll()">🔄 Ulangi Semua</button>
+    </div>
+    <div class="analysis" id="analysis"></div>
+  </section>
+
+  <footer>
+    Ebook Interaktif · Matematika Kelas 8 · Statistika 2<br>
+    Single-file HTML · MathJax v3 · Animasi SVG vanilla JS
+    <div class="credit">Dibuat Suminto dengan Qwen3.8-Max</div>
+  </footer>
+</main>
+</div>
+
+<script>
+/* mulai script utama */
+var BANK = {
+  pg: [
+    {id:'pg1',type:'pg',level:'Sedang',num:1,text:'Rata-rata 6 buah bilangan adalah 68 dan rata-rata 14 buah bilangan lain adalah 78. Rata-rata 20 buah bilangan tersebut adalah ....',options:['78','75','73','71'],answer:1,explanation:'Rata-rata gabungan = (6 × 68 + 14 × 78) ÷ 20 = (408 + 1092) ÷ 20 = 1500 ÷ 20 = 75.'},
+    {id:'pg2',type:'pg',level:'Sukar',num:2,text:'Tabel nilai 5, 6, 7, 8, 9 dengan frekuensi 2, x, 4, 6, 2. Jika rata-rata data tersebut 7, maka nilai x adalah ....',options:['9','8','7','6'],answer:3,explanation:'(104 + 6x) ÷ (14 + x) = 7 → 104 + 6x = 98 + 7x → x = 6.'},
+    {id:'pg3',type:'pg',level:'Sedang',num:3,text:'Ukuran sepatu sekelompok pelajar: 43, 40, 39, 43, 42, 39, 36, 37, 42, 38, 37, 41, 40, 39, 40, 41, 39. Median data tersebut adalah ....',options:['40','39,5','39,3','39'],answer:3,explanation:'Data terurut (n = 17, ganjil): median = data ke-9 = 39.'},
+    {id:'pg4',type:'pg',level:'Mudah',num:4,text:'Modus dari data 9, 8, 6, 5, 8, 7, 9, 8, 5, 6, 8, 7, 7, 8 adalah ....',options:['5','6','7','8'],answer:3,explanation:'Nilai 8 muncul 5 kali, paling sering. Jadi modus = 8.'},
+    {id:'pg5',type:'pg',level:'Mudah',num:5,text:'Tinggi badan 24 siswa (cm): 150, 153, 160, 147, 150, 155, 155, 148, 155, 150, 148, 158, 147, 160, 160, 150, 155, 162, 150, 155, 147, 153, 153, 160. Jangkauan data tersebut adalah ....',options:['15','14','13','12'],answer:0,explanation:'Jangkauan = nilai tertinggi − terendah = 162 − 147 = 15.'}
+  ],
+  is: [
+    {id:'is1',type:'is',level:'Mudah',num:1,text:'Mean dari data 2, 8, 3, 7, 5, 4, 3, 6 adalah ....',answer:'4.75',accept:['4.75','4,75'],explanation:'Jumlah = 38, banyak data = 8, mean = 38 ÷ 8 = 4,75.'},
+    {id:'is2',type:'is',level:'Mudah',num:2,text:'Tabel nilai 3–9 dengan frekuensi 4, 3, 2, 5, 2, 4, 3. Modus data tersebut adalah ....',answer:'6',accept:['6','enam'],explanation:'Frekuensi terbesar = 5, dimiliki nilai 6. Modus = 6.'},
+    {id:'is3',type:'is',level:'Mudah',num:3,text:'Median dari data 3, 2, 1, 5, 8, 6, 7, 3, 2 adalah ....',answer:'3',accept:['3'],explanation:'Terurut: 1, 2, 2, 3, 3, 5, 6, 7, 8 → data ke-5 = 3.'},
+    {id:'is4',type:'is',level:'Sedang',num:4,text:'Data 4, 2, 3, 5, 6, 7, 8, 5, 6, 4, 2 memiliki Q1 = 3 dan Q3 = 6. Jangkauan interkuartilnya adalah ....',answer:'3',accept:['3'],explanation:'JIK = Q3 − Q1 = 6 − 3 = 3.'},
+    {id:'is5',type:'is',level:'Mudah',num:5,text:'Sekolah ingin mengetahui minat baca seluruh siswa SMPK 1, lalu meneliti 10 siswa di tiap kelas. Keseluruhan siswa SMPK 1 disebut ....',answer:'populasi',accept:['populasi'],explanation:'Kumpulan seluruh objek penelitian = populasi; 10 siswa per kelas = sampel.'}
+  ],
+  pk: [
+    {id:'pk1',type:'pk',level:'Mudah',num:1,text:'Manakah yang merupakan data kuantitatif? (Pilih semua yang benar!)',options:['Nilai ulangan siswa','Suhu badan pasien','Jenis kendaraan di parkiran','Luas lahan pertanian'],answers:[0,1,3],explanation:'Data kuantitatif bersifat numerik hasil pengukuran. Jenis kendaraan adalah data kualitatif.'},
+    {id:'pk2',type:'pk',level:'Sedang',num:2,text:'Pernyataan yang benar tentang mean: (Pilih semua yang benar!)',options:['Mean = jumlah seluruh data dibagi banyak data','Mean dapat dihitung dari tabel frekuensi dengan Σ(x·f) ÷ Σf','Mean tidak pernah dipengaruhi nilai ekstrem','Rata-rata gabungan = (n₁·x̄₁ + n₂·x̄₂)  (n₁ + n₂)'],answers:[0,1,3],explanation:'Mean justru sensitif terhadap nilai ekstrem; tiga pernyataan lain benar.'},
+    {id:'pk3',type:'pk',level:'Sedang',num:3,text:'Data: 8, 5, 2, 8, 3, 6, 7, 5, 8, 4. Pernyataan yang benar: (Pilih semua yang benar!)',options:['Modusnya 8','Meannya 5,1','Mediannya 5,5','Jangkauannya 5'],answers:[0,1,2],explanation:'Modus 8 (3 kali); mean = 51 ÷ 10 = 5,1; terurut 2,3,4,5,5,6,7,8,8,8 → median (5+6)÷2 = 5,5; jangkauan = 8 − 2 = 6 (bukan 5).'},
+    {id:'pk4',type:'pk',level:'Mudah',num:4,text:'Pernyataan yang benar tentang populasi dan sampel: (Pilih semua yang benar!)',options:['Sampel adalah bagian populasi yang benar-benar diteliti','Populasi adalah kumpulan seluruh objek yang lengkap','Kesimpulan populasi dapat ditarik dari sampel yang diambil wajar','Sampel harus selalu memuat seluruh anggota populasi'],answers:[0,1,2],explanation:'Jika sampel memuat seluruh anggota populasi, itu bukan sampel lagi melainkan sensus/populasi penuh.'},
+    {id:'pk5',type:'pk',level:'Sedang',num:5,text:'Pernyataan yang benar tentang kuartil: (Pilih semua yang benar!)',options:['Q2 sama dengan median','Q1 adalah median paruh bawah setelah data diurutkan','Jangkauan interkuartil = Q3 − Q1','Kuartil dapat ditentukan tanpa mengurutkan data'],answers:[0,1,2],explanation:'Semua ukuran posisi (median, kuartil) wajib dihitung setelah data diurutkan.'}
+  ],
+  bs: [
+    {id:'bs1',type:'bs',level:'Mudah',num:1,text:'Data kualitatif adalah data yang diperoleh dari hasil pengukuran bersifat numerik.',answer:'S',explanation:'Salah — itu definisi data kuantitatif. Data kualitatif berasal dari pengamatan sifat objek.'},
+    {id:'bs2',type:'bs',level:'Mudah',num:2,text:'Mencatat data dengan turus merupakan salah satu cara pengumpulan data.',answer:'B',explanation:'Benar, selain mencacah/membilang dan mengukur.'},
+    {id:'bs3',type:'bs',level:'Sedang',num:3,text:'Median data berjumlah genap adalah rata-rata dua nilai tengah setelah data diurutkan.',answer:'B',explanation:'Benar, misalnya data 12 nilai: median = (data ke-6 + data ke-7) ÷ 2.'},
+    {id:'bs4',type:'bs',level:'Mudah',num:4,text:'Jangkauan interkuartil dihitung dengan Q3 + Q1.',answer:'S',explanation:'Salah — jangkauan interkuartil = Q3 − Q1.'},
+    {id:'bs5',type:'bs',level:'Mudah',num:5,text:'Modus adalah nilai yang frekuensinya paling besar.',answer:'B',explanation:'Benar, modus = nilai yang paling sering muncul.'}
+  ],
+  jd: [
+    {id:'jd1',type:'jd',level:'Mudah',num:1,
+     pairs:[{l:'Mean',r:'Jumlah seluruh data dibagi banyak data'},
+            {l:'Modus',r:'Nilai yang paling sering muncul'},
+            {l:'Median',r:'Nilai tengah setelah data diurutkan'},
+            {l:'Jangkauan',r:'Selisih nilai terbesar dan terkecil'},
+            {l:'Jangkauan interkuartil',r:'Q3 − Q1'}],
+     options:['Selisih nilai terbesar dan terkecil','Jumlah seluruh data dibagi banyak data','Q3 − Q1','Nilai yang paling sering muncul','Nilai tengah setelah data diurutkan'],
+     answers:[1,3,4,0,2],
+     explanation:'Mean = Σx ÷ n; modus = nilai tersering; median = nilai tengah data terurut; jangkauan = maks − min; JIK = Q3 − Q1.'},
+    {id:'jd2',type:'jd',level:'Mudah',num:2,
+     pairs:[{l:'Populasi',r:'Kumpulan seluruh objek yang lengkap akan diteliti'},
+            {l:'Sampel',r:'Bagian populasi yang benar-benar diamati'},
+            {l:'Data kualitatif',r:'Data sifat atau kategori objek'},
+            {l:'Data kuantitatif',r:'Data hasil pengukuran numerik'},
+            {l:'Turus',r:'Coretan tally untuk mencatat data'}],
+     options:['Data hasil pengukuran numerik','Bagian populasi yang benar-benar diamati','Coretan tally untuk mencatat data','Kumpulan seluruh objek yang lengkap akan diteliti','Data sifat atau kategori objek'],
+     answers:[3,1,4,0,2],
+     explanation:'Populasi = objek lengkap; sampel = bagian yang diteliti; kualitatif = sifat; kuantitatif = numerik; turus = tally.'},
+    {id:'jd3',type:'jd',level:'Sedang',num:3,
+     pairs:[{l:'Mean dari 6, 7, 8, 9, 10',r:'8'},
+            {l:'Modus dari 4, 4, 6, 7, 4, 8',r:'4'},
+            {l:'Median dari 3, 5, 9, 7, 1',r:'5'},
+            {l:'Jangkauan dari 4, 9, 2, 7, 5',r:'7'},
+            {l:'Q2 dari 2, 4, 6, 8, 10',r:'6'}],
+     options:['5','8','6','4','7'],
+     answers:[1,3,0,4,2],
+     explanation:'Mean = 40 ÷ 5 = 8; modus = 4 (3 kali); terurut 1,3,5,7,9 → median 5; jangkauan 9 − 2 = 7; Q2 = median = 6.'},
+    {id:'jd4',type:'jd',level:'Mudah',num:4,
+     pairs:[{l:'Piktogram',r:'Diagram dengan lambang gambar objek'},
+            {l:'Daftar frekuensi tunggal',r:'Tabel nilai dan turus/frekuensi'},
+            {l:'Daftar frekuensi berkelompok',r:'Tabel dengan interval kelas'},
+            {l:'Diagram lingkaran',r:'Juring dinyatakan dalam persen atau derajat'},
+            {l:'Diagram garis',r:'Data kontinu terhadap waktu'}],
+     options:['Tabel dengan interval kelas','Data kontinu terhadap waktu','Diagram dengan lambang gambar objek','Juring dinyatakan dalam persen atau derajat','Tabel nilai dan turus/frekuensi'],
+     answers:[2,4,0,3,1],
+     explanation:'Piktogram = lambang; tunggal = nilai + turus; berkelompok = interval kelas; lingkaran = juring persen/derajat; garis = data kontinu.'},
+    {id:'jd5',type:'jd',level:'Sukar',num:5,
+     pairs:[{l:'Rata-rata 12 anak 6,5 digabung 38 anak rata-rata 4,5',r:'4,98'},
+            {l:'Rata-rata 6 bilangan 68 digabung 14 bilangan rata-rata 78',r:'75'},
+            {l:'Rata-rata 36 anak 6,7; setelah Banu ikut rata-rata 6,75 → nilai Banu',r:'8,55'},
+            {l:'Kelompok rata-rata 65 ditambah 10 siswa rata-rata 70 menjadi 66 → banyak siswa semula',r:'40 orang'},
+            {l:'Pria rata-rata 70, wanita 62, gabungan 65 → perbandingan pria : wanita',r:'3 : 5'}],
+     options:['75','3 : 5','4,98','40 orang','8,55'],
+     answers:[2,0,4,3,1],
+     explanation:'(78+171)÷50 = 4,98; (408+1092)÷20 = 75; Banu = 37×6,75 − 36×6,7 = 8,55; 65n+700 = 66(n+10) → n = 40; 5p = 3w → p : w = 3 : 5.'}
+  ]
+};
+
+var TYPES = [
+  {k:'pg',short:'PG',label:'Pilihan Ganda'},
+  {k:'is',short:'ISIAN',label:'Isian Singkat'},
+  {k:'pk',short:'PG KOMPLEKS',label:'PG Kompleks'},
+  {k:'bs',short:'B/S',label:'Benar/Salah'},
+  {k:'jd',short:'JODOH',label:'Menjodohkan'}
+];
+var curType = 'pg';
+var STATE = freshState();
+function freshState(){ return {pg:{},is:{},pk:{},bs:{},jd:{}}; }
+function el(id){ return document.getElementById(id); }
+function findQ(id){
+  var all = BANK.pg.concat(BANK.is, BANK.pk, BANK.bs, BANK.jd);
+  for(var i=0;i<all.length;i++){ if(all[i].id===id) return all[i]; }
+  return null;
+}
+function typeLabel(t){ for(var i=0;i<TYPES.length;i++){ if(TYPES[i].k===t) return TYPES[i].label; } return t; }
+function normStr(s){ s = String(s).trim().toLowerCase(); return s.split(' ').join(''); }
+function sameSet(a,b){
+  if(a.length!==b.length) return false;
+  var sa = a.slice().sort(function(x,y){return x-y;}).join(',');
+  var sb = b.slice().sort(function(x,y){return x-y;}).join(',');
+  return sa===sb;
+}
+
+function showType(t){
+  curType = t;
+  var btns = document.querySelectorAll('.type-btn');
+  for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active', btns[i].getAttribute('data-type')===t); }
+  renderQuestions(t);
+}
+function renderQuestions(t){
+  var html = '';
+  for(var i=0;i<BANK[t].length;i++){ html += renderCard(BANK[t][i]); }
+  el('quiz-area').innerHTML = html;
+  typesetMath();
+}
+function renderCard(q){
+  var meta = '<div class="qmeta">'+typeLabel(q.type)+' · Soal '+q.num+' · Level '+q.level+'</div>';
+  var head = '<div class="qcard" id="card-'+q.id+'">'+meta+'<p class="qtext">'+q.text+'</p>';
+  var body = '';
+  if(q.type==='pg'){
+    body += '<div>';
+    for(var i=0;i<q.options.length;i++){
+      body += '<button class="opt" onclick="answerPG(\''+q.id+'\','+i+',this)">'+String.fromCharCode(65+i)+'. '+q.options[i]+'</button>';
+    }
+    body += '</div>';
+  } else if(q.type==='is'){
+    body += '<div><input class="is-input" id="isin-'+q.id+'" placeholder="Jawaban kamu..."> '+
+            '<button class="btn-small" id="isbtn-'+q.id+'" onclick="submitIS(\''+q.id+'\')">Periksa</button></div>';
+  } else if(q.type==='pk'){
+    body += '<div>';
+    for(var j=0;j<q.options.length;j++){
+      body += '<button class="opt pk-opt" onclick="togglePK(\''+q.id+'\','+j+',this)">☐ '+q.options[j]+'</button>';
+    }
+    body += '<button class="btn-small" onclick="submitPK(\''+q.id+'\')">Kunci Jawaban</button></div>';
+  } else if(q.type==='bs'){
+    body += '<div><button class="opt" style="display:inline-block;width:auto;margin-right:8px" onclick="answerBS(\''+q.id+'\','+"'B'"+',this)">✔ Benar</button>'+
+            '<button class="opt" style="display:inline-block;width:auto" onclick="answerBS(\''+q.id+'\','+"'S'"+',this)">✘ Salah</button></div>';
+  } else if(q.type==='jd'){
+    body += '<div>';
+    for(var r=0;r<q.pairs.length;r++){
+      body += '<div class="jd-row"><div class="jd-left">'+q.pairs[r].l+'</div><select id="jdsel-'+q.id+'-'+r+'"><option value="-1">— pilih pasangan —</option>';
+      for(var o=0;o<q.options.length;o++){ body += '<option value="'+o+'">'+q.options[o]+'</option>'; }
+      body += '</select></div>';
+    }
+    body += '<button class="btn-small" onclick="submitJD(\''+q.id+'\')">Periksa Semua</button></div>';
+  }
+  var fb = '<div class="explain" id="fb-'+q.id+'"></div>';
+  return head+body+fb+'</div>';
+}
+function showExplain(id, correct){
+  var q = findQ(id);
+  var box = el('fb-'+id);
+  box.innerHTML = (correct ? '✅ <b>Benar!</b> ' : '❌ <b>Belum tepat.</b> ') + q.explanation;
+  box.classList.add('show');
+  typesetMath();
+}
+function answerPG(id, idx, btn){
+  if(STATE.pg[id]) return;
+  var q = findQ(id);
+  var correct = (idx === q.answer);
+  STATE.pg[id] = {sel:idx, correct:correct};
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++){ opts[i].disabled = true; }
+  opts[q.answer].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+function submitIS(id){
+  if(STATE.is[id]) return;
+  var q = findQ(id);
+  var inp = el('isin-'+id);
+  var val = inp.value;
+  var ok = false;
+  if(normStr(val) === normStr(q.answer)) ok = true;
+  if(!ok && q.accept){ for(var i=0;i<q.accept.length;i++){ if(normStr(val)===normStr(q.accept[i])) ok = true; } }
+  if(!ok && !isNaN(parseFloat(q.answer)) && isFinite(parseFloat(val)) && Math.abs(parseFloat(val)-parseFloat(q.answer)) < 1e-9) ok = true;
+  STATE.is[id] = {val:val, correct:ok};
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  inp.disabled = true;
+  el('isbtn-'+id).disabled = true;
+  showExplain(id, ok);
+  updateScoreStrip();
+}
+function togglePK(id, idx, btn){
+  if(STATE.pk[id] && STATE.pk[id].done) return;
+  btn.classList.toggle('sel');
+  btn.innerHTML = (btn.classList.contains('sel') ? '☑ ' : '☐ ') + findQ(id).options[idx];
+}
+function submitPK(id){
+  if(STATE.pk[id] && STATE.pk[id].done) return;
+  var q = findQ(id);
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.pk-opt');
+  var sel = [];
+  for(var i=0;i<opts.length;i++){ if(opts[i].classList.contains('sel')) sel.push(i); }
+  var correct = sameSet(sel, q.answers);
+  STATE.pk[id] = {sel:sel, correct:correct, done:true};
+  for(var j=0;j<opts.length;j++){
+    var inAns = q.answers.indexOf(j) >= 0;
+    var inSel = sel.indexOf(j) >= 0;
+    if(inAns) opts[j].classList.add('correct');
+    else if(inSel) opts[j].classList.add('wrong');
+    opts[j].disabled = true;
+  }
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+function answerBS(id, val, btn){
+  if(STATE.bs[id]) return;
+  var q = findQ(id);
+  var correct = (val === q.answer);
+  STATE.bs[id] = {sel:val, correct:correct};
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++){ opts[i].disabled = true; }
+  var correctIdx = (q.answer === 'B') ? 0 : 1;
+  opts[correctIdx].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+function submitJD(id){
+  if(STATE.jd[id] && STATE.jd[id].done) return;
+  var q = findQ(id);
+  var allOk = true;
+  var picks = [];
+  for(var r=0;r<q.pairs.length;r++){
+    var s = el('jdsel-'+id+'-'+r);
+    var v = parseInt(s.value, 10);
+    picks.push(v);
+    var ok = (v === q.answers[r]);
+    if(!ok) allOk = false;
+    s.classList.add(ok ? 'correct' : 'wrong');
+    s.disabled = true;
+  }
+  STATE.jd[id] = {picks:picks, correct:allOk, done:true};
+  showExplain(id, allOk);
+  updateScoreStrip();
+}
+function countCorrect(t){
+  var n = 0;
+  for(var i=0;i<BANK[t].length;i++){
+    var st = STATE[t][BANK[t][i].id];
+    if(st && st.correct) n++;
+  }
+  return n;
+}
+function updateScoreStrip(){
+  var html = '';
+  for(var i=0;i<TYPES.length;i++){
+    var t = TYPES[i].k;
+    html += '<span class="score-chip">'+TYPES[i].short+': '+countCorrect(t)+'/'+BANK[t].length+'</span>';
+  }
+  el('score-strip').innerHTML = html;
+}
+function showAnalysis(){
+  var totalC = 0, totalN = 0;
+  var rows = '';
+  for(var i=0;i<TYPES.length;i++){
+    var t = TYPES[i].k;
+    var c = countCorrect(t);
+    var n = BANK[t].length;
+    totalC += c; totalN += n;
+    rows += '<tr><td>'+TYPES[i].label+'</td><td>'+c+' / '+n+'</td><td>'+Math.round(c/n*100)+'%</td></tr>';
+  }
+  var pct = Math.round(totalC/totalN*100);
+  var msg = pct >= 80 ? '🌟 Luar biasa! Kamu siap melanjutkan ke materi statistika berikutnya.' :
+            (pct >= 60 ? '👍 Bagus! Telaah lagi pembahasan soal yang belum tepat.' :
+            '💪 Semangat! Baca kembali bagian materi, lalu coba ulangi latihan ini.');
+  var box = el('analysis');
+  box.innerHTML = '<h3>Analisis Hasil Latihan</h3><table><tr><th>Tipe Soal</th><th>Benar</th><th>Persentase</th></tr>'+rows+
+    '<tr><td><b>TOTAL</b></td><td><b>'+totalC+' / '+totalN+'</b></td><td><b>'+pct+'%</b></td></tr></table><div class="msg">'+msg+'</div>';
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function resetAll(){
+  STATE = freshState();
+  el('analysis').classList.remove('show');
+  renderQuestions(curType);
+  updateScoreStrip();
+}
+
+/* ===== Kalkulator ===== */
+function hitungGab(){
+  var n1 = parseFloat(el('g-n1').value) || 0;
+  var x1 = parseFloat(el('g-x1').value) || 0;
+  var n2 = parseFloat(el('g-n2').value) || 0;
+  var x2 = parseFloat(el('g-x2').value) || 0;
+  var out = el('res-gab');
+  if(n1 + n2 <= 0){ out.innerHTML = 'Total banyak data harus lebih dari 0.'; return; }
+  var g = (n1*x1 + n2*x2) / (n1 + n2);
+  out.innerHTML = 'Rata-rata gabungan = (' + n1 + ' × ' + x1 + ' + ' + n2 + ' × ' + x2 + ') ÷ ' + (n1+n2) + ' = <b>' + (Math.round(g*100)/100) + '</b>';
+}
+function medianOf(sorted){
+  var n = sorted.length;
+  if(n === 0) return NaN;
+  var m = Math.floor(n/2);
+  if(n % 2 === 1) return sorted[m];
+  return (sorted[m-1] + sorted[m]) / 2;
+}
+function hitungStats(){
+  var raw = el('calc-data').value;
+  var parts = raw.split(/[ ,;]+/);
+  var nums = [];
+  for(var i=0;i<parts.length;i++){
+    if(parts[i] === '') continue;
+    var v = Number(parts[i]);
+    if(isFinite(v)) nums.push(v);
+  }
+  var out = el('res-stats');
+  if(nums.length < 3){ out.innerHTML = 'Masukkan minimal 3 angka yang valid, dipisah koma.'; return; }
+  var sorted = nums.slice().sort(function(a,b){return a-b;});
+  var n = sorted.length;
+  var sum = 0;
+  for(var j=0;j<n;j++) sum += sorted[j];
+  var mean = sum / n;
+  var med = medianOf(sorted);
+  var counts = {};
+  for(var k=0;k<n;k++){ counts[sorted[k]] = (counts[sorted[k]] || 0) + 1; }
+  var maxC = 0, modeVal = null, multi = false;
+  for(var key in counts){
+    if(counts[key] > maxC){ maxC = counts[key]; modeVal = key; multi = false; }
+    else if(counts[key] === maxC){ multi = true; }
+  }
+  var modeStr = (maxC === 1) ? 'tidak ada modus' : (multi ? 'lebih dari satu modus (maks ' + maxC + '×)' : modeVal);
+  var lower, upper;
+  if(n % 2 === 1){ lower = sorted.slice(0, (n-1)/2); upper = sorted.slice((n+1)/2); }
+  else { lower = sorted.slice(0, n/2); upper = sorted.slice(n/2); }
+  var q1 = medianOf(lower), q3 = medianOf(upper);
+  var range = sorted[n-1] - sorted[0];
+  out.innerHTML =
+    'n = ' + n + ' · data terurut: ' + sorted.join(', ') + '<br>' +
+    'Mean = ' + (Math.round(mean*100)/100) + ' · Median = ' + (Math.round(med*100)/100) + ' · Modus = ' + modeStr + '<br>' +
+    'Min = ' + sorted[0] + ' · Maks = ' + sorted[n-1] + ' · Jangkauan = ' + (Math.round(range*100)/100) + '<br>' +
+    'Q1 = ' + (Math.round(q1*100)/100) + ' · Q2 = ' + (Math.round(med*100)/100) + ' · Q3 = ' + (Math.round(q3*100)/100) + ' · JIK = ' + (Math.round((q3-q1)*100)/100);
+}
+
+/* ===== Build visual: turus, piktogram, tabel frekuensi, pie ===== */
+function turusHTML(n, startDelay){
+  var html = '';
+  var groups = Math.floor(n/5);
+  var rest = n % 5;
+  var d = startDelay;
+  for(var g=0; g<groups; g++){
+    html += '<svg class="turus-ico" style="transition-delay:'+(d*0.12).toFixed(2)+'s"><use href="#ico-turus5"></use></svg>';
+    d++;
+  }
+  for(var r=0; r<rest; r++){
+    html += '<svg class="turus-ico" style="transition-delay:'+(d*0.12).toFixed(2)+'s"><use href="#ico-turus1"></use></svg>';
+    d++;
+  }
+  return html;
+}
+function buildTurus(){
+  el('turus-demo').innerHTML = turusHTML(5, 0);
+  el('turus-demo2').innerHTML = turusHTML(13, 2);
+}
+var PICTO = [['Jeruk',5],['Durian',2],['Mangga',1],['Duku',4]];
+function buildPicto(){
+  var html = '';
+  var d = 0;
+  for(var i=0;i<PICTO.length;i++){
+    html += '<div class="picto-row" style="display:flex;align-items:center;gap:10px;margin:7px 0;flex-wrap:wrap"><div style="width:90px;font-family:JetBrains Mono,monospace;font-size:13px;color:#2b2416">'+PICTO[i][0]+'</div><div style="display:flex;gap:5px;flex-wrap:wrap">';
+    for(var k=0;k<PICTO[i][1];k++){
+      html += '<svg class="picto-ico" style="transition-delay:'+(d*0.1).toFixed(2)+'s"><use href="#ico-fruit"></use></svg>';
+      d++;
+    }
+    html += '</div><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:#5b5137;margin-left:6px">'+PICTO[i][1]+' kuintal</span></div>';
+  }
+  el('picto-box').innerHTML = html;
+}
+var FREQ = [[3,4],[4,5],[5,9],[6,13],[7,6],[8,5],[9,2]];
+function buildFreqTable(){
+  var html = '<table class="data"><tr><th>Nilai</th><th>Turus</th><th>Frekuensi</th></tr>';
+  for(var i=0;i<FREQ.length;i++){
+    html += '<tr><td>'+FREQ[i][0]+'</td><td style="text-align:left"><span style="display:inline-flex;gap:4px;flex-wrap:wrap">'+turusHTML(FREQ[i][1], i)+'</span></td><td>'+FREQ[i][1]+'</td></tr>';
+  }
+  html += '<tr><th colspan="2">Jumlah</th><th>44</th></tr></table>';
+  el('freq-tunggal').innerHTML = html;
+}
+function polar(cx,cy,r,deg){
+  var rad = deg * Math.PI / 180;
+  return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
+}
+var PIE = [['Guru',8,'#e0a94d'],['Karyawan',12,'#7fae6b'],['Wiraswasta',9,'#5b8bd0'],['Petani',11,'#c1584f'],['Pedagang',5,'#8a6fc9']];
+function buildPie(){
+  var total = 0, i;
+  for(i=0;i<PIE.length;i++) total += PIE[i][1];
+  var start = -90;
+  var out = '';
+  var legend = '';
+  for(i=0;i<PIE.length;i++){
+    var angle = PIE[i][1] / total * 360;
+    var end = start + angle;
+    var p1 = polar(130,130,100,start);
+    var p2 = polar(130,130,100,end);
+    var large = angle > 180 ? 1 : 0;
+    out += '<path class="pie-sect" style="transition-delay:'+(i*0.15).toFixed(2)+'s" fill="'+PIE[i][2]+'" d="M130,130 L'+p1[0].toFixed(2)+','+p1[1].toFixed(2)+' A100,100 0 '+large+' 1 '+p2[0].toFixed(2)+','+p2[1].toFixed(2)+' Z"></path>';
+    var mid = polar(130,130,62,start+angle/2);
+    out += '<text class="pie-lbl" style="transition-delay:'+(0.4+i*0.15).toFixed(2)+'s" x="'+mid[0].toFixed(1)+'" y="'+mid[1].toFixed(1)+'" font-size="11" text-anchor="middle" fill="#fff" font-family="JetBrains Mono">'+Math.round(PIE[i][1]/total*100)+'%</text>';
+    legend += '<div><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:'+PIE[i][2]+';margin-right:8px"></span>'+PIE[i][0]+' · '+PIE[i][1]+' orang · '+Math.round(PIE[i][1]/total*360)+'°</div>';
+    start = end;
+  }
+  el('pie-svg').innerHTML = out;
+  el('pie-legend').innerHTML = legend;
+}
+
+/* ===== Scrollspy, progress, sidebar mobile ===== */
+var SEC_IDS = ['a-data','a1-pengertian','a2-pengumpulan','a3-sampel','b-pemusatan','b1-mean','b2-modus','b3-median','c-pencaran','c1-jangkauan','c2-kuartil','c3-interkuartil','d-penyajian','d1-diagram','d2-frekuensi','latihan'];
+function onScroll(){
+  var doc = document.documentElement;
+  var max = doc.scrollHeight - window.innerHeight;
+  var p = max > 0 ? (window.scrollY / max) * 100 : 0;
+  el('progress-bar').style.width = p + '%';
+  var cur = SEC_IDS[0];
+  for(var i=0;i<SEC_IDS.length;i++){
+    var s = el(SEC_IDS[i]);
+    if(s && s.getBoundingClientRect().top <= 140) cur = SEC_IDS[i];
+  }
+  var links = document.querySelectorAll('#side-nav a[data-sec]');
+  for(var j=0;j<links.length;j++){
+    links[j].classList.toggle('active', links[j].getAttribute('data-sec') === cur);
+  }
+}
+function openSidebar(){ el('sidebar').classList.add('open'); el('overlay').classList.add('show'); }
+function closeSidebar(){ el('sidebar').classList.remove('open'); el('overlay').classList.remove('show'); }
+function initObservers(){
+  if(!('IntersectionObserver' in window)){
+    var all = document.querySelectorAll('.anim,.fade');
+    for(var i=0;i<all.length;i++) all[i].classList.add('inview');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('inview'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.2});
+  var nodes = document.querySelectorAll('.anim,.fade');
+  for(var j=0;j<nodes.length;j++) io.observe(nodes[j]);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  buildTurus();
+  buildPicto();
+  buildFreqTable();
+  buildPie();
+  initObservers();
+  renderQuestions('pg');
+  updateScoreStrip();
+  onScroll();
+  typesetMath();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  el('menu-toggle').addEventListener('click', openSidebar);
+  el('overlay').addEventListener('click', closeSidebar);
+  el('side-nav').addEventListener('click', function(e){
+    if(e.target.closest('a')) closeSidebar();
+  });
+  document.documentElement.style.scrollBehavior = 'smooth';
+});
+</script>
+</body>
+</html>

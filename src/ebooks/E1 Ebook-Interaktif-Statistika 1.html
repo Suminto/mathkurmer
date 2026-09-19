@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistika 1 · Penyajian Data — Matematika Kelas 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Source Serif 4',serif;background:var(--paper);color:var(--text-dark)}
+.layout{display:flex;min-height:100vh}
+aside#sidebar{width:290px;flex:0 0 290px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:linear-gradient(180deg,var(--ink),var(--ink2));color:var(--cream);
+  padding:28px 20px;border-right:1px solid var(--ink-border)}
+.side-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.side-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin:6px 0 14px;line-height:1.25}
+.progress-wrap{height:6px;background:var(--ink3);border-radius:99px;overflow:hidden;margin-bottom:18px}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft));transition:width .15s}
+.nav-head{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.14em;margin:16px 0 6px;text-transform:uppercase}
+nav a{display:block;color:var(--cream-dim);text-decoration:none;padding:7px 10px;border-radius:8px;font-size:14.5px;border-left:3px solid transparent;margin:2px 0}
+nav a:hover{background:var(--ink3);color:var(--cream)}
+nav a.active{background:var(--ink3);color:var(--gold-soft);border-left-color:var(--gold)}
+nav a.nav-sub{margin-left:14px;font-size:13.5px;padding:5px 10px;border-left:2px solid var(--ink-border);border-radius:0 8px 8px 0}
+nav a.nav-sub.active{border-left-color:var(--gold)}
+main#content{flex:1;min-width:0;padding:0 0 60px}
+.hero{background:linear-gradient(135deg,var(--ink) 0%,var(--ink3) 100%);color:var(--cream);padding:64px 48px 48px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(224,169,77,.25),transparent 70%)}
+.hero .label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:44px;margin:10px 0 12px;line-height:1.1}
+.hero p{color:var(--cream-dim);max-width:640px;font-size:16.5px;line-height:1.7}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{border:1px solid var(--ink-border);background:rgba(255,255,255,.06);padding:6px 12px;border-radius:99px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-soft)}
+section.block{max-width:880px;margin:0 auto;padding:48px 40px 8px}
+h2.sec{font-family:'Playfair Display',serif;font-size:30px;color:var(--ink);border-bottom:3px solid var(--gold);display:inline-block;padding-bottom:6px;margin:0 0 10px}
+h3.sub{font-family:'Playfair Display',serif;font-size:22px;color:var(--ink2);margin:26px 0 8px}
+p{line-height:1.75;color:var(--text-mid);font-size:16.5px}
+.callout{border-left:4px solid;border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15.5px;color:var(--text-mid)}
+.callout.def{background:var(--def);border-color:var(--def-b)}
+.callout.note{background:var(--note);border-color:var(--note-b)}
+.callout.warn{background:var(--warn);border-color:var(--warn-b)}
+.callout b.t{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--text-dark)}
+.example-box{background:var(--paper2);border:1px dashed var(--paper-line);border-radius:12px;padding:16px 20px;margin:18px 0}
+.example-box h4{margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--note-b);text-transform:uppercase}
+ol.steps{margin:6px 0;padding-left:20px}
+ol.steps li{margin:6px 0;line-height:1.65;color:var(--text-mid)}
+table.data{border-collapse:collapse;margin:12px 0;width:100%;font-size:15px}
+table.data th,table.data td{border:1px solid var(--paper-line);padding:8px 12px;text-align:center;color:var(--text-dark)}
+table.data th{background:var(--paper2);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.06em}
+figure.chart{margin:20px 0;background:#fff;border:1px solid var(--paper-line);border-radius:14px;padding:18px;box-shadow:0 2px 10px rgba(20,26,46,.06)}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-mid);text-align:center;margin-top:8px}
+.picto-row{display:flex;align-items:center;gap:10px;margin:7px 0;flex-wrap:wrap}
+.picto-name{width:110px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-dark)}
+.picto-ico{width:22px;height:22px;color:var(--note-b)}
+.picto-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-mid);margin-left:6px}
+.calc-box{background:linear-gradient(160deg,var(--ink),var(--ink3));border-radius:14px;padding:18px 20px;margin:20px 0;color:var(--cream)}
+.calc-box h4{margin:0 0 10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.calc-box label{font-size:13px;color:var(--cream-dim);display:block;margin:8px 0 4px}
+.calc-box input{width:130px;padding:8px 10px;border-radius:8px;border:1px solid var(--ink-border);background:var(--ink2);color:var(--cream);font-family:'JetBrains Mono',monospace}
+.calc-box button{margin-top:12px;background:var(--gold);color:var(--ink);border:none;padding:9px 18px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-weight:700;cursor:pointer}
+.calc-box button:hover{background:var(--gold-soft)}
+.calc-result{margin-top:12px;background:rgba(255,255,255,.08);border:1px solid var(--ink-border);border-radius:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold-soft);min-height:20px}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.method-card{background:#fff;border:1px solid var(--paper-line);border-radius:12px;padding:16px;text-align:center;transition:transform .25s,box-shadow .25s}
+.method-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(20,26,46,.12)}
+.method-card .emo{font-size:34px}
+.method-card h5{margin:8px 0 4px;font-family:'Playfair Display',serif;font-size:17px;color:var(--ink)}
+.method-card p{font-size:13.5px;margin:0;line-height:1.55}
+.type-bar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.type-btn{padding:9px 16px;border-radius:99px;border:1.5px solid var(--ink-border);background:#fff;color:var(--ink2);font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;transition:.2s}
+.type-btn:hover{border-color:var(--gold)}
+.type-btn.active{background:var(--ink);color:var(--gold-soft);border-color:var(--ink)}
+.score-strip{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.score-chip{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--paper2);border:1px solid var(--paper-line);border-radius:99px;padding:6px 12px;color:var(--text-mid)}
+.qcard{background:#fff;border:1px solid var(--paper-line);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:0 2px 8px rgba(20,26,46,.05)}
+.qmeta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--note-b);text-transform:uppercase;margin-bottom:6px}
+.qtext{font-size:16px;color:var(--text-dark);line-height:1.65;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--paper-line);border-radius:10px;padding:10px 14px;margin:6px 0;cursor:pointer;font-size:15px;color:var(--text-dark);transition:.15s;font-family:'Source Serif 4',serif}
+.opt:hover{border-color:var(--gold)}
+.opt.correct{background:var(--correct);border-color:var(--correct-b)}
+.opt.wrong{background:var(--wrong);border-color:var(--wrong-b)}
+.opt.sel{border-color:var(--gold);background:var(--note)}
+.opt:disabled{cursor:default}
+.explain{margin-top:10px;background:var(--def);border-left:4px solid var(--def-b);border-radius:8px;padding:10px 14px;font-size:14.5px;color:var(--text-mid);display:none}
+.explain.show{display:block}
+.btn-small{background:var(--ink);color:var(--cream);border:none;border-radius:8px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;margin-top:6px}
+.btn-small:hover{background:var(--ink3)}
+.is-input{padding:9px 12px;border-radius:8px;border:1.5px solid var(--paper-line);font-family:'JetBrains Mono',monospace;font-size:15px;width:160px;background:var(--paper)}
+.is-input.correct{border-color:var(--correct-b);background:var(--correct)}
+.is-input.wrong{border-color:var(--wrong-b);background:var(--wrong)}
+.jd-row{display:flex;gap:10px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.jd-left{flex:1;min-width:200px;background:var(--paper2);border:1px solid var(--paper-line);border-radius:8px;padding:8px 12px;font-size:14.5px;color:var(--text-dark)}
+.jd-row select{padding:8px;border-radius:8px;border:1.5px solid var(--paper-line);background:#fff;font-size:14px;max-width:300px;font-family:'Source Serif 4',serif}
+.jd-row select.correct{border-color:var(--correct-b);background:var(--correct)}
+.jd-row select.wrong{border-color:var(--wrong-b);background:var(--wrong)}
+.analysis{display:none;background:var(--ink);color:var(--cream);border-radius:14px;padding:20px 24px;margin-top:20px}
+.analysis.show{display:block}
+.analysis h3{font-family:'Playfair Display',serif;color:var(--gold-soft);margin:0 0 10px}
+.analysis table{width:100%;border-collapse:collapse;font-size:14px}
+.analysis td,.analysis th{padding:6px 10px;border-bottom:1px solid var(--ink-border);text-align:left}
+.analysis .msg{margin-top:12px;color:var(--gold-soft);font-size:15px}
+footer{background:var(--ink);color:var(--cream-dim);padding:28px 40px;text-align:center;font-size:13.5px;line-height:1.7}
+footer .credit{color:var(--gold-soft);font-family:'JetBrains Mono',monospace;font-size:12.5px;margin-top:6px}
+.fade{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.fade.inview{opacity:1;transform:none}
+.bar{transform:scaleY(0);transform-box:fill-box;transform-origin:bottom;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.inview .bar{transform:scaleY(1)}
+#line-path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s ease .2s}
+.inview #line-path{stroke-dashoffset:0}
+.lpt{opacity:0;transition:opacity .4s}
+.inview .lpt{opacity:1}
+.picto-ico{opacity:0;transform:scale(.2);transition:opacity .4s,transform .4s}
+.inview .picto-ico{opacity:1;transform:scale(1)}
+.pie-sect{opacity:0;transform:scale(.55);transform-box:fill-box;transform-origin:center;transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.inview .pie-sect{opacity:1;transform:scale(1)}
+.pie-lbl{opacity:0;transition:opacity .5s}
+.inview .pie-lbl{opacity:1}
+#menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:60;background:var(--ink);color:var(--gold);border:none;border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer}
+#overlay{display:none;position:fixed;inset:0;background:rgba(10,12,24,.5);z-index:40}
+@media(max-width:900px){
+  #menu-toggle{display:block}
+  #sidebar{position:fixed;left:0;top:0;z-index:50;transform:translateX(-100%);transition:transform .3s}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.show{display:block}
+  .method-grid{grid-template-columns:1fr}
+  .hero{padding:84px 24px 40px}
+  .hero h1{font-size:32px}
+  section.block{padding:36px 20px 4px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="ico-doc" viewBox="0 0 24 24">
+    <circle cx="12" cy="6.5" r="4" fill="currentColor"/>
+    <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8z" fill="currentColor"/>
+    <rect x="10.6" y="13" width="2.8" height="7" rx="1" fill="#fff"/>
+    <rect x="8.5" y="15.1" width="7" height="2.8" rx="1" fill="#fff"/>
+  </symbol>
+</svg>
+<button id="menu-toggle" aria-label="Buka menu">☰</button>
+<div id="overlay"></div>
+<div class="layout">
+
+<aside id="sidebar">
+  <div class="side-label">Matematika · Kelas 7</div>
+  <div class="side-title">Statistika 1 — Penyajian Data</div>
+  <div class="progress-wrap"><div id="progress-bar"></div></div>
+  <nav id="side-nav">
+    <div class="nav-head">Materi</div>
+    <a data-sec="a-mengenal" href="#a-mengenal">A. Mengenal Data</a>
+    <a data-sec="b-penyajian" href="#b-penyajian">B. Penyajian Data Statistika</a>
+    <a class="nav-sub" data-sec="b1-piktogram" href="#b1-piktogram">B.1 Piktogram</a>
+    <a class="nav-sub" data-sec="b2-batang" href="#b2-batang">B.2 Diagram Batang</a>
+    <a class="nav-sub" data-sec="b3-garis" href="#b3-garis">B.3 Diagram Garis</a>
+    <a class="nav-sub" data-sec="b4-lingkaran" href="#b4-lingkaran">B.4 Diagram Lingkaran</a>
+    <div class="nav-head">Latihan</div>
+    <a data-sec="latihan" href="#latihan">Latihan Soal (25 soal)</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('bs')">4. Benar / Salah</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+</aside>
+
+<main id="content">
+  <div class="hero">
+    <div class="label">Ebook Interaktif · Modul Matematika SMP</div>
+    <h1>Penyajian Data<br>(Statistika 1)</h1>
+    <p>Mengenal datum dan data, cara mengumpulkan data, lalu menyajikan data dalam piktogram, diagram batang, diagram garis, dan diagram lingkaran — lengkap dengan animasi, kalkulator, dan 25 latihan soal interaktif.</p>
+    <div class="chips">
+      <span class="chip">A · Mengenal Data</span>
+      <span class="chip">B.1 · Piktogram</span>
+      <span class="chip">B.2 · Diagram Batang</span>
+      <span class="chip">B.3 · Diagram Garis</span>
+      <span class="chip">B.4 · Diagram Lingkaran</span>
+      <span class="chip">25 Soal Interaktif</span>
+    </div>
+  </div>
+
+  <section class="block fade" id="a-mengenal">
+    <h2 class="sec">A. Mengenal Data</h2>
+    <div class="callout def"><b class="t">Definisi</b>
+      <b>Datum</b> adalah keterangan atau informasi yang diperoleh dari suatu objek/kejadian atau narasumber.
+      <b>Data</b> adalah kumpulan dari datum. Kata “data” berasal dari bahasa Inggris dan bersifat majemuk.
+    </div>
+    <p>Sebelum menyajikan data, kita harus mengumpulkannya terlebih dahulu. Ada tiga cara utama untuk mengumpulkan data:</p>
+    <div class="method-grid">
+      <div class="method-card"><div class="emo">🎤</div><h5>Wawancara</h5><p>Mengajukan pertanyaan secara langsung kepada narasumber, misal kondisi keluarga di daerah padat penduduk.</p></div>
+      <div class="method-card"><div class="emo">📋</div><h5>Kuesioner (Angket)</h5><p>Mengirim daftar pertanyaan kepada narasumber, misal angket acara televisi yang disukai warga RT 5.</p></div>
+      <div class="method-card"><div class="emo">👁️</div><h5>Observasi</h5><p>Mengamati objek atau kejadian, misal mengukur tinggi dan berat badan siswa satu kelas.</p></div>
+    </div>
+    <p>Berdasarkan cara memperolehnya, data terbagi menjadi dua jenis:</p>
+    <div class="callout note"><b class="t">Jenis Data</b>
+      <b>Data primer</b> — diperoleh langsung dari sumbernya (wawancara anggota keluarga, angket mapel disukai, pengukuran tinggi badan).<br>
+      <b>Data sekunder</b> — diperoleh tidak langsung dari pihak lain (nilai kurs rupiah dari BPS, jumlah siswa SMP dari Dinas Pendidikan, jumlah penduduk desa dari kelurahan).
+    </div>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Siti mencatat tinggi badan lima teman sekelasnya dengan mengukur langsung menggunakan meteran. Termasuk jenis data apakah itu dan apa cara pengumpulannya?</p>
+      <ol class="steps">
+        <li>Perhatikan sumber data: pengukuran dilakukan sendiri oleh Siti kepada teman-temannya.</li>
+        <li>Karena diperoleh langsung dari sumbernya, data tergolong <b>data primer</b>.</li>
+        <li>Cara pengumpulannya adalah mengamati/mengukur objek, yaitu <b>observasi (pengamatan)</b>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block fade" id="b-penyajian">
+    <h2 class="sec">B. Penyajian Data Statistika</h2>
+    <p>Data yang baru terkumpul belum memberikan informasi lengkap apabila belum disajikan dengan benar. Agar data mempunyai makna, data harus diolah dan disajikan. Secara umum ada dua cara penyajian data:</p>
+    <ol class="steps">
+      <li><b>Tabel atau daftar</b> — menyusun data dalam baris dan kolom.</li>
+      <li><b>Grafik atau diagram</b> — menyajikan data secara visual: piktogram, diagram batang, diagram garis, dan diagram lingkaran.</li>
+    </ol>
+    <div class="callout note"><b class="t">Tips Memilih Diagram</b>
+      Kategori dengan lambang gambar → <b>piktogram</b>. Perbandingan antar kategori → <b>diagram batang</b>. Perkembangan data kontinu terhadap waktu → <b>diagram garis</b>. Bagian terhadap keseluruhan (persen/sudut) → <b>diagram lingkaran</b>.
+    </div>
+  </section>
+
+  <section class="block fade" id="b1-piktogram">
+    <h3 class="sub">B.1 Piktogram</h3>
+    <p>Piktogram adalah diagram yang disajikan dalam bentuk lambang-lambang, dan lambang yang digunakan harus disesuaikan dengan objek yang diteliti: data jumlah siswa digunakan gambar orang, data hasil panen buah digunakan gambar buah, dan sebagainya. Satu lambang mewakili jumlah tertentu yang sama untuk semua baris.</p>
+    <figure class="chart anim" id="picto-fig">
+      <div id="picto-box"></div>
+      <figcaption>Gambar 1 — Piktogram jumlah dokter gigi tahun 2007 (1 lambang = 100 dokter gigi). Arahkan/gulir untuk melihat animasi.</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Pada piktogram di atas, berapa lambang yang diperlukan untuk Jawa Tengah yang memiliki 700 dokter gigi?</p>
+      <ol class="steps">
+        <li>Tetapkan keterangan skala: 1 lambang mewakili 100 dokter gigi.</li>
+        <li>Bagi banyak data dengan nilai satu lambang: 700 ÷ 100 = 7.</li>
+        <li>Jadi Jawa Tengah digambar dengan <b>7 lambang</b> orang/dokter.</li>
+      </ol>
+    </div>
+    <div class="callout warn"><b class="t">Peringatan</b>
+      Nilai yang diwakili satu lambang harus sama di seluruh baris piktogram. Skala yang berbeda-beda akan menyesatkan pembaca.
+    </div>
+  </section>
+
+  <section class="block fade" id="b2-batang">
+    <h3 class="sub">B.2 Diagram Batang</h3>
+    <p>Diagram batang biasanya digunakan untuk menggambarkan perkembangan nilai suatu objek dalam kurun waktu tertentu, atau menyajikan data yang variabelnya berbentuk kategori maupun data tahunan. Diperlukan <b>sumbu datar</b> yang menyatakan kategori atau waktu, dan <b>sumbu tegak</b> yang menyatakan nilai data. Kedua sumbu dibagi menjadi beberapa skala bagian yang sama.</p>
+    <figure class="chart anim" id="bar-fig">
+      <svg viewBox="0 0 470 260" role="img" aria-label="Diagram batang cara ke sekolah">
+        <line x1="60" y1="220" x2="450" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <line x1="60" y1="20" x2="60" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <line x1="60" y1="175" x2="450" y2="175" stroke="#e3d7b8"/>
+        <line x1="60" y1="130" x2="450" y2="130" stroke="#e3d7b8"/>
+        <line x1="60" y1="85" x2="450" y2="85" stroke="#e3d7b8"/>
+        <line x1="60" y1="40" x2="450" y2="40" stroke="#e3d7b8"/>
+        <text x="50" y="224" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">0</text>
+        <text x="50" y="179" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">3</text>
+        <text x="50" y="134" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">6</text>
+        <text x="50" y="89" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">9</text>
+        <text x="50" y="44" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">12</text>
+        <rect class="bar" style="transition-delay:.05s" x="85"  y="70"  width="55" height="150" rx="4" fill="#e0a94d"/>
+        <rect class="bar" style="transition-delay:.2s"  x="175" y="40"  width="55" height="180" rx="4" fill="#e0a94d"/>
+        <rect class="bar" style="transition-delay:.35s" x="265" y="100" width="55" height="120" rx="4" fill="#e0a94d"/>
+        <rect class="bar" style="transition-delay:.5s"  x="355" y="175" width="55" height="45"  rx="4" fill="#e0a94d"/>
+        <text x="112" y="62"  font-size="12" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">10</text>
+        <text x="202" y="32"  font-size="12" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">12</text>
+        <text x="292" y="92"  font-size="12" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">8</text>
+        <text x="382" y="167" font-size="12" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">3</text>
+        <text x="112" y="240" font-size="11" text-anchor="middle" fill="#5b5137">Naik bus</text>
+        <text x="202" y="240" font-size="11" text-anchor="middle" fill="#5b5137">Naik mobil</text>
+        <text x="292" y="240" font-size="11" text-anchor="middle" fill="#5b5137">Naik sepeda</text>
+        <text x="382" y="240" font-size="11" text-anchor="middle" fill="#5b5137">Jalan kaki</text>
+      </svg>
+      <figcaption>Gambar 2 — Diagram batang: cara siswa berangkat ke sekolah (frekuensi).</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Berdasarkan diagram batang di atas, berapa selisih banyak siswa yang naik mobil dan yang jalan kaki?</p>
+      <ol class="steps">
+        <li>Baca tinggi batang “Naik mobil” = 12 siswa.</li>
+        <li>Baca tinggi batang “Jalan kaki” = 3 siswa.</li>
+        <li>Selisih = 12 − 3 = <b>9 siswa</b>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block fade" id="b3-garis">
+    <h3 class="sub">B.3 Diagram Garis</h3>
+    <p>Diagram garis biasanya digunakan untuk menyajikan data yang berkesinambungan (kontinu), misalnya jumlah penduduk tiap tahun, hasil pertanian tiap tahun, atau jumlah siswa tiap tahun. Sumbu mendatar menunjukkan waktu pengamatan, sedangkan sumbu tegak menunjukkan nilai data pengamatan pada waktu tertentu.</p>
+    <figure class="chart anim" id="line-fig">
+      <svg viewBox="0 0 470 260" role="img" aria-label="Diagram garis produksi padi">
+        <line x1="60" y1="220" x2="450" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <line x1="60" y1="20" x2="60" y2="220" stroke="#5b5137" stroke-width="1.5"/>
+        <line x1="60" y1="160" x2="450" y2="160" stroke="#e3d7b8"/>
+        <line x1="60" y1="100" x2="450" y2="100" stroke="#e3d7b8"/>
+        <line x1="60" y1="40" x2="450" y2="40" stroke="#e3d7b8"/>
+        <text x="50" y="224" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">0</text>
+        <text x="50" y="164" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">3</text>
+        <text x="50" y="104" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">6</text>
+        <text x="50" y="44" font-size="11" text-anchor="end" fill="#5b5137" font-family="JetBrains Mono">9</text>
+        <polyline id="line-path" pathLength="1" fill="none" stroke="#c1584f" stroke-width="3" stroke-linejoin="round"
+          points="70,160 140,100 210,40 280,180 350,140 420,60"/>
+        <circle class="lpt" style="transition-delay:.3s"  cx="70"  cy="160" r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:.7s"  cx="140" cy="100" r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:1.1s" cx="210" cy="40"  r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:1.5s" cx="280" cy="180" r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:1.9s" cx="350" cy="140" r="4.5" fill="#c1584f"/>
+        <circle class="lpt" style="transition-delay:2.3s" cx="420" cy="60"  r="4.5" fill="#c1584f"/>
+        <text class="lpt" style="transition-delay:.3s"  x="70"  y="148" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">3</text>
+        <text class="lpt" style="transition-delay:.7s"  x="140" y="88"  font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">6</text>
+        <text class="lpt" style="transition-delay:1.1s" x="210" y="28"  font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">9</text>
+        <text class="lpt" style="transition-delay:1.5s" x="280" y="198" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">2</text>
+        <text class="lpt" style="transition-delay:1.9s" x="350" y="128" font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">4</text>
+        <text class="lpt" style="transition-delay:2.3s" x="420" y="48"  font-size="11" text-anchor="middle" fill="#2b2416" font-family="JetBrains Mono">8</text>
+        <text x="70"  y="240" font-size="11" text-anchor="middle" fill="#5b5137">2000</text>
+        <text x="140" y="240" font-size="11" text-anchor="middle" fill="#5b5137">2001</text>
+        <text x="210" y="240" font-size="11" text-anchor="middle" fill="#5b5137">2002</text>
+        <text x="280" y="240" font-size="11" text-anchor="middle" fill="#5b5137">2003</text>
+        <text x="350" y="240" font-size="11" text-anchor="middle" fill="#5b5137">2004</text>
+        <text x="420" y="240" font-size="11" text-anchor="middle" fill="#5b5137">2005</text>
+      </svg>
+      <figcaption>Gambar 3 — Diagram garis: jumlah produksi padi (juta ton) tahun 2000–2005.</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Dari diagram garis produksi padi di atas, tentukan selisih produksi tertinggi dan terendah.</p>
+      <ol class="steps">
+        <li>Titik tertinggi: tahun 2002 dengan 9 juta ton.</li>
+        <li>Titik terendah: tahun 2003 dengan 2 juta ton.</li>
+        <li>Selisih = 9 − 2 = <b>7 juta ton</b>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block fade" id="b4-lingkaran">
+    <h3 class="sub">B.4 Diagram Lingkaran</h3>
+    <p>Diagram lingkaran menyajikan data menggunakan gambar lingkaran; bagian-bagian daerah lingkaran (juring) menunjukkan bagian atau persen dari keseluruhan. Juring dapat dinyatakan dalam persen (%) atau besar sudut pusat. Satu lingkaran penuh = 100% = 360°.</p>
+    <p>Rumus utamanya:</p>
+    <p style="text-align:center">
+      \[ \text{Sudut pusat} = \frac{f}{\sum f} \times 360^\circ \qquad \text{Persentase} = \frac{f}{\sum f} \times 100\% \]
+    </p>
+    <figure class="chart anim" id="pie-fig">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:center">
+        <svg id="pie-svg" viewBox="0 0 260 260" width="260" height="260" role="img" aria-label="Diagram lingkaran jenis pekerjaan"></svg>
+        <div id="pie-legend" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5b5137;line-height:2"></div>
+      </div>
+      <figcaption>Gambar 4 — Diagram lingkaran jenis pekerjaan wali siswa (total 45 orang).</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Data pekerjaan: Guru 8, Karyawan 12, Wiraswasta 9, Petani 11, Pedagang 5. Hitung besar sudut pusat juring Karyawan.</p>
+      <ol class="steps">
+        <li>Hitung total frekuensi: 8 + 12 + 9 + 11 + 5 = 45.</li>
+        <li>Gunakan rumus sudut pusat: \( \frac{12}{45} \times 360^\circ \).</li>
+        <li>Hasil: \( \frac{12}{45} \times 360^\circ = 96^\circ \). Jadi juring Karyawan bersudut <b>96°</b>.</li>
+      </ol>
+      <table class="data">
+        <tr><th>Pekerjaan</th><th>Guru</th><th>Karyawan</th><th>Wiraswasta</th><th>Petani</th><th>Pedagang</th></tr>
+        <tr><td>Sudut pusat</td><td>64°</td><td>96°</td><td>72°</td><td>88°</td><td>40°</td></tr>
+      </table>
+    </div>
+    <div class="calc-box">
+      <h4>Kalkulator Sudut Pusat &amp; Persentase</h4>
+      <label for="calc-f">Frekuensi kategori (f)</label>
+      <input id="calc-f" type="number" placeholder="mis. 12">
+      <label for="calc-total">Total data (Σf)</label>
+      <input id="calc-total" type="number" placeholder="mis. 45">
+      <br><button onclick="hitungSudut()">Hitung</button>
+      <div class="calc-result" id="res-sudut">Hasil akan muncul di sini.</div>
+    </div>
+    <div class="calc-box">
+      <h4>Kalkulator Frekuensi dari Sudut Pusat</h4>
+      <label for="calc-deg">Sudut pusat juring (°)</label>
+      <input id="calc-deg" type="number" placeholder="mis. 96">
+      <label for="calc-total2">Total data (Σf)</label>
+      <input id="calc-total2" type="number" placeholder="mis. 45">
+      <br><button onclick="hitungFrek()">Hitung</button>
+      <div class="calc-result" id="res-frek">Hasil akan muncul di sini.</div>
+    </div>
+  </section>
+
+  <section class="block fade" id="latihan">
+    <h2 class="sec">Latihan Soal Interaktif</h2>
+    <p>Uji pemahamanmu dengan 25 soal dalam lima tipe berikut. Setiap soal dilengkapi pembahasan edukatif setelah dijawab.</p>
+    <div class="type-bar" id="type-bar">
+      <button class="type-btn active" data-type="pg" onclick="showType('pg')">1 · Pilihan Ganda</button>
+      <button class="type-btn" data-type="is" onclick="showType('is')">2 · Isian Singkat</button>
+      <button class="type-btn" data-type="pk" onclick="showType('pk')">3 · PG Kompleks</button>
+      <button class="type-btn" data-type="bs" onclick="showType('bs')">4 · Benar/Salah</button>
+      <button class="type-btn" data-type="jd" onclick="showType('jd')">5 · Menjodohkan</button>
+    </div>
+    <div class="score-strip" id="score-strip"></div>
+    <div id="quiz-area"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-small" onclick="showAnalysis()">📊 Lihat Analisis</button>
+      <button class="btn-small" onclick="resetAll()">🔄 Ulangi Semua</button>
+    </div>
+    <div class="analysis" id="analysis"></div>
+  </section>
+
+  <footer>
+    Ebook Interaktif · Matematika Kelas 7 · Statistika 1 (Penyajian Data)<br>
+    Single-file HTML · MathJax v3 · Animasi SVG vanilla JS
+    <div class="credit">Dibuat oleh Suminto dengan Qwen3.8-Max</div>
+  </footer>
+</main>
+</div>
+
+<script>
+/* mulai script utama */
+var BANK = {
+  pg: [
+    {id:'pg1',type:'pg',level:'Sedang',num:1,text:'Diagram garis penjualan beras di koperasi (dalam ton): 2010 = 40, 2011 = 55, 2012 = 50, 2013 = 65, 2014 = 80. Selisih penjualan beras pada tahun 2010 dan 2014 adalah ....',options:['10 ton','20 ton','30 ton','40 ton'],answer:3,explanation:'Selisih = nilai 2014 − nilai 2010 = 80 − 40 = 40 ton.'},
+    {id:'pg2',type:'pg',level:'Sukar',num:2,text:'Rata-rata pengunjung perpustakaan selama lima hari adalah 41 orang. Diketahui pengunjung Senin = 25, Selasa = 30, Kamis = 45, dan Jumat = 45 orang. Banyak pengunjung pada hari Rabu adalah ....',options:['55 orang','60 orang','65 orang','70 orang'],answer:1,explanation:'Total 5 hari = 41 × 5 = 205. Rabu = 205 − (25 + 30 + 45 + 45) = 205 − 145 = 60 orang.'},
+    {id:'pg3',type:'pg',level:'Sedang',num:3,text:'Data pendidikan 200 siswa: SD 40, SMP 60, SMA 90, SMK 10. Jika disajikan dalam diagram lingkaran, besar sudut pusat juring SMA adalah ....',options:['72°','108°','162°','180°'],answer:2,explanation:'Sudut SMA = (90 ÷ 200) × 360° = 0,45 × 360° = 162°.'},
+    {id:'pg4',type:'pg',level:'Mudah',num:4,text:'Pada piktogram jumlah dokter gigi, satu lambang mewakili 100 dokter. Banyak lambang untuk DKI Jakarta yang memiliki 800 dokter gigi adalah ....',options:['6','7','8','10'],answer:2,explanation:'Banyak lambang = 800 ÷ 100 = 8 lambang.'},
+    {id:'pg5',type:'pg',level:'Sedang',num:5,text:'Diagram batang nilai ulangan matematika: nilai 6 → 5 siswa, 7 → 8 siswa, 8 → 10 siswa, 9 → 6 siswa, 10 → 2 siswa. Banyak siswa yang mendapat nilai lebih dari 7 adalah ....',options:['13 orang','16 orang','18 orang','27 orang'],answer:2,explanation:'Nilai lebih dari 7 berarti nilai 8, 9, dan 10: 10 + 6 + 2 = 18 orang.'}
+  ],
+  is: [
+    {id:'is1',type:'is',level:'Mudah',num:1,text:'Pada piktogram hasil panen, satu gambar mewakili 1 kuintal. Banyak gambar untuk buah duku dengan panen 4 kuintal adalah ... gambar.',answer:'4',accept:['4','empat'],explanation:'Setiap 1 kuintal diwakili 1 gambar, sehingga 4 kuintal = 4 gambar.'},
+    {id:'is2',type:'is',level:'Sedang',num:2,text:'Banyak kendaraan yang teramati pukul 06.00–18.00 berturut-turut: 5, 14, 18, 20, 12, 10, 7. Selisih banyak kendaraan terbanyak dan tersedikit adalah ....',answer:'15',accept:['15'],explanation:'Terbanyak = 20 (pukul 12.00), tersedikit = 5 (pukul 06.00). Selisih = 20 − 5 = 15.'},
+    {id:'is3',type:'is',level:'Sedang',num:3,text:'Data pekerjaan: Guru 8, Karyawan 12, Wiraswasta 9, Petani 11, Pedagang 5 (total 45). Besar sudut pusat juring Karyawan pada diagram lingkaran adalah ... derajat.',answer:'96',accept:['96'],explanation:'Sudut Karyawan = (12 ÷ 45) × 360° = 96°.'},
+    {id:'is4',type:'is',level:'Mudah',num:4,text:'Produksi padi (juta ton): 2000 = 3, 2001 = 6, 2002 = 9, 2003 = 2, 2004 = 4, 2005 = 8. Selisih produksi tahun 2002 dan 2003 adalah ... juta ton.',answer:'7',accept:['7'],explanation:'Selisih = 9 − 2 = 7 juta ton.'},
+    {id:'is5',type:'is',level:'Mudah',num:5,text:'Data nilai kurs rupiah yang diperoleh dari BPS termasuk data .... (primer / sekunder)',answer:'sekunder',accept:['sekunder','data sekunder'],explanation:'Data diperoleh tidak langsung dari pihak lain (BPS), sehingga tergolong data sekunder.'}
+  ],
+  pk: [
+    {id:'pk1',type:'pk',level:'Mudah',num:1,text:'Manakah yang merupakan cara mengumpulkan data? (Pilih semua yang benar!)',options:['Wawancara','Kuesioner (angket)','Observasi (pengamatan)','Ekstrapolasi'],answers:[0,1,2],explanation:'Tiga cara mengumpulkan data: wawancara, kuesioner, dan observasi. Ekstrapolasi bukan cara pengumpulan data.'},
+    {id:'pk2',type:'pk',level:'Sedang',num:2,text:'Manakah yang merupakan contoh data sekunder? (Pilih semua yang benar!)',options:['Nilai kurs rupiah dari BPS','Jumlah penduduk desa dari kelurahan','Tinggi badan teman sekelas yang kamu ukur sendiri','Banyak siswa SMP satu kota dari Dinas Pendidikan'],answers:[0,1,3],explanation:'Data sekunder diperoleh dari pihak lain. Mengukur tinggi badan sendiri adalah data primer.'},
+    {id:'pk3',type:'pk',level:'Sedang',num:3,text:'Pernyataan yang sesuai dengan ciri-ciri diagram batang: (Pilih semua yang benar!)',options:['Sumbu datar menyatakan kategori atau waktu','Sumbu tegak menyatakan nilai data','Skala pada kedua sumbu harus sama','Hanya boleh digunakan untuk data kontinu'],answers:[0,1,2],explanation:'Diagram batang memakai sumbu datar (kategori/waktu) dan sumbu tegak (nilai) dengan skala sama. Data kontinu justru cocoknya diagram garis.'},
+    {id:'pk4',type:'pk',level:'Mudah',num:4,text:'Penyajian data yang tepat menggunakan piktogram: (Pilih semua yang benar!)',options:['Jumlah siswa dengan lambang orang','Hasil panen buah dengan lambang buah','Perubahan suhu tubuh pasien dari jam ke jam','Persentase pekerjaan warga dalam juring'],answers:[0,1],explanation:'Piktogram memakai lambang yang sesuai objeknya. Data kontinu → diagram garis; persen terhadap keseluruhan → diagram lingkaran.'},
+    {id:'pk5',type:'pk',level:'Sedang',num:5,text:'Pernyataan yang benar tentang diagram lingkaran: (Pilih semua yang benar!)',options:['Satu lingkaran penuh = 360°','Satu lingkaran penuh = 100%','Sudut pusat juring = (frekuensi ÷ total) × 360°','Juring tidak dapat dinyatakan dalam persen'],answers:[0,1,2],explanation:'Juring justru dapat dinyatakan dalam persen maupun derajat; satu lingkaran penuh = 100% = 360°.'}
+  ],
+  bs: [
+    {id:'bs1',type:'bs',level:'Mudah',num:1,text:'Datum adalah kumpulan dari data.',answer:'S',explanation:'Terbalik: datum adalah keterangan tunggal, sedangkan data adalah kumpulan dari datum.'},
+    {id:'bs2',type:'bs',level:'Mudah',num:2,text:'Kuesioner (angket) mengumpulkan data dengan mengirim daftar pertanyaan kepada narasumber.',answer:'B',explanation:'Benar, itu definisi kuesioner/angket.'},
+    {id:'bs3',type:'bs',level:'Mudah',num:3,text:'Diagram garis cocok untuk menyajikan data yang berkesinambungan (kontinu) terhadap waktu.',answer:'B',explanation:'Benar, misalnya jumlah penduduk atau hasil pertanian tiap tahun.'},
+    {id:'bs4',type:'bs',level:'Sedang',num:4,text:'Pada piktogram, nilai yang diwakili satu lambang boleh berbeda-beda antar baris.',answer:'S',explanation:'Salah. Skala satu lambang harus sama di semua baris agar tidak menyesatkan pembaca.'},
+    {id:'bs5',type:'bs',level:'Mudah',num:5,text:'Data primer diperoleh langsung dari sumbernya, misalnya melalui wawancara atau pengamatan.',answer:'B',explanation:'Benar, data primer diambil langsung dari sumber data.'}
+  ],
+  jd: [
+    {id:'jd1',type:'jd',level:'Mudah',num:1,
+     pairs:[{l:'Wawancara',r:'Mengajukan pertanyaan langsung kepada narasumber'},
+            {l:'Piktogram',r:'Diagram dengan lambang gambar sesuai objek'},
+            {l:'Diagram garis',r:'Menyajikan data kontinu terhadap waktu'},
+            {l:'Diagram lingkaran',r:'Juring dinyatakan dalam persen atau sudut pusat'},
+            {l:'Data sekunder',r:'Data diperoleh dari pihak lain, tidak langsung'}],
+     options:['Juring dinyatakan dalam persen atau sudut pusat','Mengajukan pertanyaan langsung kepada narasumber','Data diperoleh dari pihak lain, tidak langsung','Diagram dengan lambang gambar sesuai objek','Menyajikan data kontinu terhadap waktu'],
+     answers:[1,3,4,0,2],
+     explanation:'Wawancara = tanya jawab langsung; piktogram = lambang gambar; diagram garis = data kontinu; diagram lingkaran = juring persen/sudut; data sekunder = dari pihak lain.'}
+  ]
+};
+/* duplikasi jd menjadi 5 soal terpisah */
+BANK.jd = [
+  BANK.jd[0],
+  {id:'jd2',type:'jd',level:'Mudah',num:2,
+   pairs:[{l:'Observasi',r:'Mengamati objek atau kejadian'},
+          {l:'Datum',r:'Keterangan dari satu objek'},
+          {l:'Data primer',r:'Diperoleh langsung dari sumbernya'},
+          {l:'Diagram batang',r:'Sumbu datar kategori, sumbu tegak nilai'},
+          {l:'Kuesioner',r:'Daftar pertanyaan yang dikirim ke narasumber'}],
+   options:['Diperoleh langsung dari sumbernya','Mengamati objek atau kejadian','Daftar pertanyaan yang dikirim ke narasumber','Keterangan dari satu objek','Sumbu datar kategori, sumbu tegak nilai'],
+   answers:[1,3,0,4,2],
+   explanation:'Observasi = pengamatan; datum = keterangan tunggal; data primer = langsung dari sumber; diagram batang = dua sumbu; kuesioner = daftar pertanyaan.'},
+  {id:'jd3',type:'jd',level:'Sedang',num:3,
+   pairs:[{l:'DKI Jakarta 800 dokter (1 lambang = 100)',r:'8 lambang'},
+          {l:'Jawa Tengah 700 dokter',r:'7 lambang'},
+          {l:'Jawa Barat 600 dokter',r:'6 lambang'},
+          {l:'Jawa Timur 500 dokter',r:'5 lambang'},
+          {l:'DIY 200 dokter',r:'2 lambang'}],
+   options:['2 lambang','5 lambang','6 lambang','7 lambang','8 lambang'],
+   answers:[4,3,2,1,0],
+   explanation:'Banyak lambang = banyak data ÷ 100: 800→8, 700→7, 600→6, 500→5, 200→2.'},
+  {id:'jd4',type:'jd',level:'Sedang',num:4,
+   pairs:[{l:'Guru (8 dari 45)',r:'64°'},
+          {l:'Karyawan (12 dari 45)',r:'96°'},
+          {l:'Wiraswasta (9 dari 45)',r:'72°'},
+          {l:'Petani (11 dari 45)',r:'88°'},
+          {l:'Pedagang (5 dari 45)',r:'40°'}],
+   options:['40°','64°','72°','88°','96°'],
+   answers:[1,4,2,3,0],
+   explanation:'Sudut = (f ÷ 45) × 360°: Guru 64°, Karyawan 96°, Wiraswasta 72°, Petani 88°, Pedagang 40°.'},
+  {id:'jd5',type:'jd',level:'Sedang',num:5,
+   pairs:[{l:'Produksi tertinggi (2000–2005)',r:'Tahun 2002'},
+          {l:'Produksi terendah',r:'Tahun 2003'},
+          {l:'Selisih tertinggi − terendah',r:'7 juta ton'},
+          {l:'Produksi tahun 2005',r:'8 juta ton'},
+          {l:'Jenis diagram untuk data kontinu',r:'Diagram garis'}],
+   options:['7 juta ton','Tahun 2002','Diagram garis','Tahun 2003','8 juta ton'],
+   answers:[1,3,0,4,2],
+   explanation:'Tertinggi 2002 (9 juta), terendah 2003 (2 juta), selisih 7 juta; produksi 2005 = 8 juta; data kontinu disajikan dengan diagram garis.'}
+];
+
+var TYPES = [
+  {k:'pg',short:'PG',label:'Pilihan Ganda'},
+  {k:'is',short:'ISIAN',label:'Isian Singkat'},
+  {k:'pk',short:'PG KOMPLEKS',label:'PG Kompleks'},
+  {k:'bs',short:'B/S',label:'Benar/Salah'},
+  {k:'jd',short:'JODOH',label:'Menjodohkan'}
+];
+var curType = 'pg';
+var STATE = freshState();
+function freshState(){ return {pg:{},is:{},pk:{},bs:{},jd:{}}; }
+function el(id){ return document.getElementById(id); }
+function findQ(id){
+  var all = BANK.pg.concat(BANK.is, BANK.pk, BANK.bs, BANK.jd);
+  for(var i=0;i<all.length;i++){ if(all[i].id===id) return all[i]; }
+  return null;
+}
+function typeLabel(t){ for(var i=0;i<TYPES.length;i++){ if(TYPES[i].k===t) return TYPES[i].label; } return t; }
+function normStr(s){ s = String(s).trim().toLowerCase(); return s.split(' ').join(''); }
+function sameSet(a,b){
+  if(a.length!==b.length) return false;
+  var sa = a.slice().sort(function(x,y){return x-y;}).join(',');
+  var sb = b.slice().sort(function(x,y){return x-y;}).join(',');
+  return sa===sb;
+}
+
+function showType(t){
+  curType = t;
+  var btns = document.querySelectorAll('.type-btn');
+  for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active', btns[i].getAttribute('data-type')===t); }
+  renderQuestions(t);
+}
+
+function renderQuestions(t){
+  var html = '';
+  for(var i=0;i<BANK[t].length;i++){ html += renderCard(BANK[t][i]); }
+  el('quiz-area').innerHTML = html;
+  typesetMath();
+}
+
+function renderCard(q){
+  var meta = '<div class="qmeta">'+typeLabel(q.type)+' · Soal '+q.num+' · Level '+q.level+'</div>';
+  var head = '<div class="qcard" id="card-'+q.id+'">'+meta+'<p class="qtext">'+q.text+'</p>';
+  var body = '';
+  if(q.type==='pg'){
+    body += '<div>';
+    for(var i=0;i<q.options.length;i++){
+      body += '<button class="opt" onclick="answerPG(\''+q.id+'\','+i+',this)">'+String.fromCharCode(65+i)+'. '+q.options[i]+'</button>';
+    }
+    body += '</div>';
+  } else if(q.type==='is'){
+    body += '<div><input class="is-input" id="isin-'+q.id+'" placeholder="Jawaban kamu..."> '+
+            '<button class="btn-small" id="isbtn-'+q.id+'" onclick="submitIS(\''+q.id+'\')">Periksa</button></div>';
+  } else if(q.type==='pk'){
+    body += '<div>';
+    for(var j=0;j<q.options.length;j++){
+      body += '<button class="opt pk-opt" onclick="togglePK(\''+q.id+'\','+j+',this)">☐ '+q.options[j]+'</button>';
+    }
+    body += '<button class="btn-small" onclick="submitPK(\''+q.id+'\')">Kunci Jawaban</button></div>';
+  } else if(q.type==='bs'){
+    body += '<div><button class="opt" style="display:inline-block;width:auto;margin-right:8px" onclick="answerBS(\''+q.id+'\','+"'B'"+',this)">✔ Benar</button>'+
+            '<button class="opt" style="display:inline-block;width:auto" onclick="answerBS(\''+q.id+'\','+"'S'"+',this)">✘ Salah</button></div>';
+  } else if(q.type==='jd'){
+    body += '<div>';
+    for(var r=0;r<q.pairs.length;r++){
+      body += '<div class="jd-row"><div class="jd-left">'+q.pairs[r].l+'</div><select id="jdsel-'+q.id+'-'+r+'"><option value="-1">— pilih pasangan —</option>';
+      for(var o=0;o<q.options.length;o++){ body += '<option value="'+o+'">'+q.options[o]+'</option>'; }
+      body += '</select></div>';
+    }
+    body += '<button class="btn-small" onclick="submitJD(\''+q.id+'\')">Periksa Semua</button></div>';
+  }
+  var fb = '<div class="explain" id="fb-'+q.id+'"></div>';
+  return head+body+fb+'</div>';
+}
+
+function showExplain(id, correct){
+  var q = findQ(id);
+  var box = el('fb-'+id);
+  box.innerHTML = (correct ? '✅ <b>Benar!</b> ' : '❌ <b>Belum tepat.</b> ') + q.explanation;
+  box.classList.add('show');
+  typesetMath();
+}
+
+function answerPG(id, idx, btn){
+  if(STATE.pg[id]) return;
+  var q = findQ(id);
+  var correct = (idx === q.answer);
+  STATE.pg[id] = {sel:idx, correct:correct};
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++){ opts[i].disabled = true; }
+  opts[q.answer].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+
+function submitIS(id){
+  if(STATE.is[id]) return;
+  var q = findQ(id);
+  var inp = el('isin-'+id);
+  var val = inp.value;
+  var ok = false;
+  if(normStr(val) === normStr(q.answer)) ok = true;
+  if(!ok && q.accept){ for(var i=0;i<q.accept.length;i++){ if(normStr(val)===normStr(q.accept[i])) ok = true; } }
+  if(!ok && !isNaN(parseFloat(q.answer)) && isFinite(parseFloat(val)) && Math.abs(parseFloat(val)-parseFloat(q.answer)) < 1e-9) ok = true;
+  STATE.is[id] = {val:val, correct:ok};
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  inp.disabled = true;
+  el('isbtn-'+id).disabled = true;
+  showExplain(id, ok);
+  updateScoreStrip();
+}
+
+function togglePK(id, idx, btn){
+  if(STATE.pk[id] && STATE.pk[id].done) return;
+  btn.classList.toggle('sel');
+  btn.innerHTML = (btn.classList.contains('sel') ? '☑ ' : '☐ ') + findQ(id).options[idx];
+}
+
+function submitPK(id){
+  if(STATE.pk[id] && STATE.pk[id].done) return;
+  var q = findQ(id);
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.pk-opt');
+  var sel = [];
+  for(var i=0;i<opts.length;i++){ if(opts[i].classList.contains('sel')) sel.push(i); }
+  var correct = sameSet(sel, q.answers);
+  STATE.pk[id] = {sel:sel, correct:correct, done:true};
+  for(var j=0;j<opts.length;j++){
+    var inAns = q.answers.indexOf(j) >= 0;
+    var inSel = sel.indexOf(j) >= 0;
+    if(inAns) opts[j].classList.add('correct');
+    else if(inSel) opts[j].classList.add('wrong');
+    opts[j].disabled = true;
+  }
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+
+function answerBS(id, val, btn){
+  if(STATE.bs[id]) return;
+  var q = findQ(id);
+  var correct = (val === q.answer);
+  STATE.bs[id] = {sel:val, correct:correct};
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++){ opts[i].disabled = true; }
+  var correctIdx = (q.answer === 'B') ? 0 : 1;
+  opts[correctIdx].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+
+function submitJD(id){
+  if(STATE.jd[id] && STATE.jd[id].done) return;
+  var q = findQ(id);
+  var allOk = true;
+  var picks = [];
+  for(var r=0;r<q.pairs.length;r++){
+    var s = el('jdsel-'+id+'-'+r);
+    var v = parseInt(s.value, 10);
+    picks.push(v);
+    var ok = (v === q.answers[r]);
+    if(!ok) allOk = false;
+    s.classList.add(ok ? 'correct' : 'wrong');
+    s.disabled = true;
+  }
+  STATE.jd[id] = {picks:picks, correct:allOk, done:true};
+  showExplain(id, allOk);
+  updateScoreStrip();
+}
+
+function countCorrect(t){
+  var n = 0;
+  for(var i=0;i<BANK[t].length;i++){
+    var st = STATE[t][BANK[t][i].id];
+    if(st && st.correct) n++;
+  }
+  return n;
+}
+
+function updateScoreStrip(){
+  var html = '';
+  for(var i=0;i<TYPES.length;i++){
+    var t = TYPES[i].k;
+    html += '<span class="score-chip">'+TYPES[i].short+': '+countCorrect(t)+'/'+BANK[t].length+'</span>';
+  }
+  el('score-strip').innerHTML = html;
+}
+
+function showAnalysis(){
+  var totalC = 0, totalN = 0;
+  var rows = '';
+  for(var i=0;i<TYPES.length;i++){
+    var t = TYPES[i].k;
+    var c = countCorrect(t);
+    var n = BANK[t].length;
+    totalC += c; totalN += n;
+    rows += '<tr><td>'+TYPES[i].label+'</td><td>'+c+' / '+n+'</td><td>'+Math.round(c/n*100)+'%</td></tr>';
+  }
+  var pct = Math.round(totalC/totalN*100);
+  var msg = pct >= 80 ? '🌟 Luar biasa! Kamu siap melanjutkan ke materi statistika berikutnya.' :
+            (pct >= 60 ? '👍 Bagus! Telaah lagi pembahasan soal yang belum tepat.' :
+            '💪 Semangat! Baca kembali bagian materi, lalu coba ulangi latihan ini.');
+  var box = el('analysis');
+  box.innerHTML = '<h3>Analisis Hasil Latihan</h3><table><tr><th>Tipe Soal</th><th>Benar</th><th>Persentase</th></tr>'+rows+
+    '<tr><td><b>TOTAL</b></td><td><b>'+totalC+' / '+totalN+'</b></td><td><b>'+pct+'%</b></td></tr></table><div class="msg">'+msg+'</div>';
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function resetAll(){
+  STATE = freshState();
+  el('analysis').classList.remove('show');
+  renderQuestions(curType);
+  updateScoreStrip();
+}
+
+function hitungSudut(){
+  var f = parseFloat(el('calc-f').value) || 0;
+  var t = parseFloat(el('calc-total').value) || 0;
+  var out = el('res-sudut');
+  if(t <= 0){ out.innerHTML = 'Total data harus lebih dari 0.'; return; }
+  var pct = f / t * 100;
+  var deg = f / t * 360;
+  out.innerHTML = 'Persentase = ' + pct.toFixed(1) + '% &nbsp;·&nbsp; Sudut pusat = ' + deg.toFixed(1) + '°';
+}
+function hitungFrek(){
+  var deg = parseFloat(el('calc-deg').value) || 0;
+  var t = parseFloat(el('calc-total2').value) || 0;
+  var out = el('res-frek');
+  if(t <= 0){ out.innerHTML = 'Total data harus lebih dari 0.'; return; }
+  var f = deg / 360 * t;
+  out.innerHTML = 'Frekuensi kategori ≈ ' + (Math.round(f * 100) / 100) + ' dari total ' + t + ' data.';
+}
+
+/* ===== Piktogram & Pie chart (build + animasi) ===== */
+var PICTO = [['DKI Jakarta',8],['Jawa Barat',6],['Jawa Tengah',7],['DIY',2],['Jawa Timur',5],['Bali',3]];
+function buildPicto(){
+  var html = '';
+  var d = 0;
+  for(var i=0;i<PICTO.length;i++){
+    html += '<div class="picto-row"><div class="picto-name">'+PICTO[i][0]+'</div><div style="display:flex;gap:4px;flex-wrap:wrap">';
+    for(var k=0;k<PICTO[i][1];k++){
+      html += '<svg class="picto-ico" style="transition-delay:'+(d*0.06).toFixed(2)+'s"><use href="#ico-doc"></use></svg>';
+      d++;
+    }
+    html += '</div><span class="picto-val">'+(PICTO[i][1]*100)+'</span></div>';
+  }
+  el('picto-box').innerHTML = html;
+}
+function polar(cx,cy,r,deg){
+  var rad = deg * Math.PI / 180;
+  return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
+}
+var PIE = [['Guru',8,'#e0a94d'],['Karyawan',12,'#7fae6b'],['Wiraswasta',9,'#5b8bd0'],['Petani',11,'#c1584f'],['Pedagang',5,'#8a6fc9']];
+function buildPie(){
+  var total = 0, i;
+  for(i=0;i<PIE.length;i++) total += PIE[i][1];
+  var svg = el('pie-svg');
+  var start = -90;
+  var out = '';
+  var legend = '';
+  for(i=0;i<PIE.length;i++){
+    var angle = PIE[i][1] / total * 360;
+    var end = start + angle;
+    var p1 = polar(130,130,100,start);
+    var p2 = polar(130,130,100,end);
+    var large = angle > 180 ? 1 : 0;
+    out += '<path class="pie-sect" style="transition-delay:'+(i*0.15).toFixed(2)+'s" fill="'+PIE[i][2]+'" d="M130,130 L'+p1[0].toFixed(2)+','+p1[1].toFixed(2)+' A100,100 0 '+large+' 1 '+p2[0].toFixed(2)+','+p2[1].toFixed(2)+' Z"></path>';
+    var mid = polar(130,130,62,start+angle/2);
+    out += '<text class="pie-lbl" style="transition-delay:'+(0.4+i*0.15).toFixed(2)+'s" x="'+mid[0].toFixed(1)+'" y="'+mid[1].toFixed(1)+'" font-size="11" text-anchor="middle" fill="#fff" font-family="JetBrains Mono">'+Math.round(PIE[i][1]/total*100)+'%</text>';
+    legend += '<div><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:'+PIE[i][2]+';margin-right:8px"></span>'+PIE[i][0]+' · '+PIE[i][1]+' orang · '+Math.round(PIE[i][1]/total*360)+'°</div>';
+    start = end;
+  }
+  svg.innerHTML = out;
+  el('pie-legend').innerHTML = legend;
+}
+
+/* ===== Scrollspy, progress, sidebar mobile ===== */
+var SEC_IDS = ['a-mengenal','b-penyajian','b1-piktogram','b2-batang','b3-garis','b4-lingkaran','latihan'];
+function onScroll(){
+  var doc = document.documentElement;
+  var max = doc.scrollHeight - window.innerHeight;
+  var p = max > 0 ? (window.scrollY / max) * 100 : 0;
+  el('progress-bar').style.width = p + '%';
+  var cur = SEC_IDS[0];
+  for(var i=0;i<SEC_IDS.length;i++){
+    var s = el(SEC_IDS[i]);
+    if(s && s.getBoundingClientRect().top <= 140) cur = SEC_IDS[i];
+  }
+  var links = document.querySelectorAll('#side-nav a[data-sec]');
+  for(var j=0;j<links.length;j++){
+    links[j].classList.toggle('active', links[j].getAttribute('data-sec') === cur);
+  }
+}
+function openSidebar(){ el('sidebar').classList.add('open'); el('overlay').classList.add('show'); }
+function closeSidebar(){ el('sidebar').classList.remove('open'); el('overlay').classList.remove('show'); }
+
+function initObservers(){
+  if(!('IntersectionObserver' in window)){
+    var all = document.querySelectorAll('.anim,.fade');
+    for(var i=0;i<all.length;i++) all[i].classList.add('inview');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('inview'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.25});
+  var nodes = document.querySelectorAll('.anim,.fade');
+  for(var j=0;j<nodes.length;j++) io.observe(nodes[j]);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  buildPicto();
+  buildPie();
+  initObservers();
+  renderQuestions('pg');
+  updateScoreStrip();
+  onScroll();
+  typesetMath();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  el('menu-toggle').addEventListener('click', openSidebar);
+  el('overlay').addEventListener('click', closeSidebar);
+  el('side-nav').addEventListener('click', function(e){
+    if(e.target.closest('a')) closeSidebar();
+  });
+  document.documentElement.style.scrollBehavior = 'smooth';
+});
+</script>
+</body>
+</html>

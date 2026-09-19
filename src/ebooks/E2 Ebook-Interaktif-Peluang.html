@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peluang · Matematika Kelas 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Source Serif 4',serif;background:var(--paper);color:var(--text-dark)}
+.layout{display:flex;min-height:100vh}
+aside#sidebar{width:290px;flex:0 0 290px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:linear-gradient(180deg,var(--ink),var(--ink2));color:var(--cream);
+  padding:28px 20px;border-right:1px solid var(--ink-border)}
+.side-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.side-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin:6px 0 14px;line-height:1.25}
+.progress-wrap{height:6px;background:var(--ink3);border-radius:99px;overflow:hidden;margin-bottom:18px}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft));transition:width .15s}
+.nav-head{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.14em;margin:16px 0 6px;text-transform:uppercase}
+nav a{display:block;color:var(--cream-dim);text-decoration:none;padding:7px 10px;border-radius:8px;font-size:14.5px;border-left:3px solid transparent;margin:2px 0}
+nav a:hover{background:var(--ink3);color:var(--cream)}
+nav a.active{background:var(--ink3);color:var(--gold-soft);border-left-color:var(--gold)}
+nav a.nav-sub{margin-left:14px;font-size:13.5px;padding:5px 10px;border-left:2px solid var(--ink-border);border-radius:0 8px 8px 0}
+nav a.nav-sub.active{border-left-color:var(--gold)}
+main#content{flex:1;min-width:0;padding:0 0 60px}
+.hero{background:linear-gradient(135deg,var(--ink) 0%,var(--ink3) 100%);color:var(--cream);padding:64px 48px 48px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(224,169,77,.25),transparent 70%)}
+.hero .label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:44px;margin:10px 0 12px;line-height:1.1}
+.hero p{color:var(--cream-dim);max-width:640px;font-size:16.5px;line-height:1.7}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{border:1px solid var(--ink-border);background:rgba(255,255,255,.06);padding:6px 12px;border-radius:99px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-soft)}
+section.block{max-width:880px;margin:0 auto;padding:48px 40px 8px}
+h2.sec{font-family:'Playfair Display',serif;font-size:30px;color:var(--ink);border-bottom:3px solid var(--gold);display:inline-block;padding-bottom:6px;margin:0 0 10px}
+h3.sub{font-family:'Playfair Display',serif;font-size:22px;color:var(--ink2);margin:30px 0 8px}
+p{line-height:1.75;color:var(--text-mid);font-size:16.5px}
+.callout{border-left:4px solid;border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15.5px;color:var(--text-mid)}
+.callout.def{background:var(--def);border-color:var(--def-b)}
+.callout.note{background:var(--note);border-color:var(--note-b)}
+.callout.warn{background:var(--warn);border-color:var(--warn-b)}
+.callout b.t{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--text-dark)}
+.example-box{background:var(--paper2);border:1px dashed var(--paper-line);border-radius:12px;padding:16px 20px;margin:18px 0}
+.example-box h4{margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--note-b);text-transform:uppercase}
+ol.steps{margin:6px 0;padding-left:20px}
+ol.steps li{margin:6px 0;line-height:1.65;color:var(--text-mid)}
+table.data{border-collapse:collapse;margin:12px 0;width:100%;font-size:15px}
+table.data th,table.data td{border:1px solid var(--paper-line);padding:8px 12px;text-align:center;color:var(--text-dark)}
+table.data th{background:var(--paper2);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.06em}
+figure.chart{margin:20px 0;background:#fff;border:1px solid var(--paper-line);border-radius:14px;padding:18px;box-shadow:0 2px 10px rgba(20,26,46,.06)}
+figcaption{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-mid);text-align:center;margin-top:10px}
+.calc-box{background:linear-gradient(160deg,var(--ink),var(--ink3));border-radius:14px;padding:18px 20px;margin:20px 0;color:var(--cream)}
+.calc-box h4{margin:0 0 10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.calc-box label{font-size:13px;color:var(--cream-dim);display:block;margin:8px 0 4px}
+.calc-box input{width:150px;padding:8px 10px;border-radius:8px;border:1px solid var(--ink-border);background:var(--ink2);color:var(--cream);font-family:'JetBrains Mono',monospace}
+.calc-box button{margin-top:12px;background:var(--gold);color:var(--ink);border:none;padding:9px 18px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-weight:700;cursor:pointer}
+.calc-box button:hover{background:var(--gold-soft)}
+.calc-result{margin-top:12px;background:rgba(255,255,255,.08);border:1px solid var(--ink-border);border-radius:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold-soft);min-height:20px;line-height:1.8}
+.type-bar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.type-btn{padding:9px 16px;border-radius:99px;border:1.5px solid var(--ink-border);background:#fff;color:var(--ink2);font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;transition:.2s}
+.type-btn:hover{border-color:var(--gold)}
+.type-btn.active{background:var(--ink);color:var(--gold-soft);border-color:var(--ink)}
+.score-strip{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.score-chip{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--paper2);border:1px solid var(--paper-line);border-radius:99px;padding:6px 12px;color:var(--text-mid)}
+.qcard{background:#fff;border:1px solid var(--paper-line);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:0 2px 8px rgba(20,26,46,.05)}
+.qmeta{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--note-b);text-transform:uppercase;margin-bottom:6px}
+.qtext{font-size:16px;color:var(--text-dark);line-height:1.65;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--paper-line);border-radius:10px;padding:10px 14px;margin:6px 0;cursor:pointer;font-size:15px;color:var(--text-dark);transition:.15s;font-family:'Source Serif 4',serif}
+.opt:hover{border-color:var(--gold)}
+.opt.correct{background:var(--correct);border-color:var(--correct-b)}
+.opt.wrong{background:var(--wrong);border-color:var(--wrong-b)}
+.opt.sel{border-color:var(--gold);background:var(--note)}
+.opt:disabled{cursor:default}
+.explain{margin-top:10px;background:var(--def);border-left:4px solid var(--def-b);border-radius:8px;padding:10px 14px;font-size:14.5px;color:var(--text-mid);display:none}
+.explain.show{display:block}
+.btn-small{background:var(--ink);color:var(--cream);border:none;border-radius:8px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;margin-top:6px}
+.btn-small:hover{background:var(--ink3)}
+.is-input{padding:9px 12px;border-radius:8px;border:1.5px solid var(--paper-line);font-family:'JetBrains Mono',monospace;font-size:15px;width:160px;background:var(--paper)}
+.is-input.correct{border-color:var(--correct-b);background:var(--correct)}
+.is-input.wrong{border-color:var(--wrong-b);background:var(--wrong)}
+.jd-row{display:flex;gap:10px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.jd-left{flex:1;min-width:200px;background:var(--paper2);border:1px solid var(--paper-line);border-radius:8px;padding:8px 12px;font-size:14.5px;color:var(--text-dark)}
+.jd-row select{padding:8px;border-radius:8px;border:1.5px solid var(--paper-line);background:#fff;font-size:14px;max-width:320px;font-family:'Source Serif 4',serif}
+.jd-row select.correct{border-color:var(--correct-b);background:var(--correct)}
+.jd-row select.wrong{border-color:var(--wrong-b);background:var(--wrong)}
+.analysis{display:none;background:var(--ink);color:var(--cream);border-radius:14px;padding:20px 24px;margin-top:20px}
+.analysis.show{display:block}
+.analysis h3{font-family:'Playfair Display',serif;color:var(--gold-soft);margin:0 0 10px}
+.analysis table{width:100%;border-collapse:collapse;font-size:14px}
+.analysis td,.analysis th{padding:6px 10px;border-bottom:1px solid var(--ink-border);text-align:left}
+.analysis .msg{margin-top:12px;color:var(--gold-soft);font-size:15px}
+footer{background:var(--ink);color:var(--cream-dim);padding:28px 40px;text-align:center;font-size:13.5px;line-height:1.7}
+footer .credit{color:var(--gold-soft);font-family:'JetBrains Mono',monospace;font-size:12.5px;margin-top:6px}
+.fade{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.fade.inview{opacity:1;transform:none}
+.coin-wrap{perspective:500px;display:inline-block}
+.coin{position:relative;width:76px;height:76px;transform-style:preserve-3d;animation:coinspin 3s linear infinite}
+.coin .face{position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:28px;backface-visibility:hidden;border:3px solid rgba(0,0,0,.15)}
+.face.fA{background:linear-gradient(140deg,var(--gold),var(--gold-soft));color:var(--ink)}
+.face.fG{background:linear-gradient(140deg,var(--ink3),var(--ink));color:var(--gold-soft);transform:rotateY(180deg)}
+@keyframes coinspin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.num-chip{min-width:44px;height:38px;padding:0 8px;border-radius:10px;background:var(--paper2);border:1.5px solid var(--paper-line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text-dark);opacity:0;transform:scale(.5);transition:opacity .35s,transform .35s}
+.inview .num-chip{opacity:1;transform:scale(1)}
+.num-chip.med-hl{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}
+#dice-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;max-width:470px;margin:12px auto}
+.dcell{background:var(--paper2);border:1px solid var(--paper-line);border-radius:6px;text-align:center;padding:8px 0;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-mid);opacity:0;transform:scale(.6);
+  transition:opacity .3s,transform .3s,background .3s,color .3s}
+.inview .dcell{opacity:1;transform:scale(1)}
+.dcell.hl{background:var(--gold);color:var(--ink);font-weight:700;border-color:var(--gold)}
+.grid-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.pscale{position:relative;height:14px;border-radius:99px;background:linear-gradient(90deg,var(--warn-b),var(--note-b),var(--def-b));margin:30px 10px 40px}
+.pmark{position:absolute;top:-6px;left:0;width:26px;height:26px;border-radius:50%;background:var(--ink);border:3px solid var(--gold);transition:left 1.5s cubic-bezier(.3,.8,.3,1);transform:translateX(-50%)}
+.inview .pmark{left:50%}
+.plabel{position:absolute;top:24px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-mid);transform:translateX(-50%);white-space:nowrap}
+.fhgrid{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:10px 0}
+.fcoin{width:32px;height:32px;border-radius:50%;background:var(--ink3);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:13px;opacity:0;transform:scale(.4);transition:opacity .35s,transform .35s}
+.fcoin.hl{background:linear-gradient(140deg,var(--gold),var(--gold-soft));color:var(--ink);font-weight:700}
+.inview .fcoin{opacity:1;transform:scale(1)}
+.pie-sect{opacity:0;transform:scale(.55);transform-box:fill-box;transform-origin:center;transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.inview .pie-sect{opacity:1;transform:scale(1)}
+.venn-c{opacity:0;transition:opacity .8s,transform .8s;transform:scale(.7);transform-box:fill-box;transform-origin:center}
+.inview .venn-c{opacity:1;transform:scale(1)}
+#menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:60;background:var(--ink);color:var(--gold);border:none;border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer}
+#overlay{display:none;position:fixed;inset:0;background:rgba(10,12,24,.5);z-index:40}
+@media(max-width:900px){
+  #menu-toggle{display:block}
+  #sidebar{position:fixed;left:0;top:0;z-index:50;transform:translateX(-100%);transition:transform .3s}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.show{display:block}
+  .hero{padding:84px 24px 40px}
+  .hero h1{font-size:32px}
+  section.block{padding:36px 20px 4px}
+}
+</style>
+</head>
+<body>
+<button id="menu-toggle" aria-label="Buka menu">☰</button>
+<div id="overlay"></div>
+<div class="layout">
+
+<aside id="sidebar">
+  <div class="side-label">Matematika · Kelas 8</div>
+  <div class="side-title">Peluang — Kejadian, Ruang Sampel &amp; Frekuensi Harapan</div>
+  <div class="progress-wrap"><div id="progress-bar"></div></div>
+  <nav id="side-nav">
+    <div class="nav-head">Materi</div>
+    <a data-sec="a-peluang" href="#a-peluang">A. Pengertian Peluang</a>
+    <a class="nav-sub" data-sec="a1-kejadian" href="#a1-kejadian">A.1 Peluang Suatu Kejadian</a>
+    <a class="nav-sub" data-sec="a2-ruangsampel" href="#a2-ruangsampel">A.2 Ruang Sampel &amp; Titik Sampel</a>
+    <a data-sec="b-kisaran" href="#b-kisaran">B. Kisaran Nilai Peluang</a>
+    <a class="nav-sub" data-sec="b1-majemuk" href="#b1-majemuk">B.1 Kejadian Majemuk</a>
+    <a class="nav-sub" data-sec="b2-batas" href="#b2-batas">B.2 Batas-batas Peluang</a>
+    <a class="nav-sub" data-sec="b3-komplemen" href="#b3-komplemen">B.3 Komplemen Kejadian</a>
+    <a data-sec="c-fharapan" href="#c-fharapan">C. Frekuensi Harapan</a>
+    <a data-sec="d-dua" href="#d-dua">D. Dua Kejadian Majemuk</a>
+    <a class="nav-sub" data-sec="d1-atau" href="#d1-atau">D.1 Kejadian A atau B</a>
+    <a class="nav-sub" data-sec="d2-dan" href="#d2-dan">D.2 Kejadian A dan B</a>
+    <div class="nav-head">Latihan</div>
+    <a data-sec="latihan" href="#latihan">Latihan Soal (25 soal)</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('bs')">4. Benar / Salah</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+</aside>
+
+<main id="content">
+  <div class="hero">
+    <div class="label">Ebook Interaktif · Modul Matematika SMP</div>
+    <h1>Peluang<br>Suatu Kejadian</h1>
+    <p>Dari lemparan uang logam dan dadu menuju ruang sampel, peluang empirik–teoretik, komplemen, frekuensi harapan, hingga kejadian majemuk “A atau B” dan “A dan B” — lengkap dengan animasi interaktif, kalkulator, dan 25 latihan soal.</p>
+    <div class="chips">
+      <span class="chip">A · Pengertian Peluang</span>
+      <span class="chip">B · Kisaran Nilai Peluang</span>
+      <span class="chip">C · Frekuensi Harapan</span>
+      <span class="chip">D · Dua Kejadian Majemuk</span>
+      <span class="chip">25 Soal Interaktif</span>
+    </div>
+  </div>
+
+  <section class="block fade" id="a-peluang">
+    <h2 class="sec">A. Pengertian Peluang</h2>
+
+    <h3 class="sub" id="a1-kejadian">A.1 Peluang Suatu Kejadian</h3>
+    <p><b>Frekuensi relatif</b> mengukur seberapa sering suatu kejadian muncul dibandingkan banyak percobaan:</p>
+    <p style="text-align:center">\[ \text{Frekuensi relatif} = \frac{\text{banyak munculnya kejadian}}{\text{banyak percobaan}} \]</p>
+    <figure class="chart anim" id="coin-fig">
+      <div style="display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap">
+        <div class="coin-wrap"><div class="coin"><div class="face fA">A</div><div class="face fG">G</div></div></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#5b5137;line-height:1.9">
+          100 lemparan → angka muncul 45 kali<br>
+          Frekuensi relatif angka = 45 ÷ 100 = <b style="color:#b07f2c">0,45</b>
+        </div>
+      </div>
+      <figcaption>Gambar 1 — Uang logam bersisi Angka (A) dan Gambar (G): sumber percobaan peluang paling klasik.</figcaption>
+    </figure>
+    <div class="callout def"><b class="t">Definisi</b>
+      Peluang suatu kejadian A adalah perbandingan banyak kejadian yang dimaksud dengan banyak kejadian yang mungkin (banyak anggota ruang sampel):
+      \[ P(A) = \frac{n(A)}{n(S)} \]
+    </div>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Sebuah dadu dilempar satu kali. Tentukan peluang muncul (a) mata 5 dan (b) bilangan prima.</p>
+      <ol class="steps">
+        <li>Ruang sampel S = {1, 2, 3, 4, 5, 6}, maka n(S) = 6.</li>
+        <li>(a) Kejadian mata 5 = {5}, n = 1 → P = 1/6.</li>
+        <li>(b) Kejadian prima = {2, 3, 5}, n = 3 → P = 3/6 = <b>1/2</b>.</li>
+      </ol>
+    </div>
+    <div class="example-box">
+      <h4>Contoh — Huruf dan Kelereng</h4>
+      <ol class="steps">
+        <li>Huruf pada kata “MATEMATIKA” ada 10: M, A, T, E, M, A, T, I, K, A. P(vokal) = 5/10 = 1/2; P(huruf M) = 2/10 = 1/5; P(huruf R) = 0/10 = 0.</li>
+        <li>Kotak berisi 6 kelereng merah, 7 hijau, 8 kuning (total 21). P(merah) = 6/21 = 2/7; P(hijau) = 7/21 = 1/3; P(kuning) = 8/21.</li>
+      </ol>
+    </div>
+    <div class="calc-box">
+      <h4>Kalkulator Peluang &amp; Komplemen</h4>
+      <label for="calc-na">Banyak anggota kejadian A, n(A)</label><input id="calc-na" type="number" placeholder="mis. 3">
+      <label for="calc-ns">Banyak anggota ruang sampel, n(S)</label><input id="calc-ns" type="number" placeholder="mis. 6">
+      <br><button onclick="hitungPeluang()">Hitung</button>
+      <div class="calc-result" id="res-peluang">Hasil akan muncul di sini.</div>
+    </div>
+
+    <h3 class="sub" id="a2-ruangsampel">A.2 Ruang Sampel dan Titik Sampel</h3>
+    <div class="callout def"><b class="t">Definisi</b>
+      <b>Ruang sampel (S)</b> adalah himpunan semua kejadian yang mungkin terjadi.<br>
+      <b>Titik sampel</b> adalah setiap anggota dari ruang sampel.
+    </div>
+    <figure class="chart anim" id="coins-fig">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5b5137;text-align:center">1 uang logam → n(S) = 2</div>
+      <div class="chip-row"><div class="num-chip" style="transition-delay:.05s">A</div><div class="num-chip" style="transition-delay:.15s">G</div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5b5137;text-align:center">2 uang logam → n(S) = 4</div>
+      <div class="chip-row"><div class="num-chip" style="transition-delay:.25s">AA</div><div class="num-chip" style="transition-delay:.35s">AG</div><div class="num-chip" style="transition-delay:.45s">GA</div><div class="num-chip" style="transition-delay:.55s">GG</div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5b5137;text-align:center">3 uang logam → n(S) = 8</div>
+      <div class="chip-row">
+        <div class="num-chip" style="transition-delay:.6s">AAA</div><div class="num-chip" style="transition-delay:.68s">AAG</div>
+        <div class="num-chip" style="transition-delay:.76s">AGA</div><div class="num-chip" style="transition-delay:.84s">AGG</div>
+        <div class="num-chip" style="transition-delay:.92s">GAA</div><div class="num-chip" style="transition-delay:1s">GAG</div>
+        <div class="num-chip" style="transition-delay:1.08s">GGA</div><div class="num-chip" style="transition-delay:1.16s">GGG</div>
+      </div>
+      <figcaption>Gambar 2 — Ruang sampel pelemparan 1, 2, dan 3 uang logam.</figcaption>
+    </figure>
+    <figure class="chart anim" id="dice-fig">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5b5137;text-align:center">Ruang sampel 2 dadu → n(S) = 36 · isi tiap sel = titik sampel (dadu I, dadu II)</div>
+      <div id="dice-grid"></div>
+      <div class="grid-btns">
+        <button class="btn-small" onclick="highlightGrid('sum7')">Sorot: Jumlah 7</button>
+        <button class="btn-small" onclick="highlightGrid('same')">Sorot: Kembar</button>
+        <button class="btn-small" onclick="highlightGrid('prime')">Sorot: Jumlah Prima</button>
+        <button class="btn-small" onclick="highlightGrid('none')">Reset</button>
+      </div>
+      <figcaption>Gambar 3 — Grid interaktif ruang sampel dua dadu: setiap sel adalah pasangan titik sampel (dadu I, dadu II), misalnya (1,1) atau (4,6). Klik tombol untuk menyorot kejadian tertentu.</figcaption>
+    </figure>
+    <p>Untuk <b>sebuah dadu dan sebuah uang logam</b>, ruang sampelnya berisi 6 × 2 = 12 titik sampel: (A,1)…(A,6) dan (G,1)…(G,6).</p>
+  </section>
+
+  <section class="block fade" id="b-kisaran">
+    <h2 class="sec">B. Kisaran Nilai Peluang</h2>
+
+    <h3 class="sub" id="b1-majemuk">B.1 Kejadian Majemuk</h3>
+    <p>Untuk kejadian A dalam ruang sampel S, peluangnya dihitung dengan membandingkan banyak anggota A dengan banyak anggota S:</p>
+    <p style="text-align:center">\[ P(A) = \frac{n(A)}{n(S)} \]</p>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Dua uang logam dilempar satu kali. Tentukan peluang muncul (a) keduanya sisi angka dan (b) uang I sisi angka.</p>
+      <ol class="steps">
+        <li>S = {AA, AG, GA, GG}, n(S) = 4.</li>
+        <li>(a) Keduanya angka = {AA}, n = 1 → P = 1/4.</li>
+        <li>(b) Uang I angka = {AA, AG}, n = 2 → P = 2/4 = <b>1/2</b>.</li>
+      </ol>
+    </div>
+    <div class="example-box">
+      <h4>Contoh — Tiga Uang Logam &amp; Kartu Bridge</h4>
+      <ol class="steps">
+        <li>Tiga uang logam: n(S) = 8. Ketiganya gambar = {GGG} → P = 1/8. Paling sedikit 2 angka = {AAA, AAG, AGA, GAA} → P = 4/8 = 1/2.</li>
+        <li>Kartu bridge: n(S) = 52. P(kartu As) = 4/52 = 1/13. P(bernomor prima: 2, 3, 5, 7) = 16/52 = 4/13. P(bernomor ganjil: A, 3, 5, 7, 9) = 20/52 = 5/13.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub" id="b2-batas">B.2 Batas-batas Peluang</h3>
+    <p style="text-align:center">\[ 0 \le P(A) \le 1 \]</p>
+    <p>Jika P(A) = 0 maka A disebut <b>kejadian mustahil</b>; jika P(A) = 1 maka A disebut <b>kejadian pasti</b>.</p>
+    <figure class="chart anim" id="scale-fig">
+      <div class="pscale">
+        <div class="pmark"></div>
+        <span class="plabel" style="left:0%">0 · mustahil</span>
+        <span class="plabel" style="left:50%">1/2</span>
+        <span class="plabel" style="left:100%">1 · pasti</span>
+      </div>
+      <figcaption>Gambar 4 — Skala peluang: penanda meluncur ke posisi 1/2 (kejadian berpeluang setengah, seperti muncul angka pada satu uang logam).</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Tentukan mana yang mustahil dan mana yang pasti: (a) matahari terbit dari Barat, (b) gajah berkaki 4, (c) besok matahari terbit, (d) buaya betina beranak.</p>
+      <ol class="steps">
+        <li>(a) Mustahil → P = 0.</li>
+        <li>(b) Pasti → P = 1.</li>
+        <li>(c) Pasti → P = 1.</li>
+        <li>(d) Mustahil (buaya bertelur) → P = 0.</li>
+      </ol>
+    </div>
+
+    <h3 class="sub" id="b3-komplemen">B.3 Komplemen Suatu Kejadian</h3>
+    <p style="text-align:center">\[ P(\text{bukan } A) = 1 - P(A) \]</p>
+    <figure class="chart anim" id="comp-fig">
+      <div style="display:flex;gap:24px;align-items:center;justify-content:center;flex-wrap:wrap">
+        <svg viewBox="0 0 260 260" width="220" height="220" role="img" aria-label="Diagram komplemen">
+          <circle cx="130" cy="130" r="100" fill="#2a3358"/>
+          <path class="pie-sect" fill="#e0a94d" d="M130,130 L130,30 A100,100 0 0 1 216.60,80.00 Z"/>
+          <text x="176" y="72" font-size="13" fill="#141a2e" font-family="JetBrains Mono" font-weight="700">A</text>
+          <text x="105" y="180" font-size="13" fill="#f1cd8a" font-family="JetBrains Mono">bukan A</text>
+        </svg>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#5b5137;line-height:2">
+          Juring emas = kejadian A<br>
+          Daerah navy = komplemen (bukan A)<br>
+          P(A) + P(bukan A) = 1
+        </div>
+      </div>
+      <figcaption>Gambar 5 — Komplemen kejadian: seluruh daerah lingkaran selain A.</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">(a) Jika peluang hari ini hujan 0,221, berapa peluang tidak hujan? (b) Tiga uang logam dilempar; tentukan peluang ketiganya bukan gambar.</p>
+      <ol class="steps">
+        <li>(a) P(tidak hujan) = 1 − 0,221 = <b>0,779</b>.</li>
+        <li>(b) P(ketiganya gambar) = 1/8, maka P(bukan ketiganya gambar) = 1 − 1/8 = <b>7/8</b>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block fade" id="c-fharapan">
+    <h2 class="sec">C. Frekuensi Harapan</h2>
+    <p>Frekuensi harapan adalah banyak kejadian yang <b>diharapkan</b> muncul setelah percobaan dilakukan N kali:</p>
+    <p style="text-align:center">\[ F_h(A) = P(A) \times N \]</p>
+    <figure class="chart anim" id="fh-fig">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5b5137;text-align:center">20 lemparan uang logam → harapan muncul angka = 1/2 × 20 = 10 kali (koin emas)</div>
+      <div class="fhgrid" id="fh-grid"></div>
+      <figcaption>Gambar 6 — Visualisasi frekuensi harapan: dari 20 percobaan, sekitar separuhnya diharapkan muncul angka.</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Sebuah dadu dilempar 300 kali. Tentukan frekuensi harapan muncul (a) mata dadu kelipatan 3 dan (b) mata dadu faktor dari 6.</p>
+      <ol class="steps">
+        <li>(a) Kelipatan 3 = {3, 6} → P = 2/6 = 1/3. Fh = 1/3 × 300 = <b>100 kali</b>.</li>
+        <li>(b) Faktor dari 6 = {1, 2, 3, 6} → P = 4/6 = 2/3. Fh = 2/3 × 300 = <b>200 kali</b>.</li>
+      </ol>
+    </div>
+    <div class="example-box">
+      <h4>Contoh — Masalah Nyata</h4>
+      <ol class="steps">
+        <li>Peluang sopir mengalami kecelakaan 0,09. Dari 500 sopir: Fh = 0,09 × 500 = <b>45 sopir</b>.</li>
+        <li>Peluang pelamar diterima 0,21 → peluang tidak diterima 0,79. Dari 5.000 pelamar: 0,79 × 5.000 = <b>3.950 orang</b>.</li>
+        <li>Peluang bibit tumbuh 0,95 → peluang tidak tumbuh 0,05. Dari 2.000 bibit: 0,05 × 2.000 = <b>100 bibit</b>.</li>
+      </ol>
+    </div>
+    <div class="calc-box">
+      <h4>Kalkulator Frekuensi Harapan</h4>
+      <label for="fh-num">Pembilang peluang (mis. 1 untuk 1/6)</label><input id="fh-num" type="number" placeholder="mis. 1">
+      <label for="fh-den">Penyebut peluang (mis. 6)</label><input id="fh-den" type="number" placeholder="mis. 6">
+      <label for="fh-N">Banyak percobaan (N)</label><input id="fh-N" type="number" placeholder="mis. 300">
+      <br><button onclick="hitungFh()">Hitung</button>
+      <div class="calc-result" id="res-fh">Hasil akan muncul di sini.</div>
+    </div>
+  </section>
+
+  <section class="block fade" id="d-dua">
+    <h2 class="sec">D. Dua Kejadian Majemuk</h2>
+
+    <h3 class="sub" id="d1-atau">D.1 Kejadian Majemuk “A atau B atau Kedua-duanya”</h3>
+    <p><b>Kejadian saling lepas</b> (tidak ada anggota persekutuan):</p>
+    <p style="text-align:center">\[ P(A \cup B) = P(A) + P(B) \]</p>
+    <p><b>Kejadian tidak saling lepas</b> (ada anggota persekutuan):</p>
+    <p style="text-align:center">\[ P(A \cup B) = P(A) + P(B) - P(A \cap B) \]</p>
+    <figure class="chart anim" id="venn-fig">
+      <div style="display:flex;gap:26px;justify-content:center;flex-wrap:wrap">
+        <svg viewBox="0 0 300 170" width="280" height="160" role="img" aria-label="Venn saling lepas">
+          <circle class="venn-c" style="transition-delay:.1s" cx="90" cy="85" r="52" fill="rgba(224,169,77,.55)" stroke="#b07f2c" stroke-width="2"/>
+          <circle class="venn-c" style="transition-delay:.35s" cx="210" cy="85" r="52" fill="rgba(91,139,208,.5)" stroke="#3a5a8c" stroke-width="2"/>
+          <text x="90" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="#2b2416">A</text>
+          <text x="210" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="#2b2416">B</text>
+          <text x="150" y="160" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#5b5137">SALING LEPAS: A ∩ B = </text>
+        </svg>
+        <svg viewBox="0 0 300 170" width="280" height="160" role="img" aria-label="Venn tidak saling lepas">
+          <circle class="venn-c" style="transition-delay:.1s" cx="115" cy="85" r="55" fill="rgba(224,169,77,.5)" stroke="#b07f2c" stroke-width="2"/>
+          <circle class="venn-c" style="transition-delay:.35s" cx="185" cy="85" r="55" fill="rgba(91,139,208,.45)" stroke="#3a5a8c" stroke-width="2"/>
+          <text x="90" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="#2b2416">A</text>
+          <text x="210" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="#2b2416">B</text>
+          <text x="150" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="12" fill="#2b2416">A∩B</text>
+          <text x="150" y="160" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#5b5137">TIDAK SALING LEPAS: irisannya dikurangkan</text>
+        </svg>
+      </div>
+      <figcaption>Gambar 7 — Diagram Venn: kiri saling lepas (cukup dijumlah), kanan tidak saling lepas (irisan dihitung dua kali, maka dikurangkan).</figcaption>
+    </figure>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">(a) Sebuah dadu dilempar: peluang muncul mata kurang dari 3 atau lebih dari 4? (b) Peluang muncul mata prima atau ganjil?</p>
+      <ol class="steps">
+        <li>(a) Kurang dari 3 = {1, 2}; lebih dari 4 = {5, 6}. Tidak ada irisan (saling lepas): P = 2/6 + 2/6 = 4/6 = 2/3.</li>
+        <li>(b) Prima = {2, 3, 5}; ganjil = {1, 3, 5}; irisan = {3, 5}. P = 3/6 + 3/6 − 2/6 = 4/6 = <b>2/3</b>.</li>
+      </ol>
+    </div>
+    <div class="calc-box">
+      <h4>Kalkulator Kejadian Majemuk (A atau B / A dan B)</h4>
+      <label for="m-pa">P(A)</label><input id="m-pa" type="number" step="0.01" placeholder="mis. 0.5">
+      <label for="m-pb">P(B)</label><input id="m-pb" type="number" step="0.01" placeholder="mis. 0.33">
+      <label for="m-pab">P(A ∩ B) — isi 0 jika saling lepas</label><input id="m-pab" type="number" step="0.01" placeholder="mis. 0">
+      <br><button onclick="hitungMajemuk()">Hitung</button>
+      <div class="calc-result" id="res-majemuk">Hasil akan muncul di sini.</div>
+    </div>
+
+    <h3 class="sub" id="d2-dan">D.2 Kejadian Majemuk “A dan B” (Saling Bebas)</h3>
+    <p>Jika A dan B kejadian saling bebas (terjadinya A tidak memengaruhi B):</p>
+    <p style="text-align:center">\[ P(A \cap B) = P(A) \times P(B) \]</p>
+    <div class="example-box">
+      <h4>Contoh Soal &amp; Penyelesaian</h4>
+      <p class="qtext">Sebuah dadu dan sebuah uang logam dilempar bersama. Tentukan peluang muncul (a) mata dadu 3 dan sisi angka, (b) mata dadu prima dan sisi angka.</p>
+      <ol class="steps">
+        <li>(a) P(dadu 3) = 1/6; P(angka) = 1/2 → P = 1/6 × 1/2 = <b>1/12</b>.</li>
+        <li>(b) P(prima) = 3/6 = 1/2; P(angka) = 1/2 → P = 1/2 × 1/2 = <b>1/4</b>.</li>
+      </ol>
+    </div>
+    <div class="example-box">
+      <h4>Contoh — Dua Dadu</h4>
+      <ol class="steps">
+        <li>P(mata 5 pada dadu I dan mata 4 pada dadu II) = 1/6 × 1/6 = 1/36.</li>
+        <li>P(mata 2 pada dadu I dan mata prima pada dadu II) = 1/6 × 3/6 = 3/36 = 1/12.</li>
+      </ol>
+    </div>
+    <div class="callout warn"><b class="t">Peringatan</b>
+      Kata kunci <b>“atau”</b> → peluang dijumlah (kurangkan irisan bila tidak saling lepas). Kata kunci <b>“dan”</b> dengan kejadian saling bebas → peluang dikalikan. Jangan tertukar!
+    </div>
+  </section>
+
+  <section class="block fade" id="latihan">
+    <h2 class="sec">Latihan Soal Interaktif</h2>
+    <p>Uji pemahamanmu dengan 25 soal dalam lima tipe berikut. Setiap soal dilengkapi pembahasan edukatif setelah dijawab.</p>
+    <div class="type-bar" id="type-bar">
+      <button class="type-btn active" data-type="pg" onclick="showType('pg')">1 · Pilihan Ganda</button>
+      <button class="type-btn" data-type="is" onclick="showType('is')">2 · Isian Singkat</button>
+      <button class="type-btn" data-type="pk" onclick="showType('pk')">3 · PG Kompleks</button>
+      <button class="type-btn" data-type="bs" onclick="showType('bs')">4 · Benar/Salah</button>
+      <button class="type-btn" data-type="jd" onclick="showType('jd')">5 · Menjodohkan</button>
+    </div>
+    <div class="score-strip" id="score-strip"></div>
+    <div id="quiz-area"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-small" onclick="showAnalysis()">📊 Lihat Analisis</button>
+      <button class="btn-small" onclick="resetAll()">🔄 Ulangi Semua</button>
+    </div>
+    <div class="analysis" id="analysis"></div>
+  </section>
+
+  <footer>
+    Ebook Interaktif · Matematika Kelas 8 · Peluang<br>
+    Single-file HTML · MathJax v3 · Animasi SVG &amp; CSS vanilla JS
+    <div class="credit">Dibuat Suminto dengan Qwen3.8-Max</div>
+  </footer>
+</main>
+</div>
+
+<script>
+/* mulai script utama */
+var BANK = {
+  pg: [
+    {id:'pg1',type:'pg',level:'Mudah',num:1,text:'Jika dua dadu dilempar secara bersamaan, maka banyak anggota ruang sampelnya adalah ....',options:['36','16','12','6'],answer:0,explanation:'n(S) = 6 × 6 = 36 titik sampel.'},
+    {id:'pg2',type:'pg',level:'Mudah',num:2,text:'Dalam percobaan melempar sebuah dadu sebanyak sekali, peluang muncul mata dadu prima adalah ....',options:['1/6','1/4','1/3','1/2'],answer:3,explanation:'Prima = {2, 3, 5} → 3 kejadian dari 6 → P = 3/6 = 1/2.'},
+    {id:'pg3',type:'pg',level:'Sedang',num:3,text:'Dua buah dadu dilambungkan bersamaan. Peluang muncul mata dadu berjumlah 7 adalah ....',options:['1/8','1/7','1/6','2/7'],answer:2,explanation:'Pasangan berjumlah 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) = 6 titik → P = 6/36 = 1/6.'},
+    {id:'pg4',type:'pg',level:'Mudah',num:4,text:'Tiga keping uang logam dilempar bersama-sama. Peluang muncul ketiganya gambar adalah ....',options:['1/8','3/8','5/8','7/8'],answer:0,explanation:'n(S) = 8; kejadian {GGG} = 1 → P = 1/8.'},
+    {id:'pg5',type:'pg',level:'Sedang',num:5,text:'Sebuah mata uang dilempar ke atas sebanyak 20 kali berturut-turut. Frekuensi harapan muncul sisi angka adalah ....',options:['8 kali','10 kali','12 kali','15 kali'],answer:1,explanation:'Fh = P × N = 1/2 × 20 = 10 kali.'}
+  ],
+  is: [
+    {id:'is1',type:'is',level:'Mudah',num:1,text:'Sebuah uang logam dilempar 100 kali dan angka muncul 45 kali. Frekuensi relatif muncul angka adalah ....',answer:'0.45',accept:['0.45','0,45','45/100','9/20'],explanation:'Frekuensi relatif = 45 ÷ 100 = 0,45.'},
+    {id:'is2',type:'is',level:'Mudah',num:2,text:'Sebuah huruf dipilih acak dari huruf-huruf kata “MATEMATIKA”. Peluang terambil huruf vokal adalah ....',answer:'1/2',accept:['1/2','0.5','0,5','5/10'],explanation:'Vokal = A, E, A, I, A = 5 dari 10 huruf → P = 5/10 = 1/2.'},
+    {id:'is3',type:'is',level:'Sedang',num:3,text:'Dua dadu dilempar bersamaan. Peluang muncul mata dadu berjumlah 10 adalah .... (tuliskan pecahan paling sederhana)',answer:'1/12',accept:['1/12','3/36'],explanation:'Jumlah 10: (4,6), (5,5), (6,4) = 3 titik → P = 3/36 = 1/12.'},
+    {id:'is4',type:'is',level:'Mudah',num:4,text:'Jika peluang hari ini hujan adalah 0,221, maka peluang tidak hujan adalah ....',answer:'0.779',accept:['0.779','0,779'],explanation:'Komplemen: 1 − 0,221 = 0,779.'},
+    {id:'is5',type:'is',level:'Sedang',num:5,text:'Sebuah dadu dilempar 300 kali. Frekuensi harapan muncul mata dadu kelipatan 3 adalah ... kali.',answer:'100',accept:['100'],explanation:'Kelipatan 3 = {3, 6} → P = 2/6 = 1/3; Fh = 1/3 × 300 = 100 kali.'}
+  ],
+  pk: [
+    {id:'pk1',type:'pk',level:'Mudah',num:1,text:'Manakah yang merupakan titik sampel pada pelemparan dua uang logam? (Pilih semua yang benar!)',options:['(A, G)','(A, A)','(G, G)','(A, A, G)'],answers:[0,1,2],explanation:'Ruang sampel dua uang logam = {AA, AG, GA, GG}. (A, A, G) milik tiga uang logam.'},
+    {id:'pk2',type:'pk',level:'Mudah',num:2,text:'Pernyataan yang benar tentang nilai peluang: (Pilih semua yang benar!)',options:['Peluang kejadian mustahil = 0','Peluang kejadian pasti = 1','Untuk setiap kejadian A berlaku 0 ≤ P(A) ≤ 1','Suatu kejadian dapat memiliki peluang 1,5'],answers:[0,1,2],explanation:'Nilai peluang selalu antara 0 dan 1; 1,5 tidak mungkin.'},
+    {id:'pk3',type:'pk',level:'Sedang',num:3,text:'Pada pelemparan dua dadu, kejadian yang berpeluang 1/6 adalah: (Pilih semua yang benar!)',options:['Mata dadu berjumlah 7','Mata dadu I sama dengan mata dadu II','Mata dadu berjumlah 10','Mata dadu berjumlah 5'],answers:[0,1],explanation:'Jumlah 7 = 6 titik → 6/36 = 1/6; kembar = 6 titik → 1/6. Jumlah 10 = 3/36; jumlah 5 = 4/36.'},
+    {id:'pk4',type:'pk',level:'Sedang',num:4,text:'Jika A dan B kejadian saling lepas, maka: (Pilih semua yang benar!)',options:['P(A ∪ B) = P(A) + P(B)','A dan B tidak dapat terjadi bersamaan','P(A ∩ B) = 0','P(A ∪ B) = P(A) × P(B)'],answers:[0,1,2],explanation:'Perkalian P(A) × P(B) berlaku untuk kejadian saling bebas pada kejadian “A dan B”, bukan gabungan saling lepas.'},
+    {id:'pk5',type:'pk',level:'Sedang',num:5,text:'Sebuah dadu dan sebuah uang logam dilempar bersama. Pernyataan yang benar: (Pilih semua yang benar!)',options:['n(S) = 12','P(dadu ganjil dan uang gambar) = 1/4','P(dadu prima dan uang angka) = 1/4','P(dadu mata 3 dan uang angka) = 1/6'],answers:[0,1,2],explanation:'P(dadu 3 dan angka) = 1/6 × 1/2 = 1/12, bukan 1/6. Tiga pernyataan lain benar.'}
+  ],
+  bs: [
+    {id:'bs1',type:'bs',level:'Mudah',num:1,text:'Titik sampel adalah himpunan semua kejadian yang mungkin terjadi.',answer:'S',explanation:'Salah — itu definisi ruang sampel. Titik sampel adalah setiap anggota ruang sampel.'},
+    {id:'bs2',type:'bs',level:'Mudah',num:2,text:'Frekuensi relatif muncul suatu kejadian = banyak muncul kejadian dibagi banyak percobaan.',answer:'B',explanation:'Benar, sesuai definisi frekuensi relatif.'},
+    {id:'bs3',type:'bs',level:'Mudah',num:3,text:'P(A) + P(bukan A) = 1.',answer:'B',explanation:'Benar, itulah sifat komplemen suatu kejadian.'},
+    {id:'bs4',type:'bs',level:'Sedang',num:4,text:'Untuk dua kejadian saling bebas, P(A dan B) = P(A) + P(B).',answer:'S',explanation:'Salah — kejadian saling bebas “A dan B” dikalikan: P(A) × P(B).'},
+    {id:'bs5',type:'bs',level:'Mudah',num:5,text:'Frekuensi harapan kejadian A dihitung dengan Fh(A) = P(A) × N.',answer:'B',explanation:'Benar, N adalah banyak percobaan.'}
+  ],
+  jd: [
+    {id:'jd1',type:'jd',level:'Mudah',num:1,
+     pairs:[{l:'Ruang sampel',r:'Himpunan semua kejadian yang mungkin terjadi'},
+            {l:'Titik sampel',r:'Setiap anggota ruang sampel'},
+            {l:'Frekuensi relatif',r:'Banyak muncul kejadian ÷ banyak percobaan'},
+            {l:'Komplemen kejadian A',r:'1 − P(A)'},
+            {l:'Frekuensi harapan',r:'P(A) × N'}],
+     options:['P(A) × N','Himpunan semua kejadian yang mungkin terjadi','1 − P(A)','Setiap anggota ruang sampel','Banyak muncul kejadian ÷ banyak percobaan'],
+     answers:[1,3,4,2,0],
+     explanation:'Ruang sampel = semua kemungkinan; titik sampel = anggotanya; frekuensi relatif = perbandingan kemunculan; komplemen = 1 − P(A); frekuensi harapan = P(A) × N.'},
+    {id:'jd2',type:'jd',level:'Sedang',num:2,
+     pairs:[{l:'P(kartu As dari kartu bridge)',r:'1/13'},
+            {l:'P(mata prima pada satu dadu)',r:'1/2'},
+            {l:'P(ketiganya gambar pada 3 uang logam)',r:'1/8'},
+            {l:'P(jumlah 7 pada dua dadu)',r:'1/6'},
+            {l:'P(huruf M dari kata MATEMATIKA)',r:'1/5'}],
+     options:['1/8','1/5','1/2','1/13','1/6'],
+     answers:[3,2,0,4,1],
+     explanation:'As = 4/52 = 1/13; prima = 3/6 = 1/2; GGG = 1/8; jumlah 7 = 6/36 = 1/6; huruf M = 2/10 = 1/5.'},
+    {id:'jd3',type:'jd',level:'Sedang',num:3,
+     pairs:[{l:'Kejadian saling lepas',r:'P(A ∪ B) = P(A) + P(B)'},
+            {l:'Kejadian tidak saling lepas',r:'P(A ∪ B) = P(A) + P(B) − P(A ∩ B)'},
+            {l:'Kejadian saling bebas A dan B',r:'P(A ∩ B) = P(A) × P(B)'},
+            {l:'Kejadian mustahil',r:'P = 0'},
+            {l:'Kejadian pasti',r:'P = 1'}],
+     options:['P = 0','P(A ∪ B) = P(A) + P(B)','P(A ∩ B) = P(A) × P(B)','P = 1','P(A ∪ B) = P(A) + P(B) − P(A ∩ B)'],
+     answers:[1,4,2,0,3],
+     explanation:'Saling lepas dijumlah; tidak saling lepas dikurangi irisannya; saling bebas dikalikan; mustahil = 0; pasti = 1.'},
+    {id:'jd4',type:'jd',level:'Sedang',num:4,
+     pairs:[{l:'Frekuensi harapan angka pada 20 lemparan uang logam',r:'10 kali'},
+            {l:'Pelamar tidak diterima dari 5.000 pelamar, P(diterima) = 0,21',r:'3.950 orang'},
+            {l:'Bibit tidak tumbuh dari 2.000 bibit, P(tumbuh) = 0,95',r:'100 bibit'},
+            {l:'Sopir kecelakaan dari 500 sopir, P = 0,09',r:'45 orang'},
+            {l:'Peluang tidak hujan jika P(hujan) = 0,221',r:'0,779'}],
+     options:['45 orang','0,779','10 kali','3.950 orang','100 bibit'],
+     answers:[2,3,4,0,1],
+     explanation:'1/2 × 20 = 10; 0,79 × 5.000 = 3.950; 0,05 × 2.000 = 100; 0,09 × 500 = 45; 1 − 0,221 = 0,779.'},
+    {id:'jd5',type:'jd',level:'Mudah',num:5,
+     pairs:[{l:'Ruang sampel 2 uang logam',r:'4'},
+            {l:'Ruang sampel 3 uang logam',r:'8'},
+            {l:'Ruang sampel 1 dadu',r:'6'},
+            {l:'Ruang sampel 2 dadu',r:'36'},
+            {l:'Ruang sampel 1 dadu + 1 uang logam',r:'12'}],
+     options:['6','36','4','12','8'],
+     answers:[2,4,0,1,3],
+     explanation:'2 uang logam = 2² = 4; 3 uang logam = 2³ = 8; 1 dadu = 6; 2 dadu = 6 × 6 = 36; dadu + uang logam = 6 × 2 = 12.'}
+  ]
+};
+
+var TYPES = [
+  {k:'pg',short:'PG',label:'Pilihan Ganda'},
+  {k:'is',short:'ISIAN',label:'Isian Singkat'},
+  {k:'pk',short:'PG KOMPLEKS',label:'PG Kompleks'},
+  {k:'bs',short:'B/S',label:'Benar/Salah'},
+  {k:'jd',short:'JODOH',label:'Menjodohkan'}
+];
+var curType = 'pg';
+var STATE = freshState();
+function freshState(){ return {pg:{},is:{},pk:{},bs:{},jd:{}}; }
+function el(id){ return document.getElementById(id); }
+function findQ(id){
+  var all = BANK.pg.concat(BANK.is, BANK.pk, BANK.bs, BANK.jd);
+  for(var i=0;i<all.length;i++){ if(all[i].id===id) return all[i]; }
+  return null;
+}
+function typeLabel(t){ for(var i=0;i<TYPES.length;i++){ if(TYPES[i].k===t) return TYPES[i].label; } return t; }
+function normStr(s){ s = String(s).trim().toLowerCase(); return s.split(' ').join(''); }
+function sameSet(a,b){
+  if(a.length!==b.length) return false;
+  var sa = a.slice().sort(function(x,y){return x-y;}).join(',');
+  var sb = b.slice().sort(function(x,y){return x-y;}).join(',');
+  return sa===sb;
+}
+
+function showType(t){
+  curType = t;
+  var btns = document.querySelectorAll('.type-btn');
+  for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active', btns[i].getAttribute('data-type')===t); }
+  renderQuestions(t);
+}
+function renderQuestions(t){
+  var html = '';
+  for(var i=0;i<BANK[t].length;i++){ html += renderCard(BANK[t][i]); }
+  el('quiz-area').innerHTML = html;
+  typesetMath();
+}
+function renderCard(q){
+  var meta = '<div class="qmeta">'+typeLabel(q.type)+' · Soal '+q.num+' · Level '+q.level+'</div>';
+  var head = '<div class="qcard" id="card-'+q.id+'">'+meta+'<p class="qtext">'+q.text+'</p>';
+  var body = '';
+  if(q.type==='pg'){
+    body += '<div>';
+    for(var i=0;i<q.options.length;i++){
+      body += '<button class="opt" onclick="answerPG(\''+q.id+'\','+i+',this)">'+String.fromCharCode(65+i)+'. '+q.options[i]+'</button>';
+    }
+    body += '</div>';
+  } else if(q.type==='is'){
+    body += '<div><input class="is-input" id="isin-'+q.id+'" placeholder="Jawaban kamu..."> '+
+            '<button class="btn-small" id="isbtn-'+q.id+'" onclick="submitIS(\''+q.id+'\')">Periksa</button></div>';
+  } else if(q.type==='pk'){
+    body += '<div>';
+    for(var j=0;j<q.options.length;j++){
+      body += '<button class="opt pk-opt" onclick="togglePK(\''+q.id+'\','+j+',this)">☐ '+q.options[j]+'</button>';
+    }
+    body += '<button class="btn-small" onclick="submitPK(\''+q.id+'\')">Kunci Jawaban</button></div>';
+  } else if(q.type==='bs'){
+    body += '<div><button class="opt" style="display:inline-block;width:auto;margin-right:8px" onclick="answerBS(\''+q.id+'\','+"'B'"+',this)">✔ Benar</button>'+
+            '<button class="opt" style="display:inline-block;width:auto" onclick="answerBS(\''+q.id+'\','+"'S'"+',this)">✘ Salah</button></div>';
+  } else if(q.type==='jd'){
+    body += '<div>';
+    for(var r=0;r<q.pairs.length;r++){
+      body += '<div class="jd-row"><div class="jd-left">'+q.pairs[r].l+'</div><select id="jdsel-'+q.id+'-'+r+'"><option value="-1">— pilih pasangan —</option>';
+      for(var o=0;o<q.options.length;o++){ body += '<option value="'+o+'">'+q.options[o]+'</option>'; }
+      body += '</select></div>';
+    }
+    body += '<button class="btn-small" onclick="submitJD(\''+q.id+'\')">Periksa Semua</button></div>';
+  }
+  var fb = '<div class="explain" id="fb-'+q.id+'"></div>';
+  return head+body+fb+'</div>';
+}
+function showExplain(id, correct){
+  var q = findQ(id);
+  var box = el('fb-'+id);
+  box.innerHTML = (correct ? '✅ <b>Benar!</b> ' : '❌ <b>Belum tepat.</b> ') + q.explanation;
+  box.classList.add('show');
+  typesetMath();
+}
+function answerPG(id, idx, btn){
+  if(STATE.pg[id]) return;
+  var q = findQ(id);
+  var correct = (idx === q.answer);
+  STATE.pg[id] = {sel:idx, correct:correct};
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++){ opts[i].disabled = true; }
+  opts[q.answer].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+function submitIS(id){
+  if(STATE.is[id]) return;
+  var q = findQ(id);
+  var inp = el('isin-'+id);
+  var val = inp.value;
+  var ok = false;
+  if(normStr(val) === normStr(q.answer)) ok = true;
+  if(!ok && q.accept){ for(var i=0;i<q.accept.length;i++){ if(normStr(val)===normStr(q.accept[i])) ok = true; } }
+  if(!ok && !isNaN(parseFloat(q.answer)) && isFinite(parseFloat(val)) && Math.abs(parseFloat(val)-parseFloat(q.answer)) < 1e-9) ok = true;
+  STATE.is[id] = {val:val, correct:ok};
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  inp.disabled = true;
+  el('isbtn-'+id).disabled = true;
+  showExplain(id, ok);
+  updateScoreStrip();
+}
+function togglePK(id, idx, btn){
+  if(STATE.pk[id] && STATE.pk[id].done) return;
+  btn.classList.toggle('sel');
+  btn.innerHTML = (btn.classList.contains('sel') ? '☑ ' : '☐ ') + findQ(id).options[idx];
+}
+function submitPK(id){
+  if(STATE.pk[id] && STATE.pk[id].done) return;
+  var q = findQ(id);
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.pk-opt');
+  var sel = [];
+  for(var i=0;i<opts.length;i++){ if(opts[i].classList.contains('sel')) sel.push(i); }
+  var correct = sameSet(sel, q.answers);
+  STATE.pk[id] = {sel:sel, correct:correct, done:true};
+  for(var j=0;j<opts.length;j++){
+    var inAns = q.answers.indexOf(j) >= 0;
+    var inSel = sel.indexOf(j) >= 0;
+    if(inAns) opts[j].classList.add('correct');
+    else if(inSel) opts[j].classList.add('wrong');
+    opts[j].disabled = true;
+  }
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+function answerBS(id, val, btn){
+  if(STATE.bs[id]) return;
+  var q = findQ(id);
+  var correct = (val === q.answer);
+  STATE.bs[id] = {sel:val, correct:correct};
+  var card = el('card-'+id);
+  var opts = card.querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++){ opts[i].disabled = true; }
+  var correctIdx = (q.answer === 'B') ? 0 : 1;
+  opts[correctIdx].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  showExplain(id, correct);
+  updateScoreStrip();
+}
+function submitJD(id){
+  if(STATE.jd[id] && STATE.jd[id].done) return;
+  var q = findQ(id);
+  var allOk = true;
+  var picks = [];
+  for(var r=0;r<q.pairs.length;r++){
+    var s = el('jdsel-'+id+'-'+r);
+    var v = parseInt(s.value, 10);
+    picks.push(v);
+    var ok = (v === q.answers[r]);
+    if(!ok) allOk = false;
+    s.classList.add(ok ? 'correct' : 'wrong');
+    s.disabled = true;
+  }
+  STATE.jd[id] = {picks:picks, correct:allOk, done:true};
+  showExplain(id, allOk);
+  updateScoreStrip();
+}
+function countCorrect(t){
+  var n = 0;
+  for(var i=0;i<BANK[t].length;i++){
+    var st = STATE[t][BANK[t][i].id];
+    if(st && st.correct) n++;
+  }
+  return n;
+}
+function updateScoreStrip(){
+  var html = '';
+  for(var i=0;i<TYPES.length;i++){
+    var t = TYPES[i].k;
+    html += '<span class="score-chip">'+TYPES[i].short+': '+countCorrect(t)+'/'+BANK[t].length+'</span>';
+  }
+  el('score-strip').innerHTML = html;
+}
+function showAnalysis(){
+  var totalC = 0, totalN = 0;
+  var rows = '';
+  for(var i=0;i<TYPES.length;i++){
+    var t = TYPES[i].k;
+    var c = countCorrect(t);
+    var n = BANK[t].length;
+    totalC += c; totalN += n;
+    rows += '<tr><td>'+TYPES[i].label+'</td><td>'+c+' / '+n+'</td><td>'+Math.round(c/n*100)+'%</td></tr>';
+  }
+  var pct = Math.round(totalC/totalN*100);
+  var msg = pct >= 80 ? '🌟 Luar biasa! Kamu siap menaklukkan soal-soal peluang tingkat lanjut.' :
+            (pct >= 60 ? '👍 Bagus! Telaah lagi pembahasan soal yang belum tepat.' :
+            '💪 Semangat! Baca kembali bagian materi, lalu coba ulangi latihan ini.');
+  var box = el('analysis');
+  box.innerHTML = '<h3>Analisis Hasil Latihan</h3><table><tr><th>Tipe Soal</th><th>Benar</th><th>Persentase</th></tr>'+rows+
+    '<tr><td><b>TOTAL</b></td><td><b>'+totalC+' / '+totalN+'</b></td><td><b>'+pct+'%</b></td></tr></table><div class="msg">'+msg+'</div>';
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function resetAll(){
+  STATE = freshState();
+  el('analysis').classList.remove('show');
+  renderQuestions(curType);
+  updateScoreStrip();
+}
+
+/* ===== Kalkulator ===== */
+function hitungPeluang(){
+  var na = parseFloat(el('calc-na').value) || 0;
+  var ns = parseFloat(el('calc-ns').value) || 0;
+  var out = el('res-peluang');
+  if(ns <= 0){ out.innerHTML = 'n(S) harus lebih dari 0.'; return; }
+  if(na < 0 || na > ns){ out.innerHTML = 'n(A) harus antara 0 dan n(S).'; return; }
+  var p = na / ns;
+  out.innerHTML = 'P(A) = ' + na + '/' + ns + ' = <b>' + (Math.round(p*1000)/1000) + '</b> (' + (Math.round(p*1000)/10) + '%)<br>' +
+                  'P(bukan A) = 1 − P(A) = <b>' + (Math.round((1-p)*1000)/1000) + '</b>';
+}
+function hitungFh(){
+  var num = parseFloat(el('fh-num').value) || 0;
+  var den = parseFloat(el('fh-den').value) || 0;
+  var N = parseFloat(el('fh-N').value) || 0;
+  var out = el('res-fh');
+  if(den <= 0){ out.innerHTML = 'Penyebut peluang harus lebih dari 0.'; return; }
+  var p = num / den;
+  var fh = p * N;
+  out.innerHTML = 'P(A) = ' + num + '/' + den + ' = ' + (Math.round(p*1000)/1000) + ' · Fh = P × N = ' + (Math.round(p*1000)/1000) + ' × ' + N + ' = <b>' + (Math.round(fh*100)/100) + ' kali</b>';
+}
+function hitungMajemuk(){
+  var pa = parseFloat(el('m-pa').value) || 0;
+  var pb = parseFloat(el('m-pb').value) || 0;
+  var pab = parseFloat(el('m-pab').value) || 0;
+  var out = el('res-majemuk');
+  if(pa < 0 || pb < 0 || pa > 1 || pb > 1 || pab < 0 || pab > 1){ out.innerHTML = 'Semua nilai peluang harus antara 0 dan 1.'; return; }
+  var union = pa + pb - pab;
+  out.innerHTML = 'P(A ∪ B) = P(A) + P(B) − P(A ∩ B) = ' + pa + ' + ' + pb + ' − ' + pab + ' = <b>' + (Math.round(union*1000)/1000) + '</b><br>' +
+                  'Jika A, B saling bebas: P(A ∩ B) = P(A) × P(B) = <b>' + (Math.round(pa*pb*1000)/1000) + '</b>';
+}
+
+/* ===== Build visual: grid dadu (pasangan titik sampel) & grid frekuensi harapan ===== */
+var DICE_CELLS = [];
+function buildDiceGrid(){
+  var box = el('dice-grid');
+  var html = '';
+  var d = 0;
+  DICE_CELLS = [];
+  for(var i=1;i<=6;i++){
+    for(var j=1;j<=6;j++){
+      var s = i + j;
+      DICE_CELLS.push({i:i, j:j, sum:s});
+      html += '<div class="dcell" style="transition-delay:'+(d*0.02).toFixed(2)+'s" data-idx="'+d+'" title="Titik sampel ('+i+', '+j+') — jumlah '+s+'">('+i+', '+j+')</div>';
+      d++;
+    }
+  }
+  box.innerHTML = html;
+}
+function highlightGrid(mode){
+  var cells = document.querySelectorAll('.dcell');
+  var primes = [2,3,5,7,11];
+  for(var k=0;k<cells.length;k++){
+    var item = DICE_CELLS[k];
+    var on = false;
+    if(mode === 'sum7') on = (item.sum === 7);
+    else if(mode === 'same') on = (item.i === item.j);
+    else if(mode === 'prime') on = (primes.indexOf(item.sum) >= 0);
+    cells[k].classList.toggle('hl', on);
+  }
+}
+function buildFhGrid(){
+  var box = el('fh-grid');
+  var html = '';
+  for(var i=0;i<20;i++){
+    html += '<div class="fcoin'+(i < 10 ? ' hl' : '')+'" style="transition-delay:'+(i*0.06).toFixed(2)+'s">A</div>';
+  }
+  box.innerHTML = html;
+}
+
+/* ===== Scrollspy, progress, sidebar mobile ===== */
+var SEC_IDS = ['a-peluang','a1-kejadian','a2-ruangsampel','b-kisaran','b1-majemuk','b2-batas','b3-komplemen','c-fharapan','d-dua','d1-atau','d2-dan','latihan'];
+function onScroll(){
+  var doc = document.documentElement;
+  var max = doc.scrollHeight - window.innerHeight;
+  var p = max > 0 ? (window.scrollY / max) * 100 : 0;
+  el('progress-bar').style.width = p + '%';
+  var cur = SEC_IDS[0];
+  for(var i=0;i<SEC_IDS.length;i++){
+    var s = el(SEC_IDS[i]);
+    if(s && s.getBoundingClientRect().top <= 140) cur = SEC_IDS[i];
+  }
+  var links = document.querySelectorAll('#side-nav a[data-sec]');
+  for(var j=0;j<links.length;j++){
+    links[j].classList.toggle('active', links[j].getAttribute('data-sec') === cur);
+  }
+}
+function openSidebar(){ el('sidebar').classList.add('open'); el('overlay').classList.add('show'); }
+function closeSidebar(){ el('sidebar').classList.remove('open'); el('overlay').classList.remove('show'); }
+function initObservers(){
+  if(!('IntersectionObserver' in window)){
+    var all = document.querySelectorAll('.anim,.fade');
+    for(var i=0;i<all.length;i++) all[i].classList.add('inview');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('inview'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.2});
+  var nodes = document.querySelectorAll('.anim,.fade');
+  for(var j=0;j<nodes.length;j++) io.observe(nodes[j]);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  buildDiceGrid();
+  buildFhGrid();
+  initObservers();
+  renderQuestions('pg');
+  updateScoreStrip();
+  onScroll();
+  typesetMath();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  el('menu-toggle').addEventListener('click', openSidebar);
+  el('overlay').addEventListener('click', closeSidebar);
+  el('side-nav').addEventListener('click', function(e){
+    if(e.target.closest('a')) closeSidebar();
+  });
+  document.documentElement.style.scrollBehavior = 'smooth';
+});
+</script>
+</body>
+</html>
