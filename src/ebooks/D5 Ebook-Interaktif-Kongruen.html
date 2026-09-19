@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kongruen — Matematika Kelas 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  let mathJaxReady = false;
+  let pendingTypeset = [];
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready: function(){
+        MathJax.startup.defaultReady();
+        mathJaxReady = true;
+        pendingTypeset.forEach(function(fn){ fn(); });
+        pendingTypeset = [];
+      }
+    }
+  };
+  function typesetMath(){
+    if(mathJaxReady && window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(err){ console.error('MathJax error:', err); });
+    } else {
+      pendingTypeset.push(typesetMath);
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --ink:#141a2e; --ink2:#1c2340; --ink3:#2a3358; --ink-border:#3a4470;
+  --cream:#f3ecd9; --cream-dim:#c9c2ab; --gold:#e0a94d; --gold-soft:#f1cd8a; --gold-title:#ffd873;
+  --paper:#fbf6ea; --paper2:#f4ecd8; --paper-line:#e3d7b8; --text-dark:#2b2416; --text-mid:#5b5137;
+  --def:#eef4ea; --def-b:#7fae6b; --note:#fdf0df; --note-b:#d99a45; --warn:#fbeaea; --warn-b:#c1584f;
+  --correct:#dff0da; --correct-b:#4f9a4f; --wrong:#fbe1df; --wrong-b:#c1584f;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; font-family:'Source Serif 4', serif; background:var(--paper); color:var(--text-dark);}
+h1,h2,h3,h4{font-family:'Playfair Display', serif; color:var(--text-dark); margin:0 0 .5em;}
+.mono{font-family:'JetBrains Mono', monospace;}
+a{color:inherit;}
+
+.layout{display:flex; min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  width:290px; flex-shrink:0; background:linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+  color:var(--cream); position:sticky; top:0; height:100vh; overflow-y:auto; padding:22px 18px;
+  border-right:1px solid var(--ink-border); z-index:50;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--ink-border); border-radius:4px;}
+.side-label{font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.14em; color:var(--gold-soft); text-transform:uppercase;}
+.side-title{font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:800; color:var(--gold-title); margin:.25em 0 1.1em; line-height:1.2;}
+.progress-wrap{background:var(--ink3); border-radius:8px; height:8px; overflow:hidden; margin-bottom:1.4em; border:1px solid var(--ink-border);}
+#progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); transition:width .3s ease;}
+.nav-heading{font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cream-dim); margin:1.3em 0 .5em; padding-left:4px;}
+.nav-link{display:block; padding:8px 10px; border-radius:8px; color:var(--cream); text-decoration:none; font-size:.92rem; margin-bottom:2px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-link:hover{background:var(--ink3);}
+.nav-link.active{background:var(--ink3); border-left:3px solid var(--gold); color:var(--gold-soft); font-weight:600;}
+.nav-sub{display:block; padding:6px 10px 6px 22px; border-radius:8px; color:var(--cream-dim); text-decoration:none; font-size:.84rem; margin-bottom:1px; transition:.18s ease; border-left:3px solid transparent;}
+.nav-sub:hover{background:var(--ink3); color:var(--cream);}
+
+/* CONTENT */
+#content{flex:1; min-width:0;}
+.hero{
+  background:linear-gradient(135deg, var(--ink) 0%, var(--ink3) 100%); color:var(--cream);
+  padding:70px 60px 60px; position:relative; overflow:hidden;
+}
+.hero::after{content:"≅"; position:absolute; right:40px; top:20px; font-size:180px; color:rgba(224,169,77,.08);}
+.hero .side-label{color:var(--gold-soft);}
+.hero h1{color:var(--gold-title); font-size:2.6rem; margin:.2em 0 .3em; max-width:680px;}
+.hero p{max-width:640px; color:var(--cream-dim); font-size:1.05rem; line-height:1.6;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:1.4em;}
+.chip{background:rgba(224,169,77,.14); border:1px solid var(--gold); color:var(--gold-soft); padding:6px 14px; border-radius:20px; font-size:.82rem; font-family:'JetBrains Mono',monospace;}
+
+section.materi{padding:50px 60px; border-bottom:1px solid var(--paper-line);}
+section.materi .kicker{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;}
+section.materi h2{font-size:2rem; margin-top:.2em;}
+section.materi h3{font-size:1.3rem; color:var(--text-dark); margin-top:1.6em; border-bottom:2px solid var(--paper-line); padding-bottom:.3em;}
+section.materi h4{font-size:1.08rem; color:var(--text-dark); margin-top:1.2em;}
+section.materi p, section.materi li{color:var(--text-mid); line-height:1.75; font-size:1.02rem;}
+section.materi ul, section.materi ol{padding-left:1.4em;}
+
+.callout{border-radius:10px; padding:16px 20px; margin:1.2em 0; border-left:5px solid; line-height:1.7;}
+.callout.def{background:var(--def); border-color:var(--def-b);}
+.callout.note{background:var(--note); border-color:var(--note-b);}
+.callout.warn{background:var(--warn); border-color:var(--warn-b);}
+.callout .lbl{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:.4em;}
+
+.example-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:12px; padding:20px 24px; margin:1.2em 0;}
+.example-box .lbl{font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em; display:block;}
+.example-box .step{margin:.4em 0; padding-left:1em; border-left:3px solid var(--paper-line);}
+
+.formula-box{background:var(--ink); color:var(--cream); border-radius:12px; padding:20px 26px; margin:1.2em 0; text-align:center; font-size:1.15rem;}
+.formula-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold-soft); font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5em;}
+
+.figure-box{background:var(--paper2); border:1px solid var(--paper-line); border-radius:14px; padding:18px 20px 14px; margin:1.2em 0; text-align:center;}
+.figure-box .lbl{display:block; font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.6em;}
+.figure-box svg{max-width:100%; height:auto;}
+.figure-box .caption{margin-top:.6em; font-size:.9rem; color:var(--text-mid); font-style:italic;}
+.fsvg-shape{fill:rgba(224,169,77,.16); stroke:var(--ink); stroke-width:2.2;}
+.fsvg-label{font-family:'JetBrains Mono', monospace; font-size:14px; fill:var(--text-dark); font-weight:700;}
+.fsvg-point{fill:var(--ink);}
+.fsvg-right{fill:none; stroke:var(--ink); stroke-width:1.6;}
+.fsvg-angle{fill:none; stroke:#c1584f; stroke-width:1.8;}
+.fsvg-hi{stroke:var(--gold); stroke-width:3.4; stroke-linecap:round;}
+.fsvg-side-b{stroke:#2f6fb0; stroke-width:3.6; stroke-linecap:round;}
+.fsvg-dash{stroke:#3a6ea5; stroke-width:1.6; stroke-dasharray:5,4;}
+
+.figure-triple{display:flex; gap:16px; flex-wrap:wrap; justify-content:center;}
+.figure-item{flex:1; min-width:170px; max-width:210px; background:var(--paper); border:1px solid var(--paper-line); border-radius:10px; padding:10px 12px 14px;}
+.figure-item svg{width:100%; height:auto;}
+.figure-item-title{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.82rem; color:var(--text-dark); margin-top:.4em;}
+.figure-item-desc{font-size:.84rem; color:var(--text-mid); margin-top:.2em; line-height:1.5;}
+
+table.tbl{width:100%; border-collapse:collapse; margin:1.2em 0; background:var(--paper); border-radius:10px; overflow:hidden; border:1px solid var(--paper-line);}
+table.tbl th, table.tbl td{border:1px solid var(--paper-line); text-align:center; padding:10px 8px; vertical-align:middle;}
+table.tbl th{background:var(--ink); color:var(--gold-soft); font-family:'JetBrains Mono',monospace; font-size:.78rem; text-transform:uppercase; letter-spacing:.05em;}
+
+.calc-box{background:var(--ink2); color:var(--cream); border-radius:14px; padding:22px 26px; margin:1.6em 0; border:1px solid var(--ink-border);}
+.calc-box h4{color:var(--gold-title); margin-bottom:.7em;}
+.calc-row{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin-bottom:12px;}
+.calc-field{display:flex; flex-direction:column; gap:4px;}
+.calc-field label{font-family:'JetBrains Mono',monospace; font-size:.75rem; color:var(--cream-dim);}
+.calc-field input, .calc-field select{background:var(--ink3); border:1px solid var(--ink-border); color:var(--cream); padding:8px 10px; border-radius:8px; width:110px; font-family:'JetBrains Mono',monospace;}
+.calc-box button{background:var(--gold); color:var(--ink); border:none; padding:9px 20px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.calc-box button:hover{background:var(--gold-soft); transform:translateY(-1px);}
+.calc-result{margin-top:10px; padding:12px 16px; background:var(--ink3); border-radius:8px; font-family:'JetBrains Mono',monospace; min-height:1.2em; line-height:1.6;}
+.calc-sub{font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--cream-dim); margin:.6em 0 .2em; text-transform:uppercase; letter-spacing:.08em;}
+
+/* LATIHAN */
+#latihan{padding:50px 60px 90px;}
+.type-tabs{display:flex; flex-wrap:wrap; gap:10px; margin:1.4em 0 1.8em;}
+.type-tab{background:var(--paper2); border:1px solid var(--paper-line); color:var(--text-mid); padding:9px 18px; border-radius:24px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:.82rem; transition:.15s ease;}
+.type-tab:hover{border-color:var(--gold);}
+.type-tab.active{background:var(--ink); color:var(--gold-soft); border-color:var(--ink);}
+
+.score-strip{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:1.6em;}
+.score-chip{background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:8px 14px; font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text-mid);}
+
+.question-card{background:#fff; border:1px solid var(--paper-line); border-radius:14px; padding:22px 26px; margin-bottom:20px; box-shadow:0 2px 10px rgba(43,36,22,.05); animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
+.question-card.correct{border-color:var(--correct-b); background:var(--correct);}
+.question-card.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+.q-head{display:flex; align-items:center; gap:10px; margin-bottom:.8em;}
+.q-num{width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:.85rem; flex-shrink:0;}
+.level-badge{font-family:'JetBrains Mono',monospace; font-size:.68rem; text-transform:uppercase; padding:3px 10px; border-radius:12px; letter-spacing:.05em;}
+.level-mudah{background:#dff0da; color:#2e6b2e;}
+.level-sedang{background:#fdf0df; color:#95651c;}
+.level-sukar{background:#fbe1df; color:#9a3a32;}
+.q-text{font-size:1.04rem; color:var(--text-dark); margin-bottom:1em; line-height:1.6;}
+
+.opt-btn{display:block; width:100%; text-align:left; background:var(--paper2); border:1px solid var(--paper-line); border-radius:10px; padding:11px 16px; margin-bottom:8px; cursor:pointer; font-family:'Source Serif 4',serif; font-size:.98rem; color:var(--text-dark); transition:.15s ease;}
+.opt-btn:hover{border-color:var(--gold); transform:translateX(3px);}
+.opt-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.opt-btn.reveal-correct{background:var(--correct); border-color:var(--correct-b);}
+.opt-btn:disabled{cursor:default;}
+
+.bs-row{display:flex; gap:12px;}
+.bs-btn{flex:1; padding:12px; border-radius:10px; border:1px solid var(--paper-line); background:var(--paper2); cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; transition:.15s ease;}
+.bs-btn:hover{border-color:var(--gold);}
+.bs-btn.selected-correct{background:var(--correct); border-color:var(--correct-b);}
+.bs-btn.selected-wrong{background:var(--wrong); border-color:var(--wrong-b);}
+.bs-btn:disabled{cursor:default;}
+
+.is-row{display:flex; gap:10px; flex-wrap:wrap;}
+.is-row input{flex:1; min-width:180px; padding:11px 14px; border-radius:10px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif; font-size:1rem;}
+.is-row button{background:var(--ink); color:var(--gold-soft); border:none; padding:11px 20px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600;}
+.is-row button:hover{background:var(--ink3);}
+
+.pk-confirm{background:var(--ink); color:var(--gold-soft); border:none; padding:10px 22px; border-radius:10px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:600; margin-top:6px;}
+.pk-confirm:hover{background:var(--ink3);}
+.opt-btn.pk-on{background:var(--gold-soft); border-color:var(--gold);}
+
+.jd-row{display:flex; align-items:center; gap:14px; margin-bottom:6px;}
+.jd-left{flex:1; background:var(--paper2); padding:10px 14px; border-radius:8px; font-weight:600;}
+.jd-row select{flex:1; padding:10px 12px; border-radius:8px; border:1px solid var(--paper-line); font-family:'Source Serif 4',serif;}
+.jd-row select.correct{border-color:var(--correct-b); background:var(--correct);}
+.jd-row select.wrong{border-color:var(--wrong-b); background:var(--wrong);}
+
+.explanation{margin-top:14px; padding:14px 18px; background:var(--note); border-left:4px solid var(--note-b); border-radius:8px; font-size:.94rem; line-height:1.65; display:none;}
+.explanation.show{display:block;}
+
+.analysis-panel{display:none; background:var(--ink); color:var(--cream); border-radius:16px; padding:30px 34px; margin-top:20px;}
+.analysis-panel.show{display:block;}
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:1.2em 0;}
+.stat-box{background:var(--ink3); border-radius:10px; padding:16px; text-align:center;}
+.stat-box .num{font-family:'JetBrains Mono',monospace; font-size:1.6rem; color:var(--gold-title); font-weight:700;}
+.stat-box .lbl{font-size:.75rem; color:var(--cream-dim); text-transform:uppercase; letter-spacing:.06em; font-family:'JetBrains Mono',monospace;}
+.bar-row{display:flex; align-items:center; gap:10px; margin:8px 0;}
+.bar-row .name{width:150px; font-family:'JetBrains Mono',monospace; font-size:.82rem;}
+.bar-track{flex:1; background:var(--ink3); border-radius:6px; height:14px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); transition:width .8s cubic-bezier(.4,0,.2,1); width:0%;}
+.grade-box{text-align:center; margin:1.4em 0; padding:20px; border-radius:14px; background:linear-gradient(135deg, var(--ink3), var(--ink2)); border:2px solid var(--gold);}
+.grade-box .grade{font-family:'Playfair Display',serif; font-size:3rem; color:var(--gold-title); font-weight:800;}
+#reset-btn{background:var(--gold); color:var(--ink); border:none; padding:11px 26px; border-radius:10px; cursor:pointer; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:10px;}
+#reset-btn:hover{background:var(--gold-soft);}
+
+footer{background:var(--ink); color:var(--cream-dim); padding:34px 60px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:.85rem;}
+footer .credit{color:var(--gold-soft);}
+
+#mobile-toggle{display:none; position:fixed; top:14px; left:14px; z-index:100; background:var(--ink); color:var(--gold); border:none; width:44px; height:44px; border-radius:10px; font-size:1.2rem; cursor:pointer;}
+#overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40;}
+
+@media (max-width:900px){
+  #sidebar{position:fixed; left:0; top:0; height:100vh; transform:translateX(-100%); transition:transform .25s ease; width:270px;}
+  #sidebar.open{transform:translateX(0);}
+  #mobile-toggle{display:block;}
+  #overlay.show{display:block;}
+  .hero{padding:80px 22px 40px;}
+  section.materi{padding:34px 20px;}
+  #latihan{padding:34px 20px 60px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:26px 20px;}
+  .figure-triple{flex-direction:column; align-items:center;}
+  .figure-item{max-width:280px; width:100%;}
+  .calc-row{gap:10px;}
+}
+</style>
+</head>
+<body>
+<button id="mobile-toggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+  <nav id="sidebar">
+    <div class="side-label">Matematika · Kelas 9</div>
+    <div class="side-title">Kongruen</div>
+    <div class="progress-wrap"><div id="progress-bar"></div></div>
+
+    <div class="nav-heading">Materi</div>
+    <a class="nav-link" data-target="materi-a" href="#materi-a">A. Kongruen Bangun Datar</a>
+    <a class="nav-link" data-target="materi-b" href="#materi-b">B. Kongruen Dua Segitiga</a>
+
+    <div class="nav-heading">Latihan</div>
+    <a class="nav-link" data-target="latihan" href="#latihan">Latihan Soal</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pg')">1. Pilihan Ganda</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('is')">2. Isian Singkat</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('pk')">3. PG Kompleks</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('bs')">4. Benar/Salah</a>
+    <a class="nav-sub" href="#latihan" onclick="showType('jd')">5. Menjodohkan</a>
+  </nav>
+
+  <div id="content">
+    <header class="hero">
+      <div class="side-label">Modul Pembelajaran Digital</div>
+      <h1>Kongruen</h1>
+      <p>Mempelajari konsep kongruensi — mulai dari syarat dua bangun datar dikatakan kongruen, notasi kongruensi, hingga lima kriteria kongruensi dua segitiga (sisi‑sisi‑sisi, sisi‑sudut‑sisi, sudut‑sisi‑sudut, sudut‑sudut‑sisi, dan sisi miring‑sisi siku) lengkap dengan contoh pembuktian, animasi, dan 25 soal latihan interaktif.</p>
+      <div class="chip-row">
+        <span class="chip">A. Kongruen Bangun Datar</span>
+        <span class="chip">B. Kongruen Dua Segitiga</span>
+        <span class="chip">5 Kriteria Kongruensi</span>
+        <span class="chip">25 Soal Latihan</span>
+      </div>
+    </header>
+
+    <!-- ===================== A. KONGRUEN BANGUN DATAR ===================== -->
+    <section class="materi" id="materi-a">
+      <div class="kicker">Bagian A</div>
+      <h2>Kongruen Bangun Datar</h2>
+      <p>Perhatikan dua bangun yang bentuk dan ukurannya persis sama — misalnya dua lembar foto cetak dari negatif yang sama, atau dua ubin keramik dari cetakan yang sama. Dua bangun seperti ini disebut <strong>kongruen</strong>.</p>
+
+      <div class="callout def">
+        <span class="lbl">Definisi</span>
+        <p>Dua bangun yang mempunyai bentuk dan ukuran yang sama disebut <strong>kongruen</strong>.</p>
+      </div>
+
+      <h3>Syarat Dua Poligon Kongruen</h3>
+      <p>Dua bangun segi banyak (poligon) dikatakan kongruen jika memenuhi <strong>dua syarat</strong> sekaligus, yaitu:</p>
+      <div class="callout note">
+        <span class="lbl">Syarat Kongruensi Poligon</span>
+        <ul>
+          <li>(i) Sisi‑sisi yang bersesuaian sama panjang</li>
+          <li>(ii) Sudut‑sudut yang bersesuaian sama besar</li>
+        </ul>
+        <p>Kedua syarat ini harus dipenuhi bersama‑sama — bangun yang hanya sebangun (bentuknya sama tetapi ukurannya berbeda) <strong>tidak</strong> otomatis kongruen.</p>
+      </div>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar A.1 — Bangun ABCD Kongruen dengan JKLM</span>
+        <svg viewBox="0 0 460 210" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,60 150,50 130,150 50,140" class="fsvg-shape"/>
+          <line id="ta-ab" x1="30" y1="60" x2="150" y2="50" class="fsvg-hi"/>
+          <line id="ta-bc" x1="150" y1="50" x2="130" y2="150" class="fsvg-hi"/>
+          <line id="ta-cd" x1="130" y1="150" x2="50" y2="140" class="fsvg-hi"/>
+          <line id="ta-da" x1="50" y1="140" x2="30" y2="60" class="fsvg-hi"/>
+          <circle cx="30" cy="60" r="3" class="fsvg-point"/><circle cx="150" cy="50" r="3" class="fsvg-point"/>
+          <circle cx="130" cy="150" r="3" class="fsvg-point"/><circle cx="50" cy="140" r="3" class="fsvg-point"/>
+          <text x="14" y="58" class="fsvg-label">A</text>
+          <text x="156" y="48" class="fsvg-label">B</text>
+          <text x="134" y="170" class="fsvg-label">C</text>
+          <text x="30" y="160" class="fsvg-label">D</text>
+
+          <polygon points="270,60 390,50 370,150 290,140" class="fsvg-shape"/>
+          <line id="tb-jk" x1="270" y1="60" x2="390" y2="50" class="fsvg-hi"/>
+          <line id="tb-kl" x1="390" y1="50" x2="370" y2="150" class="fsvg-hi"/>
+          <line id="tb-lm" x1="370" y1="150" x2="290" y2="140" class="fsvg-hi"/>
+          <line id="tb-mj" x1="290" y1="140" x2="270" y2="60" class="fsvg-hi"/>
+          <circle cx="270" cy="60" r="3" class="fsvg-point"/><circle cx="390" cy="50" r="3" class="fsvg-point"/>
+          <circle cx="370" cy="150" r="3" class="fsvg-point"/><circle cx="290" cy="140" r="3" class="fsvg-point"/>
+          <text x="254" y="58" class="fsvg-label">J</text>
+          <text x="396" y="48" class="fsvg-label">K</text>
+          <text x="374" y="170" class="fsvg-label">L</text>
+          <text x="270" y="160" class="fsvg-label">M</text>
+        </svg>
+        <div class="caption">ABCD dan JKLM kongruen: AB↔JK, BC↔KL, CD↔LM, DA↔MJ. Klik tombol untuk menyorot pasangan sisi yang bersesuaian satu per satu.</div>
+        <button id="anim-btn" onclick="animasiSisiBersesuaian()" style="margin-top:8px;">▶ Animasikan Sisi Bersesuaian</button>
+        <div id="anim-status" style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:.85rem; font-weight:700; color:var(--text-dark); min-height:1.3em;"></div>
+      </div>
+
+      <table class="tbl">
+        <tr><th>Sisi Bersesuaian</th><th>Hubungan</th><th>Sudut Bersesuaian</th><th>Hubungan</th></tr>
+        <tr><td>AB &amp; JK</td><td>AB = JK</td><td>∠A &amp; ∠J</td><td>∠A = ∠J</td></tr>
+        <tr><td>BC &amp; KL</td><td>BC = KL</td><td>∠B &amp; ∠K</td><td>∠B = ∠K</td></tr>
+        <tr><td>CD &amp; LM</td><td>CD = LM</td><td>∠C &amp; ∠L</td><td>∠C = ∠L</td></tr>
+        <tr><td>DA &amp; MJ</td><td>DA = MJ</td><td>∠D &amp; ∠M</td><td>∠D = ∠M</td></tr>
+      </table>
+
+      <div class="formula-box">
+        <span class="lbl">Notasi Kongruensi</span>
+        Jika ABCD dan JKLM memenuhi kedua syarat, ditulis <strong>ABCD ≅ JKLM</strong><br>
+        Jika tidak memenuhi kedua syarat, ditulis <strong>ABCD ≢ JKLM</strong>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh Soal — Mengidentifikasi Bangun Kongruen</span>
+        <p>Dua mobil mainan diproduksi dari cetakan (molding) yang sama, sedangkan sebuah mobil dan sebuah bus jelas berbeda bentuk dan ukurannya.</p>
+        <div class="step">🚗🚗 Dua mobil identik dari cetakan yang sama → bentuk sama, ukuran sama → <strong>kongruen</strong>.</div>
+        <div class="step">🚗🚌 Mobil dan bus → bentuk berbeda → <strong>tidak kongruen</strong>.</div>
+        <div class="step">Prinsip yang sama berlaku untuk bangun datar: persegi dengan sisi 4 cm kongruen dengan persegi lain bersisi 4 cm, tetapi tidak kongruen dengan persegi bersisi 6 cm meski sama‑sama berbentuk persegi (bangun kedua hanya <em>sebangun</em>).</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Cek Kongruensi Bangun Segi Empat</h4>
+        <p style="color:var(--cream-dim); font-size:.86rem; margin:0 0 8px;">Masukkan 4 pasang panjang sisi yang bersesuaian secara berurutan (searah). Kalkulator memeriksa syarat (i) — kesamaan panjang sisi bersesuaian. Ingat, syarat (ii) yaitu kesamaan sudut bersesuaian tetap harus diperiksa terpisah agar benar‑benar kongruen.</p>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi 1 — Bangun 1</label><input type="number" id="bd-a1" placeholder="AB"></div>
+          <div class="calc-field"><label>Sisi 1 — Bangun 2</label><input type="number" id="bd-a2" placeholder="JK"></div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi 2 — Bangun 1</label><input type="number" id="bd-b1" placeholder="BC"></div>
+          <div class="calc-field"><label>Sisi 2 — Bangun 2</label><input type="number" id="bd-b2" placeholder="KL"></div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi 3 — Bangun 1</label><input type="number" id="bd-c1" placeholder="CD"></div>
+          <div class="calc-field"><label>Sisi 3 — Bangun 2</label><input type="number" id="bd-c2" placeholder="LM"></div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi 4 — Bangun 1</label><input type="number" id="bd-d1" placeholder="DA"></div>
+          <div class="calc-field"><label>Sisi 4 — Bangun 2</label><input type="number" id="bd-d2" placeholder="MJ"></div>
+          <button onclick="cekKongruenBangun()">Cek Sisi</button>
+        </div>
+        <div class="calc-result" id="bd-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== B. KONGRUEN DUA SEGITIGA ===================== -->
+    <section class="materi" id="materi-b">
+      <div class="kicker">Bagian B</div>
+      <h2>Kongruen Dua Segitiga</h2>
+
+      <div class="callout def">
+        <span class="lbl">Definisi</span>
+        <p>Dua segitiga disebut kongruen jika (i) sudut‑sudut yang bersesuaian sama besar, dan (ii) sisi‑sisi yang bersesuaian sama panjang. Notasi: \(\triangle ABC \cong \triangle DEF\).</p>
+      </div>
+
+      <div class="callout note">
+        <span class="lbl">Jalan Pintas Membuktikan Kongruensi</span>
+        <p>Untuk menguji apakah dua segitiga kongruen, kita <strong>tidak perlu</strong> menguji seluruh 3 pasang sisi dan 3 pasang sudut sekaligus. Cukup tunjukkan salah satu dari lima kriteria berikut terpenuhi.</p>
+      </div>
+
+      <h3>Lima Kriteria Kongruensi Segitiga</h3>
+      <div class="figure-triple">
+        <div class="figure-item">
+          <svg viewBox="0 0 110 90"><polygon points="18,78 96,64 54,10" class="fsvg-shape"/>
+            <line x1="18" y1="78" x2="96" y2="64" class="fsvg-hi"/>
+            <line x1="96" y1="64" x2="54" y2="10" class="fsvg-hi"/>
+            <line x1="54" y1="10" x2="18" y2="78" class="fsvg-hi"/>
+          </svg>
+          <div class="figure-item-title">Sisi ‑ Sisi ‑ Sisi (S‑S‑S)</div>
+          <div class="figure-item-desc">Ketiga pasang sisi bersesuaian sama panjang.</div>
+        </div>
+        <div class="figure-item">
+          <svg viewBox="0 0 110 90"><polygon points="18,78 96,64 54,10" class="fsvg-shape"/>
+            <line x1="18" y1="78" x2="96" y2="64" class="fsvg-side-b"/>
+            <line x1="96" y1="64" x2="54" y2="10" class="fsvg-side-b"/>
+            <path d="M80.25,66.83 A16,16 0 0 1 86.18,51.37" class="fsvg-angle"/>
+          </svg>
+          <div class="figure-item-title">Sisi ‑ Sudut ‑ Sisi (S‑Sd‑S)</div>
+          <div class="figure-item-desc">Dua pasang sisi sama panjang dan sudut apitnya sama besar.</div>
+        </div>
+        <div class="figure-item">
+          <svg viewBox="0 0 110 90"><polygon points="18,78 96,64 54,10" class="fsvg-shape"/>
+            <line x1="18" y1="78" x2="96" y2="64" class="fsvg-side-b"/>
+            <path d="M33.75,75.17 A16,16 0 0 1 25.49,63.86" class="fsvg-angle"/>
+            <path d="M86.18,51.37 A16,16 0 0 1 80.25,66.83" class="fsvg-angle"/>
+          </svg>
+          <div class="figure-item-title">Sudut ‑ Sisi ‑ Sudut (Sd‑S‑Sd)</div>
+          <div class="figure-item-desc">Dua pasang sudut sama besar dan sisi penghubung keduanya sama panjang.</div>
+        </div>
+        <div class="figure-item">
+          <svg viewBox="0 0 110 90"><polygon points="18,78 96,64 54,10" class="fsvg-shape"/>
+            <line x1="96" y1="64" x2="54" y2="10" class="fsvg-side-b"/>
+            <path d="M33.75,75.17 A16,16 0 0 1 25.49,63.86" class="fsvg-angle"/>
+            <path d="M86.18,51.37 A16,16 0 0 1 80.25,66.83" class="fsvg-angle"/>
+          </svg>
+          <div class="figure-item-title">Sudut ‑ Sudut ‑ Sisi (Sd‑Sd‑S)</div>
+          <div class="figure-item-desc">Dua pasang sudut sama besar dan sepasang sisi bersesuaian (bukan penghubung) sama panjang.</div>
+        </div>
+        <div class="figure-item">
+          <svg viewBox="0 0 110 90"><polygon points="15,78 95,78 15,14" class="fsvg-shape"/>
+            <rect x="15" y="64" width="14" height="14" class="fsvg-right"/>
+            <line x1="15" y1="78" x2="95" y2="78" class="fsvg-hi"/>
+            <line x1="95" y1="78" x2="15" y2="14" class="fsvg-hi"/>
+          </svg>
+          <div class="figure-item-title">Sisi Miring ‑ Sisi Siku (khusus siku‑siku)</div>
+          <div class="figure-item-desc">Pada segitiga siku‑siku: sisi miring (hipotenusa) dan satu sisi siku‑siku bersesuaian sama panjang.</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="lbl">Notasi</span>
+        \(\triangle ABC \cong \triangle DEF\) &nbsp;(kongruen) &nbsp;·&nbsp; \(\triangle ABC \not\cong \triangle DEF\) &nbsp;(tidak kongruen)
+      </div>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar B.1 — Contoh 1: Sudut Bertolak Belakang</span>
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="40" x2="250" y2="180" class="fsvg-shape" style="fill:none;"/>
+          <line x1="250" y1="40" x2="50" y2="180" class="fsvg-shape" style="fill:none;"/>
+          <polygon points="50,40 150,110 50,180" class="fsvg-shape"/>
+          <polygon points="250,40 150,110 250,180" class="fsvg-shape"/>
+          <line x1="50" y1="40" x2="50" y2="180" class="fsvg-hi"/>
+          <line x1="250" y1="40" x2="250" y2="180" class="fsvg-hi"/>
+          <path d="M140,102 A12,12 0 0 1 140,118" class="fsvg-angle"/>
+          <path d="M160,102 A12,12 0 0 1 160,118" class="fsvg-angle"/>
+          <circle cx="150" cy="110" r="3" class="fsvg-point"/>
+          <text x="34" y="38" class="fsvg-label">A</text>
+          <text x="258" y="38" class="fsvg-label">D</text>
+          <text x="158" y="90" class="fsvg-label">C</text>
+          <text x="34" y="198" class="fsvg-label">B</text>
+          <text x="258" y="198" class="fsvg-label">E</text>
+        </svg>
+        <div class="caption">Dua segitiga berimpit di titik C, dengan AC = EC dan BC = DC.</div>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh 1 — Buktikan \(\triangle ABC \cong \triangle EDC\)</span>
+        <p>Diketahui AC = EC dan BC = DC (lihat Gambar B.1). Buktikan bahwa \(\triangle ABC \cong \triangle EDC\)!</p>
+        <div class="step"><strong>Bukti:</strong></div>
+        <div class="step">AC = EC &nbsp;(diketahui)</div>
+        <div class="step">\(\angle ACB = \angle ECD\) &nbsp;(sudut saling bertolak belakang, selalu sama besar)</div>
+        <div class="step">BC = DC &nbsp;(diketahui)</div>
+        <div class="step">Jadi, \(\triangle ABC \cong \triangle EDC\) berdasarkan kriteria <strong>sisi‑sudut‑sisi</strong>.</div>
+      </div>
+
+      <div class="figure-box">
+        <span class="lbl">Gambar B.2 — Contoh 2: Sisi Berimpit</span>
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="150,20 60,110 150,200" class="fsvg-shape"/>
+          <polygon points="150,20 240,110 150,200" class="fsvg-shape"/>
+          <line x1="150" y1="20" x2="60" y2="110" class="fsvg-hi"/>
+          <line x1="150" y1="20" x2="240" y2="110" class="fsvg-hi"/>
+          <line x1="150" y1="200" x2="60" y2="110" class="fsvg-hi"/>
+          <line x1="150" y1="200" x2="240" y2="110" class="fsvg-hi"/>
+          <line x1="60" y1="110" x2="240" y2="110" class="fsvg-dash"/>
+          <text x="150" y="14" text-anchor="middle" class="fsvg-label">P</text>
+          <text x="42" y="114" class="fsvg-label">Q</text>
+          <text x="250" y="114" class="fsvg-label">S</text>
+          <text x="150" y="216" text-anchor="middle" class="fsvg-label">R</text>
+        </svg>
+        <div class="caption">PQ = RQ, PS = RS, dan QS adalah sisi yang sama‑sama dimiliki (berimpit) oleh kedua segitiga.</div>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">Contoh 2 — Buktikan \(\triangle PQS \cong \triangle RQS\)</span>
+        <p>Diketahui PQ = RQ dan PS = RS (lihat Gambar B.2). Buktikan bahwa \(\triangle PQS \cong \triangle RQS\)!</p>
+        <div class="step"><strong>Bukti:</strong></div>
+        <div class="step">PQ = RQ &nbsp;(diketahui)</div>
+        <div class="step">PS = RS &nbsp;(diketahui)</div>
+        <div class="step">QS pada \(\triangle PQS\) sama dengan QS pada \(\triangle RQS\) &nbsp;(QS berimpit / sisi yang sama)</div>
+        <div class="step">Jadi, \(\triangle PQS \cong \triangle RQS\) berdasarkan kriteria <strong>sisi‑sisi‑sisi</strong>.</div>
+      </div>
+
+      <div class="calc-box">
+        <h4>🧮 Kalkulator Cek Kongruensi Segitiga (Kriteria S‑S‑S)</h4>
+        <p style="color:var(--cream-dim); font-size:.86rem; margin:0 0 8px;">Masukkan panjang ketiga sisi Segitiga 1 dan Segitiga 2. Jika ketiga pasang sisi (dalam urutan berapa pun) sama, kedua segitiga kongruen menurut kriteria sisi‑sisi‑sisi.</p>
+        <div class="calc-sub">Segitiga 1</div>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi a</label><input type="number" id="sg-a1" placeholder="mis. 6"></div>
+          <div class="calc-field"><label>Sisi b</label><input type="number" id="sg-b1" placeholder="mis. 8"></div>
+          <div class="calc-field"><label>Sisi c</label><input type="number" id="sg-c1" placeholder="mis. 10"></div>
+        </div>
+        <div class="calc-sub">Segitiga 2</div>
+        <div class="calc-row">
+          <div class="calc-field"><label>Sisi a</label><input type="number" id="sg-a2" placeholder="mis. 10"></div>
+          <div class="calc-field"><label>Sisi b</label><input type="number" id="sg-b2" placeholder="mis. 6"></div>
+          <div class="calc-field"><label>Sisi c</label><input type="number" id="sg-c2" placeholder="mis. 8"></div>
+          <button onclick="cekKongruenSSS()">Cek Kongruensi</button>
+        </div>
+        <div class="calc-result" id="sg-hasil">Hasil akan tampil di sini.</div>
+      </div>
+    </section>
+
+    <!-- ===================== LATIHAN ===================== -->
+    <section id="latihan">
+      <div class="kicker">Latihan</div>
+      <h2>Uji Pemahamanmu</h2>
+      <p style="color:var(--text-mid);">25 soal — 5 tipe soal berbeda. Jawab semua soal, lalu lihat analisis hasilmu di akhir.</p>
+
+      <div class="type-tabs">
+        <button class="type-tab active" data-type="pg" onclick="showType('pg')">1. Pilihan Ganda</button>
+        <button class="type-tab" data-type="is" onclick="showType('is')">2. Isian Singkat</button>
+        <button class="type-tab" data-type="pk" onclick="showType('pk')">3. PG Kompleks</button>
+        <button class="type-tab" data-type="bs" onclick="showType('bs')">4. Benar/Salah</button>
+        <button class="type-tab" data-type="jd" onclick="showType('jd')">5. Menjodohkan</button>
+      </div>
+
+      <div class="score-strip" id="score-strip"></div>
+
+      <div id="quiz-area"></div>
+
+      <div style="text-align:center; margin-top:24px;">
+        <button id="analysis-btn" onclick="showAnalysis()" style="background:var(--ink); color:var(--gold-soft); border:none; padding:13px 30px; border-radius:12px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.95rem;">📊 Lihat Analisis Akhir</button>
+      </div>
+
+      <div class="analysis-panel" id="analysis-panel">
+        <h2 style="color:var(--gold-title);">Analisis Hasil Latihan</h2>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="num" id="stat-total">0</div><div class="lbl">Total Soal</div></div>
+          <div class="stat-box"><div class="num" id="stat-benar">0</div><div class="lbl">Benar</div></div>
+          <div class="stat-box"><div class="num" id="stat-salah">0</div><div class="lbl">Salah</div></div>
+          <div class="stat-box"><div class="num" id="stat-nilai">0%</div><div class="lbl">Nilai</div></div>
+        </div>
+        <div id="bar-chart"></div>
+        <div class="grade-box">
+          <div class="grade" id="grade-letter">-</div>
+          <div id="grade-msg" style="color:var(--cream-dim); margin-top:.4em;"></div>
+        </div>
+        <div style="text-align:center;"><button id="reset-btn" onclick="resetAll()">🔄 Ulangi Latihan</button></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Ebook Interaktif — Kongruen · Matematika Kelas 9 · Kurikulum Merdeka</div>
+      <div class="credit">Suminto with Claude.</div>
+    </footer>
+  </div>
+</div>
+
+<script>
+/* ===================== KALKULATOR MATERI ===================== */
+function cekKongruenBangun(){
+  var ids = [['bd-a1','bd-a2'],['bd-b1','bd-b2'],['bd-c1','bd-c2'],['bd-d1','bd-d2']];
+  var vals = [];
+  var out = document.getElementById('bd-hasil');
+  for(var i=0;i<ids.length;i++){
+    var v1 = parseFloat(document.getElementById(ids[i][0]).value);
+    var v2 = parseFloat(document.getElementById(ids[i][1]).value);
+    if(isNaN(v1) || isNaN(v2) || v1<=0 || v2<=0){ out.innerHTML = 'Isi kedelapan kotak dengan panjang sisi yang valid (lebih dari 0).'; return; }
+    vals.push([v1,v2]);
+  }
+  var names = ['Sisi 1 (AB/JK)','Sisi 2 (BC/KL)','Sisi 3 (CD/LM)','Sisi 4 (DA/MJ)'];
+  var html = '';
+  var semuaSama = true;
+  for(var i=0;i<vals.length;i++){
+    var sama = Math.abs(vals[i][0]-vals[i][1]) < 1e-9;
+    if(!sama) semuaSama = false;
+    html += names[i] + ': ' + vals[i][0] + ' ' + (sama ? '=' : '≠') + ' ' + vals[i][1] + '<br>';
+  }
+  if(semuaSama){
+    html += '<br>✔ Keempat pasang sisi bersesuaian sama panjang (syarat i terpenuhi).<br>Periksa juga kesamaan sudut‑sudut bersesuaian (syarat ii) untuk memastikan bangun benar‑benar <strong>kongruen</strong>.';
+  } else {
+    html += '<br>✘ Ada pasangan sisi bersesuaian yang tidak sama panjang, sehingga kedua bangun <strong>tidak kongruen</strong>.';
+  }
+  out.innerHTML = html;
+}
+
+function cekKongruenSSS(){
+  var a1 = parseFloat(document.getElementById('sg-a1').value);
+  var b1 = parseFloat(document.getElementById('sg-b1').value);
+  var c1 = parseFloat(document.getElementById('sg-c1').value);
+  var a2 = parseFloat(document.getElementById('sg-a2').value);
+  var b2 = parseFloat(document.getElementById('sg-b2').value);
+  var c2 = parseFloat(document.getElementById('sg-c2').value);
+  var out = document.getElementById('sg-hasil');
+  var vals = [a1,b1,c1,a2,b2,c2];
+  if(vals.some(isNaN) || vals.some(function(v){ return v<=0; })){ out.innerHTML = 'Isi keenam kotak dengan panjang sisi yang valid (lebih dari 0).'; return; }
+  var seg1 = [a1,b1,c1].sort(function(x,y){ return x-y; });
+  var seg2 = [a2,b2,c2].sort(function(x,y){ return x-y; });
+  var sama = Math.abs(seg1[0]-seg2[0])<1e-9 && Math.abs(seg1[1]-seg2[1])<1e-9 && Math.abs(seg1[2]-seg2[2])<1e-9;
+  var html = 'Segitiga 1 (diurutkan): ' + seg1.join(', ') + '<br>Segitiga 2 (diurutkan): ' + seg2.join(', ') + '<br><br>';
+  if(sama){ html += '✔ Ketiga pasang sisi bersesuaian sama panjang.<br>Jadi, kedua segitiga <strong>kongruen</strong> menurut kriteria sisi‑sisi‑sisi (S‑S‑S).'; }
+  else { html += '✘ Tidak semua pasangan sisi sama panjang.<br>Kedua segitiga <strong>tidak dapat dipastikan kongruen</strong> menurut kriteria S‑S‑S.'; }
+  out.innerHTML = html;
+}
+
+function animasiSisiBersesuaian(){
+  var pairs = [
+    { a:'ta-ab', b:'tb-jk', label:'AB ↔ JK' },
+    { a:'ta-bc', b:'tb-kl', label:'BC ↔ KL' },
+    { a:'ta-cd', b:'tb-lm', label:'CD ↔ LM' },
+    { a:'ta-da', b:'tb-mj', label:'DA ↔ MJ' }
+  ];
+  var allIds = [];
+  pairs.forEach(function(p){ allIds.push(p.a, p.b); });
+  var statusEl = document.getElementById('anim-status');
+  var btn = document.getElementById('anim-btn');
+  if(btn) btn.disabled = true;
+
+  function setStroke(id, color, width){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.style.transition = 'stroke .35s ease, stroke-width .35s ease';
+    el.setAttribute('stroke', color);
+    el.style.strokeWidth = width;
+  }
+
+  /* Langkah 1: redupkan semua sisi jadi abu-abu, supaya pasangan aktif terlihat mencolok */
+  allIds.forEach(function(id){ setStroke(id, '#d8cdb0', '2'); });
+
+  var stepMs = 950;
+  pairs.forEach(function(pair, i){
+    /* Sorot pasangan aktif dengan warna merah tebal + label nama sisi */
+    setTimeout(function(){
+      if(statusEl) statusEl.textContent = '🔴 Menyorot pasangan sisi bersesuaian: ' + pair.label;
+      setStroke(pair.a, '#c1584f', '6');
+      setStroke(pair.b, '#c1584f', '6');
+    }, i*stepMs + 150);
+    /* Setelah disorot, tandai sudah selesai dengan warna hijau agar terlihat progresnya */
+    setTimeout(function(){
+      setStroke(pair.a, '#4f9a4f', '4');
+      setStroke(pair.b, '#4f9a4f', '4');
+    }, i*stepMs + 650);
+  });
+
+  /* Langkah akhir: kembalikan semua sisi ke warna emas semula */
+  var totalMs = pairs.length*stepMs + 500;
+  setTimeout(function(){
+    allIds.forEach(function(id){ setStroke(id, '#e0a94d', '3.4'); });
+    if(statusEl) statusEl.textContent = '✔ Selesai — semua sisi bersesuaian telah ditandai.';
+    if(btn) btn.disabled = false;
+    setTimeout(function(){ if(statusEl) statusEl.textContent = ''; }, 2200);
+  }, totalMs);
+}
+
+/* ===================== SIDEBAR ===================== */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+document.querySelectorAll('#sidebar .nav-link, #sidebar .nav-sub').forEach(function(el){
+  el.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+/* ===================== SCROLLSPY + PROGRESS BAR ===================== */
+var sections = ['materi-a','materi-b','latihan'];
+function updateScrollspy(){
+  var scrollPos = window.scrollY + 140;
+  var activeId = sections[0];
+  sections.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top + window.scrollY <= scrollPos){ activeId = id; }
+  });
+  document.querySelectorAll('#sidebar .nav-link').forEach(function(link){
+    link.classList.toggle('active', link.getAttribute('data-target') === activeId);
+  });
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+window.addEventListener('scroll', updateScrollspy);
+window.addEventListener('resize', updateScrollspy);
+
+/* ===================== BANK SOAL ===================== */
+var allQuestions = {
+  pg: [
+    { id:'pg1', type:'pg', level:'mudah', num:1,
+      text:'Dua bangun yang mempunyai bentuk dan ukuran yang sama disebut ...',
+      options:['A. Sebangun','B. Kongruen','C. Simetris','D. Sejajar'], answer:1,
+      explanation:'✅ Dua bangun yang bentuk dan ukurannya sama disebut kongruen.' },
+    { id:'pg2', type:'pg', level:'mudah', num:2,
+      text:'Syarat agar dua poligon dikatakan kongruen adalah ...',
+      options:['A. Sisi bersesuaian sama panjang saja','B. Sudut bersesuaian sama besar saja','C. Sisi bersesuaian sama panjang dan sudut bersesuaian sama besar','D. Kedua bangun harus berwarna sama'], answer:2,
+      explanation:'✅ Dua syarat harus dipenuhi bersama: sisi‑sisi bersesuaian sama panjang DAN sudut‑sudut bersesuaian sama besar.' },
+    { id:'pg3', type:'pg', level:'sedang', num:3,
+      text:'Jika \\(\\triangle ABC \\cong \\triangle DEF\\), maka pernyataan yang pasti benar adalah ...',
+      options:['A. AB = DE','B. AB = EF','C. Luas ABC lebih besar dari DEF','D. ABC dan DEF sebangun tetapi ukuran berbeda'], answer:0,
+      explanation:'✅ Pada notasi \\(\\triangle ABC \\cong \\triangle DEF\\), urutan huruf menunjukkan kesesuaian, sehingga AB (sisi ke‑1 dan ke‑2 pada ABC) bersesuaian dan sama panjang dengan DE (sisi ke‑1 dan ke‑2 pada DEF).' },
+    { id:'pg4', type:'pg', level:'sedang', num:4,
+      text:'Kriteria kongruensi dua segitiga yang menggunakan dua pasang sisi sama panjang dan sudut apitnya sama besar disebut kriteria ...',
+      options:['A. Sisi‑Sisi‑Sisi','B. Sisi‑Sudut‑Sisi','C. Sudut‑Sisi‑Sudut','D. Sudut‑Sudut‑Sisi'], answer:1,
+      explanation:'✅ Dua sisi dan sudut yang diapit oleh kedua sisi itu adalah ciri kriteria sisi‑sudut‑sisi (S‑Sd‑S).' },
+    { id:'pg5', type:'pg', level:'sukar', num:5,
+      text:'Diketahui \\(\\triangle ABC\\) dan \\(\\triangle DEF\\) dengan AB = DE, BC = EF, dan \\(\\angle B = \\angle E\\). Kedua segitiga kongruen berdasarkan kriteria ...',
+      options:['A. Sisi‑Sisi‑Sisi','B. Sisi‑Sudut‑Sisi','C. Sudut‑Sisi‑Sudut','D. Sisi Miring‑Sisi Siku'], answer:1,
+      explanation:'✅ AB dan BC adalah dua sisi yang mengapit \\(\\angle B\\), sehingga memenuhi kriteria sisi‑sudut‑sisi (S‑Sd‑S).' }
+  ],
+  is: [
+    { id:'is1', type:'is', level:'mudah', num:1,
+      text:'Lambang notasi untuk menyatakan dua bangun kongruen adalah ... .',
+      answer:'≅', altAnswers:['kongruen'],
+      explanation:'✅ Lambang ≅ digunakan untuk menyatakan dua bangun kongruen, misalnya ABCD ≅ JKLM.' },
+    { id:'is2', type:'is', level:'mudah', num:2,
+      text:'Lambang notasi untuk menyatakan dua bangun TIDAK kongruen adalah ... .',
+      answer:'≢', altAnswers:[],
+      explanation:'✅ Lambang ≢ digunakan untuk menyatakan dua bangun tidak kongruen.' },
+    { id:'is3', type:'is', level:'sedang', num:3,
+      text:'Kriteria kongruensi dua segitiga siku‑siku yang membandingkan sisi miring dan satu sisi siku‑siku disebut kriteria sisi miring‑... .',
+      answer:'sisi siku', altAnswers:['sisi siku-siku','sisi siku siku'],
+      explanation:'✅ Kriteria khusus segitiga siku‑siku ini disebut kriteria sisi miring‑sisi siku, membandingkan hipotenusa dan satu sisi siku‑siku.' },
+    { id:'is4', type:'is', level:'sedang', num:4,
+      text:'Jika dua pasang sudut bersesuaian sama besar dan sisi yang menghubungkan kedua sudut tersebut sama panjang, kriteria yang digunakan adalah sudut‑...‑sudut.',
+      answer:'sisi', altAnswers:[],
+      explanation:'✅ Kriteria ini disebut sudut‑sisi‑sudut (Sd‑S‑Sd): dua sudut dan sisi penghubungnya sama.' },
+    { id:'is5', type:'is', level:'sukar', num:5,
+      text:'Berapa banyak syarat yang harus dipenuhi agar dua poligon dikatakan kongruen? ... syarat.',
+      answer:'2', altAnswers:['dua'],
+      explanation:'✅ Ada 2 syarat: sisi‑sisi bersesuaian sama panjang, dan sudut‑sudut bersesuaian sama besar.' }
+  ],
+  pk: [
+    { id:'pk1', type:'pk', level:'mudah', num:1,
+      text:'Manakah berikut ini yang termasuk kriteria kongruensi dua segitiga? (Jawaban bisa lebih dari satu)',
+      options:['A. Sisi‑Sisi‑Sisi','B. Sisi‑Sisi‑Sudut sembarang (tanpa syarat posisi)','C. Sudut‑Sisi‑Sudut','D. Sudut‑Sudut‑Sudut'], answers:[0,2],
+      explanation:'✅ Sisi‑Sisi‑Sisi dan Sudut‑Sisi‑Sudut adalah kriteria kongruensi yang sah. Sisi‑Sisi‑Sudut sembarang dan Sudut‑Sudut‑Sudut BUKAN kriteria kongruensi (Sudut‑Sudut‑Sudut hanya menunjukkan sebangun, bukan kongruen).' },
+    { id:'pk2', type:'pk', level:'sedang', num:2,
+      text:'Manakah pernyataan berikut yang BENAR tentang dua bangun kongruen? (Jawaban bisa lebih dari satu)',
+      options:['A. Sisi‑sisi bersesuaian sama panjang','B. Sudut‑sudut bersesuaian sama besar','C. Luasnya pasti berbeda','D. Bentuknya sama'], answers:[0,1,3],
+      explanation:'✅ Bangun kongruen memiliki sisi bersesuaian sama panjang, sudut bersesuaian sama besar, dan tentu saja bentuknya sama — sehingga luasnya juga pasti SAMA, bukan berbeda.' },
+    { id:'pk3', type:'pk', level:'sedang', num:3,
+      text:'Perhatikan \\(\\triangle ABC\\) dan \\(\\triangle DEF\\) dengan AB = DE, AC = DF, dan \\(\\angle A = \\angle D\\). Pernyataan manakah yang BENAR? (Jawaban bisa lebih dari satu)',
+      options:['A. Kedua segitiga kongruen','B. Kriteria yang digunakan adalah sisi‑sudut‑sisi','C. Kriteria yang digunakan adalah sudut‑sisi‑sudut','D. BC pasti sama panjang dengan EF'], answers:[0,1,3],
+      explanation:'✅ \\(\\angle A\\) diapit oleh sisi AB dan AC, sehingga kriterianya sisi‑sudut‑sisi (bukan sudut‑sisi‑sudut) — kedua segitiga kongruen, sehingga BC = EF.' },
+    { id:'pk4', type:'pk', level:'sukar', num:4,
+      text:'Manakah dari berikut ini yang BUKAN merupakan syarat/kriteria kongruensi segitiga yang sah? (Jawaban bisa lebih dari satu)',
+      options:['A. Sudut‑Sudut‑Sudut','B. Sisi‑Sudut‑Sisi','C. Sisi‑Sisi‑Sudut (sudut di luar apitan, sembarang posisi)','D. Sisi Miring‑Sisi Siku'], answers:[0,2],
+      explanation:'✅ Sudut‑Sudut‑Sudut hanya menjamin sebangun, bukan kongruen. Sisi‑Sisi‑Sudut sembarang posisi juga tidak menjamin kongruensi karena bisa menghasilkan dua segitiga berbeda (kasus ambigu).' },
+    { id:'pk5', type:'pk', level:'sukar', num:5,
+      text:'Pada Contoh 1 (dua segitiga berimpit di satu titik), unsur‑unsur berikut digunakan untuk membuktikan kongruensi. Manakah yang benar? (Jawaban bisa lebih dari satu)',
+      options:['A. Sepasang sudut yang bertolak belakang sama besar','B. Dua pasang sisi diketahui sama panjang','C. Kriteria yang digunakan adalah sisi‑sudut‑sisi','D. Kriteria yang digunakan adalah sisi‑sisi‑sisi'], answers:[0,1,2],
+      explanation:'✅ Pada Contoh 1, AC = EC dan BC = DC (dua pasang sisi), serta \\(\\angle ACB = \\angle ECD\\) (sudut bertolak belakang) — sehingga kriteria yang tepat adalah sisi‑sudut‑sisi, bukan sisi‑sisi‑sisi.' }
+  ],
+  bs: [
+    { id:'bs1', type:'bs', level:'mudah', num:1,
+      text:'Pernyataan: Dua bangun yang sebangun pasti kongruen.',
+      answer:false,
+      explanation:'❌ SALAH. Sebangun hanya berarti bentuknya sama, ukurannya boleh berbeda. Kongruen mensyaratkan bentuk DAN ukuran sama persis.' },
+    { id:'bs2', type:'bs', level:'mudah', num:2,
+      text:'Pernyataan: Kriteria sisi‑sisi‑sisi (S‑S‑S) menggunakan tiga pasang sisi bersesuaian yang sama panjang.',
+      answer:true,
+      explanation:'✅ BENAR, kriteria S‑S‑S memang membandingkan ketiga pasang sisi bersesuaian.' },
+    { id:'bs3', type:'bs', level:'sedang', num:3,
+      text:'Pernyataan: Sudut yang saling bertolak belakang selalu sama besar.',
+      answer:true,
+      explanation:'✅ BENAR. Sifat ini sering dipakai untuk membuktikan kongruensi pada dua segitiga yang berimpit di satu titik, seperti pada Contoh 1.' },
+    { id:'bs4', type:'bs', level:'sedang', num:4,
+      text:'Pernyataan: Untuk membuktikan dua segitiga kongruen, cukup menunjukkan satu pasang sisi bersesuaian sama panjang.',
+      answer:false,
+      explanation:'❌ SALAH. Satu pasang sisi saja tidak cukup; harus memenuhi salah satu dari lima kriteria kongruensi (S‑S‑S, S‑Sd‑S, Sd‑S‑Sd, Sd‑Sd‑S, atau sisi miring‑sisi siku).' },
+    { id:'bs5', type:'bs', level:'sukar', num:5,
+      text:'Pernyataan: Jika \\(\\triangle PQS \\cong \\triangle RQS\\) dengan QS sebagai sisi berimpit, maka QS dihitung sebagai sisi milik kedua segitiga sekaligus.',
+      answer:true,
+      explanation:'✅ BENAR. Sisi berimpit seperti QS pada Contoh 2 memang menjadi sisi yang sama untuk kedua segitiga, sehingga otomatis sama panjang dengan dirinya sendiri.' }
+  ],
+  jd: [
+    { id:'jd1', type:'jd', level:'mudah', num:1,
+      left:'Tiga pasang sisi bersesuaian sama panjang', right:'Sisi‑Sisi‑Sisi', answer:'Sisi‑Sisi‑Sisi',
+      options:['Sisi‑Sisi‑Sisi','Sisi‑Sudut‑Sisi','Sudut‑Sisi‑Sudut','Sudut‑Sudut‑Sisi'],
+      explanation:'✅ Tiga pasang sisi sama panjang adalah ciri kriteria sisi‑sisi‑sisi (S‑S‑S).' },
+    { id:'jd2', type:'jd', level:'sedang', num:2,
+      left:'Dua pasang sisi sama panjang dan sudut apitnya sama besar', right:'Sisi‑Sudut‑Sisi', answer:'Sisi‑Sudut‑Sisi',
+      options:['Sisi‑Sudut‑Sisi','Sisi‑Sisi‑Sisi','Sudut‑Sudut‑Sisi','Sisi Miring‑Sisi Siku'],
+      explanation:'✅ Dua sisi dan sudut yang diapitnya adalah ciri kriteria sisi‑sudut‑sisi (S‑Sd‑S).' },
+    { id:'jd3', type:'jd', level:'sedang', num:3,
+      left:'Dua pasang sudut sama besar dan sisi penghubung kedua sudut sama panjang', right:'Sudut‑Sisi‑Sudut', answer:'Sudut‑Sisi‑Sudut',
+      options:['Sudut‑Sisi‑Sudut','Sisi‑Sudut‑Sisi','Sudut‑Sudut‑Sisi','Sisi‑Sisi‑Sisi'],
+      explanation:'✅ Dua sudut dan sisi yang menghubungkan keduanya adalah ciri kriteria sudut‑sisi‑sudut (Sd‑S‑Sd).' },
+    { id:'jd4', type:'jd', level:'sedang', num:4,
+      left:'Dua pasang sudut sama besar dan sepasang sisi bersesuaian (bukan penghubung) sama panjang', right:'Sudut‑Sudut‑Sisi', answer:'Sudut‑Sudut‑Sisi',
+      options:['Sudut‑Sudut‑Sisi','Sudut‑Sisi‑Sudut','Sisi‑Sudut‑Sisi','Sisi‑Sisi‑Sisi'],
+      explanation:'✅ Dua sudut ditambah sisi bersesuaian yang bukan penghubung adalah ciri kriteria sudut‑sudut‑sisi (Sd‑Sd‑S).' },
+    { id:'jd5', type:'jd', level:'sukar', num:5,
+      left:'Khusus segitiga siku‑siku: sisi miring dan satu sisi siku‑siku bersesuaian sama panjang', right:'Sisi Miring‑Sisi Siku', answer:'Sisi Miring‑Sisi Siku',
+      options:['Sisi Miring‑Sisi Siku','Sisi‑Sisi‑Sisi','Sudut‑Sisi‑Sudut','Sisi‑Sudut‑Sisi'],
+      explanation:'✅ Kriteria ini hanya berlaku pada segitiga siku‑siku, membandingkan hipotenusa dan satu sisi siku‑siku.' }
+  ]
+};
+var typeLabels = { pg:'Pilihan Ganda', is:'Isian Singkat', pk:'PG Kompleks', bs:'Benar/Salah', jd:'Menjodohkan' };
+var typeOrder = ['pg','is','pk','bs','jd'];
+
+var state = { answers:{}, currentType:'pg', matchSelections:{} };
+var pkTemp = {};
+
+function showType(type){
+  state.currentType = type;
+  document.querySelectorAll('.type-tab').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-type') === type);
+  });
+  renderQuestions(type);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+function renderQuestions(type){
+  var container = document.getElementById('quiz-area');
+  var qs = allQuestions[type];
+  var html = '';
+  qs.forEach(function(q){ html += renderCard(q); });
+  container.innerHTML = html;
+  qs.forEach(function(q){ if(state.answers[q.id]){ refreshCard(q); } });
+  typesetMath();
+}
+
+function renderCard(q){
+  var levelClass = 'level-' + q.level;
+  var body = '';
+  if(q.type === 'pg'){ body = renderPG(q); }
+  else if(q.type === 'is'){ body = renderIS(q); }
+  else if(q.type === 'pk'){ body = renderPK(q); }
+  else if(q.type === 'bs'){ body = renderBS(q); }
+  else if(q.type === 'jd'){ body = renderJD(q); }
+
+  return '<div class="question-card" id="card-' + q.id + '">' +
+    '<div class="q-head"><div class="q-num">' + q.num + '</div>' +
+    '<span class="level-badge ' + levelClass + '">' + q.level + '</span></div>' +
+    '<div class="q-text">' + (q.left ? ('Pasangkan: <strong>' + q.left + '</strong>') : q.text) + '</div>' +
+    body +
+    '<div class="explanation" id="exp-' + q.id + '">' + q.explanation + '</div>' +
+    '</div>';
+}
+
+function renderPG(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="answerPG(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  return html;
+}
+function answerPG(qid, idx){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = idx === q.answer;
+  state.answers[qid] = { chosen: idx, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderIS(q){
+  return '<div class="is-row">' +
+    '<input type="text" id="input-' + q.id + '" placeholder="Ketik jawabanmu..." onkeydown="if(event.key===\'Enter\'){submitIS(\'' + q.id + '\')}">' +
+    '<button onclick="submitIS(\'' + q.id + '\')">Kirim Jawaban</button>' +
+    '</div>';
+}
+function submitIS(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var input = document.getElementById('input-' + qid);
+  var val = (input.value || '').trim().toLowerCase();
+  if(val === ''){ return; }
+  var candidates = [q.answer].concat(q.altAnswers || []).map(function(a){ return a.toString().trim().toLowerCase(); });
+  var correct = candidates.indexOf(val) !== -1;
+  state.answers[qid] = { chosen: input.value, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderPK(q){
+  var html = '';
+  q.options.forEach(function(opt, idx){
+    html += '<button class="opt-btn" id="opt-' + q.id + '-' + idx + '" onclick="togglePK(\'' + q.id + '\',' + idx + ')">' + opt + '</button>';
+  });
+  html += '<button class="pk-confirm" id="confirm-' + q.id + '" onclick="submitPK(\'' + q.id + '\')">Konfirmasi Jawaban</button>';
+  return html;
+}
+function togglePK(qid, idx){
+  if(state.answers[qid]) return;
+  if(!pkTemp[qid]) pkTemp[qid] = [];
+  var arr = pkTemp[qid];
+  var pos = arr.indexOf(idx);
+  var btn = document.getElementById('opt-' + qid + '-' + idx);
+  if(pos === -1){ arr.push(idx); btn.classList.add('pk-on'); }
+  else { arr.splice(pos,1); btn.classList.remove('pk-on'); }
+}
+function submitPK(qid){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var chosen = (pkTemp[qid] || []).slice().sort();
+  var correctArr = q.answers.slice().sort();
+  var correct = chosen.length === correctArr.length && chosen.every(function(v,i){ return v === correctArr[i]; });
+  state.answers[qid] = { chosen: chosen, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderBS(q){
+  return '<div class="bs-row">' +
+    '<button class="bs-btn" id="opt-' + q.id + '-true" onclick="answerBS(\'' + q.id + '\',true)">✅ BENAR</button>' +
+    '<button class="bs-btn" id="opt-' + q.id + '-false" onclick="answerBS(\'' + q.id + '\',false)">❌ SALAH</button>' +
+    '</div>';
+}
+function answerBS(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function renderJD(q){
+  var opts = q.options.slice();
+  var optHtml = '<option value="">-- pilih --</option>';
+  opts.forEach(function(o){ optHtml += '<option value="' + o + '">' + o + '</option>'; });
+  return '<div class="jd-row"><div class="jd-left">' + q.left + '</div>' +
+    '<select id="sel-' + q.id + '" onchange="answerJD(\'' + q.id + '\', this.value)">' + optHtml + '</select></div>';
+}
+function answerJD(qid, val){
+  var q = findQuestion(qid);
+  if(state.answers[qid]) return;
+  if(val === '') return;
+  var correct = val === q.answer;
+  state.answers[qid] = { chosen: val, correct: correct };
+  refreshCard(q);
+  updateScoreStrip();
+}
+
+function findQuestion(qid){
+  for(var t in allQuestions){
+    var found = allQuestions[t].find(function(q){ return q.id === qid; });
+    if(found) return found;
+  }
+  return null;
+}
+
+function refreshCard(q){
+  var card = document.getElementById('card-' + q.id);
+  var ans = state.answers[q.id];
+  if(!card || !ans) return;
+  card.classList.add(ans.correct ? 'correct' : 'wrong');
+
+  if(q.type === 'pg'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      if(idx === ans.chosen){ btn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong'); }
+      if(idx === q.answer && !ans.correct){ btn.classList.add('reveal-correct'); }
+    });
+  } else if(q.type === 'is'){
+    var input = document.getElementById('input-' + q.id);
+    if(input) input.disabled = true;
+  } else if(q.type === 'pk'){
+    q.options.forEach(function(opt, idx){
+      var btn = document.getElementById('opt-' + q.id + '-' + idx);
+      btn.disabled = true;
+      var wasChosen = ans.chosen.indexOf(idx) !== -1;
+      var isCorrectOpt = q.answers.indexOf(idx) !== -1;
+      if(wasChosen && isCorrectOpt) btn.classList.add('selected-correct');
+      else if(wasChosen && !isCorrectOpt) btn.classList.add('selected-wrong');
+      else if(!wasChosen && isCorrectOpt) btn.classList.add('reveal-correct');
+    });
+    var confirmBtn = document.getElementById('confirm-' + q.id);
+    if(confirmBtn) confirmBtn.disabled = true;
+  } else if(q.type === 'bs'){
+    var trueBtn = document.getElementById('opt-' + q.id + '-true');
+    var falseBtn = document.getElementById('opt-' + q.id + '-false');
+    trueBtn.disabled = true; falseBtn.disabled = true;
+    var chosenBtn = ans.chosen ? trueBtn : falseBtn;
+    chosenBtn.classList.add(ans.correct ? 'selected-correct' : 'selected-wrong');
+    if(!ans.correct){
+      var correctBtn = q.answer ? trueBtn : falseBtn;
+      correctBtn.classList.add('selected-correct');
+    }
+  } else if(q.type === 'jd'){
+    var sel = document.getElementById('sel-' + q.id);
+    if(sel){ sel.disabled = true; sel.classList.add(ans.correct ? 'correct' : 'wrong'); }
+  }
+
+  var exp = document.getElementById('exp-' + q.id);
+  if(exp){ exp.classList.add('show'); typesetMath(); }
+}
+
+function updateScoreStrip(){
+  var html = '';
+  typeOrder.forEach(function(t, i){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    html += '<div class="score-chip">' + (i+1) + '. ' + typeLabels[t] + ': ' + correct + '/' + qs.length + '</div>';
+  });
+  document.getElementById('score-strip').innerHTML = html;
+}
+
+function showAnalysis(){
+  var totalQ = 0, totalCorrect = 0;
+  var perType = {};
+  typeOrder.forEach(function(t){
+    var qs = allQuestions[t];
+    var answered = qs.filter(function(q){ return state.answers[q.id]; });
+    var correct = answered.filter(function(q){ return state.answers[q.id].correct; }).length;
+    perType[t] = { total: qs.length, correct: correct };
+    totalQ += qs.length;
+    totalCorrect += correct;
+  });
+  var totalWrong = totalQ - totalCorrect;
+  var pct = totalQ > 0 ? Math.round((totalCorrect/totalQ)*100) : 0;
+
+  document.getElementById('stat-total').textContent = totalQ;
+  document.getElementById('stat-benar').textContent = totalCorrect;
+  document.getElementById('stat-salah').textContent = totalWrong;
+  document.getElementById('stat-nilai').textContent = pct + '%';
+
+  var barHtml = '';
+  typeOrder.forEach(function(t){
+    var p = perType[t];
+    var barPct = p.total > 0 ? (p.correct/p.total)*100 : 0;
+    barHtml += '<div class="bar-row"><div class="name">' + typeLabels[t] + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div>' +
+      '<div class="mono" style="width:50px; text-align:right;">' + p.correct + '/' + p.total + '</div></div>';
+  });
+  document.getElementById('bar-chart').innerHTML = barHtml;
+
+  var grade, msg;
+  if(pct >= 90){ grade='A'; msg='🏆 Luar Biasa!'; }
+  else if(pct >= 75){ grade='B'; msg='⭐ Bagus!'; }
+  else if(pct >= 60){ grade='C'; msg='👍 Cukup Baik'; }
+  else if(pct >= 40){ grade='D'; msg='💪 Jangan Menyerah'; }
+  else { grade='E'; msg='📚 Semangat Belajar'; }
+  document.getElementById('grade-letter').textContent = grade;
+  document.getElementById('grade-msg').textContent = msg;
+
+  document.getElementById('analysis-panel').classList.add('show');
+  document.getElementById('analysis-panel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetAll(){
+  state.answers = {};
+  pkTemp = {};
+  document.getElementById('analysis-panel').classList.remove('show');
+  renderQuestions(state.currentType);
+  updateScoreStrip();
+  window.scrollTo({top: document.getElementById('latihan').offsetTop - 20, behavior:'smooth'});
+}
+
+/* ===================== INIT ===================== */
+document.addEventListener('DOMContentLoaded', function(){
+  renderQuestions('pg');
+  updateScoreStrip();
+  updateScrollspy();
+  typesetMath();
+});
+</script>
+</body>
+</html>
