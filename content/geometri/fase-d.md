@@ -117,16 +117,16 @@ bab:
       Melalui proses pembelajaran transformasi,siswa memiliki pengalaman belajar
       sebagai berikut: 
 
-       Terlatih berpikir kritis dan berpikir kreatif 
+      1. Terlatih berpikir kritis dan berpikir kreatif 
 
-       Menemukan ilmu pengetahuan dari pemecahan masalah nyata 
+      2. Menemukan ilmu pengetahuan dari pemecahan masalah nyata 
 
-       Mengajak untuk melakukan penelitian dasar dalam membangun konsep. 
+      3. Mengajak untuk melakukan penelitian dasar dalam membangun konsep. 
 
-       Dilatih bekerjasama dalam tim untuk menemukan solusi permasalahan. 
+      4. Dilatih bekerjasama dalam tim untuk menemukan solusi permasalahan. 
 
-       Dilatih mengajukan ide-ide secar bebas dan terbuka 
+      5. Dilatih mengajukan ide-ide secar bebas dan terbuka 
 
-       Merasakan manfaat matematika dalam kehidupan sehari-hari. 
+      6. Merasakan manfaat matematika dalam kehidupan sehari-hari. 
     ebookUrl: /ebooks/D7 Ebook-Interaktif-Transformasi.html
 ---
