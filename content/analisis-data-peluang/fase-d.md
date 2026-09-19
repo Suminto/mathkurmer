@@ -15,10 +15,13 @@ bab:
   - ebookLabel: Buka Ebook Interaktif
     judul: Statistika 1
     ringkasan: Statistika
+    ebookUrl: /ebooks/E1 Ebook-Interaktif-Statistika 1.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Peluang
     ringkasan: Peluang
+    ebookUrl: /ebooks/E2 Ebook-Interaktif-Peluang.html
   - ebookLabel: Buka Ebook Interaktif
     judul: Statistika 2
     ringkasan: Statistika
+    ebookUrl: /ebooks/E3 Ebook-Interaktif-Statistika 2.html
 ---
